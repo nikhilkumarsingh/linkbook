@@ -1,15 +1,10 @@
 {% extends 'base.html' %}
 
 {% load staticfiles i18n %}
+{% block title %}SIGN UP{% endblock %}
 
-{% block head %}
-  <link href="{% static 'css/signup.css' %}" rel="stylesheet">
-{% endblock head %}
 
 {% block body %}
-  <h1 class = "logo">LinkBook</h1>
-  <div class="signup">
-    <h2>{% trans 'Sign up for LinkBook' %}</h2>
     <form action="{% url 'signup' %}" method="post" role="form">
       {% csrf_token %}
       {% for field in form.visible_fields %}

@@ -7,6 +7,9 @@ from linkbook.authentication.models import Profile
 
 
 def signup(request):
+    if request.user.is_authenticated:
+        return redirect('/')
+
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if not form.is_valid():
