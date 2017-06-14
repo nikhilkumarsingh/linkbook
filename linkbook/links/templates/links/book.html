@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load i18n %}
+
+{% block title %}{{ book.id }}{% endblock %}
+
+{% block main %}
+{{book}}
+{% endblock main %}
