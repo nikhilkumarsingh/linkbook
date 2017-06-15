@@ -4,7 +4,7 @@
 
 {% block title %}LinkBook{% endblock %}
 
-{% block main %}
+{% block body %}
 {% if request.user.is_authenticated %}
 <a href = "/logout"> Logout</a><br/>
 {% else %}
@@ -13,4 +13,4 @@
 {% endif %}
 <a href = "/link/new"> Create new link </a><br/>
 <a href = "/book/new"> Create new book </a><br/>
-{% endblock main %}
+{% endblock body %}
