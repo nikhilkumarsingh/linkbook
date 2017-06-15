@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load i18n %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+<div class = "container">
+<table class = "responsive-table centered">
+
+<thead>
+  <tr>
+     <th>Books</th>
+  </tr>
+</thead>
+<tbody>
+{% for book in view_books %}
+</tbody>
+<tr>
+    <td><a href = "../book/{{book.id}}">{{ book }}</a></td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+{% endblock%}
