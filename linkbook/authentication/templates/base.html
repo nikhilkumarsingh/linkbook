@@ -2,25 +2,79 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"> <! This will help in zooming in mobile>
+	<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<!--Import materialize.css-->
+	<link type="text/css" rel="stylesheet" href="../static/materialize/css/materialize.css"  media="screen,projection"/>
 	<title>
 		{% block title %}{% endblock %}
 	</title>
-
+    <script src = "../static/materialize/js/jquery.js"></script>
+    <script src = '../static/materialize/js/materialize.js'> </script>
 	{% block head %}
 	{% endblock %}
 </head>
-	
-<body>
-	{% block body %}
-	<main>
-		<div class="container">
-			{% block main %}
-			{% endblock main %}
-		</div>
-	</main>
-		{% endblock body %}
-</body>
+<style>
 
+    .row
+    {
+        width: 100%;
+    }
+
+    .container
+    {
+        width: 100%;
+    }
+
+
+/*
+    .input-field input[type=text]:focus + label {
+     color: blue;
+   }
+
+    .input-field label {
+     color: red;
+   }
+*/
+
+
+</style>
+<body>
+    <nav class=" white-text" style="background-color: #26a69a">
+        <div class="nav-wrapper">
+            <a href="#" class="center brand-logo">LINK BOOK</a>
+            <a href="#" data-activates="mobile-demo"  class="button-collapse" ><i class="material-icons">menu</i></a>
+            <ul class="hide-on-med-and-down left">
+                <li class="active left"><a href="#">Home</a></li>
+                <li>
+                    <a class="left" href="#">About Us </a>
+                </li>
+                <li><a class="left" href="#">Project</a></li>
+            </ul>
+            <ul class="hide-on-med-and-down right">
+                <li><a href="#" class="right"> Sign Up</a></li>
+                <li><a href="#" class="right"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            </ul>
+            <ul class="side-nav" id="mobile-demo">
+                <li class="active "><a href="#">Home</a></li>
+                <li><a href="#">About Us </a></li>
+                <li><a  href="#">Project</a></li>
+                <li><a href="#" > Sign Up</a></li>
+                <li><a href="#">Login</a></li>
+            </ul>
+        </div>
+    </nav>
+	{% block body %}
+
+    {% endblock body %}
+
+    <script>
+
+        $(function () {
+            $(".button-collapse").sideNav();
+        });
+    </script>
+</body>
 </html>
