@@ -17,7 +17,8 @@ def link(request, id):
 
 def book(request, id):
     book = get_object_or_404(Book, id = id)
-    return render(request, 'links/book.html', {'book': book})
+    links = book.link_set.all()
+    return render(request, 'links/book.html', {'book': links})
 
 
 @login_required

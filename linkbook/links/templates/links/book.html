@@ -2,8 +2,26 @@
 {% load staticfiles %}
 {% load i18n %}
 
-{% block title %}{{ book.id }}{% endblock %}
+{% block title %}{% endblock %}
 
-{% block main %}
-{{book}}
-{% endblock main %}
+{% block body %}
+
+<link type="text/css" rel="stylesheet" href="/static/materialize/css/materialize.css"  media="screen,projection"/>
+<div class = "container">
+<table class = "responsive-table centered">
+
+<thead>
+  <tr>
+     <th>Links</th>
+  </tr>
+</thead>
+<tbody>
+{% for link in book%}
+<tr>
+    <td>{{ link }}</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+{% endblock%}
