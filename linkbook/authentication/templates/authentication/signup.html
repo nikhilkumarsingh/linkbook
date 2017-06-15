@@ -15,11 +15,11 @@
                 <form action="{% url 'signup' %}" method="post" role="form">
                     {% csrf_token %}
                     {% for field in form.visible_fields %}
-                    <div class=" input-field {% if field.errors %} has-error{% endif %}">
+                    <div class=" input-field">
                         {{ field }}
-                        <label for="{{ field.label }}" class="active">{{ field.label }} </label>
+                        <label for="{{ field.label }}" class="active" >{{ field.label }} </label>
                         {% if field.help_text %}
-                            <span id="help-block">{{ field.help_text|safe }}</span>
+                            <span>{{ field.help_text|safe }}</span>
                         {% endif %}
                         {% for error in field.errors %}
                             <label id = "control-label">{{ error }}</label>

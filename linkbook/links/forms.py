@@ -7,10 +7,10 @@ from linkbook.links.models import Link, Book
 class BookForm(forms.Form):
 
     title = forms.CharField(
-        widget = forms.TextInput(attrs = {'class': 'form-control'}),
+        widget = forms.TextInput(attrs = {'class': 'input-field'}),
         max_length = 30, required = True)
     description = forms.CharField(
-        widget = forms.Textarea(attrs = {'class': 'form-control'}),
+        widget = forms.Textarea(attrs = {'class': 'materialize-textarea', 'id': 'description'}),
         max_length = 1000, required = False)
 
 
@@ -21,13 +21,13 @@ class LinkForm(forms.Form):
         self.fields['books'].queryset = Book.objects.filter(user = user)
     
     url = forms.URLField(
-        widget = forms.TextInput(attrs = {'class': 'form-control'}),
+        widget = forms.TextInput(attrs = {'class': ''}),
         max_length = 255)
     title = forms.CharField(
-        widget = forms.TextInput(attrs = {'class': 'form-control'}),
+        widget = forms.TextInput(attrs = {'class': ''}),
         max_length = 30, required = True)
     description = forms.CharField(
-        widget = forms.Textarea(attrs = {'class': 'form-control'}),
+        widget = forms.Textarea(attrs = {'class': 'materialize-textarea', 'id': 'description'}),
         max_length = 1000, required = False)
     tags = TagField()
     books = forms.ModelMultipleChoiceField(
