@@ -6,11 +6,12 @@
 
 {% block body %}
     <div class="container">
+        <br><br>
         <div class="row">
             <div class="col s1 m3 l3"> </div>
-            <div class="col s10 m6 l6">
+            <div class="col s10 m6 l6 card hoverable">
                 <br>
-                <br>
+                <h5 class="center">Get your ticket to Link Book</h5>
                 <form action="{% url 'signup' %}" method="post" role="form">
                     {% csrf_token %}
                     {% for field in form.visible_fields %}
@@ -26,6 +27,7 @@
                     </div>
                     {% endfor %}
                     <button type="submit" class="btn btn-primary btn-lg">{% trans 'Create an account' %}</button>
+                    <br><br>
                 </form>
             </div>
             <div class="col s1 m3 l3"></div>
