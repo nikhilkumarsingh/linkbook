@@ -4,12 +4,48 @@
 
 {% block title %}{{ link.id }}{% endblock %}
 
-{% block main %}
-<table>
-<form method="post" action="{% url 'create_book' %}" role="form">
-{% csrf_token %}
-{{form.as_p}}
-<button type="submit" class="btn btn-default">{% trans 'Save' %}</button>
-</form>
-</table>
-{% endblock main %}
+{% block body %}
+    <div class="container">
+        <div class="row">
+
+            <div class="col s1 l3 m3"></div>
+            <div class="col s10 l6 m6 card hoverable">
+            <h4 class="center">Fill this form to create your book</h4>
+                <form method="post" action="{% url 'create_book' %}" role="form">
+                {% csrf_token %}
+                    {% for field in form.visible_fields %}
+                    <div class=" input-field">
+                        {{ field }}
+                        <label for="{{ field.label }}" class="active" >{{ field.label }} </label>
+                        {% if field.help_text %}
+                            <span>{{ field.help_text|safe }}</span>
+                        {% endif %}
+                        {% for error in field.errors %}
+                            <label id = "control-label">{{ error }}</label>
+                        {% endfor %}
+                    </div>
+                    {% endfor %}
+                    <button type="submit" class="btn btn-default">{% trans 'Save' %}</button>
+                    <br><br>
+                </form>
+
+            </div>
+            <div class="col s1 l3 m3"></div>
+
+        </div>
+
+    </div>
+
+    <script>
+
+    $(function () {
+
+          $('#description').val('');
+         $('#description').trigger('autoresize');
+
+
+    })
+
+    </script>
+
+{% endblock body %}
