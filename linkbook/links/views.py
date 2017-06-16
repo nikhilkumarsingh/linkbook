@@ -107,3 +107,24 @@ def create_comment(request, id):
             comment.text = form.cleaned_data.get('text')
             comment.save()
             return redirect('/link/{}'.format(id))
+
+@login_required
+def edit_book(request, id):
+    if request.method == 'POST':
+        form = BoookForm(request.POST)
+        if form.is_valid():
+            book = Book()
+            book.user = request.user
+            book.title = form.cleaned_data.get('title')
+            book.description = form.cleaned_data.get('description')
+            book.save()
+            return redirect("/book/{}/".format(id))
+    else:
+        old_book = get_object_or_404(Book, id = id)
+        initial_dict = {'title': old_book.title,
+                   'description': old_book.description,
+                   }
+        print(old_book.description)
+        form = BookForm(initial = initial_dict)
+        return render(request, 'links/edit_book.html', 
+            {'form': form, 'book':old_book, 'color' : 'red'})
