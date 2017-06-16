@@ -11,17 +11,24 @@
         <h3 class="center">Book</h3>
     </div>
     {% for link in book %}
+        <a href = "/link/{{link.id}}">
         <div class="row">
             <div class="col s4 l4 m4"></div>
             <div class="col s4 m4 l4">
                 <div class="card horizontal hoverable">
                   <div class="card-stacked">
-                    <div class="card-title center">{{ link.title }}</div>
+                    <div class="card-title center">{{link.title}}</div>
                       <div class="card-content">
                       <p>{{ link.description }}</p>
+                      <p>Tags:
+                        {% for tag in link.tags.all %}
+                          <strong>{{tag.name}}</strong>
+                        {% endfor %}
+                      </p>
+                      <p>{{link.comment_set.count}} comment(s)</p>
                     </div>
                     <div class="card-action">
-                      <a href="{{ link.url }}">LINK</a>
+                      <a href="{{link.url}}">Visit link</a>
                     </div>
                   </div>
     </div>
@@ -29,6 +36,7 @@
 
             <div class="col s4 m4 l4"></div>
         </div>
+        </a>
     {% endfor %}
 
     </div>
