@@ -22,7 +22,7 @@ Tags:
 <p>{{link.comment_set.count}} comment(s) on this link:</p>
 {% for comment in link.comment_set.all %}
 	<div>
-        <strong>{{ comment.user }} said:</strong>
+        <strong>{{ comment.user }} [{{comment.date}}]:</strong>
         <p>{{ comment.text|linebreaks }}</p>
     </div>
 {% endfor %}
