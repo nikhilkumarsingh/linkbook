@@ -12,6 +12,7 @@
     </div>
     {% for book in view_books %}
         <div class="row">
+          <a href="/book/{{book.id}}">
             <div class="col s4 l4 m4"></div>
             <div class="col s4 m4 l4">
                 <div class="card horizontal hoverable">
@@ -19,14 +20,13 @@
                     <div class="card-title center">{{ book.title }}</div>
                       <div class="card-content">
                       <p>{{ book.description }}</p>
-                    </div>
-                    <div class="card-action">
-                      <a href="/book/{{ book.id  }}">LINK</a>
+                      <p>{{book.link_set.count}} link(s)</p>
                     </div>
                   </div>
     </div>
   </div>
             <div class="col s4 m4 l4"></div>
+            </a>
         </div>
     {% endfor %}
     </div>
