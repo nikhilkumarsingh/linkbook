@@ -34,6 +34,31 @@
        color : brown;
    }
 
+   .input-field textarea:focus
+   {
+       border-bottom: 1px solid #000;
+     box-shadow: 0 1px 0 0 #000;
+       color : brown;
+   }
+   .input-field textarea:focus + label {
+     color: brown;
+   }
+
+   textarea:focus
+   {
+       border-bottom: 1px solid #000;
+     box-shadow: 0 1px 0 0 #000;
+       color : brown;
+   }
+   textarea:focus + label {
+     color: brown;
+   }
+
+   textarea
+   {
+       color : brown;
+   }
+
    .materialize-textarea
    {
        color: brown;
@@ -81,5 +106,10 @@
 
     nav
     {
-        background-color: #26a69a;
+        background-color: brown;
+    }
+
+    button :hover
+    {
+        background-color: brown;
     }
