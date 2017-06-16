@@ -5,20 +5,18 @@
 {% block title %}{% endblock %}
 
 {% block body %}
-
-<link type="text/css" rel="stylesheet" href="/static/materialize/css/materialize.css"  media="screen,projection"/>
 <div class = "container">
 <table class = "responsive-table centered">
 
 <thead>
   <tr>
-     <th>Links</th>
+     <th>Books</th>
   </tr>
 </thead>
 <tbody>
-{% for link in book%}
+{% for book in view_books %}
 <tr>
-    <td>{{ link }}</td>
+    <td><a href = "../book/{{book.id}}">{{ book }}</a></td>
 </tr>
 {% endfor %}
 </tbody>
