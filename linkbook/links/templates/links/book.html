@@ -29,6 +29,9 @@
                     </div>
                     <div class="card-action">
                       <a href="{{link.url}}">Visit link</a>
+                      {% if request.user == link.user %}
+                        <a href="/link/{{link.id}}/edit">Edit</a>
+                      {% endif %}
                     </div>
                   </div>
     </div>

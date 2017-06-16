@@ -46,6 +46,35 @@ def create_link(request):
         return render(request, 'links/new_link.html', {'form': form})
 
 
+def edit_link(request, id):
+    if request.method == 'POST':
+        form = LinkForm(request.user, request.POST)
+        if form.is_valid():
+            link = Link.objects.get(id = id)
+            link.user = request.user
+            link.url = form.cleaned_data.get('url')
+            link.title = form.cleaned_data.get('title')
+            link.description = form.cleaned_data.get('description')
+            link.save()
+            link.tags.clear()
+            tag_list = form.cleaned_data.get('tags')
+            for tag in tag_list:
+                link.tags.add(tag)
+            link.books = form.cleaned_data.get('books')
+            link.save()
+            return redirect("/link/{}/".format(id))
+    else:
+        old_link = get_object_or_404(Link, id = id)
+        initial_dict = {'url': old_link.url, 'title': old_link.title,
+                   'description': old_link.description,
+                   'tags': ", ".join(tag.name for tag in old_link.tags.all()),
+                   'books': old_link.books.all()}
+        print(old_link.description)
+        form = LinkForm(request.user, initial = initial_dict)
+        return render(request, 'links/edit_link.html', 
+            {'form': form, 'link':old_link, 'color':'red'})
+
+
 @login_required
 def create_book(request):
     if request.method == 'POST':
