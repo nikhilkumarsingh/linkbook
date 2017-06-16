@@ -8,16 +8,16 @@
 <div class = "container">
 
     <div class="row">
-        <h3 class="center">Your Books</h3>
+        <h3 class="center blue-grey-text">Your Books</h3>
     </div>
     {% for book in view_books %}
         <div class="row">
           <a href="/book/{{book.id}}">
-            <div class="col s4 l4 m4"></div>
-            <div class="col s4 m4 l4">
-                <div class="card horizontal hoverable">
+            <div class="col s1 l4 m4"></div>
+            <div class="col s10 m4 l4">
+                <div class="card horizontal hoverable blue-grey white-text lighten-1 ">
                   <div class="card-stacked">
-                    <div class="card-title center">{{ book.title }}</div>
+                      <div class="card-title center"><h4>{{ book.title }}</h4></div>
                       <div class="card-content">
                       <p>{{ book.description }}</p>
                       <p>{{book.link_set.count}} link(s)</p>
@@ -25,7 +25,7 @@
                   </div>
     </div>
   </div>
-            <div class="col s4 m4 l4"></div>
+            <div class="col s1 m4 l4"></div>
             </a>
         </div>
     {% endfor %}
