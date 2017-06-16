@@ -8,12 +8,14 @@
 	<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<!--Import materialize.css-->
 	<link type="text/css" rel="stylesheet" href="../../static/materialize/css/materialize.css"  media="screen,projection"/>
+
 	<title>
 		{% block title %}{% endblock %}
 	</title>
     <script src = "../../static/materialize/js/jquery.js"></script>
     <script src = '../../static/materialize/js/materialize.js'> </script>
-	{% block head %}
+	<!--- <link type="text/css" rel="stylesheet" href="../../static/materialize/css/Color_theme.css" media="screen,projection"> --->
+    {% block head %}
 	{% endblock %}
 </head>
 <style>
@@ -35,22 +37,34 @@
             <a href="#" class="center brand-logo">LINK BOOK</a>
             <a href="#" data-activates="mobile-demo"  class="button-collapse" ><i class="material-icons">menu</i></a>
             <ul class="hide-on-med-and-down left">
-                <li class="active left"><a href="#">Home</a></li>
+                <li class="active left"><a href="/">Home</a></li>
                 <li>
                     <a class="left" href="#">About Us </a>
                 </li>
                 <li><a class="left" href="#">Project</a></li>
             </ul>
             <ul class="hide-on-med-and-down right">
-                <li><a href="#" class="right"> Sign Up</a></li>
-                <li><a href="#" class="right"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                {% if not request.user.is_authenticated %}
+                <li ><a href="/login" class="right"> Login</a></li>
+                    <li ><a href="/signup" class="right">Sign Up</a></li>
+
+                {% else %}
+                    <li><a href="/profile" class="right">Profile</a></li>
+                    <li><a href="/logout" class="right">Logout</a></li>
+                {% endif %}
+
             </ul>
             <ul class="side-nav" id="mobile-demo">
-                <li class="active "><a href="#">Home</a></li>
+                <li class="active "><a href="/">Home</a></li>
                 <li><a href="#">About Us </a></li>
                 <li><a  href="#">Project</a></li>
-                <li><a href="#" > Sign Up</a></li>
-                <li><a href="#">Login</a></li>
+                {%  if not request.user.is_authenticated %}
+                <li><a href="signup" > Sign Up</a></li>
+                <li><a href="login">Login</a></li>
+                {% else %}
+                    <li><a href="/profile" >Profile</a></li>
+                <li><a href="/logout">Logout</a></li>
+                {% endif %}
             </ul>
         </div>
     </nav>
@@ -63,6 +77,7 @@
         $(function () {
             $(".button-collapse").sideNav();
         });
+        $('select').material_select();
     </script>
 </body>
 </html>

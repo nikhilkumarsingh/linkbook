@@ -6,20 +6,28 @@
 
 {% block body %}
 <div class = "container">
-<table class = "responsive-table centered">
 
-<thead>
-  <tr>
-     <th>Books</th>
-  </tr>
-</thead>
-<tbody>
-{% for book in view_books %}
-<tr>
-    <td><a href = "../book/{{book.id}}">{{ book }}</a></td>
-</tr>
-{% endfor %}
-</tbody>
-</table>
-</div>
+    <div class="row">
+        <h3 class="center">Your Books</h3>
+    </div>
+    {% for book in view_books %}
+        <div class="row">
+            <div class="col s4 l4 m4"></div>
+            <div class="col s4 m4 l4">
+                <div class="card horizontal hoverable">
+                  <div class="card-stacked">
+                    <div class="card-title center">{{ book.title }}</div>
+                      <div class="card-content">
+                      <p>{{ book.description }}</p>
+                    </div>
+                    <div class="card-action">
+                      <a href="/book/{{ book.id  }}">LINK</a>
+                    </div>
+                  </div>
+    </div>
+  </div>
+            <div class="col s4 m4 l4"></div>
+        </div>
+    {% endfor %}
+    </div>
 {% endblock%}

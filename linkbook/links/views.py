@@ -18,6 +18,7 @@ def link(request, id):
 def book(request, id):
     book = get_object_or_404(Book, id = id)
     links = book.link_set.all()
+    print links
     return render(request, 'links/book.html', {'book': links})
 
 
