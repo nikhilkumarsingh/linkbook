@@ -2,8 +2,40 @@
 {% load staticfiles %}
 {% load i18n %}
 
-{% block title %}{{ link.id }}{% endblock %}
+{% block title %}{{link}}{% endblock %}
 
-{% block main %}
-{{link}}
-{% endblock main %}
+{% block body %}
+
+<div>
+<a href = "{{link.url}}">{{link | linebreaksbr}}</a>
+<p>{{link.description}}</p>
+
+Tags:
+{% for tag in link.tags.all %}
+<strong>{{tag.name}}</strong>
+{% endfor %}
+</div>
+
+
+
+<div>
+<p>{{link.comment_set.count}} comment(s) on this link:</p>
+{% for comment in link.comment_set.all %}
+	<div>
+        <strong>{{ comment.user }} said:</strong>
+        <p>{{ comment.text|linebreaks }}</p>
+    </div>
+{% endfor %}
+</div>
+
+
+
+<div>
+<strong>Write a comment</strong>
+<form method="post" action="/link/{{link.id}}/comment/" role="form">
+	{% csrf_token %}
+    {{ comment_form.as_p }}
+    <button type="submit" class="save btn btn-default">Comment</button>
+</form>
+</div>
+{% endblock %}

@@ -1,7 +1,7 @@
 from django import forms
 from taggit.forms import *
 
-from linkbook.links.models import Link, Book
+from linkbook.links.models import Link, Book, Comment
 
 
 class BookForm(forms.Form):
@@ -43,3 +43,12 @@ class LinkForm(forms.Form):
             'books': forms.CheckboxSelectMultiple()
         }
     '''
+
+class CommentForm(forms.ModelForm):
+
+    class Meta:
+        model = Comment
+        fields = ['text']
+        widgets = {
+            'text': forms.Textarea(),
+            }

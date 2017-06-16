@@ -18,6 +18,7 @@ urlpatterns = [
 
     url(r'^link/(?P<id>\d+)/$', linkbook_link_views.link, name='link'),
     url(r'^link/new/$', linkbook_link_views.create_link, name = 'create_link'),
+    url(r'^link/(?P<id>\d+)/comment/$', linkbook_link_views.create_comment, name = 'create_comment'),
 
     url(r'^book/(?P<id>\d+)/$', linkbook_link_views.book, name='book'),
     url(r'^book/new/$', linkbook_link_views.create_book, name = 'create_book'),

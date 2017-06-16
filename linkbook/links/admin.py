@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django import forms
-from .models import Link, Book
+from .models import Link, Book, Comment
 
 class LinkAdmin(admin.ModelAdmin):
 	list_display = ('title', 'url', 'user', 'date')
@@ -15,5 +15,11 @@ class BookAdmin(admin.ModelAdmin):
 		links = "\n".join(link.url for link in obj.link_set.all())
 		return links
 
+class CommentAdmin(admin.ModelAdmin):
+	list_display = ('link', 'user', 'text', 'date')
+	ordering = ['date']
+
+
 admin.site.register(Link, LinkAdmin)
 admin.site.register(Book, BookAdmin)
+admin.site.register(Comment, CommentAdmin)

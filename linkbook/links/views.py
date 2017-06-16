@@ -4,15 +4,17 @@ from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 
-from linkbook.links.forms import LinkForm, BookForm
-from linkbook.links.models import Link, Book
+from linkbook.links.forms import LinkForm, BookForm, CommentForm
+from linkbook.links.models import Link, Book, Comment
 
 from taggit.models import Tag
 
 
 def link(request, id):
     link = get_object_or_404(Link, id = id)
-    return render(request, 'links/link.html', {'link': link})
+    comment_form = CommentForm()
+    return render(request, 'links/link.html', 
+        {'link': link, 'comment_form': comment_form})
 
 
 def book(request, id):
@@ -63,3 +65,16 @@ def create_book(request):
 def view_books(request):
     user_records = Book.objects.filter(user = request.user)
     return render(request, 'links/view_books.html', {'view_books':user_records})
+
+
+@login_required
+def create_comment(request, id):
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = Comment()
+            comment.user = request.user
+            comment.link = Link.objects.get(id = id)
+            comment.text = form.cleaned_data.get('text')
+            comment.save()
+            return redirect('/link/{}'.format(id))

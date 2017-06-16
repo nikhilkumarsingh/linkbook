@@ -64,3 +64,14 @@ class Link(models.Model):
 
 	def create_tags(self, link_tags):
 		self.tags.add(link_tags.split(" "))
+
+
+
+class Comment(models.Model):
+    link = models.ForeignKey(Link)
+    user = models.ForeignKey(User)
+    text = models.TextField(max_length = 250)
+    date = models.DateTimeField(auto_now_add = True)
+
+    def __str__(self):
+        return self.text
