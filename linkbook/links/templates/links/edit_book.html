@@ -2,7 +2,7 @@
 {% load staticfiles %}
 {% load i18n %}
 
-{% block title %}{% endblock %}
+{% block title %}Edit {{book.title}}{% endblock %}
 
 {% block body %}
 
@@ -12,8 +12,8 @@
 
             <div class="col s1 m3 l3"></div>
             <div class="col s10 m6 l6 card hoverable">
-            <h4 class="center">Edit your link<h4>
-                <form method="post" action="/link/{{link.id}}/edit/" role="form">
+            <h4 class="center">Edit your book<h4>
+                <form method="post" action="/book/{{book.id}}/edit/" role="form">
                 {% csrf_token %}
                     {% for field in form.visible_fields %}
                     <div class=" input-field">

@@ -22,6 +22,7 @@ urlpatterns = [
     url(r'^link/(?P<id>\d+)/comment/$', linkbook_link_views.create_comment, name = 'create_comment'),
 
     url(r'^book/(?P<id>\d+)/$', linkbook_link_views.book, name='book'),
+    url(r'^book/(?P<id>\d+)/edit/$', linkbook_link_views.edit_book, name='edit_book'),
     url(r'^book/new/$', linkbook_link_views.create_book, name = 'create_book'),
 
     url(r'^profile/$', linkbook_link_views.view_books, name='user_books'),
