@@ -6,36 +6,98 @@
 
 {% block body %}
 
-<div>
-<a href = "{{link.url}}">{{link | linebreaksbr}}</a>
-<p>{{link.description}}</p>
 
-Tags:
-{% for tag in link.tags.all %}
-<strong>{{tag.name}}</strong>
-{% endfor %}
-</div>
+    <div class="container">
+        <div class="row">
+
+            <div class="col s1 m3 l3"></div>
+            <div class="col s10 m6 l6">
+                <ul class="collection hoverable " style="border: 1px solid lightcoral">
+                    <li class="collection-item avatar">
+                      <i class="material-icons circle red">web</i>
+                        <span class="title red-text">URL</span>
+                        <p><a href = "{{link.url}}" target="_blank">{{link | linebreaksbr}} </a>  <button class="btn btn-flat red right waves-effect waves-light white-text" id="btn_url">Show url</button> </p>
+                        <p id="url" style="display: none">{{ link.url }}</p>
+                    </li>
+                    <li class="collection-item avatar">
+                      <i class="material-icons circle red">description</i>
+                        <span class="title red-text">Description</span>
+                       <p>{{link.description}}</p>
+                    </li>
+                    <li class="collection-item avatar">
+                      <i class="material-icons circle red">assignment</i>
+                        <span class="title red-text">Tags</span>
+                        <p>
+                        {% for tag in link.tags.all %}
+                            <div class="chip">
+                                {{tag.name}}
+                            </div>
+                         {% endfor %}
+                        </p>
+                    </li>
+                    <li class="collection-item avatar">
+                      <i class="material-icons circle red">comment</i>
+                        <span class="title red-text">Comments</span>
+                        <p class="green-text">{{link.comment_set.count}} comment(s) on this link:</p>
+                        <p>
+
+                    {% for comment in link.comment_set.all %}
+                        <div>
+                            <span style="font-weight: 800">{{ comment.user }} <sub>[{{comment.date}}]</sub> :</span>
+                            <span>{{ comment.text }}</span>
+                        </div>
+                    {% endfor %}
+                        </p>
+                    </li>
+
+                <li class="collection-item avatar">
+                      <i class="material-icons circle red">mode_comment</i>
+                        <span class="title red-text">Write a comment</span>
+                        <p>
+                        <div>
+                    <form method="post" action="/link/{{link.id}}/comment/" role="form">
+                        {% csrf_token %}
+                        <div class="input-field">
+                        {{ comment_form.as_p }}
+                        <button type="submit" class="save btn red waves-effect waves-light">Comment</button>
+                    </form>
+                    </div>
+                        </p>
+                    </li>
+                </ul>
 
 
-
-<div>
-<p>{{link.comment_set.count}} comment(s) on this link:</p>
-{% for comment in link.comment_set.all %}
-	<div>
-        <strong>{{ comment.user }} [{{comment.date}}]:</strong>
-        <p>{{ comment.text|linebreaks }}</p>
+            </div>
+            <div class="col s1 m3 l3"></div>
+        </div>
     </div>
-{% endfor %}
-</div>
+
+    <script>
+
+    $(function () {
+
+        var b = $('#btn_url');
+        var disp = false;
+        var URL = $('#url');
+        b.click(function () {
+
+            if(disp)
+            {
+                URL.css({'display' : 'none'});
+                b.html("Show URL");
+            }
+            else
+            {
+                URL.css({'display' : 'block'});
+                b.html("Hide URL");
+            }
+            disp = 1 - disp;
+        });
+
+    })
 
 
+    </script>
 
-<div>
-<strong>Write a comment</strong>
-<form method="post" action="/link/{{link.id}}/comment/" role="form">
-	{% csrf_token %}
-    {{ comment_form.as_p }}
-    <button type="submit" class="save btn btn-default">Comment</button>
-</form>
-</div>
+
 {% endblock %}
