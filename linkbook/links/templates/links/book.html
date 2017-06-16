@@ -5,23 +5,31 @@
 {% block title %}{% endblock %}
 
 {% block body %}
+    <div class = "container">
 
-<link type="text/css" rel="stylesheet" href="/static/materialize/css/materialize.css"  media="screen,projection"/>
-<div class = "container">
-<table class = "responsive-table centered">
+    <div class="row">
+        <h3 class="center">Book</h3>
+    </div>
+    {% for link in book %}
+        <div class="row">
+            <div class="col s4 l4 m4"></div>
+            <div class="col s4 m4 l4">
+                <div class="card horizontal hoverable">
+                  <div class="card-stacked">
+                    <div class="card-title center">{{ link.title }}</div>
+                      <div class="card-content">
+                      <p>{{ link.description }}</p>
+                    </div>
+                    <div class="card-action">
+                      <a href="{{ link.url }}">LINK</a>
+                    </div>
+                  </div>
+    </div>
+  </div>
 
-<thead>
-  <tr>
-     <th>Links</th>
-  </tr>
-</thead>
-<tbody>
-{% for link in book%}
-<tr>
-    <td>{{ link }}</td>
-</tr>
-{% endfor %}
-</tbody>
-</table>
-</div>
+            <div class="col s4 m4 l4"></div>
+        </div>
+    {% endfor %}
+
+    </div>
 {% endblock%}

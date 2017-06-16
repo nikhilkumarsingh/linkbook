@@ -33,7 +33,9 @@ class LinkForm(forms.Form):
     books = forms.ModelMultipleChoiceField(
         required = False,
         queryset = Book.objects.all(),
-        widget = forms.widgets.CheckboxSelectMultiple())
+        widget = forms.SelectMultiple(attrs = {'id' : 'Books'}),
+
+    )
     '''
     class Meta:
         model = Link
