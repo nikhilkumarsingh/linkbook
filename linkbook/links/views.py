@@ -11,7 +11,7 @@ from taggit.models import Tag
 
 UP = 0
 DOWN = 1
-vote_color = "yellow-text"
+vote_color = "btn-flat lighten-5"
 
 
 def link(request, id):
