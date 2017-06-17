@@ -9,7 +9,6 @@ from linkbook.links.models import Link, Book, Comment
 
 from taggit.models import Tag
 
-
 UP = 0
 DOWN = 1
 vote_color = "yellow-text"
