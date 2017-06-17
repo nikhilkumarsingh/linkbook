@@ -5,6 +5,7 @@ from django.db import models
 from taggit.managers import TaggableManager
 
 from jsonfield import JSONField
+from vote.models import VoteModel
 
 class Book(models.Model):
 	user = models.ForeignKey(User)
@@ -30,7 +31,7 @@ class Book(models.Model):
 
 
 
-class Link(models.Model):
+class Link(VoteModel, models.Model):
 	user = models.ForeignKey(User)
 	date = models.DateTimeField(auto_now_add = True)
 	url = models.URLField(default = None)
@@ -61,9 +62,6 @@ class Link(models.Model):
 						book.tags[tag.name] = 1
 				book.save()
 			super(Link, self).save(*args, **kwargs)
-
-	def create_tags(self, link_tags):
-		self.tags.add(link_tags.split(" "))
 
 
 

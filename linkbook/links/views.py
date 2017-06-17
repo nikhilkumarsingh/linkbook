@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
-from django.http import HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 
@@ -10,11 +10,33 @@ from linkbook.links.models import Link, Book, Comment
 from taggit.models import Tag
 
 
+UP = 0
+DOWN = 1
+vote_color = "yellow-text"
+
+
 def link(request, id):
     link = get_object_or_404(Link, id = id)
     comment_form = CommentForm()
+    upvotes = link.votes.count(action = UP)
+    downvotes = link.votes.count(action = DOWN)
+    upvoted = link.votes.exists(request.user.id, action = UP)
+    downvoted = link.votes.exists(request.user.id, action = DOWN)
+
+    if not upvoted:
+        upvote_button = ""
+    else:
+        upvote_button = vote_color
+
+    if not downvoted:
+        downvote_button = ""
+    else:
+        downvote_button = vote_color
+
     return render(request, 'links/link.html', 
-        {'link': link, 'comment_form': comment_form})
+        {'link': link, 'comment_form': comment_form, 
+        'upvotes': upvotes, 'downvotes': downvotes,
+        'upvote_button': upvote_button, 'downvote_button': downvote_button})
 
 
 def book(request, id):
@@ -42,7 +64,7 @@ def create_link(request):
             print("Done")
             return redirect('/')
     else:
-        form = LinkForm(request.user)#initial = {'books': Book.objects.filter(user = request.user)})
+        form = LinkForm(request.user)
         return render(request, 'links/new_link.html', {'form': form})
 
 
@@ -72,9 +94,56 @@ def edit_link(request, id):
         print(old_link.description)
         form = LinkForm(request.user, initial = initial_dict)
         return render(request, 'links/edit_link.html', 
-            {'form': form, 'link':old_link, 'color':'red'})
+            {'form': form, 'link':old_link})
 
 
+@login_required
+def vote_link(request, id):
+    if request.method == 'GET':
+        vote_type = request.GET['type']
+        link = Link.objects.get(id = id)
+        upvoted = link.votes.exists(request.user.id, action = UP)
+        downvoted = link.votes.exists(request.user.id, action = DOWN)
+
+        if vote_type == "U":
+            if not upvoted:
+                link.votes.up(request.user.id)
+                link.save()
+                upvote_button = vote_color
+                if downvoted:
+                    downvote_button = vote_color
+                else:
+                    downvote_button = ""
+            else:
+                link.votes.delete(request.user.id)
+                print("hello")
+                upvote_button = vote_color
+                downvote_button = ""
+            return JsonResponse({'upvotes': link.votes.count(action = UP), 
+                'downvotes': link.votes.count(action = DOWN),
+                'upvote_button': upvote_button,
+                'downvote_button': downvote_button})
+
+
+        elif vote_type == "D":
+            if not downvoted:
+                link.votes.down(request.user.id)
+                link.save()
+                downvote_button = vote_color
+                if upvoted:
+                    upvote_button = vote_color
+                else:
+                    upvote_button = ""
+            else:
+                link.votes.delete(request.user.id)
+                downvote_button = vote_color
+                upvote_button = ""
+            return JsonResponse({'upvotes': link.votes.count(action = UP),
+                'downvotes': link.votes.count(action = DOWN),
+                'upvote_button': upvote_button,
+                'downvote_button': downvote_button})
+
+        
 @login_required
 def create_book(request):
     if request.method == 'POST':

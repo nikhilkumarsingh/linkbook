@@ -35,6 +35,25 @@
                          {% endfor %}
                         </p>
                     </li>
+
+<li class="collection-item avatar">
+    <div>
+        <strong id="upvote_count">{{upvotes}}</strong>
+        {% if request.user.is_authenticated %}
+                <a class="btn-floating btn-medium waves-effect waves-light green" id = "upvote" link_id = "{{link.id}}">
+                <i id = "upvote_icon" class="small material-icons {{upvote_button}}">thumb_up</i></a>
+        {% endif %}
+    </div>
+    <div>
+        <strong id="downvote_count">{{downvotes}}</strong>
+        {% if request.user.is_authenticated %}
+                <a class="btn-floating btn-medium waves-effect waves-light red" id = "downvote" link_id = "{{link.id}}">
+                <i id = "downvote_icon" class="small material-icons {{downvote_button}}">thumb_down</i></a>
+        {% endif %}
+        </div>
+</li>
+
+
                     <li class="collection-item avatar">
                       <i class="material-icons circle red">comment</i>
                         <span class="title red-text">Comments</span>
@@ -94,8 +113,31 @@
             disp = 1 - disp;
         });
 
-    })
+    });
 
+    $('#upvote').click(function(){
+    var link_id;
+    link_id = $(this).attr("link_id");
+    $.get('/link/{{link.id}}/vote/', {type: 'U'}, function(data){
+
+               $('#upvote_count').html(data['upvotes']);
+               $('#downvote_count').html(data['downvotes']);
+               $("#upvote_icon").toggleClass(data['upvote_button']);
+               $("#downvote_icon").toggleClass(data['downvote_button']); 
+        });
+    });
+
+    $('#downvote').click(function(){
+    var link_id;
+    link_id = $(this).attr("link_id");
+    $.get('/link/{{link.id}}/vote/', {type: 'D'}, function(data){
+
+               $('#downvote_count').html(data['downvotes']);
+               $('#upvote_count').html(data['upvotes']);
+               $("#upvote_icon").toggleClass(data['upvote_button']);
+               $("#downvote_icon").toggleClass(data['downvote_button']); 
+        });
+    });
 
     </script>
 

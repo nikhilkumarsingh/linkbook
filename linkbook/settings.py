@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
     'taggit',
+    'vote',
 
     'linkbook.core',
     'linkbook.authentication',
