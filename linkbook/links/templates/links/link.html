@@ -12,21 +12,21 @@
 
             <div class="col s1 m3 l3"></div>
             <div class="col s10 m6 l6">
-                <ul class="collection hoverable " style="border: 1px solid lightcoral">
+                <ul class="collection hoverable " style="border: 1px solid #607d8b">
                     <li class="collection-item avatar">
-                      <i class="material-icons circle red">web</i>
-                        <span class="title red-text">URL</span>
-                        <p><a href = "{{link.url}}" target="_blank">{{link | linebreaksbr}} </a>  <button class="btn btn-flat red right waves-effect waves-light white-text" id="btn_url">Show url</button> </p>
-                        <p id="url" style="display: none">{{ link.url }}</p>
+                      <i class="material-icons circle blue-grey">web</i>
+                        <span class="title blue-grey-text">URL</span>
+                        <p><a href = "{{link.url}}" target="_blank">{{link | linebreaksbr}} </a>  <button class="btn btn-flat blue-grey right waves-effect waves-light white-text" id="btn_url">Show url</button> </p>
+                        <p id="url" style="display: none"><a href="{{ link.url }}" target="_blank"> {{ link.url }} </a></p>
                     </li>
                     <li class="collection-item avatar">
-                      <i class="material-icons circle red">description</i>
-                        <span class="title red-text">Description</span>
+                      <i class="material-icons circle blue-grey">description</i>
+                        <span class="title blue-grey-text">Description</span>
                        <p>{{link.description}}</p>
                     </li>
                     <li class="collection-item avatar">
-                      <i class="material-icons circle red">assignment</i>
-                        <span class="title red-text">Tags</span>
+                      <i class="material-icons circle blue-grey">assignment</i>
+                        <span class="title blue-grey-text">Tags</span>
                         <p>
                         {% for tag in link.tags.all %}
                             <div class="chip">
@@ -36,27 +36,31 @@
                         </p>
                     </li>
 
+                {% if request.user.is_authenticated %}
                     <li class="collection-item avatar">
-                        <div>
-                            <strong id="upvote_count">{{upvotes}}</strong>
-                            {% if request.user.is_authenticated %}
-                                    <a class="btn-floating btn-medium waves-effect waves-light green" id = "upvote" link_id = "{{link.id}}">
-                                    <i id = "upvote_icon" class="small material-icons {{upvote_button}}">thumb_up</i></a>
-                            {% endif %}
+
+                    <div class="row">
+                        <div class="col s4 m4 l4">
+                            <span> <sup id="upvotes_count">{{ upvotes }}</sup><sup> upvote(s)</sup></span>
+                            <button class="btn green waves-light waves-effect upvote {{upvote_button}} center" id="upvote_button" link_id = "{{ link.id }}"> &nbsp;&nbsp; Upvote &nbsp;&nbsp;</button>
                         </div>
-                        <div>
-                            <strong id="downvote_count">{{downvotes}}</strong>
-                            {% if request.user.is_authenticated %}
-                                    <a class="btn-floating btn-medium waves-effect waves-light red" id = "downvote" link_id = "{{link.id}}">
-                                    <i id = "downvote_icon" class="small material-icons {{downvote_button}}">thumb_down</i></a>
-                            {% endif %}
-                            </div>
+                        <div class="col s4 m4 l4">
+                            <span> <sup id="downvotes_count">{{ downvotes }} </sup><sup> downvote(s)</sup></span>
+                            <button class="btn red waves-light center  waves-effect downvote {{downvote_button}}" id="downvote_button" link_id = "{{ link.id }}">Downvote</button>
+                        </div>
+                        <div class="col s4 m4 l4">
+                            <span>
+                                <sup>{{link.comment_set.count}} comment(s)</sup>
+                            </span>
+                            <button class="btn blue waves-light center waves-effect" id="comments_tab">Comments</button>
+                        </div>
+                    </div>
                     </li>
+                {% endif %}
 
-
-                    <li class="collection-item avatar">
-                      <i class="material-icons circle red">comment</i>
-                        <span class="title red-text">Comments</span>
+                <li class="collection-item avatar" id="comments" style="display: none">
+                      <i class="material-icons circle blue-grey">comment</i>
+                        <span class="title blue-grey-text">Comments</span>
                         <p class="green-text">{{link.comment_set.count}} comment(s) on this link:</p>
                         <p>
 
@@ -67,22 +71,15 @@
                         </div>
                     {% endfor %}
                         </p>
-                    </li>
 
-                <li class="collection-item avatar">
-                      <i class="material-icons circle red">mode_comment</i>
-                        <span class="title red-text">Write a comment</span>
-                        <p>
-                        <div>
-                    <form method="post" action="/link/{{link.id}}/comment/" role="form">
+                <form method="post" action="/link/{{link.id}}/comment/" role="form">
                         {% csrf_token %}
                         <div class="input-field">
                         {{ comment_form.as_p }}
-                        <button type="submit" class="save btn red waves-effect waves-light">Comment</button>
+                        <button type="submit" class="save btn blue waves-effect waves-light">Comment</button>
+                            </div>
                     </form>
-                    </div>
-                        </p>
-                    </li>
+                </li>
                 </ul>
 
 
@@ -113,33 +110,48 @@
             disp = 1 - disp;
         });
 
-    });
 
-    $('#upvote').click(function(){
+    $('.upvote').click(function(){
     var link_id;
     link_id = $(this).attr("link_id");
     $.get('/link/{{link.id}}/vote/', {type: 'U'}, function(data){
-
-               $('#upvote_count').html(data['upvotes']);
-               $('#downvote_count').html(data['downvotes']);
-               $("#upvote_icon").toggleClass(data['upvote_button']);
-               $("#downvote_icon").toggleClass(data['downvote_button']); 
+               $('#upvotes_count').html(data['upvotes']);
+               $('#downvotes_count').html(data['downvotes']);
+                $(".upvote").toggleClass(data['upvote_button']);
+               $(".downvote").toggleClass(data['downvote_button']);
         });
     });
-
-    $('#downvote').click(function(){
+    $('.downvote').click(function(){
     var link_id;
     link_id = $(this).attr("link_id");
     $.get('/link/{{link.id}}/vote/', {type: 'D'}, function(data){
 
-               $('#downvote_count').html(data['downvotes']);
-               $('#upvote_count').html(data['upvotes']);
-               $("#upvote_icon").toggleClass(data['upvote_button']);
-               $("#downvote_icon").toggleClass(data['downvote_button']); 
+               $('#downvotes_count').html(data['downvotes']);
+               $('#upvotes_count').html(data['upvotes']);
+               $(".upvote").toggleClass(data['upvote_button']);
+               $(".downvote").toggleClass(data['downvote_button']);
         });
     });
 
-    </script>
+    var comments_tab = $('#comments_tab');
+    var comments_open = 0;
+    comments_tab.click(function () {
 
+        if(comments_open == 0)
+        {
+            $('#comments').css({'display' : 'block'});
+            comments_tab.html("Hide Comments");
+        }
+        else
+        {
+            $('#comments').css({'display' : 'none'});
+            comments_tab.html("Comments");
+        }
+        comments_open = 1 - comments_open;
+    });
+
+    });
+
+    </script>
 
 {% endblock %}
