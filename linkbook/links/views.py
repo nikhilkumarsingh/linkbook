@@ -110,13 +110,13 @@ def vote_link(request, id):
                 link.save()
                 upvote_button = vote_color
                 if downvoted:
-                    downvote_button = vote_color
+                    downvote_button = ""
                 else:
                     downvote_button = ""
             else:
                 link.votes.delete(request.user.id)
                 print("hello")
-                upvote_button = vote_color
+                upvote_button = ""
                 downvote_button = ""
             return JsonResponse({'upvotes': link.votes.count(action = UP), 
                 'downvotes': link.votes.count(action = DOWN),
@@ -130,12 +130,12 @@ def vote_link(request, id):
                 link.save()
                 downvote_button = vote_color
                 if upvoted:
-                    upvote_button = vote_color
+                    upvote_button = ""
                 else:
                     upvote_button = ""
             else:
                 link.votes.delete(request.user.id)
-                downvote_button = vote_color
+                downvote_button = ""
                 upvote_button = ""
             return JsonResponse({'upvotes': link.votes.count(action = UP),
                 'downvotes': link.votes.count(action = DOWN),

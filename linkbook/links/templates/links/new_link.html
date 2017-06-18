@@ -5,6 +5,9 @@
 {% block title %}New Link{% endblock %}
 
 {% block body %}
+    <style>
+
+    </style>
 
     <div class="container">
         <div class="row">
@@ -14,8 +17,9 @@
                 <form method="post" action="{% url 'create_link' %}" role="form">
                 {% csrf_token %}
                     {% for field in form.visible_fields %}
-                    <div class=" input-field">
+                    <div class="input-field">
                         {{ field }}
+
                         <label  >{{ field.label }} </label>
                         {% if field.help_text %}
                             <span>{{ field.help_text|safe }}</span>
@@ -38,6 +42,13 @@
     $(function () {
          $('#description').trigger('autoresize');
          $('.chips').material_chip();
+
+         var Select = $('#Books');
+         console.log(Select.parent().parent().parent().parent().parent().attr('class'))
+         Select =  Select.parent();
+        Select.addClass('hidden');
+
+
     })
     </script>
 {% endblock body %}
