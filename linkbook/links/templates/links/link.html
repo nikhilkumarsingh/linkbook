@@ -5,23 +5,52 @@
 {% block title %}{{link}}{% endblock %}
 
 {% block body %}
+    <style>
 
+    .btn
+    {
+        width: 100%;
+        margin: 0px;
+        padding: 0px;
+    }
+    p
+    {
+        margin: 0px;
+        padding: 0px;
+    }
 
+    </style>
     <div class="container">
         <div class="row">
             <div class="col s1 m3 l3"></div>
             <div class="col s10 m6 l6">
                 <ul class="collection hoverable " style="border: 1px solid #607d8b">
                     <li class="collection-item avatar">
-                      <i class="material-icons circle blue-grey">web</i>
-                        <span class="title blue-grey-text">URL</span>
-                        <p><a href = "{{link.url}}" target="_blank">{{link | linebreaksbr}} </a>  <button class="btn btn-flat blue-grey right waves-effect waves-light white-text" id="btn_url">Show url</button> </p>
-                        <p id="url" style="display: none"><a href="{{ link.url }}" target="_blank"> {{ link.url }} </a></p>
-                    </li>
-                    <li class="collection-item avatar">
-                      <i class="material-icons circle blue-grey">description</i>
-                        <span class="title blue-grey-text">Description</span>
-                       <p>{{link.description}}</p>
+                      <div class="row">
+                        <img class="circle responsive-img" src="https://thebenclark.files.wordpress.com/2014/03/facebook-default-no-profile-pic.jpg" title="{{ link.user }}">
+                        &nbsp; &nbsp;
+                        <span class="title blue-grey-text ">{{ link.user }} <sub>{{ link.date }}</sub></span> <br><span class="title blue-grey-text"><sup>&nbsp; &nbsp;&nbsp; Last updated : {{ link.last_updated }}</sup>  </span>
+                      </div>
+                        <div class="row" style="margin: 0px">
+                            <div class="col s6 m6 l6">
+                                <i class="material-icons circle blue-grey">description</i>
+                                <span><a href = "{{link.url}}" target="_blank" class="title center">{{link.title | linebreaksbr}}</a></span>
+                                <hr>
+                       <span class="title blue-grey-text">{{link.description}}</span>
+                                <span id="url" style="display: none"><a href="{{ link.url }}" target="_blank"> {{ link.url }} </a></span>
+                            </div>
+                            <div class="col s6 m6 l6">
+                                <div class="row">
+                                    <br>
+                                    <div class="col s12 m6 l6">
+                                        <span> <button class="btn btn-block left small blue-grey waves-effect waves-light white-text" id="btn_url">URL</button> </span>
+                                    </div>
+                                    <div class="col s12 m6 l6">
+                                <span><a class="btn blue-grey small right btn-block  waves-effect waves-light white-text" href="{{ link.url }}" target="_blank">Visit Link</a></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </li>
                     <li class="collection-item avatar">
                       <i class="material-icons circle blue-grey">assignment</i>
@@ -108,8 +137,6 @@
             }
             disp = 1 - disp;
         });
-
-
     $('.upvote').click(function(){
     var link_id;
     link_id = $(this).attr("link_id");
@@ -151,6 +178,7 @@
                     $('.downvote').addClass('btn-flat lighten-5');
                 }
         });
+
     });
 
     var comments_tab = $('#comments_tab');
@@ -168,7 +196,8 @@
             comments_tab.html("Comments");
         }
         comments_open = 1 - comments_open;
-    });
+        });
+
 
     });
 

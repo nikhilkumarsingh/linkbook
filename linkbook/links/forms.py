@@ -4,6 +4,7 @@ from taggit.forms import *
 from linkbook.links.models import Link, Book, Comment
 
 
+
 class BookForm(forms.Form):
 
     title = forms.CharField(
@@ -19,7 +20,8 @@ class LinkForm(forms.Form):
     def __init__(self, user, *args, **kwargs):
         super(LinkForm, self).__init__(*args, **kwargs)
         self.fields['books'].queryset = Book.objects.filter(user = user)
-    
+    print "Hello"
+    print Book.objects.all()
     url = forms.URLField(
         widget = forms.TextInput(attrs = {'class': ''}),
         max_length = 255)
@@ -33,8 +35,7 @@ class LinkForm(forms.Form):
     books = forms.ModelMultipleChoiceField(
         required = False,
         queryset = Book.objects.all(),
-        widget = forms.SelectMultiple(attrs = {'id' : 'Books'}),
-
+        widget = forms.SelectMultiple(attrs = {'class' : ''}),
     )
     '''
     class Meta:
