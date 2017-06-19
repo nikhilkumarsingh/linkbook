@@ -52,19 +52,26 @@
                             </div>
                         </div>
                     </li>
-
                     <!-- Open Graph data -->
-                    {% if show_og %}
-                    <li>
-                        <img src="{{og.image}}" height="{{og.image_height}}" width="{{og.image_width}}">
-                        <strong>{{og.site_name}}</strong>
-                        <p>{{og.title}}</p>
-                        <p>{{og.description}}</p>
+                    {% if show_og and og.title != None %}
+                    <li class="collection-item avatar " style="padding: 4px">
+                        <div class="card hoverable horizontal">
+                            <div class="card-image" style="margin: 4px;" id="card_image_div">
+                                <img src="{{og.image}}" class="responsive-image" height={{ og.image_height}} width={{ og.image_width }} id="card_image">
+                            </div>
+
+                            <div class="card-stacked">
+                             {%if og.title != None %}
+                                <div class="card-content" style="padding: 2px">
+                                 <span><span style="font-weight: bolder">{{ og.title }}</span></span>
+                                <p style="font-size: 80%">{{ og.description }}</p>
+                                </div>
+                                {% endif %}
+                        </div>
+                        </div>
                     </li>
                     {% endif %}
                     <!-- End of open graph data -->
-
-
                     <li class="collection-item avatar">
                       <i class="material-icons circle blue-grey">assignment</i>
                         <span class="title blue-grey-text">Tags</span>
@@ -122,13 +129,10 @@
                     </form>
                 </li>
                 </ul>
-
-
             </div>
             <div class="col s1 m3 l3"></div>
         </div>
     </div>
-
     <script>
 
     $(function () {
@@ -212,6 +216,13 @@
         });
 
 
+
+    });
+
+    $('img').on('error', function () {
+
+        console.log("Hello");
+        $('#card_image_div').css({'display' : 'none'});
     });
 
     </script>
