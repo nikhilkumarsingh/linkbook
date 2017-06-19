@@ -3,11 +3,12 @@ from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
+from django.db.models import Count
 
 from linkbook.links.forms import LinkForm, BookForm, CommentForm
 from linkbook.links.models import Link, Book, Comment
 
-from taggit.models import Tag
+from taggit.models import Tag, TaggedItem
 
 UP = 0
 DOWN = 1
@@ -196,3 +197,9 @@ def edit_book(request, id):
         form = BookForm(initial = initial_dict)
         return render(request, 'links/edit_book.html', 
             {'form': form, 'book':old_book, 'color' : 'red'})
+
+@login_required
+def view_tag(request, id):
+    tag_obj = get_object_or_404(Tag, id = id)
+    tagged = Link.objects.filter(tags__name = tag_obj)
+    return render(request, "links/tags.html/", {'tag': tagged, 'tagname' : tag_obj})
