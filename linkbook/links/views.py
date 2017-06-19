@@ -12,7 +12,7 @@ from .PyOpenGraph import PyOpenGraph
 
 UP = 0
 DOWN = 1
-vote_color = "btn-flat lighten-5"
+vote_color = "lighten-5"
 
 
 def link(request, id):
