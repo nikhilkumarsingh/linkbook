@@ -8,6 +8,7 @@ from linkbook.links.forms import LinkForm, BookForm, CommentForm
 from linkbook.links.models import Link, Book, Comment
 
 from taggit.models import Tag
+from .PyOpenGraph import PyOpenGraph
 
 UP = 0
 DOWN = 1
@@ -22,18 +23,34 @@ def link(request, id):
     upvoted = link.votes.exists(request.user.id, action = UP)
     downvoted = link.votes.exists(request.user.id, action = DOWN)
 
+    # open graph data
+    show_og = True
+    og = PyOpenGraph(link.url)
+    if not og.is_valid:
+        show_og = False
+    elif og.image and og.image_height and og.image_width:
+        ratio = int(og.image_height) / int(og.image_width)
+        og.image_width = 150
+        og.image_height = 150*ratio
+    else:
+        og.image_width = 150
+        og.image_height = 150
+
+
+    # upvote button config
     if not upvoted:
         upvote_button = ""
     else:
         upvote_button = vote_color
 
+    # downvote button config
     if not downvoted:
         downvote_button = ""
     else:
         downvote_button = vote_color
 
     return render(request, 'links/link.html', 
-        {'link': link, 'comment_form': comment_form, 
+        {'link': link, 'comment_form': comment_form, 'og': og, 'show_og': show_og,
         'upvotes': upvotes, 'downvotes': downvotes,
         'upvote_button': upvote_button, 'downvote_button': downvote_button})
 
@@ -60,8 +77,7 @@ def create_link(request):
                 link.tags.add(tag)
             link.books = form.cleaned_data.get('books')
             link.save()
-            print("Done")
-            return redirect('/')
+            return redirect('/link/{}/'.format(link.id))
     else:
         form = LinkForm(request.user)
         return render(request, 'links/new_link.html', {'form': form})
@@ -90,7 +106,6 @@ def edit_link(request, id):
                    'description': old_link.description,
                    'tags': ", ".join(tag.name for tag in old_link.tags.all()),
                    'books': old_link.books.all()}
-        print(old_link.description)
         form = LinkForm(request.user, initial = initial_dict)
         return render(request, 'links/edit_link.html', 
             {'form': form, 'link':old_link})
@@ -109,13 +124,10 @@ def vote_link(request, id):
                 link.votes.up(request.user.id)
                 link.save()
                 upvote_button = vote_color
-                if downvoted:
-                    downvote_button = ""
-                else:
-                    downvote_button = ""
+                downvote_button = ""
             else:
                 link.votes.delete(request.user.id)
-                print("hello")
+                link.save()
                 upvote_button = ""
                 downvote_button = ""
             return JsonResponse({'upvotes': link.votes.count(action = UP), 
@@ -129,12 +141,10 @@ def vote_link(request, id):
                 link.votes.down(request.user.id)
                 link.save()
                 downvote_button = vote_color
-                if upvoted:
-                    upvote_button = ""
-                else:
-                    upvote_button = ""
+                upvote_button = ""
             else:
                 link.votes.delete(request.user.id)
+                link.save()
                 downvote_button = ""
                 upvote_button = ""
             return JsonResponse({'upvotes': link.votes.count(action = UP),

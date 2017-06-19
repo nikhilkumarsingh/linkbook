@@ -52,6 +52,19 @@
                             </div>
                         </div>
                     </li>
+
+                    <!-- Open Graph data -->
+                    {% if show_og %}
+                    <li>
+                        <img src="{{og.image}}" height="{{og.image_height}}" width="{{og.image_width}}">
+                        <strong>{{og.site_name}}</strong>
+                        <p>{{og.title}}</p>
+                        <p>{{og.description}}</p>
+                    </li>
+                    {% endif %}
+                    <!-- End of open graph data -->
+
+
                     <li class="collection-item avatar">
                       <i class="material-icons circle blue-grey">assignment</i>
                         <span class="title blue-grey-text">Tags</span>
