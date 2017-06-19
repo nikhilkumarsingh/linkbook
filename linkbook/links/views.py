@@ -7,8 +7,7 @@ from django.template.loader import render_to_string
 from linkbook.links.forms import LinkForm, BookForm, CommentForm
 from linkbook.links.models import Link, Book, Comment
 
-from taggit.models import Tag, TaggedItem
-
+from taggit.models import Tag
 UP = 0
 DOWN = 1
 vote_color = "btn-flat lighten-5"
