@@ -3,7 +3,6 @@ from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
-from django.db.models import Count
 
 from linkbook.links.forms import LinkForm, BookForm, CommentForm
 from linkbook.links.models import Link, Book, Comment
