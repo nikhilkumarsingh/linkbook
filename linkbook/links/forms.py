@@ -20,8 +20,7 @@ class LinkForm(forms.Form):
     def __init__(self, user, *args, **kwargs):
         super(LinkForm, self).__init__(*args, **kwargs)
         self.fields['books'].queryset = Book.objects.filter(user = user)
-    print "Hello"
-    print Book.objects.all()
+
     url = forms.URLField(
         widget = forms.TextInput(attrs = {'class': ''}),
         max_length = 255)
@@ -37,15 +36,7 @@ class LinkForm(forms.Form):
         queryset = Book.objects.all(),
         widget = forms.SelectMultiple(attrs = {'class' : ''}),
     )
-    '''
-    class Meta:
-        model = Link
-        fields = ['url', 'title', 'description', 'tags', 'books']
-        widgets = {
-            'description': forms.Textarea(),
-            'books': forms.CheckboxSelectMultiple()
-        }
-    '''
+ 
 
 class CommentForm(forms.ModelForm):
 
