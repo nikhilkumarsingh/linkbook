@@ -208,8 +208,7 @@ def edit_book(request, id):
             {'form': form, 'book':old_book, 'color' : 'red'})
 
 @login_required
-def view_tag(request, id):
-    tag_obj = get_object_or_404(Tag, id = id)
-    tagged = Link.objects.filter(tags__name = tag_obj)
-    return render(request, "links/tags.html/", {'tag': tagged, 'tagname' : tag_obj})
+def view_tag(request, tag_name):
+    tagged = Link.objects.filter(tags__name = tag_name)
+    return render(request, "links/tags.html/", {'tag': tagged, 'tagname' : tag_name})
 
