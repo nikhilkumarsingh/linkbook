@@ -169,7 +169,7 @@ def create_book(request):
         return render(request, 'links/new_book.html', {'form': form})
 
 @login_required
-def view_books(request):
+def view_books(request, id):
     user_records = Book.objects.filter(user = request.user)
     return render(request, 'links/view_books.html', {'view_books':user_records})
 

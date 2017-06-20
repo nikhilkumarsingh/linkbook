@@ -28,7 +28,7 @@ urlpatterns = [
 
     url(r'^tags/(?P<tag_name>[-\w]+)/$', linkbook_link_views.view_tag, name='view_tag'),
 
-    url(r'^profile/$', linkbook_link_views.view_books, name='user_books'),
+    url(r'^(?P<id>\d+)/books/$', linkbook_link_views.view_books, name='user_books'),
 
 	url(r'^$', linkbook_core_views.index, name = 'index'),
 ]
