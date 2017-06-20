@@ -26,8 +26,6 @@ urlpatterns = [
     url(r'^book/(?P<id>\d+)/edit/$', linkbook_link_views.edit_book, name='edit_book'),
     url(r'^book/new/$', linkbook_link_views.create_book, name = 'create_book'),
 
-    url(r'^tags/(?P<id>\d+)/$', linkbook_link_views.view_tag, name='tag_search'),
-
     url(r'^profile/$', linkbook_link_views.view_books, name='user_books'),
 
 	url(r'^$', linkbook_core_views.index, name = 'index'),
