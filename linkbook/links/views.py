@@ -211,4 +211,3 @@ def edit_book(request, id):
 def view_tag(request, tag_name):
     tagged = Link.objects.filter(tags__name = tag_name)
     return render(request, "links/tags.html/", {'tag': tagged, 'tagname' : tag_name})
-
