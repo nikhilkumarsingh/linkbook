@@ -8,17 +8,16 @@
     <div class = "container">
 
     <div class="row">
-        <h3 class="center blue-grey-text">Book</h3>
+        <h3 class="center blue-grey-text">Links with tag '{{tagname}}'</h3>
     </div>
-    {% for link in book %}
+    {% for link in tag%}
         <div class="row">
             <div class="col s1 l4 m4"></div>
             <div class="col s10 m4 l4">
                 <div class="card horizontal hoverable white-text blue-grey lighten-1">
                   <div class="card-stacked">
-                      <div class="card_link" id="{{ link.id }}"  style="cursor: pointer;">
                       <div class="card-title center"><h5>{{link.title}}</h5></div>
-                      <div class="card-content" id="{{ link.id }}">
+                      <div class="card-content" id="{{ link.id }}" style="cursor: pointer;">
                       <p>{{ link.description }}</p>
                       <p>Tags:
                         {% for tag in link.tags.all %}
@@ -29,7 +28,6 @@
                       </p>
                       <p>{{link.comment_set.count}} comment(s)</p>
                     </div>
-                      </div>
                     <div class="card-action">
                       <a href="{{link.url}}" target="_blank">Visit link</a>
                       {% if request.user == link.user %}
@@ -50,12 +48,14 @@
 
         $(function () {
 
-            var cards = $('.card_link');
+            var cards = $('.card-content');
 
             cards.click(function () {
+
                 var id = this.id;
                 var url = '/link/' + id;
                 window.location.href = url;
+
             });
 
         });
