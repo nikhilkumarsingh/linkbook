@@ -56,7 +56,7 @@ def link(request, id):
 
 
 def book(request, id):
-    book = get_object_or_404(Book, id = id)
+    book = get_object_or_404(Book, id=id)
     links = book.link_set.all()
     return render(request, 'links/book.html', {'book': links})
 
@@ -169,9 +169,16 @@ def create_book(request):
         return render(request, 'links/new_book.html', {'form': form})
 
 @login_required
-def view_books(request, id):
-    user_records = Book.objects.filter(user = request.user)
-    return render(request, 'links/view_books.html', {'view_books':user_records})
+def username_slugs(request, username):
+    action = request.GET.get('show', None)
+    #View all books by a user
+    if action == 'books':
+        user_records = Book.objects.filter(user = request.user)
+        return render(request, 'links/view_books.html', {'view_books':user_records})
+    #View all links by a user
+    elif action == 'links':
+        user_links = Link.objects.filter(user = request.user)
+        return render(request, 'links/view_links.html', {'view_links':user_links})
 
 
 @login_required
