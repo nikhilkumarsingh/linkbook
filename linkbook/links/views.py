@@ -206,3 +206,8 @@ def edit_book(request, id):
         form = BookForm(initial = initial_dict)
         return render(request, 'links/edit_book.html', 
             {'form': form, 'book':old_book, 'color' : 'red'})
+
+@login_required
+def view_tag(request, tag_name):
+    tagged = Link.objects.filter(tags__name = tag_name)
+    return render(request, "links/tags.html/", {'tag': tagged, 'tagname' : tag_name})
