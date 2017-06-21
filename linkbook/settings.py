@@ -24,9 +24,11 @@ INSTALLED_APPS = [
     # http://whitenoise.evans.io/en/stable/django.html#using-whitenoise-in-development
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
+    
     'taggit',
     'vote',
-
+    'social_django',
+    
     'linkbook.core',
     'linkbook.authentication',
     'linkbook.links',
@@ -41,7 +43,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
+
 
 ROOT_URLCONF = 'linkbook.urls'
 
@@ -57,16 +62,18 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect', 
             ],
             'debug': DEBUG,
         },
     },
 ]
 
+
 WSGI_APPLICATION = 'linkbook.wsgi.application'
 
-
-# Database
 
 DATABASES = {
     'default': {
@@ -74,6 +81,16 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.github.GithubOAuth2',
+    'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.facebook.FacebookOAuth2',
+
+    'django.contrib.auth.backends.ModelBackend',
+)
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -89,6 +106,19 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+# Github social auth
+SOCIAL_AUTH_GITHUB_KEY = "1a25010838abc0d2aa3c"
+SOCIAL_AUTH_GITHUB_SECRET = "1b058b21308b8ac5e33f9db22f89c0ad095e3e48"
+
+# Twitter social auth
+SOCIAL_AUTH_TWITTER_KEY = "6kvYXDxbq9ueiYmIg6YK0AXLZ"
+SOCIAL_AUTH_TWITTER_SECRET = "HDUfwg8YOrbkodYuja6dMP7NK81sPJoqsetUPorR1sNRi8iTo7"
+
+# Facebook social auth
+SOCIAL_AUTH_FACEBOOK_KEY = "1493976870673154"
+SOCIAL_AUTH_FACEBOOK_SECRET = "251e785cae01c4b70558f396a220530f"
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
@@ -111,7 +141,6 @@ ALLOWED_HOSTS = ['*']
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
-
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 STATIC_URL = '/static/'
 
@@ -124,5 +153,6 @@ STATICFILES_DIRS = [
 # https://warehouse.python.org/project/whitenoise/
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'
 LOGIN_REDIRECT_URL = '/'

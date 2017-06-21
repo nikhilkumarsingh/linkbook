@@ -10,11 +10,12 @@ from linkbook.links import views as linkbook_link_views
 
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
+    url(r'^administrator/', admin.site.urls),
     url(r'^login', auth_views.login, {'template_name': 'authentication/login.html',
     	'redirect_authenticated_user': True}, name = 'login'),
     url(r'^logout', auth_views.logout, {'next_page': '/'}, name = 'logout'),
     url(r'^signup/$', linkbook_auth_views.signup, name = 'signup'),
+    url(r'^oauth/', include('social_django.urls', namespace='social')),
 
     url(r'^link/(?P<id>\d+)/$', linkbook_link_views.link, name='link'),
     url(r'^link/new/$', linkbook_link_views.create_link, name = 'create_link'),
