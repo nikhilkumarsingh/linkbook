@@ -15,6 +15,17 @@ DOWN = 1
 vote_color = "lighten-5"
 
 
+def get_profile_pic(user):
+    try:
+        social = user.social_auth.get()
+        provider = social.provider
+        if provider == 'facebook':
+            image = "https://graph.facebook.com/{0}/picture?type=square".format(user.extra_data['id'])
+            return image
+    except:
+        return None
+
+
 def link(request, id):
     link = get_object_or_404(Link, id = id)
     comment_form = CommentForm()

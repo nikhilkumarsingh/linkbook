@@ -27,7 +27,22 @@
                 <ul class="collection hoverable " style="border: 1px solid #607d8b">
                     <li class="collection-item avatar">
                       <div class="row">
-                        <img class="circle responsive-img" src="https://thebenclark.files.wordpress.com/2014/03/facebook-default-no-profile-pic.jpg" title="{{ link.user }}">
+                        <!-- user avatar -->
+                        {% if request.user.social_auth.get.provider == "facebook" %}
+                            <img height=40px width=40px src="https://graph.facebook.com/{{request.user.social_auth.get.uid}}/picture?type=square" />
+                        
+                        {% elif request.user.social_auth.get.provider == "google-oauth2" %}
+                            <script src="https://www.avatarapi.com/js.aspx?email={{request.user.social_auth.get.uid}}&size=40"></script>
+
+                        {% elif request.user.social_auth.get.provider == "github" %}
+                             <img height=40px width=40px src="https://avatars.githubusercontent.com/u/{{request.user.social_auth.get.uid}}" />
+                            
+                        {% elif request.user.social_auth.get.provider == "twitter" %}
+                             <img height=40px width=40px src="https://twitter.com/{{request.user.social_auth.get.access_token.screen_name}}/profile_image?size=normal" />
+
+                        {% else %}
+                             <img height=40px width=40px src="https://thebenclark.files.wordpress.com/2014/03/facebook-default-no-profile-pic.jpg" />
+                        {% endif %}
                         &nbsp; &nbsp;
                         <span class="title blue-grey-text ">{{ link.user }} <sub>{{ link.date }}</sub></span> <br><span class="title blue-grey-text"><sup>&nbsp; &nbsp;&nbsp; Last updated : {{ link.last_updated }}</sup>  </span>
                       </div>

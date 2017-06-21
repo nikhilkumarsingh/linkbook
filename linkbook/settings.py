@@ -108,6 +108,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
 # Github social auth
 SOCIAL_AUTH_GITHUB_KEY = "1a25010838abc0d2aa3c"
 SOCIAL_AUTH_GITHUB_SECRET = "1b058b21308b8ac5e33f9db22f89c0ad095e3e48"
@@ -123,7 +124,6 @@ SOCIAL_AUTH_FACEBOOK_SECRET = "251e785cae01c4b70558f396a220530f"
 # Google social auth
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = "17910751855-hmjoau4i5iniajdhddmscg0i1udpsd20.apps.googleusercontent.com"
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = "IWohMzjfbDipogkgfcU6avU1"
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
