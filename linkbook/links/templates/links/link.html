@@ -29,26 +29,26 @@
                       <div class="row">
                         <!-- user avatar -->
                         {% if request.user.social_auth.get.provider == "facebook" %}
-                            <img height=40px width=40px src="https://graph.facebook.com/{{request.user.social_auth.get.uid}}/picture?type=square" />
+                            <img class = "responsive-img circle left" src="https://graph.facebook.com/{{request.user.social_auth.get.uid}}/picture?type=square" />
                         
                         {% elif request.user.social_auth.get.provider == "google-oauth2" %}
                             <script src="https://www.avatarapi.com/js.aspx?email={{request.user.social_auth.get.uid}}&size=40"></script>
 
                         {% elif request.user.social_auth.get.provider == "github" %}
-                             <img height=40px width=40px src="https://avatars.githubusercontent.com/u/{{request.user.social_auth.get.uid}}" />
+                             <img class = "responsive-img circle left" src="https://avatars.githubusercontent.com/u/{{request.user.social_auth.get.uid}}" />
                             
                         {% elif request.user.social_auth.get.provider == "twitter" %}
-                             <img height=40px width=40px src="https://twitter.com/{{request.user.social_auth.get.access_token.screen_name}}/profile_image?size=normal" />
+                             <img class = "responsive-img circle left" src="https://twitter.com/{{request.user.social_auth.get.access_token.screen_name}}/profile_image?size=normal" />
 
                         {% else %}
-                             <img height=40px width=40px src="https://thebenclark.files.wordpress.com/2014/03/facebook-default-no-profile-pic.jpg" />
+                             <img class = "responsive-img circle left" src="https://thebenclark.files.wordpress.com/2014/03/facebook-default-no-profile-pic.jpg" />
                         {% endif %}
                         &nbsp; &nbsp;
                         <span class="title blue-grey-text ">{{ link.user }} <sub>{{ link.date }}</sub></span> <br><span class="title blue-grey-text"><sup>&nbsp; &nbsp;&nbsp; Last updated : {{ link.last_updated }}</sup>  </span>
                       </div>
-                        <div class="row" style="margin: 0px">
+                        <div class="row" style="margin: 0px; position: relative">
                             <div class="col s6 m6 l6">
-                                <i class="material-icons circle blue-grey">description</i>
+
                                 <span><a href = "{{link.url}}" target="_blank" class="title center">{{link.title | linebreaksbr}}</a></span>
                                 <hr>
                        <span class="title blue-grey-text">{{link.description}}</span>
@@ -58,26 +58,26 @@
                                 <div class="row">
                                     <br>
                                     <div class="col s12 m6 l6">
-                                        <span> <a class="waves-effect waves-light btn blue-grey white-text" href="#modal1">URL</a>
-                                        <!-- Modal Structure -->
-                                          <div id="modal1" class="modal">
-                                            <div class="modal-content">
-                                                <div class="row">
-                                                    <div class="col s12 m8 l8">
-                                                        <div class="title"><a id="link_url" href="{{ link.url }}" target="_blank"> {{ link.url }}</a>  </div>
-                                                    </div>
-                                                    <div class="col s12 m4 l4">
-                                                       <button title="copy to clipboard" class="btn black white-text" id="copy"> <i class="material-icons black" style="color: white">content_copy</i></button>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                          </div> </span>
+                                        <span> <button class="waves-effect waves-light btn blue-grey white-text" id="b">URL</button></span>
 
                                     </div>
-
                                     <div class="col s12 m6 l6">
                                 <span><a class="btn blue-grey small right btn-block  waves-effect waves-light white-text" href="{{ link.url }}" target="_blank">Visit Link</a></span>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col s12 m12 l12" id="clone_div" style="z-index: 5;">
+                                <div class="row">
+                                    <div>
+                                        <div class="row" style="border : 1px solid rgb(209, 213, 218); padding: 15px; z-index: 100; background-color: white; position:absolute; ">
+                                            <div class="col s10 m10 l10 valign-wrapper">
+                                                <span style="border: 1px solid rgb(209, 213, 218); border-radius: 30px;  padding: 5px" id="link_url">{{ link.url }}</span>
+                                            </div>
+                                            <div class="col s2 l2 m2 valign-wrapper">
+                                                <button title="copy to clipboard" class="btn green white-text" id="copy"> <i class="material-icons green" style="color: white">content_copy</i></button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -90,7 +90,6 @@
                             <div class="card-image" style="margin: 4px;" id="card_image_div">
                                 <img src="{{og.image}}" class="responsive-image" height={{ og.image_height}} width={{ og.image_width }} id="card_image">
                             </div>
-
                             <div class="card-stacked">
                              {%if og.title != None %}
                                 <div class="card-content" style="padding: 2px">
@@ -168,23 +167,26 @@
 
     $(function () {
 
-        var b = $('#btn_url');
+        var b = $('#b');
         var disp = false;
         var URL = $('#url');
-        b.click(function () {
-
-            if(disp)
-            {
-                URL.css({'display' : 'none'});
-                b.html("Show URL");
-            }
-            else
-            {
-                URL.css({'display' : 'block'});
-                b.html("Hide URL");
-            }
-            disp = 1 - disp;
+        var clone = $('#clone_div');
+       // clone.hide();
+        clone.click(function(e) { //button click class name is myDiv
+            e.stopPropagation();
         });
+
+        b.click(function() {
+                clone.show();
+                return false;
+
+        });
+        $(document).click(function(){
+                clone.hide(); //hide the button
+        });
+
+
+
     $('.upvote_upper_button').click(function(){
     var link_id;
     link_id = $(this).attr("link_id");
