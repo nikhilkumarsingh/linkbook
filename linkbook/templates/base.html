@@ -14,20 +14,11 @@
 	</title>
     <script src = "/static/materialize/js/jquery.js"></script>
     <script src = '/static/materialize/js/materialize.js'> </script>
+    <link type="text/css" rel="stylesheet" href="/static/materialize/css/basic.css"  media="screen,projection"/>
 	<!-- <link type="text/css" rel="stylesheet" href="/static/materialize/css/Color_theme.css" media="screen,projection"> -->
     {% block head %}
 	{% endblock %}
 </head>
-<style>
-    .row
-    {
-        width: 100%;
-    }
-    .container
-    {
-        width: 100%;
-    }
-</style>
 <body>
     <nav class=" white-text" style="background-color: #26a69a">
         <div class="nav-wrapper">
@@ -41,11 +32,16 @@
                 <li><a class="left" href="#">Project</a></li>
             </ul>
             <ul class="hide-on-med-and-down right">
-                {% if request.user.social_auth.get.provider == "facebook" %}
+
+
+                {% if not request.user.is_authenticated %}
+                    <li ><a href="/signup" class="right">Sign Up</a></li>
+                {% else %}
+                    {% if request.user.social_auth.get.provider == "facebook" %}
                     <li>
 
-                    <img class="responsive-img circle" height = "40px" width="40px" style="margin: 12px"  src="https://graph.facebook.com/{{request.user.social_auth.get.uid}}/picture?type=square" /></li>
-                
+                    <img class="responsive-img circle" height = "40px" width="40px" style="margin: 25%; margin-left: -10%" src="https://graph.facebook.com/{{request.user.social_auth.get.uid}}/picture?type=square" /></li>
+
                 {% elif request.user.social_auth.get.provider == "google-oauth2" %}
                     <li>
                     <script src="https://www.avatarapi.com/js.aspx?email={{request.user.social_auth.get.uid}}&size=40"></script>
@@ -53,23 +49,18 @@
 
                 {% elif request.user.social_auth.get.provider == "github" %}
                     <li>
-                     <img class="responsive-img circle" style="margin: 12px" height = "40px" width="40px"  src="https://avatars.githubusercontent.com/u/{{request.user.social_auth.get.uid}}" />
+                     <img class="responsive-img circle"  height = "40px" width="40px" style="margin: 25%; margin-left: -10%"  src="https://avatars.githubusercontent.com/u/{{request.user.social_auth.get.uid}}" />
                     </li>
 
                 {% elif request.user.social_auth.get.provider == "twitter" %}
                     <li>
-                     <img class="responsive-img circle" style="margin: 12px" height = "40px" width="40px" src="https://twitter.com/{{request.user.social_auth.get.access_token.screen_name}}/profile_image?size=normal" />
+                     <img class="responsive-img circle"  height = "40px" width="40px" style="margin: 25%; margin-left: -10%" src="https://twitter.com/{{request.user.social_auth.get.access_token.screen_name}}/profile_image?size=normal" />
                     </li>
                 {% else %}
                     <li>
-                     <img class="responsive-img circle" style="margin: 12px" height = "40px"  width="40px" src="https://thebenclark.files.wordpress.com/2014/03/facebook-default-no-profile-pic.jpg" />
+                     <img class="responsive-img circle" height="40px" width="40px" style="margin: 25%; margin-left: -10%" src="https://thebenclark.files.wordpress.com/2014/03/facebook-default-no-profile-pic.jpg" />
                     </li>
                 {% endif %}
-
-                {% if not request.user.is_authenticated %}
-                    <li ><a href="/login" class="right"> Login</a></li>
-                    <li ><a href="/signup" class="right">Sign Up</a></li>
-                {% else %}
                     <li>Hi {{request.user.first_name}}!</li>
                     <li><a href="/profile" class="right">Profile</a></li>
                     <li><a href="/logout" class="right">Logout</a></li>
@@ -82,7 +73,6 @@
                 <li><a  href="#">Project</a></li>
                 {%  if not request.user.is_authenticated %}
                 <li><a href="signup" > Sign Up</a></li>
-                <li><a href="login">Login</a></li>
                 {% else %}
                     <li><a href="/profile" >Profile</a></li>
                 <li><a href="/logout">Logout</a></li>
@@ -93,7 +83,6 @@
 	{% block body %}
 
     {% endblock body %}
-
     <script>
 
         $(function () {
