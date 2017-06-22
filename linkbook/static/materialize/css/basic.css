@@ -1,0 +1,35 @@
+.row
+    {
+        width: 100%;
+
+    }
+    .container
+    {
+        width: 100%;
+
+    }
+
+    .row > h1
+    {
+        margin-left: 15%;
+    }
+    .row > h2
+    {
+        margin-left: 15%;
+    }
+    .row > h3
+    {
+        margin-left: 15%;
+    }
+    .row > h4
+    {
+        margin-left: 15%;
+    }
+    .row > h5
+    {
+        margin-left: 15%;
+    }
+    .row > h6
+    {
+        margin-left: 15%;
+    }

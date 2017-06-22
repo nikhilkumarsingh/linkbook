@@ -14,20 +14,11 @@
 	</title>
     <script src = "/static/materialize/js/jquery.js"></script>
     <script src = '/static/materialize/js/materialize.js'> </script>
+    <link type="text/css" rel="stylesheet" href="/static/materialize/css/basic.css"  media="screen,projection"/>
 	<!-- <link type="text/css" rel="stylesheet" href="/static/materialize/css/Color_theme.css" media="screen,projection"> -->
     {% block head %}
 	{% endblock %}
 </head>
-<style>
-    .row
-    {
-        width: 100%;
-    }
-    .container
-    {
-        width: 100%;
-    }
-</style>
 <body>
     <nav class=" white-text" style="background-color: #26a69a">
         <div class="nav-wrapper">
@@ -49,7 +40,7 @@
                     {% if request.user.social_auth.get.provider == "facebook" %}
                     <li>
 
-                    <img class="responsive-img circle" height = "40px" width="40px" style="margin: 12px"  src="https://graph.facebook.com/{{request.user.social_auth.get.uid}}/picture?type=square" /></li>
+                    <img class="responsive-img circle" height = "40px" width="40px" style="margin: 25%; margin-left: -10%" src="https://graph.facebook.com/{{request.user.social_auth.get.uid}}/picture?type=square" /></li>
 
                 {% elif request.user.social_auth.get.provider == "google-oauth2" %}
                     <li>
@@ -58,12 +49,12 @@
 
                 {% elif request.user.social_auth.get.provider == "github" %}
                     <li>
-                     <img class="responsive-img circle" style="margin: 12px" height = "40px" width="40px"  src="https://avatars.githubusercontent.com/u/{{request.user.social_auth.get.uid}}" />
+                     <img class="responsive-img circle"  height = "40px" width="40px" style="margin: 25%; margin-left: -10%"  src="https://avatars.githubusercontent.com/u/{{request.user.social_auth.get.uid}}" />
                     </li>
 
                 {% elif request.user.social_auth.get.provider == "twitter" %}
                     <li>
-                     <img class="responsive-img circle" style="margin: 12px" height = "40px" width="40px" src="https://twitter.com/{{request.user.social_auth.get.access_token.screen_name}}/profile_image?size=normal" />
+                     <img class="responsive-img circle"  height = "40px" width="40px" style="margin: 25%; margin-left: -10%" src="https://twitter.com/{{request.user.social_auth.get.access_token.screen_name}}/profile_image?size=normal" />
                     </li>
                 {% else %}
                     <li>
@@ -92,7 +83,6 @@
 	{% block body %}
 
     {% endblock body %}
-
     <script>
 
         $(function () {
