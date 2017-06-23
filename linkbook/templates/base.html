@@ -37,30 +37,10 @@
                 {% if not request.user.is_authenticated %}
                     <li ><a href="/signup" class="right">Sign Up</a></li>
                 {% else %}
-                    {% if request.user.social_auth.get.provider == "facebook" %}
                     <li>
-
-                    <img class="responsive-img circle" height = "40px" width="40px" style="margin: 25%; margin-left: -10%" src="https://graph.facebook.com/{{request.user.social_auth.get.uid}}/picture?type=square" /></li>
-
-                {% elif request.user.social_auth.get.provider == "google-oauth2" %}
-                    <li>
-                    <script src="https://www.avatarapi.com/js.aspx?email={{request.user.social_auth.get.uid}}&size=40"></script>
+                     <img class="responsive-img circle"  height = "40px" width="40px" style="margin: 25%; margin-left: -10%"  src="{{request.user.profile.pic}}" />
                     </li>
-
-                {% elif request.user.social_auth.get.provider == "github" %}
-                    <li>
-                     <img class="responsive-img circle"  height = "40px" width="40px" style="margin: 25%; margin-left: -10%"  src="https://avatars.githubusercontent.com/u/{{request.user.social_auth.get.uid}}" />
-                    </li>
-
-                {% elif request.user.social_auth.get.provider == "twitter" %}
-                    <li>
-                     <img class="responsive-img circle"  height = "40px" width="40px" style="margin: 25%; margin-left: -10%" src="https://twitter.com/{{request.user.social_auth.get.access_token.screen_name}}/profile_image?size=normal" />
-                    </li>
-                {% else %}
-                    <li>
-                     <img class="responsive-img circle" height="40px" width="40px" style="margin: 25%; margin-left: -10%" src="https://thebenclark.files.wordpress.com/2014/03/facebook-default-no-profile-pic.jpg" />
-                    </li>
-                {% endif %}
+ 
                     <li>Hi {{request.user.first_name}}!</li>
                     <li><a href="/profile" class="right">Profile</a></li>
                     <li><a href="/logout" class="right">Logout</a></li>
