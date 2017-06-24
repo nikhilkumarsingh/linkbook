@@ -17,14 +17,14 @@
                     <div class="col s12 m6 l6">
                         <div class="input-field">
                             <i class="material-icons prefix">open_in_browser</i>
-                            <input type="text" class="input" name="URL" id="URL">
-                            <label for="URL" class="active">URL</label>
+                            <input type="url" class="input validate" name="URL" id="URL" autocomplete="autocomplete" required>
+                            <label for="URL" class="active" data-error="Wrong! Example : https://www.google.co.in." data-success="Correct">URL</label>
                         </div>
                     </div>
                     <div class="col s12 m6 l6">
                         <div class="input-field">
                             <i class="material-icons prefix">title</i>
-                            <input type="text" class="input" name="TITLE" id="TITLE">
+                            <input type="text" class="input" name="TITLE" id="TITLE" autocomplete="autocomplete" required maxlength="25" data-length="25">
                             <label for="TITLE" class="active">Title</label>
                         </div>
                     </div>
@@ -55,7 +55,7 @@
                     <div class=" col s12 m12 l12">
                         <div class="input-field">
                         <i class="material-icons prefix">description</i>
-                        <textarea class="input materialize-textarea" name="DESCRIPTION" id="DESCRIPTION"></textarea>
+                        <textarea class="input materialize-textarea" name="DESCRIPTION" id="DESCRIPTION" maxlength="1000" data-length="1000"></textarea>
                         <label for="DESCRIPTION" class="active">Description</label>
                     </div>
                     </div>
@@ -71,8 +71,11 @@
 
     <script>
     $(function () {
-         $('#description').trigger('autoresize');
+         $('#DESCRIPTION').trigger('autoresize');
          $('.chips').material_chip();
-    })
+
+         $('#TITLE, #DESCRIPTION').characterCounter();
+
+    });
     </script>
 {% endblock body %}

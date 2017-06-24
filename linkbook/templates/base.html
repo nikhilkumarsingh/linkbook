@@ -37,9 +37,8 @@
                 {% if not request.user.is_authenticated %}
                     <li ><a href="/signup" class="right">Sign Up</a></li>
                 {% else %}
-                    <li><a href = "/{{request.user.username}}/">
-                     <img class="responsive-img circle"  height = "40px" width="40px" style="margin: 25%; margin-left: -10%"  src="{{request.user.profile.pic}}" />
-                    </a>
+                    <li>
+                     <img class="responsive-img circle"  height = "40px" width="40px" style="margin: 25%; margin-left: -10%; cursor:pointer;"  src="{{request.user.profile.pic}}" id="userProfilePic">
                     </li>
                     <li><a href="/logout" class="right">Logout</a></li>
                 {% endif %}
@@ -67,6 +66,12 @@
             $(".button-collapse").sideNav();
         });
         $('select').material_select();
+        $('#userProfilePic').click(function () {
+
+            var url = "/" + "{{ request.user.username }}";
+            window.location.href = url;
+
+        });
     </script>
 </body>
 </html>
