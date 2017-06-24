@@ -9,6 +9,7 @@ from linkbook.links.forms import LinkForm, BookForm, CommentForm
 from linkbook.links.models import Link, Book, Comment
 
 from taggit.models import Tag
+from taggit.utils import _parse_tags
 from .PyOpenGraph import PyOpenGraph
 
 UP = 0
@@ -72,9 +73,9 @@ def create_link(request):
         link.title = request.POST.get('TITLE')
         link.description = request.POST.get('DESCRIPTION')
         link.save()
-        tag_list = request.POST.get('TAGS').split(',')
-        for tag in tag_list:
-            link.tags.add(tag.strip())
+        tag_list = request.POST.get('TAGS')
+        for tag in _parse_tags(tag_list):
+            link.tags.add(tag)
         for book_name in request.POST.getlist('BOOKS'):
             link.books.add(Book.objects.get(user = request.user, title = book_name))
         link.save()
@@ -93,9 +94,9 @@ def edit_link(request, id):
         link.url = request.POST.get('URL')
         link.title = request.POST.get('TITLE')
         link.description = request.POST.get('DESCRIPTION')
-        tag_list = request.POST.get('TAGS').split(',')
-        for tag in tag_list:
-            link.tags.add(tag.strip())
+        tag_list = request.POST.get('TAGS')
+        for tag in _parse_tags(tag_list):
+            link.tags.add(tag)
 
         new_book_list = request.POST.getlist('BOOKS')
         for book in books:
