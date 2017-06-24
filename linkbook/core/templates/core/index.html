@@ -8,38 +8,17 @@
     <br><br><br>
 
 {% if request.user.is_authenticated %}
+    <style>
+        .row
+        {
+            margin-bottom: 10px;
+        }
+    </style>
 <a href = "/logout"> Logout</a>
-    <br><a href = "/link/new"> Create new link </a><br/>
+    <br><a href = "#modal3" class="waves-effect waves-light btn">Create new link</a><br/>
+
 
     <a href = "#modal2" class="waves-effect waves-light btn"> Create new book </a><br/>
-
-    <div id="modal2" class="modal">
-
-        <div class="modal-content">
-            <h4 class="center">Create your own book</h4>
-                <form method="post" action="{% url 'create_book' %}" role="form">
-                {% csrf_token %}
-                    <div class="input-field">
-                        <i class="material-icons prefix">title</i>
-                        <input class="input" type="text" id="TITLE" name="TITLE" maxlength="30" data-length="30">
-                        <label for="TITLE">Title</label>
-                    </div>
-                    <div class="input-field">
-                        <div class="input-field">
-                            <i class="material-icons prefix">description</i>
-                            <textarea class="materialize-textarea" type="text" id="DESCRIPTION" name="DESCRIPTION" maxlength="255" data-length="255"></textarea>
-                                        <label for="DESCRIPTION">Description</label>
-                        </div>
-                        </div>
-
-                    <button type="submit" class="btn btn-default">{% trans 'Save' %}</button>
-                    <br><br>
-                </form>
-
-        </div>
-    </div>
-
-
 
 {% else %}
         <link rel="stylesheet" type="text/css" href="/static/materialize/css/override_buttons.css">
