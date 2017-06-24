@@ -27,6 +27,7 @@ def link(request, id):
     # open graph data
     show_og = True
     og = PyOpenGraph(link.url)
+    
     if not og.is_valid:
         show_og = False
     elif og.image and og.image_height and og.image_width:
@@ -75,7 +76,7 @@ def create_link(request):
         for tag in tag_list:
             link.tags.add(tag.strip())
         for book_name in request.POST.getlist('BOOKS'):
-            link.books = Book.objects.filter(user = request.user, title = book_name)
+            link.books.add(Book.objects.get(user = request.user, title = book_name))
         link.save()
         return redirect('/link/{}/'.format(link.id))
     else:

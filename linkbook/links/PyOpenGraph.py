@@ -4,7 +4,10 @@ from html.parser import HTMLParser
 class PyOpenGraph(object):
    
     def __init__(self, url):
-        html = requests.get(url).text
+        try:
+            html = requests.get(url).text
+        except:
+            html = "<html></html>"
         p = PyOpenGraphParser()
         p.feed(html)
         self.url = p.properties['url']
