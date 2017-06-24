@@ -90,7 +90,6 @@ def edit_link(request, id):
     link = get_object_or_404(Link, id = id)
     books = Book.objects.filter(user = request.user)
     if request.method == 'POST':
-        link.user = request.user
         link.url = request.POST.get('URL')
         link.title = request.POST.get('TITLE')
         link.description = request.POST.get('DESCRIPTION')
@@ -156,17 +155,29 @@ def vote_link(request, id):
 @login_required
 def create_book(request):
     if request.method == 'POST':
-        form = BookForm(request.POST)
-        if form.is_valid():
-            book = Book()
-            book.user = request.user
-            book.title = form.cleaned_data.get('title')
-            book.description = form.cleaned_data.get('description')
-            book.save()
-            return redirect('/')
+        book = Book()
+        book.user = request.user
+        book.title = request.POST.get('TITLE')
+        book.description = request.POST.get('DESCRIPTION')
+        book.save()
+        return redirect('/')
     else:
-        form = BookForm()
-        return render(request, 'links/new_book.html', {'form': form})
+        return render(request, 'links/new_book.html')
+
+
+@login_required
+def edit_book(request, id):
+    book = get_object_or_404(Book, id = id)
+    if request.method == 'POST':
+        book.title = request.POST.get('TITLE')
+        book.description = request.POST.get('DESCRIPTION')
+        book.save()
+        return redirect("/book/{}/".format(id))
+    else:
+        return render(request, 'links/edit_book.html', {'book':book})
+
+
+
 
 
 @login_required
@@ -181,26 +192,6 @@ def create_comment(request, id):
             comment.save()
             return redirect('/link/{}'.format(id))
 
-@login_required
-def edit_book(request, id):
-    if request.method == 'POST':
-        form = BoookForm(request.POST)
-        if form.is_valid():
-            book = Book()
-            book.user = request.user
-            book.title = form.cleaned_data.get('title')
-            book.description = form.cleaned_data.get('description')
-            book.save()
-            return redirect("/book/{}/".format(id))
-    else:
-        old_book = get_object_or_404(Book, id = id)
-        initial_dict = {'title': old_book.title,
-                   'description': old_book.description,
-                   }
-        print(old_book.description)
-        form = BookForm(initial = initial_dict)
-        return render(request, 'links/edit_book.html', 
-            {'form': form, 'book':old_book, 'color' : 'red'})
 
 @login_required
 def view_tag(request, tag_name):
