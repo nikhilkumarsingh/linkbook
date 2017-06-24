@@ -11,13 +11,22 @@ def index(request):
 
 def username_slugs(request, username):
     action = request.GET.get('show', None)
-    # view all books by a user
+    user = get_object_or_404(User, username = username)
+
     if action == 'books':
-        user_books = Book.objects.filter(user = get_object_or_404(User, username = username))
-        return render(request, 'links/view_books.html', {'view_books':user_books})
-    # view all links by a user
+        user_books = Book.objects.filter(user = user)
+        return render(request, 'links/view_books.html', 
+            {'user': user, 'view_books':user_books})
+
     elif action == 'links':
-        user_links = Link.objects.filter(user = get_object_or_404(User, username = username))
-        return render(request, 'links/view_links.html', {'view_links':user_links})
+        user_links = Link.objects.filter(user = user)
+        return render(request, 'links/view_links.html', 
+            {'user': user, 'view_links':user_links})
+
     else:
-        pass
+        link_count = Link.objects.filter(user = user).count()
+        book_count = Book.objects.filter(user = user).count()
+        return render(request, 'core/profile.html', 
+            {'user': user, 'link_count': link_count,
+            'book_count': book_count})
+

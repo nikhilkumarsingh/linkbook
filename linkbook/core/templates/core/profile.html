@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load i18n %}
+
+{% block title %}{{user.username}}{% endblock %}
+
+{% block body %}
+<li>
+ <img height = "40px" width="40px" src="{{user.profile.pic}}" />
+</li>
+<li>Username: {{user.username}}</li>
+<li>Links: {{link_count}}</li>
+<li>Books: {{book_count}}</li>
+{% endblock body %}
