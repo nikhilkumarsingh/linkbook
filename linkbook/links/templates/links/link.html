@@ -30,40 +30,26 @@
                         &nbsp; &nbsp;
                         <span class="title blue-grey-text ">{{ link.user }} <sub>{{ link.date }}</sub></span> <br><span class="title blue-grey-text"><sup>&nbsp; &nbsp;&nbsp; Last updated : {{ link.last_updated }}</sup>  </span>
                       </div>
-                        <div class="row" style="margin: 0px">
+                        <div class="row" style="margin: 0px;">
                             <div class="col s12 m12 l12">
                                 <i class="material-icons circle blue-grey">description</i>
-                                <span><a href = "{{link.url}}" target="_blank" class="title center">{{link.title | linebreaksbr}}</a></span>
+                                <div>
+                                    <div class="row" style="margin-bottom: 0px">
+                                        <div class="col s7 m7 l7">
+                                            <a href = "{{link.url}}" target="_blank" class="title center" style="font-size: 2rem">{{link.title | linebreaksbr}}</a>
+                                        </div>
+                                        <div class="col s1 m1 l1"></div>
+                                        <div class="col s4 m4 l4 right-align" id="icons_extra">
+                                            <a class="btn-floating btn-small waves-effect waves-light blue" href="#modal1" title="Show URL"><i class="material-icons">remove_red_eye</i></a>
+                                            <a class="btn-floating btn-small waves-effect waves-light blue" href="{{ link.url }}" title="Visit Link" target="_blank"><i class="material-icons">open_in_new</i></a>
+                                            <a class="btn-floating btn-small waves-effect waves-light blue" href="#" title="Share"><i class="material-icons">share</i></a>
+                                        </div>
+                                    </div>
+
+                                </div>
                                 <hr>
                        <span class="title blue-grey-text">{{link.description}}</span>
                                 <span id="url" style="display: none"><a href="{{ link.url }}" target="_blank"> {{ link.url }} </a></span>
-                            </div>
-                            <div class="col s12 m12 l12">
-                                <div class="row">
-                                    <br>
-                                    <div class="col s12 m6 l6">
-                                        <span> <a class="waves-effect waves-light btn blue-grey white-text" href="#modal1">URL</a>
-                                        <!-- Modal Structure -->
-                                          <div id="modal1" class="modal">
-                                            <div class="modal-content">
-                                                <div class="row">
-                                                    <div class="col s12 m8 l8">
-                                                        <div class="title"><a id="link_url" href="{{ link.url }}" target="_blank"> {{ link.url }}</a>  </div>
-                                                    </div>
-                                                    <div class="col s12 m4 l4">
-                                                       <button title="copy to clipboard" class="btn black white-text" id="copy"> <i class="material-icons black" style="color: white">content_copy</i></button>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                          </div> </span>
-
-                                    </div>
-
-                                    <div class="col s12 m6 l6">
-                                <span><a class="btn blue-grey small right btn-block  waves-effect waves-light white-text" href="{{ link.url }}" target="_blank">Visit Link</a></span>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </li>
@@ -186,6 +172,10 @@
                 }
         });
     });
+
+
+
+
     $('.downvote_upper_button').click(function(){
     var link_id;
     link_id = $(this).attr("link_id");
