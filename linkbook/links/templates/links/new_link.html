@@ -33,18 +33,18 @@
                     <div class="col s12 m6 l6">
                         <div class="input-field">
                         <i class="material-icons prefix">assignment</i>
-                        <input type="text" class="input" name="TAGS" id="TAGS">
+                        <input type="text" class="input" name="TAGS" id="TAGS" >
                         <label for="TAGS" class="active">Tags</label>
                     </div>
                     </div>
                     <div class="col s12 m6 l6">
                          <div class="input-field">
                         <i class="material-icons prefix">book</i>
-                        <select multiple title="Choose the books in which the current link has to be saved" id="BOOKS">
+                        <select multiple title="Choose the books in which the current link has to be saved" name="BOOKS" id="BOOKS">
                         <label class="active" for="BOOKS">BOOKS</label>
                             <option selected disabled>Choose Books here</option>
-                            {% for x in books %}
-                                <option> {{ x }} </option>
+                            {% for book in books %}
+                                <option> {{ book }} </option>
                             {% endfor %}
                         </select>
                     </div>

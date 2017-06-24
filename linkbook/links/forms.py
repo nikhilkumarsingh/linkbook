@@ -22,10 +22,10 @@ class LinkForm(forms.Form):
         self.fields['books'].queryset = Book.objects.filter(user = user)
 
     url = forms.URLField(
-        widget = forms.TextInput(attrs = {'class': ' '}),
+        widget = forms.TextInput(attrs = {'class': 'input', 'name': 'URL'}),
         max_length = 255)
     title = forms.CharField(
-        widget = forms.TextInput(attrs = {'class': ' '}),
+        widget = forms.TextInput(attrs = {'class': 'input', 'placeholder': 'title'}),
         max_length = 30, required = True)
     description = forms.CharField(
         widget = forms.Textarea(attrs = {'class': 'materialize-textarea', 'id': 'description'}),

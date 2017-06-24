@@ -3,6 +3,7 @@ from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
+from django.contrib.auth.models import User
 
 from linkbook.links.forms import LinkForm, BookForm, CommentForm
 from linkbook.links.models import Link, Book, Comment
@@ -13,17 +14,6 @@ from .PyOpenGraph import PyOpenGraph
 UP = 0
 DOWN = 1
 vote_color = "lighten-5"
-
-
-def get_profile_pic(user):
-    try:
-        social = user.social_auth.get()
-        provider = social.provider
-        if provider == 'facebook':
-            image = "https://graph.facebook.com/{0}/picture?type=square".format(user.extra_data['id'])
-            return image
-    except:
-        return None
 
 
 def link(request, id):
@@ -75,51 +65,48 @@ def book(request, id):
 @login_required
 def create_link(request):
     if request.method == 'POST':
-        form = LinkForm(request.user, request.POST)
-        if form.is_valid():
-            link = Link()
-            link.user = request.user
-            link.url = form.cleaned_data.get('url')
-            link.title = form.cleaned_data.get('title')
-            link.description = form.cleaned_data.get('description')
-            link.save()
-            tag_list = form.cleaned_data.get('tags')
-            for tag in tag_list:
-                link.tags.add(tag)
-            link.books = form.cleaned_data.get('books')
-            link.save()
-            return redirect('/link/{}/'.format(link.id))
+        link = Link()
+        link.user = request.user
+        link.url = request.POST.get('URL')
+        link.title = request.POST.get('TITLE')
+        link.description = request.POST.get('DESCRIPTION')
+        link.save()
+        tag_list = request.POST.get('TAGS').split(',')
+        for tag in tag_list:
+            link.tags.add(tag.strip())
+        for book_name in request.POST.getlist('BOOKS'):
+            link.books = Book.objects.filter(user = request.user, title = book_name)
+        link.save()
+        return redirect('/link/{}/'.format(link.id))
     else:
-        form = LinkForm(request.user)
-        return render(request, 'links/new_link.html', {'form': form})
+        books = Book.objects.filter(user = request.user)
+        return render(request, 'links/new_link.html', {'books': books})
 
 
+@login_required
 def edit_link(request, id):
+    link = get_object_or_404(Link, id = id)
+    books = Book.objects.filter(user = request.user)
     if request.method == 'POST':
-        form = LinkForm(request.user, request.POST)
-        if form.is_valid():
-            link = Link.objects.get(id = id)
-            link.user = request.user
-            link.url = form.cleaned_data.get('url')
-            link.title = form.cleaned_data.get('title')
-            link.description = form.cleaned_data.get('description')
-            link.save()
-            link.tags.clear()
-            tag_list = form.cleaned_data.get('tags')
-            for tag in tag_list:
-                link.tags.add(tag)
-            link.books = form.cleaned_data.get('books')
-            link.save()
-            return redirect("/link/{}/".format(id))
+        link.user = request.user
+        link.url = request.POST.get('URL')
+        link.title = request.POST.get('TITLE')
+        link.description = request.POST.get('DESCRIPTION')
+        tag_list = request.POST.get('TAGS').split(',')
+        for tag in tag_list:
+            link.tags.add(tag.strip())
+
+        new_book_list = request.POST.getlist('BOOKS')
+        for book in books:
+            if book in link.books.all() and book.title not in new_book_list:
+                link.books.remove(book)
+            elif book not in link.books.all() and book.title in new_book_list:
+                link.books.add(book)
+        link.save()
+        return redirect('/link/{}/'.format(link.id))
     else:
-        old_link = get_object_or_404(Link, id = id)
-        initial_dict = {'url': old_link.url, 'title': old_link.title,
-                   'description': old_link.description,
-                   'tags': ", ".join(tag.name for tag in old_link.tags.all()),
-                   'books': old_link.books.all()}
-        form = LinkForm(request.user, initial = initial_dict)
-        return render(request, 'links/edit_link.html', 
-            {'form': form, 'link':old_link})
+        tag_text = ", ".join(tag.name for tag in link.tags.all())
+        return render(request, 'links/edit_link.html', {'link':link, 'books': books, 'tag_text': tag_text})
 
 
 @login_required
@@ -178,18 +165,6 @@ def create_book(request):
     else:
         form = BookForm()
         return render(request, 'links/new_book.html', {'form': form})
-
-@login_required
-def username_slugs(request, username):
-    action = request.GET.get('show', None)
-    #View all books by a user
-    if action == 'books':
-        user_records = Book.objects.filter(user = request.user)
-        return render(request, 'links/view_books.html', {'view_books':user_records})
-    #View all links by a user
-    elif action == 'links':
-        user_links = Link.objects.filter(user = request.user)
-        return render(request, 'links/view_links.html', {'view_links':user_links})
 
 
 @login_required
