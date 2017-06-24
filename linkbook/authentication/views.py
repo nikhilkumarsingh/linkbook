@@ -23,10 +23,11 @@ def signup(request):
             User.objects.create_user(username = username, password = password,
                                      email = email)
             user = authenticate(username = username, password = password)
-            Profile.objects.create(user = user)
+            Profile.objects.get_or_create(user = user)
             login(request, user)
             return redirect('/')
 
     else:
         return render(request, 'authentication/signup.html',
                       {'form': SignUpForm()})
+
