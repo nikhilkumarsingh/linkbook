@@ -8,8 +8,70 @@
     <br><br><br>
 
 {% if request.user.is_authenticated %}
+    <style>
+        .row
+        {
+            margin-bottom: 10px;
+        }
+    </style>
 <a href = "/logout"> Logout</a>
-    <br><a href = "/link/new"> Create new link </a><br/>
+    <br><a href = "#modal3" class="waves-effect waves-light btn">Create new link</a><br/>
+
+    <div id="modal3" class="modal">
+        <div class="modal-content">
+            <h4 class="center">Create your link</h4>
+                <form method="post" action="{% url 'create_link' %}" role="form">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col s12 m6 l6">
+                        <div class="input-field ">
+                            <i class="material-icons prefix">open_in_browser</i>
+                            <input type="url" class="input validate" name="URL" id="URL" autocomplete="autocomplete" required>
+                            <label for="URL" class="active" data-error="Invalid URL, Example(Valid URL) : https://www.google.co.in." data-success="Correct">URL</label>
+                        </div>
+                    </div>
+                    <div class="col s12 m6 l6">
+                        <div class="input-field ">
+                            <i class="material-icons prefix">title</i>
+                            <input type="text" class="input" name="TITLE" id="TITLE" autocomplete="autocomplete" required maxlength="30" data-length="30">
+                            <label for="TITLE" class="active">Title</label>
+                        </div>
+                    </div>
+                </div>
+                    <div class="row">
+                    <div class="col s12 m6 l6">
+                        <div class="input-field ">
+                        <i class="material-icons prefix">assignment</i>
+                        <input type="text" class="input" name="TAGS" id="TAGS" >
+                        <label for="TAGS" class="active">Tags</label>
+                        </div>
+                    </div>
+                    <div class="col s12 m6 l6">
+                         <div class="input-field ">
+                        <i class="material-icons prefix">book</i>
+                        <select multiple title="Choose the books in which the current link has to be saved" name="BOOKS" id="BOOKS">
+                        <label class="active" for="BOOKS">BOOKS</label>
+                            <option selected disabled>Choose Books here</option>
+                            {% for book in books %}
+                                <option> {{ book }} </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    </div>
+                </div>
+                    <div class="row">
+                    <div class=" col s12 m12 l12">
+                        <div class="input-field">
+                        <i class="material-icons prefix">description</i>
+                        <textarea class="input materialize-textarea" name="DESCRIPTION" id="DESCRIPTION" maxlength="1000" data-length="1000"></textarea>
+                        <label for="DESCRIPTION" class="active">Description</label>
+                    </div>
+                    </div>
+                </div>
+                    <button type="submit" class="btn">{% trans 'Save' %}</button>
+                </form>
+        </div>
+    </div>
 
     <a href = "#modal2" class="waves-effect waves-light btn"> Create new book </a><br/>
 
@@ -35,12 +97,8 @@
                     <button type="submit" class="btn btn-default">{% trans 'Save' %}</button>
                     <br><br>
                 </form>
-
         </div>
     </div>
-
-
-
 {% else %}
         <link rel="stylesheet" type="text/css" href="/static/materialize/css/override_buttons.css">
     <link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">

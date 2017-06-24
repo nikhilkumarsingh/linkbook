@@ -38,7 +38,7 @@
                     <li ><a href="/signup" class="right">Sign Up</a></li>
                 {% else %}
                     <li>
-                     <img class="responsive-img circle"  height = "40px" width="40px" style="margin: 25%; margin-left: -10%; cursor:pointer;"  src="{{request.user.profile.pic}}" id="userProfilePic">
+                     <img class="responsive-img circle hoverable"  height = "40px" width="40px" style="margin: 25%; margin-left: -10%; cursor:pointer;"  src="{{request.user.profile.pic}}" id="userProfilePic">
                     </li>
                     <li><a href="/logout" class="right">Logout</a></li>
                 {% endif %}
@@ -67,10 +67,8 @@
         });
         $('select').material_select();
         $('#userProfilePic').click(function () {
-
             var url = "/" + "{{ request.user.username }}";
             window.location.href = url;
-
         });
     </script>
 </body>
