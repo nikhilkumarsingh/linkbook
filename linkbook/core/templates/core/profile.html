@@ -5,10 +5,29 @@
 {% block title %}{{user.username}}{% endblock %}
 
 {% block body %}
+    <br><br>
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m3 l3">
+                <img class="responsive-img" width="90%" src="{{ user.profile.pic }}">
+            </div>
+            <div class="col s12 m3 l3">
+                <button class="btn btn-flat blue" style="width: 90%"> followers : {{ followers }}</button>
+                <br><br>
+                <button class="btn btn-flat green" style="width: 90%"> Total Upvotes : {{ upvotes }}</button>
+                <br><br>
+                <button class="btn btn-flat blue" style="width: 90%">Email : {{ user.email }}</button>
+
+            </div>
+        </div>
+    </div>
+
+    <!---
 <li>
  <img height = "40px" width="40px" src="{{user.profile.pic}}" />
 </li>
 <li>Username: {{user.username}}</li>
 <li>Links: {{link_count}}</li>
 <li>Books: {{book_count}}</li>
+--->
 {% endblock body %}
