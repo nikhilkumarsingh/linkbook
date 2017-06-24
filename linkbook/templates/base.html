@@ -37,8 +37,9 @@
                 {% if not request.user.is_authenticated %}
                     <li ><a href="/signup" class="right">Sign Up</a></li>
                 {% else %}
-                    <li>
+                    <li><a href = "/{{request.user.username}}/">
                      <img class="responsive-img circle"  height = "40px" width="40px" style="margin: 25%; margin-left: -10%"  src="{{request.user.profile.pic}}" />
+                    </a>
                     </li>
                     <li><a href="/logout" class="right">Logout</a></li>
                 {% endif %}
