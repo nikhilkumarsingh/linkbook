@@ -37,8 +37,8 @@
                 {% if not request.user.is_authenticated %}
                     <li ><a href="/signup" class="right">Sign Up</a></li>
                 {% else %}
-                    <li><a class="btn-floating btn-small waves-effect waves-light green" href="#modal2" title="Create new book" ><i class="material-icons">queue</i></a></li>
-                    <li><a class="btn-floating btn-small waves-effect waves-light green" href="#modal3" title="Create new link" ><i class="material-icons">note_add</i></a>
+                    <li><a class="btn-floating  waves-effect waves-light green" href="#modal2" title="Create new book" ><i class="material-icons">queue</i></a></li>
+                    <li><a class="btn-floating waves-effect waves-light green" href="#modal3" title="Create new link" ><i class="material-icons">note_add</i></a>
                     </li>
                     <li>
                      <img class="responsive-img circle hoverable"  height = "40px" width="40px" style="margin: 25%;  cursor:pointer;"  src="{{request.user.profile.pic}}" id="userProfilePic">
