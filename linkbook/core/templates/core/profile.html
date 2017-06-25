@@ -23,12 +23,12 @@
 
                 </div>
                 <hr>
-                <button class="btn blue darken-3 hoverable waves-effect waves-light" style="width: 100%" id="follow">Follow</button>
+                <button id = "follow_button" class="btn blue hoverable waves-effect waves-light" style="width: 100%" id="follow">{{follow_button}}</button>
                 </div>
             <div class="col s12 m12 l4" style="height: 100%; border-right: 1px solid black">
                 <button class="btn btn-flat blue" style="width: 90%">Name : {{ user.first_name}} {{user.last_name}}</button><br><br>
                 <button class="btn btn-flat green" style="width: 90%">Following : {{ following_count }} </button><br><br>
-                <button class="btn btn-flat blue" style="width: 90%"> Followers : {{ follower_count }}</button>
+                <button class="btn btn-flat blue" id = "follower_count" style="width: 90%"> Followers : {{ follower_count }}</button>
                 <br><br>
                 <button class="btn btn-flat green" style="width: 90%"> Total Links : {{ link_count }}</button>
                 <br><br>
@@ -61,12 +61,13 @@
         </div>
     </div>
 
-    <!--
-<li>
- <img height = "40px" width="40px" src="{{user.profile.pic}}" />
-</li>
-<li>Username: {{user.username}}</li>
-<li>Links: {{link_count}}</li>
-<li>Books: {{book_count}}</li>
--->
+<script>
+    $('#follow_button').click(function(){
+    $.get('/follow/', {to_follow: "{{user.username}}"}, function(data){
+                    $('#follow_button').html(data['follow_button']);
+                    $('#follower_count').html("Followers: " + data['follower_count']);
+
+        });
+    });
+</script>
 {% endblock body %}
