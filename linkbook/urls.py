@@ -28,8 +28,9 @@ urlpatterns = [
     url(r'^book/(?P<id>\d+)/$', linkbook_link_views.book, name='book'),
     url(r'^book/(?P<id>\d+)/edit/$', linkbook_link_views.edit_book, name='edit_book'),
     url(r'^book/new/$', linkbook_link_views.create_book, name = 'create_book'),
-    
+
+    url(r'^follow/$', linkbook_core_views.follow_profile, name = 'follow_profile'),    
     url(r'^(?P<username>[-\w]+)/$', linkbook_core_views.username_slugs, name='username'),
     url(r'^(?P<username>[-\w]+)/edit/$', linkbook_core_views.edit_profile, name='edit_profile'),
-	url(r'^$', linkbook_core_views.index, name = 'index'),
+    url(r'^$', linkbook_core_views.index, name = 'index'),
 ]

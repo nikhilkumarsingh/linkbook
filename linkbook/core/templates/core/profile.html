@@ -26,7 +26,6 @@
     }
 
     </style>
-    <br><br>
     <div class="container">
         <div class="row">
         <!--
@@ -38,29 +37,30 @@
                     <i class="material-icons small circle">email</i> <a href="mailto:{{ user.email }}">{{user.email}}</a>
                 </div>
                 <hr>
-                <button class="btn blue darken-3 hoverable waves-effect waves-light" style="width: 100%" id="follow">Follow</button>
+                <button id = "follow_button" class="btn blue hoverable waves-effect waves-light" style="width: 100%" id="follow">{{follow_button}}</button>
                 </div>
             <div class="col s12 m12 l6" style="height: 100%; border-right: 1px solid black">
                 <button class="btn btn-flat blue" style="width: 90%">Name : {{ user.first_name}} {{user.last_name}}</button><br><br>
                 <button class="btn btn-flat green" style="width: 90%">Following : {{ following_count }} </button><br><br>
-                <button class="btn btn-flat blue" style="width: 90%"> Followers : {{ follower_count }}</button>
+                <button class="btn btn-flat blue" id = "follower_count" style="width: 90%"> Followers : {{ follower_count }}</button>
                 <br><br>
                 <button class="btn btn-flat green" style="width: 90%"> Total Links : {{ link_count }}</button>
                 <br><br>
                 <button class="btn btn-flat blue" style="width: 90%">Total books : {{ book_count }}</button>
             </div> -->
         <div class="col s12 m12 l4">
+            <br><br>
             <div class="card " style="width: 100%">
         <div class="card-image">
             <img src="{{ user.profile.pic }}" class="responsive-img hoverable">
           <span class="card-title">{{ user.first_name }} {{ user.last_name }}</span>
-          <a class="btn-floating halfway-fab waves-effect waves-light blue darken-2" title="Follow"><i class="material-icons">group_add</i></a>
+          <a class="btn-floating halfway-fab waves-effect waves-light blue darken-2" title="Follow" id="follow_button"><i class="material-icons">group_add</i></a>
         </div>
         <div class="card-content">
           <p>
               <div class="row">
                     <div class="col s12 l6 m12">
-                        <button class="btn btn-flat blue darken-1">{{ follower_count }} follower(s)</button>
+                        <button class="btn btn-flat blue darken-1" id="follower_count">{{ follower_count }} follower(s)</button>
                         <button class="btn btn-flat blue darken-1">following {{ following_count }}</button>
 
                     </div>
@@ -75,10 +75,9 @@
       </div>
         </div>
             <div class="col s12 m12 l8">
-            <div class="header center center-align">
-                    <h5>Popular Links</h5>
+            <div class="header center center-align" style="padding: 0px; margin: 0px">
+                    <h5 style="padding: 0px; margin: 0px">Popular Links</h5>
                 </div>
-                  
                 <div class="row">
                     <div class="col s12 m12 l6">
 
@@ -261,7 +260,21 @@
             });
 
         });
+        $('#follow_button').click(function(){
+    $.get('/follow/', {to_follow: "{{user.username}}"}, function(data){
+
+
+        if(data['follow_button'] === '1')
+            $('#follow_button').addClass('lighten-5');
+        else
+            $('#follow_button').removeClass('lighten-5')
+
+       // $('#follow_button').html(data['follow_button']);
+        $('#follower_count').html(data['follower_count'] + "followers");
+
+
+        });
+    });
 
     </script>
-
 {% endblock body %}
