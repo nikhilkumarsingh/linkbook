@@ -26,11 +26,17 @@ def username_slugs(request, username):
             {'user': user, 'view_links':user_links})
 
     else:
+        links = Link.objects.filter(user = user)[:5]
+        books = Book.objects.filter(user = user)[:5]
         link_count = Link.objects.filter(user = user).count()
         book_count = Book.objects.filter(user = user).count()
+        follower_count = user.profile.followers.count()
+        following_count = user.profile.following.count()
         return render(request, 'core/profile.html', 
-            {'user': user, 'link_count': link_count,
-            'book_count': book_count})
+            {'user': user, 'links': links, 'books': books, 
+            'link_count': link_count, 'book_count': book_count, 
+            'follower_count': follower_count,
+            'following_count': following_count})
 
 
 @login_required
