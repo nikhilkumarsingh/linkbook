@@ -5,20 +5,59 @@
 {% block title %}{{user.username}}{% endblock %}
 
 {% block body %}
+    <style>
+    .btn-flat
+    {
+        cursor: default;
+    }
+    </style>
     <br><br>
     <div class="container">
         <div class="row">
-            <div class="col s12 m3 l3">
-                <img class="responsive-img" width="90%" src="{{ user.profile.pic }}">
-            </div>
-            <div class="col s12 m3 l3">
+            <div class="col s12 m12 l3">
+                <img class="responsive-img hoverable" width="90%" src="{{ user.profile.pic }}" style="border-radius: 5%">
+                <br>
+                <br>
+                <div class="center center-align valign-wrapper">
+                    <i class="material-icons small circle">email</i> <a href="mailto:{{ user.email }}">Email has to be wriiten here</a>
+
+                </div>
+                <hr>
+                <button class="btn blue darken-3 hoverable waves-effect waves-light" style="width: 100%" id="follow">Follow</button>
+                </div>
+            <div class="col s12 m12 l4" style="height: 100%; border-right: 1px solid black">
+                <button class="btn btn-flat blue" style="width: 90%">Name : {{ user.name}}</button><br><br>
+                <button class="btn btn-flat green" style="width: 90%">Follows : {{ user.follows }} People</button><br><br>
                 <button class="btn btn-flat blue" style="width: 90%"> followers : {{ followers }}</button>
                 <br><br>
-                <button class="btn btn-flat green" style="width: 90%"> Total Upvotes : {{ upvotes }}</button>
+                <button class="btn btn-flat green" style="width: 90%"> Total Links : {{ link_count }}</button>
                 <br><br>
-                <button class="btn btn-flat blue" style="width: 90%">Email : {{ user.email }}</button>
+                <button class="btn btn-flat blue" style="width: 90%">Total books : {{ book_count }}</button>
+            </div>
+            <div class="col s12 m12 l5" style="border-left: 1px solid black">
+                <div class="header center center-align">
+                    <h5>Popular Links</h5>
+                    <div id="links_Collections">
+                    <ul class="collection">
+                        {% for link in user.links %}
+                            <li class="collection-item avatar">
+                                <span class="title">{{ link.title }}</span>
+                                <br>
+                                <a href="{{ link.url }}">{{ link.url }}</a>
+                                <br>
+                            <div class="row">
+                                <div class="col s4 m4 l4 green-text">{{ link.upvotes }} upvotes</div>
+                                <div class="col s4 m4 l4 red-text">{{ link.downvotes }} downvotes</div>
+                                <div class="col s4 m4 l4 blue-text">{{ link.comments }} comments</div>
+                            </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                        </div>
+                </div>
 
             </div>
+
         </div>
     </div>
 
