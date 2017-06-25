@@ -9,7 +9,7 @@ def save_profile(backend, user, response, *args, **kwargs):
 		if backend.name == "github":
 			pic = "https://avatars.githubusercontent.com/u/{}".format(response.get('id'))
 		elif backend.name == "twitter":
-			pic = "https://twitter.com/{}/profile_image?size=normal".format(response.get('screen_name'))
+			pic = "https://twitter.com/{}/profile_image?size=original".format(response.get('screen_name'))
 		elif backend.name == "facebook":
 			pic = "https://graph.facebook.com/{}/picture?type=large&height=720&width=720".format(response.get('id'))
 		elif backend.name == "google-oauth2":
