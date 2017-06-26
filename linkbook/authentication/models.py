@@ -10,14 +10,3 @@ class Profile(models.Model):
 	followers = models.ManyToManyField('self', related_name='following', symmetrical=False)
 	def __str__(self):
 		return self.user.username
-
-'''
-def post_user_save(sender, instance, created, **kwargs):
-	if not created:
-		return
-	print(kwargs)
-
-	Profile.objects.get_or_create(user=instance)
-
-post_save.connect(post_user_save, sender=User, weak=False)
-'''
