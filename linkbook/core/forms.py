@@ -14,7 +14,7 @@ class UpdateProfileForm(forms.Form):
 	email = forms.EmailField(required=True)
 	first_name = forms.CharField(required=False)
 	last_name = forms.CharField(required=False)
-	image_url = forms.URLField(required=False)
+	pic = forms.ImageField(required=False)
 
 	def clean_username(self):
 		username = self.cleaned_data.get('username')

@@ -11,11 +11,9 @@ from linkbook.links.models import Link, Book
 from linkbook.core.forms import UpdateProfileForm
 
 
-CLIENT_ID = "fd0c3e407af9974"
+IMGUR_CLIENT_ID = "fd0c3e407af9974"
 TEMP_IMAGE_PATH = 'linkbook/media/temp.png'
-'''
-a269dd92cc5f51c0a28d8b4eeebdb9067e2ca459
-'''
+
 
 def index(request):
     return render(request, 'core/index.html')
@@ -72,7 +70,7 @@ def edit_profile(request, username):
 
             if 'pic' in request.FILES:
                 Image.open(request.FILES['pic']).save(TEMP_IMAGE_PATH)
-                uploaded_image = pyimgur.Imgur(CLIENT_ID).upload_image(TEMP_IMAGE_PATH)
+                uploaded_image = pyimgur.Imgur(IMGUR_CLIENT_ID).upload_image(TEMP_IMAGE_PATH)
                 os.remove(TEMP_IMAGE_PATH) 
                 user.profile.pic = uploaded_image.link
             
@@ -90,7 +88,7 @@ def edit_profile(request, username):
 
 
 def follow_profile(request):
-    print('gotcha')
+
     if request.method == 'GET':
         user = User.objects.get(username = request.GET['to_follow'])
         follows = request.user.profile in user.profile.followers.all()

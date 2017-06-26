@@ -12,7 +12,7 @@
             <div class="col s10 m6 l6 card hoverable">
                 <br>
                 <h5 class="center">Edit your profile</h5>
-                <form action="/{{request.user.username}}/edit/" method="post" role="form">
+                <form action="/{{request.user.username}}/edit/" method="post" role="form" enctype="multipart/form-data">
                     {% csrf_token %}
                     {% for field in form.visible_fields %}
                     <div class=" input-field">
