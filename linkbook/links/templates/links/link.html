@@ -42,22 +42,7 @@
                                         <div class="col s4 m4 l4 right-align" id="icons_extra">
                                             <a class="btn-floating btn-small waves-effect waves-light blue" href="#modal1" title="Show URL"><i class="material-icons">remove_red_eye</i></a>
                                             <a class="btn-floating btn-small waves-effect waves-light blue" href="{{ link.url }}" title="Visit Link" target="_blank"><i class="material-icons">open_in_new</i></a>
-
-                                            
-                                            <a class="btn-floating btn-small waves-effect waves-light blue dropbtn" href="#" title="Share" onclick="shareDropDown()"><i class="material-icons">share</i></a>
-                                                    <div id="shareDrop" class="dropdown-content">
-                                                        <a href="#">Link 1</a>
-                                                        <a href="#">Link 2</a>
-                                                        <a href="#">Link 3</a>
-                                                    </div>
-                                            
-
-                                            
-
-
-
-
-
+                                            <a class="btn-floating btn-small waves-effect waves-light blue" href="#" title="Share"><i class="material-icons">share</i></a>
                                         </div>
                                     </div>
                                     <div id="modal1" class="modal">
@@ -287,24 +272,6 @@
     $temp.val($(element).text()).select();
     document.execCommand("copy");
     $temp.remove();
-}
-
-function shareDropDown() {
-    document.getElementById("shareDrop").classList.toggle("show");
-}
-
-window.onclick = function(event) {
-  if (!event.target.matches('.dropbtn')) {
-
-    var dropdowns = document.getElementsByClassName("dropdown-content");
-    var i;
-    for (i = 0; i < dropdowns.length; i++) {
-      var openDropdown = dropdowns[i];
-      if (openDropdown.classList.contains('show')) {
-        openDropdown.classList.remove('show');
-      }
-    }
-  }
 }
     </script>
 
