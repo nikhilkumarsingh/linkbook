@@ -86,6 +86,38 @@
                     </li>
                     {% endif %}
                     <!-- End of open graph data -->
+
+                    <!-- Sharing Options -->
+
+                    <li class="collection-item avatar">
+                      <i class="material-icons circle blue-grey">share</i>
+                        <span class="title blue-grey-text">Share</span>
+                        <p>
+                            <div>
+                                <a href = "https://www.facebook.com/sharer/sharer.php?u={{link.url}}">
+                                    <img height=41px width=41px src="/static/icons/fb.svg" alt="Facebook" />
+                                </a>
+                                <a href = "https://twitter.com/home?status={{link.url}}">
+                                    <img height=41px width=41px src="/static/icons/Twitterbird.png" alt="Twitter" />
+                                </a>
+                                <a href = "https://plus.google.com/share?url={{link.url}}">
+                                    <img height=41px width=41px src="/static/icons/gplus.png" alt="Google+" />
+                                </a>
+                                <a href = "http://www.reddit.com/submit?url={{link.url}}">
+                                    <img height=41px width=41px src="/static/icons/reddit.png" alt="Reddit" />
+                                </a>
+                                <a href = "http://pinterest.com/pin/create/button/?url={{link.url}}&description={{link.description}}">
+                                    <img height=41px width=41px src="/static/icons/pinterest.svg" alt="Pinterest" />
+                                </a>
+                                <a href = "https://www.linkedin.com/shareArticle?mini=true&url={{link.url}}">
+                                    <img height=41px width=41px src="/static/icons/linkedin.svg" alt="LinkedIn" />
+                                </a>
+                            </div>
+                        </p>
+                    </li>
+
+                    <!-- Tags -->
+
                     <li class="collection-item avatar">
                       <i class="material-icons circle blue-grey">assignment</i>
                         <span class="title blue-grey-text">Tags</span>
