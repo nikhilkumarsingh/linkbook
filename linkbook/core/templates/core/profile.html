@@ -14,47 +14,43 @@
         margin: 5px;
     }
 
+
     .card1 div
     {
         margin: 1px;
         padding: 2px;
+
     }
     .card1 .card-content1
     {
         padding: 2px;
         margin: 1px;
+        height: 100px;
     }
 
     </style>
     <div class="container">
         <div class="row">
-        <!--
-            <div class="col s12 m12 l3">
-                <img class="responsive-img hoverable" width="90%" src="{{ user.profile.pic }}" style="border-radius: 5%">
-                <br>
-                <br>
-                <div class="center center-align valign-wrapper">
-                    <i class="material-icons small circle">email</i> <a href="mailto:{{ user.email }}">{{user.email}}</a>
-                </div>
-                <hr>
-                <button id = "follow_button" class="btn blue hoverable waves-effect waves-light" style="width: 100%" id="follow">{{follow_button}}</button>
-                </div>
-            <div class="col s12 m12 l6" style="height: 100%; border-right: 1px solid black">
-                <button class="btn btn-flat blue" style="width: 90%">Name : {{ user.first_name}} {{user.last_name}}</button><br><br>
-                <button class="btn btn-flat green" style="width: 90%">Following : {{ following_count }} </button><br><br>
-                <button class="btn btn-flat blue" id = "follower_count" style="width: 90%"> Followers : {{ follower_count }}</button>
-                <br><br>
-                <button class="btn btn-flat green" style="width: 90%"> Total Links : {{ link_count }}</button>
-                <br><br>
-                <button class="btn btn-flat blue" style="width: 90%">Total books : {{ book_count }}</button>
-            </div> -->
         <div class="col s12 m12 l4">
             <br><br>
             <div class="card " style="width: 100%">
         <div class="card-image">
             <img src="{{ user.profile.pic }}" class="responsive-img hoverable">
           <span class="card-title">{{ user.first_name }} {{ user.last_name }}</span>
-          <a class="btn-floating halfway-fab waves-effect waves-light blue darken-2" title="Follow" id="follow_button"><i class="material-icons">group_add</i></a>
+        {% if request.user.is_authenticated %}
+            {% if request.user == user %}
+
+                <a class="btn-floating halfway-fab waves-effect waves-light" title="Edit" id="follow_button" href="edit"><i class="material-icons">edit</i></a>
+
+            {% else %}
+                {% if follow_button == "1" %}
+                <a class="btn-floating halfway-fab waves-effect grey lighten-3 waves-light" title="unfollow" id="follow_button"><i class="material-icons">group_add</i></a>
+                {% else  %}
+                <a class="btn-floating halfway-fab waves-effect waves-light" title="follow" id="follow_button"><i class="material-icons">group_add</i></a>
+                {% endif %}
+            {% endif %}
+        {% endif %}
+
         </div>
         <div class="card-content">
           <p>
@@ -88,7 +84,6 @@
                       <div class="card_link" id="{{links.0.id }}"  style="cursor: pointer;">
                       <div class="card-title center"><h5>{{links.0.title}}</h5></div>
                       <div class="card-content card-content1" id="{{links.0.id }}">
-                      <p>{{links.0.description }}</p>
                       <p>Books:
                         {% for book in links.0.books.all %}
                             <span class="chip">
@@ -125,7 +120,6 @@
                       <div class="card_link" id="{{links.2.id }}"  style="cursor: pointer;">
                       <div class="card-title center"><h5>{{links.2.title}}</h5></div>
                       <div class="card-content card-content1" id="{{links.2.id }}">
-                      <p>{{links.2.description }}</p>
                       <p>Books:
                         {% for book in links.2.books.all %}
                             <span class="chip">
@@ -164,7 +158,7 @@
                       <div class="card_link" id="{{links.1.id }}"  style="cursor: pointer;">
                       <div class="card-title center"><h5>{{links.1.title}}</h5></div>
                       <div class="card-content card-content1" id="{{links.1.id }}">
-                      <p>{{links.1.description }}</p>
+
                       <p>Books:
                         {% for book in links.1.books.all %}
                             <span class="chip">
@@ -200,7 +194,6 @@
                       <div class="card_link" id="{{links.3.id }}"  style="cursor: pointer;">
                       <div class="card-title center"><h5>{{links.3.title}}</h5></div>
                       <div class="card-content card-content1" id="{{links.3.id }}">
-                      <p>{{links.3.description }}</p>
                       <p>Books:
                         {% for book in links.3.books.all %}
                             <span class="chip">
@@ -263,18 +256,32 @@
         $('#follow_button').click(function(){
     $.get('/follow/', {to_follow: "{{user.username}}"}, function(data){
 
+        var fButton = $('#follow_button');
 
         if(data['follow_button'] === '1')
-            $('#follow_button').addClass('lighten-5');
+        {
+            //$('#follow_button').removeClass('grey');
+            fButton.removeClass('grey');
+            fButton.removeClass('lighten-3');
+            fButton.attr('title', 'follow');
+        }
         else
-            $('#follow_button').removeClass('lighten-5')
+        {
+            //$('#follow_button').addClass('grey');
+            fButton.addClass('grey');
+            fButton.addClass('lighten-3');
+            fButton.attr('title', 'unfollow')
+        }
+
 
        // $('#follow_button').html(data['follow_button']);
-        $('#follower_count').html(data['follower_count'] + "followers");
+        $('#follower_count').html(data['follower_count'] + " followers");
 
 
         });
     });
+
+
 
     </script>
 {% endblock body %}
