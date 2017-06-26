@@ -3,9 +3,19 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.contrib.auth.models import User
 
+from PIL import Image
+import pyimgur
+import os
+
 from linkbook.links.models import Link, Book
 from linkbook.core.forms import UpdateProfileForm
 
+
+CLIENT_ID = "fd0c3e407af9974"
+TEMP_IMAGE_PATH = 'linkbook/media/temp.png'
+'''
+a269dd92cc5f51c0a28d8b4eeebdb9067e2ca459
+'''
 
 def index(request):
     return render(request, 'core/index.html')
@@ -53,12 +63,20 @@ def edit_profile(request, username):
         return redirect('/{}/'.format(user.username))
 
     if request.method == 'POST':
-        form = UpdateProfileForm(request.POST, user = user)
+        form = UpdateProfileForm(request.POST, request.FILES or None, user = user)
         if form.is_valid():
             user.username = form.clean_username()
             user.email = form.cleaned_data.get('email')
             user.first_name = form.cleaned_data.get('first_name')
             user.last_name = form.cleaned_data.get('last_name')
+
+            if 'pic' in request.FILES:
+                Image.open(request.FILES['pic']).save(TEMP_IMAGE_PATH)
+                uploaded_image = pyimgur.Imgur(CLIENT_ID).upload_image(TEMP_IMAGE_PATH)
+                os.remove(TEMP_IMAGE_PATH) 
+                user.profile.pic = uploaded_image.link
+            
+            user.profile.save()
             user.save()
             return redirect('/{}/'.format(user.username))
         else:
@@ -67,7 +85,7 @@ def edit_profile(request, username):
     form = UpdateProfileForm(user = user, 
         initial = {'username': user.username,
         'first_name':user.first_name, 'last_name': user.last_name,
-        'email':user.email, 'image_url':user.profile.pic})
+        'email':user.email})
     return render(request, "core/edit_profile.html", {'form':form})
 
 
