@@ -34,7 +34,7 @@ class SignUpForm(forms.ModelForm):
 		required = True)
 	
 	email = forms.CharField(
-		widget = forms.EmailInput(attrs = {'id': 'Email'}),
+		widget = forms.EmailInput(attrs = {'id': 'Email', 'class' : 'validate', 'autocomplete' : 'autocomplete'}),
 		required = True,
 		max_length = 75)
 

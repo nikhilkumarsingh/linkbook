@@ -35,4 +35,26 @@
         </div>
 
     </div>
+    <script>
+    $(function () {
+
+        var File = $('input[type="file"]');
+        var Parent = File.parent();
+        Parent.addClass('file-field');
+        console.log(Parent.children());
+        var Children = Parent.children();
+        Children[1].remove();
+        var str = Parent.html();
+        var newStr = '';
+        newStr += '<div class="btn"> ' +
+        '<span>Upload Photo</span>';
+        newStr += str;
+        newStr += '</div>' + '<div class="file-path-wrapper">' +
+        '<input class="file-path validate" type="text">' +
+      '</div>';
+        Parent.html(newStr);
+
+
+    });
+    </script>
 {% endblock body %}
