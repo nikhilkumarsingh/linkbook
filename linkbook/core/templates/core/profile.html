@@ -19,7 +19,6 @@
     {
         margin: 1px;
         padding: 2px;
-
     }
     .card1 .card-content1
     {
@@ -27,6 +26,17 @@
         margin: 1px;
         height: 100px;
     }
+
+    #popularLinksTab, #popularLinksTab
+    {
+        text-decoration-color: violet;
+    }
+
+    .card_book
+    {
+        cursor: pointer;
+    }
+
 
     </style>
     <div class="container">
@@ -76,9 +86,9 @@
       </div>
         </div>
             <div class="col s12 m12 l8">
-            <div class="row">
+            <div class="row" style="border-bottom: 3px solid violet">
                 <div class="col s6 m6 l6">
-                                <div class="header center center-align" id="popularLinksTab" style="padding: 0px; margin: 0px; cursor:pointer;">
+                                <div class="header center center-align" id="popularLinksTab" style="padding: 0px; margin: 0px; cursor:pointer; text-decoration: underline">
                     <h5 style="padding: 0px; margin: 0px; cursor: pointer">Popular Links</h5>
                 </div>
                 </div>
@@ -88,11 +98,9 @@
                 </div>
                     <br><br>
                 </div>
-
             </div>
                 <div class="row" id="popularLinks">
                     <div class="col s12 m12 l6">
-
                         {% if links.0 == none %}
                         {% else %}
                             <div class="card card1 horizontal hoverable white-text blue-grey lighten-1">
@@ -125,7 +133,6 @@
                     </div>
                   </div>
                             </div>
-
                         {% endif %}
                     
                     
@@ -238,12 +245,82 @@
 
                         {% endif %}
                         
-                        
+                    </div>
+            </div>
+                <div class="row" id="popularBooks" style="display: none">
+
+                    <div class="col s12 m12 l6">
+
+                        {% if books.0 == none %}
+                        {% else %}
+
+
+                <div class="card card1 card_book horizontal hoverable blue-grey white-text lighten-1 " id="{{ books.0.id }}">
+                  <div class="card-stacked">
+                      <div class="card-title center"><h4>{{ books.0.title }}</h4></div>
+                      <div class="card-content card-content1">
+                      <p>{{ books.0.description }}</p>
+                      <p>{{books.0.link_set.count}} link(s)</p>
+                    </div>
+                  </div>
+    </div>
+                        {% endif %}
+                        {% if books.2 == none %}
+                        {% else %}
+                            <div class="card card1 card_book horizontal hoverable blue-grey white-text lighten-1 " id="{{ books.2.id }}">
+                  <div class="card-stacked">
+                      <div class="card-title center"><h4>{{ books.2.title }}</h4></div>
+                      <div class="card-content card-content1">
+                      <p>{{ books.2.description }}</p>
+                      <p>{{books.2.link_set.count}} link(s)</p>
+                    </div>
+                  </div>
+    </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="col s12 m12 l6">
+
+                                        {% if books.1 == none %}
+                        {% else %}
+                                            <div class="card  card1 card_book horizontal hoverable blue-grey white-text lighten-1 " id="{{ books.1.id }}">
+                  <div class="card-stacked">
+                      <div class="card-title center"><h4>{{ books.1.title }}</h4></div>
+                      <div class="card-content card-content1">
+                      <p>{{ books.1.description }}</p>
+                      <p>{{books.1.link_set.count}} link(s)</p>
+                    </div>
+                  </div>
+    </div>
+
+
+
+
+                        {% endif %}
+                    
+
+                                            {% if books.3 == none %}
+                        {% else %}
+
+                <div class="card card1 horizontal hoverable blue-grey white-text lighten-1 card_book" id="{{ books.3.id }}">
+                  <div class="card-stacked">
+                      <div class="card-title center"><h4>{{ books.3.title }}</h4></div>
+                      <div class="card-content card-content1">
+                      <p>{{ books.3.description }}</p>
+                      <p>{{books.3.link_set.count}} link(s)</p>
+                    </div>
+                  </div>
+    </div>
+
+                        {% endif %}
+
+
                     </div>
 
 
 
-            </div>
+
+                </div>
 
         </div>
     </div>
@@ -267,9 +344,43 @@
                 var url = '/link/' + id;
                 window.open(url);
             });
+
+            var books = $('.card_book');
+            books.click(function () {
+
+                var id = this.id;
+                var url = '/book/' + id;
+                window.open(url);
+
+            });
+
+
+
+
+               var popularLinks = $('#popularLinks');
+        var popularBooks = $('#popularBooks');
+        var popularLinksTab = $('#popularLinksTab');
+        var popularBooksTab = $('#popularBooksTab');
+
+        popularBooksTab.click(function () {
+
+            popularLinks.css({'display' : 'none' });
+            popularBooks.css({'display' : 'block'});
+            popularBooksTab.css({'text-decoration' : 'underline'});
+            popularLinksTab.css({'text-decoration' : 'none'});
+
         });
 
-        $('#follower_count').click(function(){
+        popularLinksTab.click(function () {
+
+            popularBooks.css({'display' : 'none'});
+            popularLinks.show({'display' : 'block'});
+            popularLinksTab.css({'text-decoration' : 'underline'});
+            popularBooksTab.css({'text-decoration' : 'none'});
+
+            });
+
+         $('#follower_count').click(function(){
           $.get('/followers/', {user: "{{user.username}}"}, function(data){
             $('#show_followers').html(JSON.stringify(data));
           });
@@ -307,8 +418,14 @@
         $('#follower_count').html(data['follower_count'] + " followers");
 
 
+
+
+
         });
     });
+
+        });
+
 
 
 
