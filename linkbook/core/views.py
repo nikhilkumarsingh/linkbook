@@ -27,9 +27,9 @@ def username_slugs(request, username):
     follows = request.user.profile in user.profile.followers.all()
 
     if follows:
-        follow_button = "UNFOLLOW"
+        follow_button = "1"
     else:
-        follow_button = "FOLLOW"
+        follow_button = "2"
 
     if action == 'books':
         user_books = Book.objects.filter(user = user)
@@ -97,10 +97,10 @@ def follow_profile(request):
 
         if follows:
             user.profile.followers.remove(request.user.profile)
-            follow_button = "FOLLOW"
+            follow_button = "1"
         else:
             user.profile.followers.add(request.user.profile)
-            follow_button = "UNFOLLOW"
+            follow_button = "2"
         follower_count = user.profile.followers.count()
 
         return JsonResponse({'follower_count':follower_count,
