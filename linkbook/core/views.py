@@ -91,6 +91,8 @@ def follow_profile(request):
 
     if request.method == 'GET':
         user = User.objects.get(username = request.GET['to_follow'])
+        if request.user == user:
+            return None
         follows = request.user.profile in user.profile.followers.all()
 
         if follows:
@@ -106,3 +108,28 @@ def follow_profile(request):
 
 
 
+def get_follower_list(request):
+
+    if request.method == 'GET':
+        user = User.objects.get(username = request.GET['user'])
+        followers = user.profile.followers.all()
+        data = []
+        for follower in followers:
+            row = {}
+            row['username'] = follower.user.username
+            row['pic'] = follower.pic
+            data.append(row)
+        return JsonResponse({'data':data})
+
+
+def get_following_list(request):
+    if request.method == 'GET':
+        user = User.objects.get(username = request.GET['user'])
+        followings = user.profile.following.all()
+        data = []
+        for following in followings:
+            row = {}
+            row['username'] = following.user.username
+            row['pic'] = following.pic
+            data.append(row)
+        return JsonResponse({'data':data})

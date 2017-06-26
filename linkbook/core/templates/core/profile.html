@@ -57,9 +57,14 @@
               <div class="row">
                     <div class="col s12 l6 m12">
                         <button class="btn btn-flat blue darken-1" id="follower_count">{{ follower_count }} follower(s)</button>
-                        <button class="btn btn-flat blue darken-1">following {{ following_count }}</button>
-
+                        <button class="btn btn-flat blue darken-1" id = "following_count">following {{ following_count }}</button>
                     </div>
+
+                    <!-- Just testing -->
+                    <div id = "show_followers"></div>
+                    <div id = "show_following"></div>
+
+
                     <div class="col s12 l6 m12">
                          <button class="btn btn-flat green">{{ link_count }} link(s)</button>
                          <button class="btn btn-flat green">{{ book_count }} books(s)</button>
@@ -251,8 +256,21 @@
                 var url = '/link/' + id;
                 window.open(url);
             });
-
         });
+
+        $('#follower_count').click(function(){
+          $.get('/followers/', {user: "{{user.username}}"}, function(data){
+            $('#show_followers').html(JSON.stringify(data));
+          });
+        });
+
+        $('#following_count').click(function(){
+          $.get('/following/', {user: "{{user.username}}"}, function(data){
+            $('#show_following').html(JSON.stringify(data));
+          });
+        });
+
+
         $('#follow_button').click(function(){
     $.get('/follow/', {to_follow: "{{user.username}}"}, function(data){
 

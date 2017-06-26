@@ -30,6 +30,8 @@ urlpatterns = [
     url(r'^book/new/$', linkbook_link_views.create_book, name = 'create_book'),
 
     url(r'^follow/$', linkbook_core_views.follow_profile, name = 'follow_profile'),    
+    url(r'^followers/$', linkbook_core_views.get_follower_list, name = 'get_follower_list'),    
+    url(r'^following/$', linkbook_core_views.get_following_list, name = 'get_following_list'),    
     url(r'^(?P<username>[-\w]+)/$', linkbook_core_views.username_slugs, name='username'),
     url(r'^(?P<username>[-\w]+)/edit/$', linkbook_core_views.edit_profile, name='edit_profile'),
     url(r'^$', linkbook_core_views.index, name = 'index'),
