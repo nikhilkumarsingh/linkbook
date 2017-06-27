@@ -1,20 +1,16 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% load i18n %}
-
 {% block title %}{{user.username}}{% endblock %}
-
 {% block body %}
     <style>
+
     .btn-flat
     {
-        cursor: default;
         text-transform: lowercase;
         width: 100%;
         margin: 5px;
     }
-
-
     .card1 div
     {
         margin: 1px;
@@ -26,118 +22,110 @@
         margin: 1px;
         height: 100px;
     }
-
     #popularLinksTab, #popularLinksTab
     {
         text-decoration-color: violet;
     }
-
-    .card_book
-    {
-        cursor: pointer;
-    }
-
-
     </style>
     <div class="container">
         <div class="row">
-        <div class="col s12 m12 l4">
-            <br><br>
-            <div class="card " style="width: 100%">
-        <div class="card-image">
-            <img src="{{ user.profile.pic }}" class="responsive-img hoverable">
-          <span class="card-title">{{ user.first_name }} {{ user.last_name }}</span>
-        {% if request.user.is_authenticated %}
-            {% if request.user == user %}
+        <!-- First Column : Profile page card -->
+            <div class="col s12 m12 l4">
+                <br><br>
+                <div class="card " style="width: 100%">
+                    <div class="card-image">
+                        <img src="{{ user.profile.pic }}" class="responsive-img hoverable">
+                        <span class="card-title">{{ user.first_name }} {{ user.last_name }}</span>
+                    {% if request.user.is_authenticated %}
+                        {% if request.user == user %}
 
-                <a class="btn-floating halfway-fab waves-effect waves-light" title="Edit" id="follow_button" href="edit"><i class="material-icons">edit</i></a>
+                            <a class="btn-floating halfway-fab waves-effect waves-light" title="Edit" id="follow_button" href="edit"><i class="material-icons">edit</i></a>
 
-            {% else %}
-                {% if follow_button == "1" %}
-                <a class="btn-floating halfway-fab waves-effect grey lighten-3 waves-light" title="unfollow" id="follow_button"><i class="material-icons">group_add</i></a>
-                {% else  %}
-                <a class="btn-floating halfway-fab waves-effect waves-light" title="follow" id="follow_button"><i class="material-icons">group_add</i></a>
-                {% endif %}
-            {% endif %}
-        {% endif %}
+                        {% else %}
+                            {% if follow_button == "1" %}
+                            <a class="btn-floating halfway-fab waves-effect grey lighten-3 waves-light" title="unfollow" id="follow_button"><i class="material-icons">group_add</i></a>
+                            {% else  %}
+                            <a class="btn-floating halfway-fab waves-effect waves-light" title="follow" id="follow_button"><i class="material-icons">group_add</i></a>
+                            {% endif %}
+                        {% endif %}
+                    {% endif %}
 
-        </div>
-        <div class="card-content">
-          <p>
-              <div class="row">
-                    <div class="col s12 l6 m12">
-                        <button class="btn btn-flat blue darken-1" id="follower_count">{{ follower_count }} follower(s)</button>
-                        <button class="btn btn-flat blue darken-1" id = "following_count">following {{ following_count }}</button>
                     </div>
+                    <div class="card-content">
+                      <div class="container">
+                          <div class="row">
+                                <div class="col s12 l6 m12">
+                                    <button class="btn btn-flat blue darken-1" id="follower_count">{{ follower_count }} follower(s)</button>
+                                    <button class="btn btn-flat blue darken-1" id = "following_count">following {{ following_count }}</button>
+                                </div>
+                                <div class="col s12 l6 m12">
+                                     <a href="/{{ user.username }}?show=links" target="_blank" class="btn btn-flat green">{{ link_count }} link(s)</a>
+                                     <a href="/{{ user.username }}?show=books" target="_blank" class="btn btn-flat green">{{ book_count }} books(s)</a>
+                                </div>
+                            </div>
 
-                    <!-- Just testing -->
-                    <div id = "show_followers"></div>
-                    <div id = "show_following"></div>
-
-
-                    <div class="col s12 l6 m12">
-                         <button class="btn btn-flat green">{{ link_count }} link(s)</button>
-                         <button class="btn btn-flat green">{{ book_count }} books(s)</button>
+                      </div>
                     </div>
-                </div>
-
-          </p>
-        </div>
-      </div>
-        </div>
-            <div class="col s12 m12 l8">
-            <div class="row" style="border-bottom: 3px solid violet">
-                <div class="col s6 m6 l6">
-                                <div class="header center center-align" id="popularLinksTab" style="padding: 0px; margin: 0px; cursor:pointer; text-decoration: underline">
-                    <h5 style="padding: 0px; margin: 0px; cursor: pointer">Popular Links</h5>
-                </div>
-                </div>
-                <div class="col s6 m6 l6">
-                                <div class="header center center-align" style="padding: 0px; margin: 0px; cursor: pointer" id="popularBooksTab">
-                    <h5 style="padding: 0px; margin: 0px" >Popular Books</h5>
-                </div>
-                    <br><br>
                 </div>
             </div>
+        <!-- Ending of the first Column -->
+        <!-- Second Column started -->
+            <div class="col s12 m12 l8">
+                <div class="row" style="border-bottom: 3px solid violet">
+                    <div class="col s6 m6 l6">
+                                    <div class="header center center-align" id="popularLinksTab" style="padding: 0px; margin: 0px; cursor:pointer; text-decoration: underline">
+                        <h5 style="padding: 0px; margin: 0px; cursor: pointer">Popular Links</h5>
+                    </div>
+                    </div>
+                    <div class="col s6 m6 l6">
+                                    <div class="header center center-align" style="padding: 0px; margin: 0px; cursor: pointer" id="popularBooksTab">
+                        <h5 style="padding: 0px; margin: 0px" >Popular Books</h5>
+                    </div>
+                        <br><br>
+                    </div>
+                </div>
                 <div class="row" id="popularLinks">
                     <div class="col s12 m12 l6">
                         {% if links.0 == none %}
                         {% else %}
+                            <div class="container">
                             <div class="card card1 horizontal hoverable white-text blue-grey lighten-1">
                   <div class="card-stacked">
                       <div class="card_link" id="{{links.0.id }}"  style="cursor: pointer;">
-                      <div class="card-title center"><h5>{{links.0.title}}</h5></div>
-                      <div class="card-content card-content1" id="{{links.0.id }}">
-                      <p>Books:
-                        {% for book in links.0.books.all %}
-                            <span class="chip">
-                          <strong><a href = "/../book/{{book.id}}/">{{book.title}}</a></strong>
-                            </span>
-                        {% endfor %}
-                      </p>
-                      <p>Tags:
-                        {% for tag in links.0.tags.all %}
-                            <span class="chip">
-                          <strong><a href = "/../tags/{{tag.name}}/">{{tag.name}}</a></strong>
-                            </span>
-                        {% endfor %}
-                      </p>
-                      <span>{{links.0.comment_set.count}} comment(s)</span>
-                    </div>
+                          <div class="card-title center"><h5>{{links.0.title}}</h5></div>
+                          <div class="card-content card-content1" id="{{links.0.id }}">
+                              <p>Books:
+                                {% for book in links.0.books.all %}
+                                    <span class="chip">
+                                  <strong><a href = "/../book/{{book.id}}/">{{book.title}}</a></strong>
+                                    </span>
+                                {% endfor %}
+                              </p>
+                              <p>Tags:
+                                {% for tag in links.0.tags.all %}
+                                    <span class="chip">
+                                  <strong><a href = "/../tags/{{tag.name}}/">{{tag.name}}</a></strong>
+                                    </span>
+                                {% endfor %}
+                              </p>
+                              <span>{{links.0.comment_set.count}} comment(s)</span>
+                          </div>
                       </div>
                     <div class="card-action">
-                      <a href="{{links.0.url}}" target="_blank">visit link</a>
-                      {% if request.user == links.0.user %}
-                        <a href="/link/{{links.0.id}}/edit">Edit</a>
-                      {% endif %}
+                          <a href="{{links.0.url}}" target="_blank">visit link</a>
+                          {% if request.user == links.0.user %}
+                            <a href="/link/{{links.0.id}}/edit">Edit</a>
+                          {% endif %}
                     </div>
                   </div>
                             </div>
+                            </div>
                         {% endif %}
-                    
-                    
-                                            {% if links.2 == none %}
+
+
+                        {% if links.2 == none %}
                         {% else %}
+                        <div class="container">
                             <div class="card card1 horizontal hoverable white-text blue-grey lighten-1">
                   <div class="card-stacked">
                       <div class="card_link" id="{{links.2.id }}"  style="cursor: pointer;">
@@ -168,14 +156,16 @@
                     </div>
                   </div>
                             </div>
+                                                </div>
 
                         {% endif %}
                     </div>
-                    
+
                     <div class="col s12 m12 l6">
-                        
+
                                                 {% if links.1 == none %}
                         {% else %}
+                                                    <div class="container">
                             <div class="card card1 horizontal hoverable white-text blue-grey lighten-1">
                   <div class="card-stacked">
                       <div class="card_link" id="{{links.1.id }}"  style="cursor: pointer;">
@@ -207,11 +197,13 @@
                     </div>
                   </div>
                             </div>
+                                                    </div>
 
                         {% endif %}
-                    
-                                            {% if links.3 == none %}
+
+                        {% if links.3 == none %}
                         {% else %}
+                                                <div class="container">
                             <div class="card card1 horizontal hoverable white-text blue-grey lighten-1">
                   <div class="card-stacked">
                       <div class="card_link" id="{{links.3.id }}"  style="cursor: pointer;">
@@ -242,97 +234,108 @@
                     </div>
                   </div>
                             </div>
+                                                </div>
 
                         {% endif %}
-                        
+
                     </div>
             </div>
-                <div class="row" id="popularBooks" style="display: none">
-
+                <div class="row" id="popularBooks">
                     <div class="col s12 m12 l6">
-
                         {% if books.0 == none %}
                         {% else %}
+                <div class="card card1 horizontal hoverable blue-grey white-text lighten-1" >
+                    <div class="card-stacked">
+                    <div id="{{ books.0.id }}" class="card_book" style="cursor: pointer">
 
-
-                <div class="card card1 card_book horizontal hoverable blue-grey white-text lighten-1 " id="{{ books.0.id }}">
-                  <div class="card-stacked">
-                      <div class="card-title center"><h4>{{ books.0.title }}</h4></div>
-                      <div class="card-content card-content1">
-                      <p>{{ books.0.description }}</p>
-                      <p>{{books.0.link_set.count}} link(s)</p>
+                          <div class="card-title center"><h4>{{ books.0.title }}</h4></div>
+                          <div class="card-content card-content1">
+                          <p>{{ books.0.description }}</p>
+                          <p>{{books.0.link_set.count}} link(s)</p>
+                        </div>
                     </div>
-                  </div>
-    </div>
+                        <div class="card-action"></div>
+                    </div>
+                </div>
                         {% endif %}
                         {% if books.2 == none %}
                         {% else %}
-                            <div class="card card1 card_book horizontal hoverable blue-grey white-text lighten-1 " id="{{ books.2.id }}">
-                  <div class="card-stacked">
+                            <div class="card card1 horizontal hoverable blue-grey white-text lighten-1 ">
+                            <div class="card-stacked">
+                                <div id="{{ books.2.id }}" class="card_book" style="cursor: pointer;">
+
                       <div class="card-title center"><h4>{{ books.2.title }}</h4></div>
                       <div class="card-content card-content1">
                       <p>{{ books.2.description }}</p>
                       <p>{{books.2.link_set.count}} link(s)</p>
                     </div>
                   </div>
+                                <div class="card-action"></div>
+                            </div>
     </div>
                         {% endif %}
                     </div>
 
                     <div class="col s12 m12 l6">
 
-                                        {% if books.1 == none %}
+                        {% if books.1 == none %}
                         {% else %}
-                                            <div class="card  card1 card_book horizontal hoverable blue-grey white-text lighten-1 " id="{{ books.1.id }}">
-                  <div class="card-stacked">
-                      <div class="card-title center"><h4>{{ books.1.title }}</h4></div>
-                      <div class="card-content card-content1">
-                      <p>{{ books.1.description }}</p>
-                      <p>{{books.1.link_set.count}} link(s)</p>
-                    </div>
-                  </div>
-    </div>
+                        <div class="card card1 horizontal hoverable blue-grey white-text lighten-1 " >
+                        <div class="card-stacked">
+                            <div id="{{ books.1.id }}" class="card_book" style="cursor:pointer;">
 
-
-
-
+                                  <div class="card-title center"><h4>{{ books.1.title }}</h4></div>
+                                  <div class="card-content card-content1">
+                                  <p>{{ books.1.description }}</p>
+                                  <p>{{books.1.link_set.count}} link(s)</p>
+                                </div>
+                              </div>
+                            <div class="card-action"></div>
+                            </div>
+                        </div>
                         {% endif %}
-                    
 
-                                            {% if books.3 == none %}
+                        {% if books.3 == none %}
                         {% else %}
+                <div class="card card1 horizontal hoverable blue-grey white-text lighten-1">
+                <div class="card-stacked" >
+                    <div id="{{ books.3.id }}" class="card_book" style="cursor: pointer">
 
-                <div class="card card1 horizontal hoverable blue-grey white-text lighten-1 card_book" id="{{ books.3.id }}">
-                  <div class="card-stacked">
                       <div class="card-title center"><h4>{{ books.3.title }}</h4></div>
                       <div class="card-content card-content1">
                       <p>{{ books.3.description }}</p>
                       <p>{{books.3.link_set.count}} link(s)</p>
                     </div>
                   </div>
+                    <div class="card-action"></div>
+                </div>
     </div>
-
                         {% endif %}
 
 
                     </div>
-
-
-
-
                 </div>
-
-        </div>
+            </div>
+    </div>
     </div>
 
-    <!--
-<li>
- <img height = "40px" width="40px" src="{{user.profile.pic}}" />
-</li>
-<li>Username: {{user.username}}</li>
-<li>Links: {{link_count}}</li>
-<li>Books: {{book_count}}</li>
--->
+    <!-- Modals -->
+    <div id="modal5" class="modal">
+        <div class="modal-content" id="followers_modal_content">
+            <ul class="collection" id="followers_modal_list">
+
+            </ul>
+        </div>
+  </div>
+
+        <div id="modal6" class="modal">
+    <div class="modal-content" id="following_modal_content">
+        <ul class="collection" id="following_modal_list">
+
+        </ul>
+    </div>
+  </div>
+
     <script>
 
         $(function () {
@@ -346,21 +349,19 @@
             });
 
             var books = $('.card_book');
-            books.click(function () {
+            books.click(function ()
+            {
 
                 var id = this.id;
                 var url = '/book/' + id;
                 window.open(url);
 
             });
-
-
-
-
-               var popularLinks = $('#popularLinks');
+            var popularLinks = $('#popularLinks');
         var popularBooks = $('#popularBooks');
         var popularLinksTab = $('#popularLinksTab');
         var popularBooksTab = $('#popularBooksTab');
+        popularBooks.css({'display' : 'none'});
 
         popularBooksTab.click(function () {
 
@@ -382,22 +383,53 @@
 
          $('#follower_count').click(function(){
           $.get('/followers/', {user: "{{user.username}}"}, function(data){
-            $('#show_followers').html(JSON.stringify(data));
+              data = data.data;
+              console.log(data);
+              $('#modal5').modal('open');
+              var list = $('#followers_modal_list');
+              var str = '';
+              str += '<li class="collection-item valign-wrapper">';
+              str += '<span class="title">';
+              str += data.length + ' follower(s)';
+              str += '<span>';
+              str += '</li>';
+              for(var i = 0 ; i < data.length; ++i)
+              {
+                  str += '<li class="collection-item avatar valign-wrapper">';
+                  str += '<img src="' + data[i].pic + '" class="circle">';
+                  str += '<a href="/' + data[i].username + '" target = "blank"><span class="title">' + data[i].username + '</span></a>';
+                  str += '</li>';
+              }
+              list.html(str);
           });
         });
 
         $('#following_count').click(function(){
           $.get('/following/', {user: "{{user.username}}"}, function(data){
-            $('#show_following').html(JSON.stringify(data));
+              data = data.data;
+              console.log(data);
+                $('#modal6').modal('open');
+                 var list = $('#following_modal_list');
+                 var str = '';
+                  str += '<li class="collection-item valign-wrapper">';
+                  str += '<span class="title">';
+                  str +=  ' following ' + data.length + ' user(s)';
+                  str += '<span>';
+                  str += '</li>';
+                  for(var i = 0 ; i < data.length; ++i)
+                  {
+                      str += '<li class="collection-item avatar valign-wrapper">';
+                      str += '<img src="' + data[i].pic + '" class="circle">';
+                      str += '<a href="/' + data[i].username + '" target = "blank"><span class="title">' + data[i].username + '</span></a>';
+                      str += '</li>';
+                  }
+                  list.html(str);
           });
         });
 
-
         $('#follow_button').click(function(){
     $.get('/follow/', {to_follow: "{{user.username}}"}, function(data){
-
         var fButton = $('#follow_button');
-
         if(data['follow_button'] === '1')
         {
             //$('#follow_button').removeClass('grey');
@@ -412,22 +444,11 @@
             fButton.addClass('lighten-3');
             fButton.attr('title', 'unfollow')
         }
-
-
        // $('#follow_button').html(data['follow_button']);
         $('#follower_count').html(data['follower_count'] + " followers");
-
-
-
-
-
         });
     });
 
         });
-
-
-
-
     </script>
 {% endblock body %}
