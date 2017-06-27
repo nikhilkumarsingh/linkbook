@@ -99,9 +99,20 @@
     </div>
   </div>
 <a class="btn" href = "/signup"> Signup</a><br/>
-
-
 {% endif %}
+
+<!-- testing notifications -->
+<div>
+{% for notif in notifs %}
+<a href = "/link/{{notif.target.id}}/">
+<li>
+{{notif}}
+</li>
+</a>
+{% endfor %}
+</div>
+
+<!-- -->
 
      <script>
 

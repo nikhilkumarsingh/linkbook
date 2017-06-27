@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'taggit',
     'vote',
     'social_django',
+    'notifications',
     
     'linkbook.core',
     'linkbook.authentication',

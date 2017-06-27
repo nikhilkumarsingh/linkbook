@@ -11,6 +11,7 @@ from linkbook.links.models import Link, Book, Comment
 from taggit.models import Tag
 from taggit.utils import _parse_tags
 from .PyOpenGraph import PyOpenGraph
+from notifications.signals import notify
 
 UP = 0
 DOWN = 1
@@ -124,11 +125,14 @@ def vote_link(request, id):
                 link.save()
                 upvote_button = vote_color
                 downvote_button = ""
+                notify.send(request.user, recipient = link.user, 
+                    target = link, verb = "upvoted")
             else:
                 link.votes.delete(request.user.id)
                 link.save()
                 upvote_button = ""
                 downvote_button = ""
+        
             return JsonResponse({'upvotes': link.votes.count(action = UP), 
                 'downvotes': link.votes.count(action = DOWN),
                 'upvote_button': upvote_button,
@@ -141,11 +145,14 @@ def vote_link(request, id):
                 link.save()
                 downvote_button = vote_color
                 upvote_button = ""
+                notify.send(request.user, recipient = link.user, 
+                    target = link, verb = "downvoted")
             else:
                 link.votes.delete(request.user.id)
                 link.save()
                 downvote_button = ""
                 upvote_button = ""
+            
             return JsonResponse({'upvotes': link.votes.count(action = UP),
                 'downvotes': link.votes.count(action = DOWN),
                 'upvote_button': upvote_button,
@@ -177,9 +184,6 @@ def edit_book(request, id):
         return render(request, 'links/edit_book.html', {'book':book})
 
 
-
-
-
 @login_required
 def create_comment(request, id):
     if request.method == 'POST':
@@ -190,6 +194,8 @@ def create_comment(request, id):
             comment.link = Link.objects.get(id = id)
             comment.text = form.cleaned_data.get('text')
             comment.save()
+            notify.send(request.user, recipient = comment.link.user, 
+                target = comment.link, verb = "commented on")
             return redirect('/link/{}'.format(id))
 
 

@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from PIL import Image
 import pyimgur
 import os
+from notifications.models import Notification
 
 from linkbook.links.models import Link, Book
 from linkbook.core.forms import UpdateProfileForm
@@ -16,18 +17,26 @@ TEMP_IMAGE_PATH = 'linkbook/media/temp.png'
 
 
 def index(request):
-    return render(request, 'core/index.html')
+    if request.user.is_authenticated:
+        notifs = request.user.notifications.unread()
+        print(notifs)
+    else:
+        notifs = None
+    return render(request, 'core/index.html', {'notifs': notifs})
 
 
 def username_slugs(request, username):
     action = request.GET.get('show', None)
     user = get_object_or_404(User, username = username)
-    follows = request.user.profile in user.profile.followers.all()
 
-    if follows:
-        follow_button = "1"
+    if request.user.is_authenticated:
+        follows = request.user.profile in user.profile.followers.all()
+        if follows:
+            follow_button = "1"
+        else:
+            follow_button = "2"
     else:
-        follow_button = "2"
+        follow_button = "1"
 
     if action == 'books':
         user_books = Book.objects.filter(user = user)
@@ -87,6 +96,7 @@ def edit_profile(request, username):
     return render(request, "core/edit_profile.html", {'form':form})
 
 
+@login_required
 def follow_profile(request):
 
     if request.method == 'GET':

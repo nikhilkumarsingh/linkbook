@@ -4,6 +4,8 @@ from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
 from django.contrib import admin
 
+import notifications.urls
+
 from linkbook.core import views as linkbook_core_views
 from linkbook.authentication import views as linkbook_auth_views
 from linkbook.links import views as linkbook_link_views
@@ -16,6 +18,8 @@ urlpatterns = [
     url(r'^logout', auth_views.logout, {'next_page': '/'}, name = 'logout'),
     url(r'^signup/$', linkbook_auth_views.signup, name = 'signup'),
     url(r'^oauth/', include('social_django.urls', namespace='social')),
+
+    url(r'^inbox/notifications/', include(notifications.urls, namespace='notifications')),
 
     url(r'^link/(?P<id>\d+)/$', linkbook_link_views.link, name='link'),
     url(r'^link/new/$', linkbook_link_views.create_link, name = 'create_link'),
