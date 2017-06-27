@@ -26,6 +26,7 @@
     {
         text-decoration-color: violet;
     }
+
     </style>
     <div class="container">
         <div class="row">
@@ -388,16 +389,18 @@
               $('#modal5').modal('open');
               var list = $('#followers_modal_list');
               var str = '';
-              str += '<li class="collection-item valign-wrapper">';
+              str += '<li class="collection-item">';
               str += '<span class="title">';
               str += data.length + ' follower(s)';
               str += '<span>';
               str += '</li>';
               for(var i = 0 ; i < data.length; ++i)
               {
-                  str += '<li class="collection-item avatar valign-wrapper">';
-                  str += '<img src="' + data[i].pic + '" class="circle">';
+                  str += '<li class="collection-item avatar ">';
+                  str += '<img src="' + data[i].pic + '" class="circle images">';
+                  str += '<p style="padding : 2%">';
                   str += '<a href="/' + data[i].username + '" target = "blank"><span class="title">' + data[i].username + '</span></a>';
+                  str += '</p>';
                   str += '</li>';
               }
               list.html(str);
@@ -411,16 +414,18 @@
                 $('#modal6').modal('open');
                  var list = $('#following_modal_list');
                  var str = '';
-                  str += '<li class="collection-item valign-wrapper">';
+                  str += '<li class="collection-item">';
                   str += '<span class="title">';
                   str +=  ' following ' + data.length + ' user(s)';
                   str += '<span>';
                   str += '</li>';
                   for(var i = 0 ; i < data.length; ++i)
                   {
-                      str += '<li class="collection-item avatar valign-wrapper">';
-                      str += '<img src="' + data[i].pic + '" class="circle">';
+                      str += '<li class="collection-item avatar">';
+                      str += '<img src="' + data[i].pic + '" class="circle images">';
+                      str += '<p style="padding : 2%">';
                       str += '<a href="/' + data[i].username + '" target = "blank"><span class="title">' + data[i].username + '</span></a>';
+                      str += '</p>'
                       str += '</li>';
                   }
                   list.html(str);

@@ -8,7 +8,6 @@
 	<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<!--Import materialize.css-->
 	<link type="text/css" rel="stylesheet" href="/static/materialize/css/materialize.css"  media="screen,projection"/>
-
 	<title>
 		{% block title %}{% endblock %}
 	</title>
@@ -20,6 +19,24 @@
 	{% endblock %}
 </head>
 <body>
+<style>
+
+    #userProfilePicNavbar
+    {
+        margin: 25%;
+        cursor:pointer;
+    }
+
+    @-moz-document url-prefix()
+    {
+        #userProfilePicNavbar
+        {
+            margin-top: 15%;
+        }
+    }
+
+
+</style>
     <nav class=" white-text" style="background-color: #26a69a">
         <div class="nav-wrapper">
             <a href="#" class="center brand-logo" >LINK BOOK</a>
@@ -41,7 +58,7 @@
                     <li><a class="btn-floating waves-effect waves-light green" href="#modal3" title="Create new link" ><i class="material-icons">note_add</i></a>
                     </li>
                     <li>
-                     <img class="responsive-img circle hoverable"  height = "40px" width="40px" style="margin: 25%;  cursor:pointer;"  src="{{request.user.profile.pic}}" id="userProfilePic">
+                     <img class="responsive-img circle hoverable"  height = "40px" width="40px"   src="{{request.user.profile.pic}}" id="userProfilePicNavbar">
                     </li>
                     <li><a href="/logout">Logout</a></li>
                 {% endif %}
@@ -151,7 +168,7 @@
         $(function () {
             $(".button-collapse").sideNav();
             $('select').material_select();
-        $('#userProfilePic').click(function () {
+        $('#userProfilePicNavbar').click(function () {
             var url = "/" + "{{ request.user.username }}";
             window.location.href = url;
         });
