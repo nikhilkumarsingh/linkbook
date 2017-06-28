@@ -14,6 +14,11 @@
   <script src = "/static/materialize/js/jquery.js"></script>
   <script src = '/static/materialize/js/materialize.js'> </script>
   <link type="text/css" rel="stylesheet" href="/static/materialize/css/basic.css"  media="screen,projection"/>
+  {% if not request.user.is_authenticated %}
+      <!-- required for social login buttons -->
+      <link rel="stylesheet" type="text/css" href="/static/materialize/css/override_buttons.css">
+      <link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+  {% endif %}
   <!-- <link type="text/css" rel="stylesheet" href="/static/materialize/css/Color_theme.css" media="screen,projection"> -->
   {% block head %}
   {% endblock %}
@@ -34,8 +39,6 @@
                 margin-top: 15%;
             }
         }
-
-
     </style>
     <nav class=" white-text" style="background-color: #26a69a">
         <div class="nav-wrapper">
@@ -59,13 +62,13 @@
                 <li><a class="btn-floating waves-effect waves-light green" href="#modal3" title="Create new link" ><i class="material-icons">note_add</i></a>
                 </li>
                 <li>
-                   <img class="responsive-img circle hoverable"  height = "40px" width="40px"   src="{{request.user.profile.pic}}" id="userProfilePicNavbar">
-               </li>
-               <li><a href="/logout">Logout</a></li>
-               {% endif %}
+                 <img class="responsive-img circle hoverable"  height = "40px" width="40px"   src="{{request.user.profile.pic}}" id="userProfilePicNavbar">
+             </li>
+             <li><a href="/logout">Logout</a></li>
+             {% endif %}
 
-           </ul>
-           <ul class="side-nav" id="mobile-demo">
+         </ul>
+         <ul class="side-nav" id="mobile-demo">
             <li class="active "><a href="/">Home</a></li>
             <li><a href="#">About Us </a></li>
             <li><a  href="#">Project</a></li>
@@ -96,22 +99,22 @@
 
                 <div class="col s12 m4 l4">
                     <div>
-                        <a href="{% url 'social:begin' 'github' %}"><button class="btn black lighten-3 white-text btn-block "><span class="fa fa-github" style="text-transform: lowercase"> | continue with GitHub</span></button></a>
+                        <a href="{% url 'social:begin' 'github' %}?next={{request.path}}"><button class="btn black lighten-3 white-text btn-block "><span class="fa fa-github" style="text-transform: lowercase"> | continue with GitHub</span></button></a>
                     </div>
                     <br>
                     <div>
-                        <a href="{% url 'social:begin' 'twitter' %}"><button class="btn btn-info blue white-text btn-block"><span class="fa fa-twitter" style="text-transform: lowercase"> | continue with Twitter</span></button> </a>
+                        <a href="{% url 'social:begin' 'twitter' %}?next={{request.path}}"><button class="btn btn-info blue white-text btn-block"><span class="fa fa-twitter" style="text-transform: lowercase"> | continue with Twitter</span></button> </a>
                     </div>
                     <br>
                     <div>
-                      <a href="{% url 'social:begin' 'facebook' %}"><button class="btn btn-primary btn-block"><span class="fa fa-facebook" style="text-transform: lowercase"> | continue with Facebook</span></button></a></div>
+                      <a href="{% url 'social:begin' 'facebook' %}?next={{request.path}}"><button class="btn btn-primary btn-block"><span class="fa fa-facebook" style="text-transform: lowercase"> | continue with Facebook</span></button></a></div>
                       <br>
                       <div>
-                        <a href="{% url 'social:begin' 'google-oauth2' %}"> <button class="browser-default btn btn-danger btn-block"><span class="fa fa-google-plus" style="text-transform: lowercase"> | continue with google</span> </button> </a>
+                        <a href="{% url 'social:begin' 'google-oauth2' %}?next={{request.path}}"> <button class="browser-default btn btn-danger btn-block"><span class="fa fa-google-plus" style="text-transform: lowercase"> | continue with google</span> </button> </a>
                     </div>
                     <br>
                     <div>
-                        <a href = "/signup" class="center center-align"><button class="btn btn-default btn-block"><span class="fa fa-user" style="text-transform: lowercase"> | Sign Up locally</span></button></a>
+                        <a href = "/signup/" class="center center-align"><button class="btn btn-default btn-block"><span class="fa fa-user" style="text-transform: lowercase"> | Sign Up locally</span></button></a>
                     </div>
                 </div>
                 <div class="col s12 m1 l1 hide-on-small-and-down" style="border-left: 1px solid black">
@@ -119,7 +122,7 @@
                 </div>
                 <div class="col s12 m7 l7">
 
-                    <form method="post" action="{% url 'login' %}" role="form">
+                    <form method="post" action="{% url 'login' %}?next={{request.path}}" role="form">
                         {% csrf_token %}
                         <div class="input-field{% if form.username.errors %} has-error{% endif %}">
                           <label for="username" class="active">{% trans 'Username' %}</label>
@@ -212,7 +215,7 @@
                     </div>
                 </div>
                 <div class="col s12 m6 l6">
-                   <div class="input-field ">
+                 <div class="input-field ">
                     <i class="material-icons prefix">book</i>
                     <select multiple title="Choose the books in which the current link has to be saved" name="BOOKS" id="BOOKS">
                         <label class="active" for="BOOKS">BOOKS</label>
@@ -279,8 +282,8 @@
             var books = $("#BOOKS");
 
             $.ajax({ url: '/navbar/',
-               type: 'post',
-               success : function(data, status){
+             type: 'post',
+             success : function(data, status){
                 console.log(data);
                 for(var i = 0; i<data['books'].length;i++){
                     books.append('<option>' + data['books'][i] + '</option>');
@@ -306,11 +309,11 @@
 
         // function to auto-resize descrption field
         $(function () {
-           $('#DESCRIPTION').trigger('autoresize');
-           $('.chips').material_chip();
+         $('#DESCRIPTION').trigger('autoresize');
+         $('.chips').material_chip();
 
-           $('#TITLE, #DESCRIPTION').characterCounter();
-       });
-   </script>
+         $('#TITLE, #DESCRIPTION').characterCounter();
+     });
+ </script>
 </body>
 </html>
