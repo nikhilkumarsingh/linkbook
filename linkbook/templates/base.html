@@ -138,9 +138,6 @@
                         <select multiple title="Choose the books in which the current link has to be saved" name="BOOKS" id="BOOKS">
                         <label class="active" for="BOOKS">BOOKS</label>
                             <option selected disabled>Choose Books here</option>
-                            {% for book in books %}
-                                <option> {{ book }} </option>
-                            {% endfor %}
                         </select>
                     </div>
                     </div>
@@ -163,7 +160,60 @@
 	{% block body %}
 
     {% endblock body %}
+    
     <script>
+
+    <!-- CSRF handling -->
+    function getCookie(name) {
+          var cookieValue = null;
+          if (document.cookie && document.cookie != '') {
+              var cookies = document.cookie.split(';');
+              for (var i = 0; i < cookies.length; i++) {
+                  var cookie = jQuery.trim(cookies[i]);
+                  // Does this cookie string begin with the name we want?
+                  if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                      cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                      break;
+                  }
+              }
+          }
+          return cookieValue;
+      }
+      var csrftoken = getCookie('csrftoken');
+      function csrfSafeMethod(method) {
+          // these HTTP methods do not require CSRF protection
+          return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+      }
+      $.ajaxSetup({
+          beforeSend: function(xhr, settings) {
+              if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                  xhr.setRequestHeader("X-CSRFToken", csrftoken);
+              }
+          }
+      });
+
+
+
+        {% if request.user.is_authenticated %}
+        $(document).ready(function(){
+            //initialize
+            var books = $("#BOOKS");
+
+            $.ajax({ url: '/navbar/',
+                     type: 'post',
+                     success : function(data, status){
+                            console.log(data);
+                            for(var i = 0; i<data['books'].length;i++){
+                                books.append('<option>' + data['books'][i] + '</option>');
+                            }
+
+                            // bind new options
+                            books.material_select();
+                        },
+                    });
+            });
+        {% endif %}
+
 
         $(function () {
             $(".button-collapse").sideNav();
@@ -174,8 +224,6 @@
         });
         $('.modal').modal();
         });
-
-
     </script>
 </body>
 </html>

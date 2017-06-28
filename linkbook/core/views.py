@@ -25,6 +25,12 @@ def index(request):
     return render(request, 'core/index.html', {'notifs': notifs})
 
 
+def navbar(request):
+    if request.is_ajax():
+        books = [book.title for book in Book.objects.filter(user = request.user)]
+        return JsonResponse({'books':books})
+
+
 def username_slugs(request, username):
     action = request.GET.get('show', None)
     user = get_object_or_404(User, username = username)
