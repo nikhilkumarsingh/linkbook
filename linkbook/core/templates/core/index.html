@@ -5,8 +5,8 @@
 {% block title %}LinkBook{% endblock %}
 
 {% block body %}
-    <br><br><br>
 
+<!-- what is this??? 
 {% if request.user.is_authenticated %}
     <style>
         .row
@@ -14,115 +14,22 @@
             margin-bottom: 10px;
         }
     </style>
-<a href = "/logout"> Logout</a>
-    <br><a href = "#modal3" class="waves-effect waves-light btn">Create new link</a><br/>
-
-
-    <a href = "#modal2" class="waves-effect waves-light btn"> Create new book </a><br/>
 
 {% else %}
-        <link rel="stylesheet" type="text/css" href="/static/materialize/css/override_buttons.css">
+    <link rel="stylesheet" type="text/css" href="/static/materialize/css/override_buttons.css">
     <link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
-    <a class="waves-effect waves-light btn" href="#modal1">Login</a>
-    <br>
-  <!-- Modal Structure -->
-  <div id="modal1" class="modal">
-    <div class="modal-content">
-
-        <div class="container">
-            <div class="row">
-                <div class="col s12 m2 l2"></div>
-                <div class="col s12 m8 l8">
-                    <h5 class="center center-align blue-grey-text">LinkBook</h5>
-                </div>
-                <div class="col s12 m2 l2"></div>
-            </div>
-            <div class="row">
-
-                <div class="col s12 m4 l4">
-                    <div>
-                        <a href="{% url 'social:begin' 'github' %}"><button class="btn black lighten-3 white-text btn-block "><span class="fa fa-github" style="text-transform: lowercase"> | continue with GitHub</span></button></a>
-                    </div>
-                    <br>
-                <div>
-                    <a href="{% url 'social:begin' 'twitter' %}"><button class="btn btn-info blue white-text btn-block"><span class="fa fa-twitter" style="text-transform: lowercase"> | continue with Twitter</span></button> </a>
-                </div>
-                    <br>
-                <div>
-                      <a href="{% url 'social:begin' 'facebook' %}"><button class="btn btn-primary btn-block"><span class="fa fa-facebook" style="text-transform: lowercase"> | continue with Facebook</span></button></a></div>
-                <br>
-                    <div>
-                        <a href="{% url 'social:begin' 'google-oauth2' %}"> <button class="browser-default btn btn-danger btn-block"><span class="fa fa-google-plus" style="text-transform: lowercase"> | continue with google</span> </button> </a>
-                </div>
-                    <br>
-                    <div>
-                        <a href = "/signup" class="center center-align"><button class="btn btn-default btn-block"><span class="fa fa-user" style="text-transform: lowercase"> | Sign Up locally</span></button></a>
-                    </div>
-                </div>
-                <div class="col s12 m1 l1 hide-on-small-and-down" style="border-left: 1px solid black">
-                    <br><br><br><br><br><br><br><br><br><br><br><br><br>
-                </div>
-                <div class="col s12 m7 l7">
-
-                    <form method="post" action="{% url 'login' %}" role="form">
-                {% csrf_token %}
-                <div class="input-field{% if form.username.errors %} has-error{% endif %}">
-                  <label for="username" class="active">{% trans 'Username' %}</label>
-                  <input type="text" class="form-control" id="username" name="username">
-
-                  {% for error in form.username.errors %}
-                    <span class="red-text">{{ error }}</span><br>
-                  {% endfor %}
-                </div>
-                <div class="input-field{% if form.password.errors %} has-error{% endif %}">
-                  <label for="password" class="active">{% trans 'Password' %}</label>
-                  <input type="password"  id="password" name="password">
-                  {% for error in form.password.errors %}
-                    <span class="red-text">{{ error }}</span><br>
-                  {% endfor %}
-                </div>
-                        <button type="submit" class="btn waves-effect waves-light">{% trans 'Log in' %}</button>
-                  <br><br><br>
-              </form>
-
-                </div>
-            </div>
-            <div class="row">
-                <div class="col s12 m4 l4"></div>
-                <div class="col s12 m4 l4 center center-align">
-
-                </div>
-                <div class="col s12 m4 l4"></div>
-            </div>
-        </div>
-
-    </div>
-  </div>
-<a class="btn" href = "/signup"> Signup</a><br/>
 {% endif %}
+-->
 
 <!-- testing notifications -->
 <div>
-{% for notif in notifs %}
-<a href = "/link/{{notif.target.id}}/">
-<li>
-{{notif}}
-</li>
-</a>
-{% endfor %}
+  {% for notif in notifs %}
+  <a href = "/link/{{notif.target.id}}/">
+    <li>
+      {{notif}}
+    </li>
+  </a>
+  {% endfor %}
 </div>
-
-<!-- -->
-
-     <script>
-
-        $(function () {
-                     $('#DESCRIPTION').trigger('autoresize');
-         $('.chips').material_chip();
-
-         $('#TITLE, #DESCRIPTION').characterCounter();
-        });
-
-    </script>
 
 {% endblock body %}
