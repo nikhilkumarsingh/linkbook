@@ -238,7 +238,6 @@
 {% endblock body %}
 
 <script>
-
     // CSRF handling
     function getCookie(name) {
       var cookieValue = null;
@@ -268,17 +267,13 @@
           }
       });
 
-
-       
         // function to load user books when page is loaded
         $(document).ready(function(){
-
         {% if request.user.is_authenticated %}
             //initialize
             var books = $("#BOOKS");
             var notifs = $("#NOTIFS");
             var notif_master = $("#MYNOTIF");
-
             $.ajax({ url: '/navbar/',
                type: 'post',
                success : function(data, status){
@@ -286,27 +281,23 @@
                     for(var i = 0; i<data['books'].length;i++){
                         books.append('<option>' + data['books'][i] + '</option>');
                     }
-                    
+
                     // bind new options
                     books.material_select();
 
-                    
                     for(var i = 0; i<data['notifs'].length;i++){
                         notifs.append("<li><a href='/link/" + data['notifs'][i]['id'] + "/'>"
                             + "<img src=" + data['notifs'][i]['pic'] + " height=20px width=20px/>&nbsp" 
                             + data['notifs'][i]['text'] + "</a></li>"
                             + "<li class='divider'></li>");
-                    }
 
                     // bind new notifications
                     notifs.material_select(true);
                     notif_master.dropdown();
-
                 },
             });
         {% endif %}
-
-        // to load user profile url on click 
+        // to load user profile url on click
         $(".button-collapse").sideNav();
         $('select').material_select();
         $('#userProfilePicNavbar').click(function () {
@@ -314,7 +305,6 @@
             window.location.href = url;
         });
         $('.modal').modal();
-
         // to auto-resize descrption field
         $('#DESCRIPTION').trigger('autoresize');
         $('.chips').material_chip();
