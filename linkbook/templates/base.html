@@ -267,6 +267,33 @@
           }
       });
 
+      function LoadNotifications()
+      {
+            var books = $("#BOOKS");
+            var notifs = $("#NOTIFS");
+            var notif_master = $("#MYNOTIF");
+          $.ajax({ url: '/navbar/',
+               type: 'post',
+               success : function(data, status){
+                    console.log(data);
+                    var str = '';
+                    for(var i = 0;  i < data['books'].length;i++){
+                        str +=('<option>' + data['books'][i] + '</option>');
+                    }
+                    // bind new options
+                   books.html(str);
+
+                   str = ''
+                    for( i = 0; i < data['notifs'].length;i++){
+                        str +=("<li><a href='/link/" + data['notifs'][i]['id'] + "/'>"
+                            + data['notifs'][i]['text'] + "</a></li>");
+                    }
+                    notifs.html(str);
+                }
+            });
+
+      }
+
         // function to load user books when page is loaded
         $(document).ready(function(){
         {% if request.user.is_authenticated %}
@@ -274,26 +301,12 @@
             var books = $("#BOOKS");
             var notifs = $("#NOTIFS");
             var notif_master = $("#MYNOTIF");
-            $.ajax({ url: '/navbar/',
-               type: 'post',
-               success : function(data, status){
-                    console.log(data);
-                    for(var i = 0; i<data['books'].length;i++){
-                        books.append('<option>' + data['books'][i] + '</option>');
-                    }
 
-                    // bind new options
-                    books.material_select();
-
-                    for(var i = 0; i<data['notifs'].length;i++){
-                        notifs.append("<li><a href='/link/" + data['notifs'][i]['id'] + "/'>"
-                            + data['notifs'][i]['text'] + "</a></li>");
-                    }
-                    // bind new notifications
-                    notifs.material_select(true);
-                    notif_master.dropdown();
-                },
-            });
+            LoadNotifications();
+            books.material_select();
+            notifs.material_select(true);
+            notif_master.dropdown();
+            window.setInterval(LoadNotifications, 5000);
         {% endif %}
         // to load user profile url on click
         $(".button-collapse").sideNav();
