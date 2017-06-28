@@ -269,9 +269,11 @@
       });
 
 
-       {% if request.user.is_authenticated %}
+       
         // function to load user books when page is loaded
         $(document).ready(function(){
+
+        {% if request.user.is_authenticated %}
             //initialize
             var books = $("#BOOKS");
             var notifs = $("#NOTIFS");
@@ -290,7 +292,8 @@
 
                     
                     for(var i = 0; i<data['notifs'].length;i++){
-                        notifs.append('<li><a href="#!">' + data['notifs'][i] + '</a></li>');
+                        notifs.append("<li><a href='/link/" + data['notifs'][i]['id'] + "/'>" 
+                            + data['notifs'][i]['text'] + "</a></li>");
                     }
 
                     // bind new notifications

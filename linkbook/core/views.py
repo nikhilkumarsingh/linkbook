@@ -17,18 +17,14 @@ TEMP_IMAGE_PATH = 'linkbook/media/temp.png'
 
 
 def index(request):
-    if request.user.is_authenticated:
-        notifs = request.user.notifications.unread()
-        print(notifs)
-    else:
-        notifs = None
-    return render(request, 'core/index.html', {'notifs': notifs})
+    return render(request, 'core/index.html')
 
 
 def navbar(request):
     if request.is_ajax():
         books = [book.title for book in Book.objects.filter(user = request.user)]
-        notifs = [notif. __str__() for notif in request.user.notifications.unread()]
+        notifs = [{'id':notif.target.id, 'text': notif. __str__(), 'pic': notif.actor.profile.pic} 
+        for notif in request.user.notifications.unread()]
         return JsonResponse({'books':books, 'notifs':notifs})
 
 
