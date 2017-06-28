@@ -28,7 +28,8 @@ def index(request):
 def navbar(request):
     if request.is_ajax():
         books = [book.title for book in Book.objects.filter(user = request.user)]
-        return JsonResponse({'books':books})
+        notifs = [notif. __str__() for notif in request.user.notifications.unread()]
+        return JsonResponse({'books':books, 'notifs':notifs})
 
 
 def username_slugs(request, username):
