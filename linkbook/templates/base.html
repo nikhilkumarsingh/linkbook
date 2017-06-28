@@ -46,10 +46,11 @@
                 <li><a class="btn-floating  waves-effect waves-light green" href="#modal2" title="Create new book" ><i class="material-icons">queue</i></a></li>
                 <li><a class="btn-floating waves-effect waves-light green" href="#modal3" title="Create new link" ><i class="material-icons">note_add</i></a>
                 </li>
-                <li>
-                   <img class="responsive-img square hoverable"  style= "vertical-align: middle" height = "40px" width="40px"   src="{{request.user.profile.pic}}" id="userProfilePicNavbar">
+               <li><a class='dropdown-button btn-floating waves-effect waves-light blue' data-beloworigin="true" href='#' data-activates='dropdown1'><i class="material-icons">notifications</i></a></li>
+               <li>
+                   <img class="responsive-img square hoverable"  style= "vertical-align: middle" height = "40px" width="40px"   src="{{request.user.profile.pic}}" id="userProfilePicNavbar">&nbsp;{{request.user.first_name}}
                </li>
-               <li><a href="/logout">Logout</a></li>
+               <li><a href="/logout/?next={{request.path}}">Logout</a></li>
                {% endif %}
 
            </ul>
@@ -67,6 +68,20 @@
         </ul>
     </div>
 </nav>
+
+
+<!-- Dropdown Structure -->
+  <ul id='dropdown1' class='dropdown-content'>
+    <li><a href="#!">one</a></li>
+    <li><a href="#!">two</a></li>
+    <li class="divider"></li>
+    <li><a href="#!">three</a></li>
+    <li><a href="#!"><i class="material-icons">view_module</i>four</a></li>
+    <li><a href="#!"><i class="material-icons">cloud</i>five</a></li>
+  </ul>
+
+
+
 
 <!-- LOGIN modal -->
 <div id="modal1" class="modal">
