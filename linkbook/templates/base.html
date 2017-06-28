@@ -283,11 +283,11 @@
                     for(var i = 0; i<data['books'].length;i++){
                         books.append('<option>' + data['books'][i] + '</option>');
                     }
-                    
+
                     // bind new options
                     books.material_select();
 
-                    
+
                     for(var i = 0; i<data['notifs'].length;i++){
                         notifs.append('<li><a href="#!">' + data['notifs'][i] + '</a></li>');
                     }
@@ -301,7 +301,7 @@
         });
         {% endif %}
 
-        // function to load user profile on click 
+        // function to load user profile on click
         $(function () {
             $(".button-collapse").sideNav();
             $('select').material_select();
