@@ -5,16 +5,4 @@
 {% block title %}Home{% endblock %}
 
 {% block body %}
-
-<!-- testing notifications -->
-<div>
-  {% for notif in notifs %}
-  <a href = "/link/{{notif.target.id}}/">
-    <li>
-      {{notif}}
-    </li>
-  </a>
-  {% endfor %}
-</div>
-
 {% endblock body %}
