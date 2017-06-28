@@ -15,31 +15,16 @@
   <script src = '/static/materialize/js/materialize.js'> </script>
   <link type="text/css" rel="stylesheet" href="/static/materialize/css/basic.css"  media="screen,projection"/>
   {% if not request.user.is_authenticated %}
-      <!-- required for social login buttons -->
-      <link rel="stylesheet" type="text/css" href="/static/materialize/css/override_buttons.css">
-      <link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+  <!-- required for social login buttons -->
+  <link rel="stylesheet" type="text/css" href="/static/materialize/css/override_buttons.css">
+  <link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
   {% endif %}
   <!-- <link type="text/css" rel="stylesheet" href="/static/materialize/css/Color_theme.css" media="screen,projection"> -->
   {% block head %}
   {% endblock %}
 </head>
 <body>
-    <style>
 
-        #userProfilePicNavbar
-        {
-            margin: 25%;
-            cursor:pointer;
-        }
-
-        @-moz-document url-prefix()
-        {
-            #userProfilePicNavbar
-            {
-                margin-top: 15%;
-            }
-        }
-    </style>
     <nav class=" white-text" style="background-color: #26a69a">
         <div class="nav-wrapper">
             <a href="#" class="center brand-logo" >LINK BOOK</a>
@@ -62,13 +47,13 @@
                 <li><a class="btn-floating waves-effect waves-light green" href="#modal3" title="Create new link" ><i class="material-icons">note_add</i></a>
                 </li>
                 <li>
-                 <img class="responsive-img circle hoverable"  height = "40px" width="40px"   src="{{request.user.profile.pic}}" id="userProfilePicNavbar">
-             </li>
-             <li><a href="/logout">Logout</a></li>
-             {% endif %}
+                   <img class="responsive-img square hoverable"  style= "vertical-align: middle" height = "40px" width="40px"   src="{{request.user.profile.pic}}" id="userProfilePicNavbar">
+               </li>
+               <li><a href="/logout">Logout</a></li>
+               {% endif %}
 
-         </ul>
-         <ul class="side-nav" id="mobile-demo">
+           </ul>
+           <ul class="side-nav" id="mobile-demo">
             <li class="active "><a href="/">Home</a></li>
             <li><a href="#">About Us </a></li>
             <li><a  href="#">Project</a></li>
@@ -215,7 +200,7 @@
                     </div>
                 </div>
                 <div class="col s12 m6 l6">
-                 <div class="input-field ">
+                   <div class="input-field ">
                     <i class="material-icons prefix">book</i>
                     <select multiple title="Choose the books in which the current link has to be saved" name="BOOKS" id="BOOKS">
                         <label class="active" for="BOOKS">BOOKS</label>
@@ -245,7 +230,7 @@
 
 <script>
 
-    <!-- CSRF handling -->
+    // CSRF handling
     function getCookie(name) {
       var cookieValue = null;
       if (document.cookie && document.cookie != '') {
@@ -282,8 +267,8 @@
             var books = $("#BOOKS");
 
             $.ajax({ url: '/navbar/',
-             type: 'post',
-             success : function(data, status){
+               type: 'post',
+               success : function(data, status){
                 console.log(data);
                 for(var i = 0; i<data['books'].length;i++){
                     books.append('<option>' + data['books'][i] + '</option>');
@@ -309,11 +294,11 @@
 
         // function to auto-resize descrption field
         $(function () {
-         $('#DESCRIPTION').trigger('autoresize');
-         $('.chips').material_chip();
+           $('#DESCRIPTION').trigger('autoresize');
+           $('.chips').material_chip();
 
-         $('#TITLE, #DESCRIPTION').characterCounter();
-     });
- </script>
+           $('#TITLE, #DESCRIPTION').characterCounter();
+       });
+   </script>
 </body>
 </html>
