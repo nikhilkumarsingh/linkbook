@@ -9,7 +9,7 @@
     <!--Import materialize.css-->
     <link type="text/css" rel="stylesheet" href="/static/materialize/css/materialize.css"  media="screen,projection"/>
     <title>
-      {% block title %}{% endblock %}
+    LinkBook | {% block title %}{% endblock %}
   </title>
   <script src = "/static/materialize/js/jquery.js"></script>
   <script src = '/static/materialize/js/materialize.js'> </script>
@@ -27,7 +27,7 @@
 
     <nav class=" white-text" style="background-color: #26a69a">
         <div class="nav-wrapper">
-            <a href="#" class="center brand-logo" >LINK BOOK</a>
+            <a href="#" class="center brand-logo" >LinkBook</a>
             <a href="#" data-activates="mobile-demo"  class="button-collapse" ><i class="material-icons">menu</i></a>
             <ul class="hide-on-med-and-down left">
                 <li class="active left"><a href="/">Home</a></li>
@@ -46,7 +46,7 @@
                 <li><a class="btn-floating  waves-effect waves-light green" href="#modal2" title="Create new book" ><i class="material-icons">queue</i></a></li>
                 <li><a class="btn-floating waves-effect waves-light green" href="#modal3" title="Create new link" ><i class="material-icons">note_add</i></a>
                 </li>
-               <li><a class='dropdown-button btn-floating waves-effect waves-light blue' data-beloworigin="true" href='#' data-activates='dropdown1'><i class="material-icons">notifications</i></a></li>
+               <li><a class='dropdown-button btn-floating waves-effect waves-light blue' data-beloworigin="true" href='#' data-activates='NOTIFS'><i class="material-icons">notifications</i></a></li>
                <li>
                    <img class="responsive-img square hoverable"  style= "vertical-align: middle" height = "40px" width="40px"   src="{{request.user.profile.pic}}" id="userProfilePicNavbar">&nbsp;{{request.user.first_name}}
                </li>
@@ -71,13 +71,7 @@
 
 
 <!-- Dropdown Structure -->
-  <ul id='dropdown1' class='dropdown-content'>
-    <li><a href="#!">one</a></li>
-    <li><a href="#!">two</a></li>
-    <li class="divider"></li>
-    <li><a href="#!">three</a></li>
-    <li><a href="#!"><i class="material-icons">view_module</i>four</a></li>
-    <li><a href="#!"><i class="material-icons">cloud</i>five</a></li>
+  <ul id='NOTIFS' class='dropdown-content'>
   </ul>
 
 
@@ -280,19 +274,30 @@
         $(document).ready(function(){
             //initialize
             var books = $("#BOOKS");
+            var notifs = $("#NOTIFS");
 
             $.ajax({ url: '/navbar/',
                type: 'post',
                success : function(data, status){
-                console.log(data);
-                for(var i = 0; i<data['books'].length;i++){
-                    books.append('<option>' + data['books'][i] + '</option>');
-                }
+                    console.log(data);
+                    for(var i = 0; i<data['books'].length;i++){
+                        books.append('<option>' + data['books'][i] + '</option>');
+                    }
+                    
+                    // bind new options
+                    books.material_select();
 
-                            // bind new options
-                            books.material_select();
-                        },
-                    });
+                    
+                    for(var i = 0; i<data['notifs'].length;i++){
+                        notifs.append('<li><a href="#!">' + data['notifs'][i] + '</a></li>');
+                    }
+
+                    // bind new notifications
+                    notifs.material_select(true);
+                    console.log(notifs.html());
+
+                },
+            });
         });
         {% endif %}
 
