@@ -43,13 +43,13 @@
                 <li><a class="right" href="#modal1">Login</a></li>
                 <li ><a href="/signup" class="right">Sign Up</a></li>
                 {% else %}
+                <li>
+                   <img class="responsive-img square hoverable"  style= "vertical-align: middle" height = "40px" width="40px"   src="{{request.user.profile.pic}}" id="userProfilePicNavbar">&nbsp;{{request.user.first_name}}
+               </li>
                 <li><a class="btn-floating  waves-effect waves-light green" href="#modal2" title="Create new book" ><i class="material-icons">queue</i></a></li>
                 <li><a class="btn-floating waves-effect waves-light green" href="#modal3" title="Create new link" ><i class="material-icons">note_add</i></a>
                 </li>
-               <li><a class='dropdown-button btn-floating waves-effect waves-light blue' data-beloworigin="true" href='#' data-activates='NOTIFS'><i class="material-icons">notifications</i></a></li>
-               <li>
-                   <img class="responsive-img square hoverable"  style= "vertical-align: middle" height = "40px" width="40px"   src="{{request.user.profile.pic}}" id="userProfilePicNavbar">&nbsp;{{request.user.first_name}}
-               </li>
+               <li><a class='dropdown-button btn-floating waves-effect waves-light blue' data-beloworigin="true" href='#!' data-activates='NOTIFS' id="MYNOTIF" data-constrainwidth="false"><i class="material-icons">notifications</i></a></li>
                <li><a href="/logout/?next={{request.path}}">Logout</a></li>
                {% endif %}
 
@@ -77,79 +77,6 @@
 
 
 
-<!-- LOGIN modal -->
-<div id="modal1" class="modal">
-    <div class="modal-content">
-
-        <div class="container">
-            <div class="row">
-                <div class="col s12 m2 l2"></div>
-                <div class="col s12 m8 l8">
-                    <h5 class="center center-align blue-grey-text">LinkBook</h5>
-                </div>
-                <div class="col s12 m2 l2"></div>
-            </div>
-            <div class="row">
-
-                <div class="col s12 m4 l4">
-                    <div>
-                        <a href="{% url 'social:begin' 'github' %}?next={{request.path}}"><button class="btn black lighten-3 white-text btn-block "><span class="fa fa-github" style="text-transform: lowercase"> | continue with GitHub</span></button></a>
-                    </div>
-                    <br>
-                    <div>
-                        <a href="{% url 'social:begin' 'twitter' %}?next={{request.path}}"><button class="btn btn-info blue white-text btn-block"><span class="fa fa-twitter" style="text-transform: lowercase"> | continue with Twitter</span></button> </a>
-                    </div>
-                    <br>
-                    <div>
-                      <a href="{% url 'social:begin' 'facebook' %}?next={{request.path}}"><button class="btn btn-primary btn-block"><span class="fa fa-facebook" style="text-transform: lowercase"> | continue with Facebook</span></button></a></div>
-                      <br>
-                      <div>
-                        <a href="{% url 'social:begin' 'google-oauth2' %}?next={{request.path}}"> <button class="browser-default btn btn-danger btn-block"><span class="fa fa-google-plus" style="text-transform: lowercase"> | continue with google</span> </button> </a>
-                    </div>
-                    <br>
-                    <div>
-                        <a href = "/signup/" class="center center-align"><button class="btn btn-default btn-block"><span class="fa fa-user" style="text-transform: lowercase"> | Sign Up locally</span></button></a>
-                    </div>
-                </div>
-                <div class="col s12 m1 l1 hide-on-small-and-down" style="border-left: 1px solid black">
-                    <br><br><br><br><br><br><br><br><br><br><br><br><br>
-                </div>
-                <div class="col s12 m7 l7">
-
-                    <form method="post" action="{% url 'login' %}?next={{request.path}}" role="form">
-                        {% csrf_token %}
-                        <div class="input-field{% if form.username.errors %} has-error{% endif %}">
-                          <label for="username" class="active">{% trans 'Username' %}</label>
-                          <input type="text" class="form-control" id="username" name="username">
-
-                          {% for error in form.username.errors %}
-                          <span class="red-text">{{ error }}</span><br>
-                          {% endfor %}
-                      </div>
-                      <div class="input-field{% if form.password.errors %} has-error{% endif %}">
-                          <label for="password" class="active">{% trans 'Password' %}</label>
-                          <input type="password"  id="password" name="password">
-                          {% for error in form.password.errors %}
-                          <span class="red-text">{{ error }}</span><br>
-                          {% endfor %}
-                      </div>
-                      <button type="submit" class="btn waves-effect waves-light">{% trans 'Log in' %}</button>
-                      <br><br><br>
-                  </form>
-
-              </div>
-          </div>
-          <div class="row">
-            <div class="col s12 m4 l4"></div>
-            <div class="col s12 m4 l4 center center-align">
-
-            </div>
-            <div class="col s12 m4 l4"></div>
-        </div>
-    </div>
-
-</div>
-</div>
 
 
 <!-- NEW BOOK modal -->
@@ -233,12 +160,90 @@
 </div>
 
 
+
+    <!-- LOGIN modal -->
+<div id="modal1" class="modal">
+    <div class="modal-content">
+        <div class="container">
+            <div class="row">
+                <div class="col s12 m2 l2"></div>
+                <div class="col s12 m8 l8">
+                    <h5 class="center center-align blue-grey-text">LinkBook</h5>
+                </div>
+                <div class="col s12 m2 l2"></div>
+            </div>
+            <div class="row">
+
+                <div class="col s12 m4 l4">
+                    <div>
+                        <a href="{% url 'social:begin' 'github' %}?next={{request.path}}"><button class="btn black lighten-3 white-text btn-block "><span class="fa fa-github" style="text-transform: lowercase"> | continue with GitHub</span></button></a>
+                    </div>
+                    <br>
+                    <div>
+                        <a href="{% url 'social:begin' 'twitter' %}?next={{request.path}}"><button class="btn btn-info blue white-text btn-block"><span class="fa fa-twitter" style="text-transform: lowercase"> | continue with Twitter</span></button> </a>
+                    </div>
+                    <br>
+                    <div>
+                      <a href="{% url 'social:begin' 'facebook' %}?next={{request.path}}"><button class="btn btn-primary btn-block"><span class="fa fa-facebook" style="text-transform: lowercase"> | continue with Facebook</span></button></a></div>
+                      <br>
+                      <div>
+                        <a href="{% url 'social:begin' 'google-oauth2' %}?next={{request.path}}"> <button class="browser-default btn btn-danger btn-block"><span class="fa fa-google-plus" style="text-transform: lowercase"> | continue with google</span> </button> </a>
+                    </div>
+                    <br>
+                    <div>
+                        <a href = "/signup/" class="center center-align"><button class="btn btn-default btn-block"><span class="fa fa-user" style="text-transform: lowercase"> | Sign Up locally</span></button></a>
+                    </div>
+                </div>
+                <div class="col s12 m1 l1 hide-on-small-and-down" style="border-left: 1px solid black">
+                    <br><br><br><br><br><br><br><br><br><br><br><br><br>
+                </div>
+                <div class="col s12 m7 l7">
+
+                    <form method="post" action="{% url 'login' %}?next={{request.path}}" role="form">
+                        {% csrf_token %}
+                        <div class="input-field{% if form.username.errors %} has-error{% endif %}">
+                          <label for="username" class="active">{% trans 'Username' %}</label>
+                          <input type="text" class="form-control" id="username" name="username">
+
+                          {% for error in form.username.errors %}
+                          <span class="red-text">{{ error }}</span><br>
+                          {% endfor %}
+                      </div>
+                      <div class="input-field{% if form.password.errors %} has-error{% endif %}">
+                          <label for="password" class="active">{% trans 'Password' %}</label>
+                          <input type="password"  id="password" name="password">
+                          {% for error in form.password.errors %}
+                          <span class="red-text">{{ error }}</span><br>
+                          {% endfor %}
+                      </div>
+                      <button type="submit" class="btn waves-effect waves-light">{% trans 'Log in' %}</button>
+                      <br><br><br>
+                  </form>
+
+              </div>
+          </div>
+          <div class="row">
+            <div class="col s12 m4 l4"></div>
+            <div class="col s12 m4 l4 center center-align">
+
+            </div>
+            <div class="col s12 m4 l4"></div>
+        </div>
+    </div>
+
+</div>
+</div>
+
+
+
+
+
 {% block body %}
+
 
 {% endblock body %}
 
 <script>
-
     // CSRF handling
     function getCookie(name) {
       var cookieValue = null;
@@ -267,15 +272,13 @@
               }
           }
       });
-
-
-      {% if request.user.is_authenticated %}
+       {% if request.user.is_authenticated %}
         // function to load user books when page is loaded
         $(document).ready(function(){
             //initialize
             var books = $("#BOOKS");
             var notifs = $("#NOTIFS");
-
+            var notif_master = $("#MYNOTIF");
             $.ajax({ url: '/navbar/',
                type: 'post',
                success : function(data, status){
@@ -287,38 +290,28 @@
                     // bind new options
                     books.material_select();
 
-
                     for(var i = 0; i<data['notifs'].length;i++){
                         notifs.append('<li><a href="#!">' + data['notifs'][i] + '</a></li>');
                     }
-
                     // bind new notifications
                     notifs.material_select(true);
-                    console.log(notifs.html());
-
+                    notif_master.dropdown();
                 },
             });
-        });
         {% endif %}
-
-        // function to load user profile on click
-        $(function () {
-            $(".button-collapse").sideNav();
-            $('select').material_select();
-            $('#userProfilePicNavbar').click(function () {
-                var url = "/" + "{{ request.user.username }}";
-                window.location.href = url;
-            });
-            $('.modal').modal();
+        // to load user profile url on click
+        $(".button-collapse").sideNav();
+        $('select').material_select();
+        $('#userProfilePicNavbar').click(function () {
+            var url = "/" + "{{ request.user.username }}";
+            window.location.href = url;
         });
-
-        // function to auto-resize descrption field
-        $(function () {
-           $('#DESCRIPTION').trigger('autoresize');
-           $('.chips').material_chip();
-
-           $('#TITLE, #DESCRIPTION').characterCounter();
-       });
+        $('.modal').modal();
+        // to auto-resize descrption field
+        $('#DESCRIPTION').trigger('autoresize');
+        $('.chips').material_chip();
+        $('#TITLE, #DESCRIPTION').characterCounter();
+    });
    </script>
 </body>
 </html>
