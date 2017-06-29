@@ -38,7 +38,7 @@
                                 <div>
                                     <div class="row" style="margin-bottom: 0px">
                                         <div class="col s7 m7 l7">
-                                            <a href = "{{link.url}}" target="_blank" class="title center"> <h5>{{link.title | linebreaksbr}}</h5>
+                                            <a href = "{{link.url}}" target="_blank" class="title"> <h5>{{link.title | linebreaksbr}}</h5>
                                             </a>
                                         </div>
                                         <div class="col s1 m1 l1"></div>
@@ -253,7 +253,8 @@
         var converter = new showdown.Converter();
         var descr = $("#DESCR");
         text = descr.html();
-        new_text = converter.makeHtml(text);
+        new_text = (converter.makeHtml(text)).replace('h1','h4').replace('h2','h5')
+                                             .replace('h3','h6').replace('h4','h7');
         descr.html(new_text);
         console.log(descr.html());
 
