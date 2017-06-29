@@ -94,6 +94,8 @@ def edit_link(request, id):
         link.url = request.POST.get('URL')
         link.title = request.POST.get('TITLE')
         link.description = request.POST.get('DESCRIPTION')
+        for tag in link.tags.all():
+            link.tags.remove(tag)
         tag_list = request.POST.get('TAGS')
         for tag in _parse_tags(tag_list):
             link.tags.add(tag)

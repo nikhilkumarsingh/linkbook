@@ -21,6 +21,7 @@ urlpatterns = [
 
     url(r'^navbar/$', linkbook_core_views.navbar, name = 'navbar'),
     url(r'^inbox/notifications/', include(notifications.urls, namespace='notifications')),
+    #url(r'^mark_as_read/', linkbook_core_views.mark_as_read),
 
     url(r'^link/(?P<id>\d+)/$', linkbook_link_views.link, name='link'),
     url(r'^link/new/$', linkbook_link_views.create_link, name = 'create_link'),

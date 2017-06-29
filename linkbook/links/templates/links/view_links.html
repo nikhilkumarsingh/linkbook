@@ -45,7 +45,6 @@
                       <div class="card_link" id="{{ link.id }}"  style="cursor: pointer;">
                       <div class="card-title center"><h5>{{link.title}}</h5></div>
                       <div class="card-content" id="{{ link.id }}">
-                      <p class="description">{{ link.description }}</p>
                       <p>Books:
                         {% for book in link.books.all %}
                             <span class="chip">
