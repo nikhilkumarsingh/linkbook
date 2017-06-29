@@ -68,7 +68,7 @@
 
                                 </div>
                                 <hr>
-                       <span class="title blue-grey-text">{{link.description}}</span>
+                                <span id = "DESCR" style="font-size: 100%">{{link.description}}</span>
                                 <span id="url" style="display: none"><a href="{{ link.url }}" target="_blank"> {{ link.url }} </a></span>
                             </div>
                         </div>
@@ -248,8 +248,14 @@
       belowOrigin: true, // Displays dropdown below the button
       alignment: 'right', // Displays dropdown with edge aligned to the left of button
       stopPropagation: false // Stops event propagation
-    }
-  );
+    });
+
+        var converter = new showdown.Converter();
+        var descr = $("#DESCR");
+        text = descr.html();
+        new_text = converter.makeHtml(text);
+        descr.html(new_text);
+        console.log(descr.html());
 
 
         var b = $('#btn_url');
@@ -339,6 +345,7 @@
         console.log("Hello");
         $('#card_image_div').css({'display' : 'none'});
     });
+
     function copyToClipboard(element) {
     var $temp = $("<input>");
     $("body").append($temp);
@@ -346,6 +353,7 @@
     document.execCommand("copy");
     $temp.remove();
 }
+
     </script>
 
 {% endblock %}
