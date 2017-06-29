@@ -37,14 +37,12 @@
                 <li><a class="left" href="#">Project</a></li>
             </ul>
             <ul class="hide-on-med-and-down right">
-
-
                 {% if not request.user.is_authenticated %}
                 <li><a class="right" href="#modal1">Login</a></li>
                 <li ><a href="/signup" class="right">Sign Up</a></li>
                 {% else %}
                 <li>
-                   <img class="responsive-img square hoverable"  style= "vertical-align: middle" height = "40px" width="40px"   src="{{request.user.profile.pic}}" id="userProfilePicNavbar">&nbsp;{{request.user.first_name}}
+                   <img class="responsive-img square hoverable"  style= "vertical-align: middle; cursor: pointer;" height = "40px" width="40px"   src="{{request.user.profile.pic}}" id="userProfilePicNavbar">&nbsp;{{request.user.first_name}}
                </li>
                 <li><a class="btn-floating  waves-effect waves-light green" href="#modal2" title="Create new book" ><i class="material-icons">queue</i></a></li>
                 <li><a class="btn-floating waves-effect waves-light green" href="#modal3" title="Create new link" ><i class="material-icons">note_add</i></a>
@@ -73,14 +71,9 @@
 <!-- Dropdown Structure -->
   <ul id='NOTIFS' class='dropdown-content'>
   </ul>
-
-
-
-
 <!-- LOGIN modal -->
 <div id="modal1" class="modal">
     <div class="modal-content">
-
         <div class="container">
             <div class="row">
                 <div class="col s12 m2 l2"></div>
@@ -271,24 +264,34 @@
 
       function LoadNotifications()
       {
+          var books = $("#BOOKS");
+          var notifs = $("#NOTIFS");
+           var notif_master = $("#MYNOTIF");
           $.ajax({ url: '/navbar/',
                type: 'post',
                success :function(data, status){
                         console.log(data);
-                        var str = '';
-                        for(var i = 0;  i < data['books'].length;i++){
+                        str = '<option selected disabled>Choose Books here</option>';
+                        for(var i = 0;  i < data['books'].length; i++)
+                        {
                             str +=('<option>' + data['books'][i] + '</option>');
                         }
 
                         // bind new options
                         books.html(str);
+                        books.material_select();
 
-                        str = ''
+                        str = '';
                         for( i = 0; i < data['notifs'].length;i++){
                             str += ("<li><a href='/link/" + data['notifs'][i]['id'] + "/'>"
                                     + "<img src=" + data['notifs'][i]['pic'] + " height=20px width=20px/>&nbsp" 
                                     + data['notifs'][i]['text'] + "</a></li>"
                                     + "<li class='divider'></li>");
+                        }
+
+                        if(str === '')
+                        {
+                            str = '<li>No new notifications</li>'
                         }
 
                         // bind new notifications
