@@ -18,7 +18,7 @@
     {
         padding: 2px;
         margin: 1px;
-        height: 100px;
+        height: 120px;
     }
 
     .row
@@ -42,6 +42,17 @@
         padding: 0px;
     }
 
+    .BooksP
+    {
+        overflow: hidden;
+        height : 37px;
+    }
+
+    .TagsP
+    {
+        overflow: hidden;
+        height : 37px;
+    }
 
     </style>
     <div class="container">
@@ -109,14 +120,14 @@
                       <div class="card_link" id="{{links.0.id }}"  style="cursor: pointer;">
                           <div class="card-title center"><h5>{{links.0.title}}</h5></div>
                           <div class="card-content card-content1" id="{{links.0.id }}">
-                              <p>Books:
+                              <p class="BooksP">Books:
                                 {% for book in links.0.books.all %}
                                     <span class="chip">
                                   <strong><a href = "/../book/{{book.id}}/">{{book.title}}</a></strong>
                                     </span>
                                 {% endfor %}
                               </p>
-                              <p>Tags:
+                              <p class="TagsP">Tags:
                                 {% for tag in links.0.tags.all %}
                                     <span class="chip">
                                   <strong><a href = "/../tags/{{tag.name}}/">{{tag.name}}</a></strong>
@@ -146,14 +157,14 @@
                       <div class="card_link" id="{{links.2.id }}"  style="cursor: pointer;">
                       <div class="card-title center"><h5>{{links.2.title}}</h5></div>
                       <div class="card-content card-content1" id="{{links.2.id }}">
-                      <p>Books:
+                      <p class="BooksP">Books:
                         {% for book in links.2.books.all %}
                             <span class="chip">
                           <strong><a href = "/../book/{{book.id}}/">{{book.title}}</a></strong>
                             </span>
                         {% endfor %}
                       </p>
-                      <p>Tags:
+                      <p class="TagsP">Tags:
                         {% for tag in links.2.tags.all %}
                             <span class="chip">
                           <strong><a href = "/../tags/{{tag.name}}/">{{tag.name}}</a></strong>
@@ -187,14 +198,14 @@
                       <div class="card-title center"><h5>{{links.1.title}}</h5></div>
                       <div class="card-content card-content1" id="{{links.1.id }}">
 
-                      <p>Books:
+                      <p class="BooksP">Books:
                         {% for book in links.1.books.all %}
                             <span class="chip">
                           <strong><a href = "/../book/{{book.id}}/">{{book.title}}</a></strong>
                             </span>
                         {% endfor %}
                       </p>
-                      <p>Tags:
+                      <p class="TagsP">Tags:
                         {% for tag in links.1.tags.all %}
                             <span class="chip">
                           <strong><a href = "/../tags/{{tag.name}}/">{{tag.name}}</a></strong>
@@ -224,14 +235,14 @@
                       <div class="card_link" id="{{links.3.id }}"  style="cursor: pointer;">
                       <div class="card-title center"><h5>{{links.3.title}}</h5></div>
                       <div class="card-content card-content1" id="{{links.3.id }}">
-                      <p>Books:
+                      <p class="BooksP">Books:
                         {% for book in links.3.books.all %}
                             <span class="chip">
                           <strong><a href = "/../book/{{book.id}}/">{{book.title}}</a></strong>
                             </span>
                         {% endfor %}
                       </p>
-                      <p>Tags:
+                      <p class="TagsP">Tags:
                         {% for tag in links.3.tags.all %}
                             <span class="chip">
                           <strong><a href = "/../tags/{{tag.name}}/">{{tag.name}}</a></strong>
