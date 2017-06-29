@@ -66,15 +66,15 @@
         <!-- Second Column started -->
             <div class="col s12 m12 l8">
             <br>
-                <div class="row" style="border-bottom: 3px solid lightgray; margin: 0px; padding: 0px">
+                <div class="row" style="border-bottom: 3px solid lightgray; padding: 0px">
                     <div class="col s6 m6 l6" id="popularLinksDiv">
-                                    <div class="header center center-align" id="popularLinksTab" style="padding: 0px; margin: 0px; cursor:pointer;">
-                        <h5 style="padding: 0px; margin: 0px; cursor: pointer" id="popularLinksHeading">Popular Links</h5><br>
+                                    <div class="header center center-align" id="popularLinksTab" style="padding: 0px;; cursor:pointer;">
+                        <h5 style="padding: 0px; cursor: pointer" id="popularLinksHeading">Popular Links</h5><br>
                     </div>
                     </div>
                     <div class="col s6 m6 l6" id="popularBooksDiv">
-                                    <div class="header center center-align" style="padding: 0px; margin: 0px; cursor: pointer" id="popularBooksTab">
-                        <h5 id="popularBooksHeading" style="padding: 0px; margin: 0px" >Popular Books</h5><br>
+                                    <div class="header center center-align" style="padding: 0px; cursor: pointer" id="popularBooksTab">
+                        <h5 id="popularBooksHeading" style="padding: 0px;" >Popular Books</h5><br>
                     </div>
 
                     </div>
@@ -83,7 +83,6 @@
                     <div class="col s12 m12 l6">
                         {% if links.0 == none %}
                         {% else %}
-                            <div class="container">
                             <div class="card card1 horizontal hoverable white-text blue-grey lighten-1">
                   <div class="card-stacked">
                       <div class="card_link" id="{{links.0.id }}"  style="cursor: pointer;">
@@ -114,13 +113,13 @@
                     </div>
                   </div>
                             </div>
-                            </div>
+
                         {% endif %}
 
 
                         {% if links.2 == none %}
                         {% else %}
-                        <div class="container">
+
                             <div class="card card1 horizontal hoverable white-text blue-grey lighten-1">
                   <div class="card-stacked">
                       <div class="card_link" id="{{links.2.id }}"  style="cursor: pointer;">
@@ -151,7 +150,7 @@
                     </div>
                   </div>
                             </div>
-                                                </div>
+
 
                         {% endif %}
                     </div>
@@ -160,7 +159,7 @@
 
                                                 {% if links.1 == none %}
                         {% else %}
-                                                    <div class="container">
+
                             <div class="card card1 horizontal hoverable white-text blue-grey lighten-1">
                   <div class="card-stacked">
                       <div class="card_link" id="{{links.1.id }}"  style="cursor: pointer;">
@@ -192,13 +191,13 @@
                     </div>
                   </div>
                             </div>
-                                                    </div>
+
 
                         {% endif %}
 
                         {% if links.3 == none %}
                         {% else %}
-                                                <div class="container">
+
                             <div class="card card1 horizontal hoverable white-text blue-grey lighten-1">
                   <div class="card-stacked">
                       <div class="card_link" id="{{links.3.id }}"  style="cursor: pointer;">
@@ -229,7 +228,7 @@
                     </div>
                   </div>
                             </div>
-                                                </div>
+
 
                         {% endif %}
 

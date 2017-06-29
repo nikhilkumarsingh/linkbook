@@ -36,13 +36,17 @@
                                 <div>
                                     <div class="row" style="margin-bottom: 0px">
                                         <div class="col s7 m7 l7">
-                                            <a href = "{{link.url}}" target="_blank" class="title center" style="font-size: 2rem">{{link.title | linebreaksbr}}</a>
+                                            <a href = "{{link.url}}" target="_blank" class="title center"> <h5>{{link.title | linebreaksbr}}</h5>
+                                            </a>
                                         </div>
                                         <div class="col s1 m1 l1"></div>
                                         <div class="col s4 m4 l4 right-align" id="icons_extra">
-                                            <a class="btn-floating btn-small waves-effect waves-light blue" href="#modal10" title="Show URL"><i class="material-icons">remove_red_eye</i></a>
-                                            <a class="btn-floating btn-small waves-effect waves-light blue" href="{{ link.url }}" title="Visit Link" target="_blank"><i class="material-icons">open_in_new</i></a>
-                                            <a class="btn-floating btn-small waves-effect waves-light blue" href="#" title="Share"><i class="material-icons">share</i></a>
+                                                    <a class="btn-floating btn-small waves-effect waves-light blue" href="#modal10" title="Show URL"><i class="material-icons">remove_red_eye</i></a>
+
+                                                    <a class="btn-floating btn-small  waves-effect waves-light blue" href="{{ link.url }}" title="Visit Link" target="_blank"><i class="material-icons">open_in_new</i></a>
+
+                                                    <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue" href="#" title="Share" data-beloworigin="true" data-activates="dropdown10"><i class="material-icons">share</i></a>
+
                                         </div>
                                     </div>
                                     <div id="modal10" class="modal">
@@ -88,8 +92,7 @@
                     {% endif %}
                     <!-- End of open graph data -->
 
-                    <!-- Sharing Options -->
-
+                    <!-- Sharing Options
                     <li class="collection-item avatar">
                       <i class="material-icons circle blue-grey">share</i>
                         <span class="title blue-grey-text">Share</span>
@@ -116,6 +119,7 @@
                             </div>
                         </p>
                     </li>
+                    -->
 
                     <!-- Tags -->
 
@@ -135,15 +139,15 @@
                     <li class="collection-item avatar">
 
                     <div class="row">
-                        <div class="col s4 m4 l4">
+                        <div class="col s12 m4 l4">
                             <span> <sup id="upvotes_count">{{ upvotes }}</sup><sup> upvote(s)</sup></span>
                             <button class="btn green upvote upvote_upper_button waves-effect waves-light {{upvote_button}} center" id="upvote_button" link_id = "{{ link.id }}"> <i class="material-icons" style="color: white; background-color: transparent">thumb_up</i> </button>
                         </div>
-                        <div class="col s4 m4 l4">
+                        <div class="col s12 m4 l4">
                             <span> <sup id="downvotes_count">{{ downvotes }} </sup><sup> downvote(s)</sup></span>
                                     <button title="downvote" class="btn waves-effect waves-light  red btn-block white-text downvote downvote_upper_button {{ downvote_button }}" id="downvote_button" link_id = "{{ link.id }}" > <i class="material-icons" style="color: white; background-color: transparent" >thumb_down</i></button>
                         </div>
-                        <div class="col s4 m4 l4">
+                        <div class="col s12 m4 l4">
                             <span>
                                 <sup>{{link.comment_set.count}} comment(s)</sup>
                             </span>
@@ -180,8 +184,71 @@
             <div class="col s1 m3 l3"></div>
         </div>
     </div>
+
+    <!--  Sharing dropdown -->
+        <ul class="dropdown-content" id="dropdown10">
+                                <li>
+                                    <a href = "#"> Share Via
+                                </a>
+                                </li>
+                                <li class="divider"></li>
+
+                                <li><a href = "https://www.facebook.com/sharer/sharer.php?u={{link.url}}">
+                                    <img height = 20px width = 20px src="/static/icons/fb.svg" alt="Facebook" /> | facebook
+                                </a></li>
+
+                                <li><a href = "https://twitter.com/home?status={{link.url}}">
+                                    <img height = 20px width = 20px src="/static/icons/Twitterbird.png" alt="Twitter" />  | twitter
+                                </a></li>
+                                <li><a href = "https://plus.google.com/share?url={{link.url}}">
+                                    <img height = 20px width = 20px src="/static/icons/gplus.png" alt="Google+" />  | google+
+                                </a></li>
+                                <li><a href = "http://www.reddit.com/submit?url={{link.url}}">
+                                    <img height = 20px width = 20px src="/static/icons/reddit.png" alt="Reddit" />  | reddit
+                                </a></li>
+
+                               <li> <a href = "http://pinterest.com/pin/create/button/?url={{link.url}}&description={{link.description}}">
+                                    <img height = 20px width = 20px src="/static/icons/pinterest.svg" alt="Pinterest" /> | pinterest
+                                </a></li>
+
+                                <li><a href = "https://www.linkedin.com/shareArticle?mini=true&url={{link.url}}">
+                                    <img height = 20px width = 20px src="/static/icons/linkedin.svg" alt="LinkedIn" />  | linkedin
+                                </a></li>
+
+
+                    </ul>
+
+
+    <!-- Copy to Clipboard Dropdown -->
+
+    <ul id="dropdown11" class="dropdown-content">
+            <li>
+                <a id="link_url" href="{{ link.url }}" target="_blank"> {{ link.url }}
+                 <i class="material-icons" id="copy">content_copy</i>
+                </a>
+
+
+        </li>
+    </ul>
+
+
+
     <script>
     $(function () {
+
+        $('.dropdown-button').dropdown({
+      inDuration: 300,
+      outDuration: 225,
+      constrainWidth: false, // Does not change width of dropdown to that of the activator
+      hover: false, // Activate on hover
+      gutter: 0, // Spacing from edge
+      belowOrigin: false, // Displays dropdown below the button
+      alignment: 'right', // Displays dropdown with edge aligned to the left of button
+      stopPropagation: false // Stops event propagation
+    }
+  );
+
+
         var b = $('#btn_url');
         var disp = false;
         var URL = $('#url');
@@ -218,10 +285,6 @@
                 }
         });
     });
-
-
-
-
     $('.downvote_upper_button').click(function(){
     var link_id;
     link_id = $(this).attr("link_id");

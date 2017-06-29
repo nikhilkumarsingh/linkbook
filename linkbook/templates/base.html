@@ -262,7 +262,7 @@
       });
 
 
-      function LoadNotifications()
+      function LoadNotifications(param)
       {
           var books = $("#BOOKS");
           var notifs = $("#NOTIFS");
@@ -278,8 +278,12 @@
                         }
 
                         // bind new options
+                   if(param == 1)
+                   {
+
                         books.html(str);
                         books.material_select();
+                   }
 
                         str = '';
                         for( i = 0; i < data['notifs'].length;i++){
@@ -308,11 +312,11 @@
             var notifs = $("#NOTIFS");
             var notif_master = $("#MYNOTIF");
 
-            LoadNotifications();
+            LoadNotifications(1);
             books.material_select();
             notifs.material_select(true);
             notif_master.dropdown();
-            window.setInterval(LoadNotifications, 5000);
+            window.setInterval(LoadNotifications, 5000, 0);
         {% endif %}
 
         // to load user profile url on click 
