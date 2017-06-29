@@ -15,18 +15,32 @@
             overflow: hidden;
             max-height : 70px;
         }
+        .collapsiblecards{
+            display:inline-block;
+            margin-left: 5px; 
+            margin-right: 5px;
+            width:32%;
+        }
     </style>
-    <div class = "container">
-        <div class="row">
-            <h3 class="center blue-grey-text">{{user.username}}'s links</h3>
-        </div>
-        <div class="row">
-            {% for link in view_links %}
-                <div class="col s12 m4 l4">
-                    <div class="row">
-                        <div class="col s12 m12 l12">
 
-                <div class="card card1 horizontal hoverable white-text blue-grey lighten-1">
+    <div style="width:80%; margin:auto;">
+      <ul class="collapsible popout" data-collapsible="expandable">
+      {% for book in view_books %}
+        <li>
+          {% if forloop.counter|add:0|divisibleby:3 %}
+            <div class="collapsible-header" style="background-color: #59f6ff;">
+          {% endif %} 
+          {% if forloop.counter|add:1|divisibleby:3 %}
+            <div class="collapsible-header" style="background-color: #90ff60;">
+          {% endif %} 
+          {% if forloop.counter|add:2|divisibleby:3 %}
+            <div class="collapsible-header" style="background-color: #ffec49;">
+          {% endif %}<i class="material-icons">whatshot</i>{{book.title}}</div>
+            <div class="collapsible-body">
+                {% for link in book.link_set.all %}
+                  <span>
+                  <div class="collapsiblecards">
+                    <div class="card card1 horizontal hoverable white-text blue-grey lighten-1">
                   <div class="card-stacked">
                       <div class="card_link" id="{{ link.id }}"  style="cursor: pointer;">
                       <div class="card-title center"><h5>{{link.title}}</h5></div>
@@ -56,13 +70,17 @@
                       {% endif %}
                     </div>
                   </div>
+               </div>
                 </div>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
-    </div>
+                  </span>
+                {% endfor %}
+            </div>
+        </li>
+      {% endfor %}
+      </ul>
+        
+</div>
+   
     <script>
 
         $(function () {
@@ -76,6 +94,11 @@
             });
 
         });
+
+        $(document).ready(function(){
+        $('.collapsible').collapsible();
+        });
+          
 
     </script>
 
