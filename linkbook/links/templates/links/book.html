@@ -5,24 +5,44 @@
 {% block title %}{% endblock %}
 
 {% block body %}
+    <style>
+        .card1
+        {
+            height : 300px;
+        }
+        .description
+        {
+            overflow: hidden;
+            max-height : 70px;
+        }
+    </style>
     <div class = "container">
-    <div class="row">
-        <h3 class="blue-grey-text center">Book</h3>
-    </div>
-    {% for link in book %}
         <div class="row">
-            <div class="col s1 l4 m1"></div>
-            <div class="col s10 m10 l4">
-                <div class="card horizontal hoverable white-text blue-grey lighten-1">
+            <h3 class="center blue-grey-text">{{user.username}}'s links</h3>
+        </div>
+        <div class="row">
+            {% for link in book %}
+                <div class="col s12 m4 l4">
+                    <div class="row">
+                        <div class="col s12 m12 l12">
+
+                <div class="card card1 horizontal hoverable white-text blue-grey lighten-1">
                   <div class="card-stacked">
                       <div class="card_link" id="{{ link.id }}"  style="cursor: pointer;">
                       <div class="card-title center"><h5>{{link.title}}</h5></div>
                       <div class="card-content" id="{{ link.id }}">
-                      <p>{{ link.description }}</p>
+                      <p class="description">{{ link.description }}</p>
+                      <p>Books:
+                        {% for book in link.books.all %}
+                            <span class="chip">
+                          <strong><a href = "/../book/{{book.id}}/">{{book.title}}</a></strong>
+                            </span>
+                        {% endfor %}
+                      </p>
                       <p>Tags:
                         {% for tag in link.tags.all %}
                             <span class="chip">
-                          <strong><a href = "/../tags/{{tag.name}}/" style="text-decoration: underline">{{tag.name}}</a></strong>
+                          <strong><a href = "/../tags/{{tag.name}}/">{{tag.name}}</a></strong>
                             </span>
                         {% endfor %}
                       </p>
@@ -37,13 +57,11 @@
                     </div>
                   </div>
                 </div>
-            </div>
-            <div class="col s1 m1 l4"></div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
-
-    {% endfor %}
-
-
     </div>
     <script>
 
@@ -62,3 +80,4 @@
     </script>
 
 {% endblock%}
+
