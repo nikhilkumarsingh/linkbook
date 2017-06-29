@@ -48,8 +48,9 @@ def username_slugs(request, username):
 
     elif action == 'links':
         user_links = Link.objects.filter(user = user)
+        user_books = Book.objects.filter(user = user)
         return render(request, 'links/view_links.html', 
-            {'user': user, 'view_links':user_links})
+            {'user': user, 'view_links':user_links, 'view_books':user_books})
 
     else:
         links = Link.objects.filter(user = user)[:5]
