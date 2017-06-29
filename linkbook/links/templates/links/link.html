@@ -17,12 +17,14 @@
         margin: 0px;
         padding: 0px;
     }
+
+
     </style>
     <div class="container">
         <div class="row">
             <div class="col s1 m3 l3"></div>
             <div class="col s10 m6 l6">
-                <ul class="collection hoverable " style="border: 1px solid #607d8b">
+                <ul class="collection hoverable " style="border: 1px solid #607d8b" id="list">
                     <li class="collection-item avatar">
                       <div class="row">
                         <!-- user avatar -->
@@ -41,7 +43,7 @@
                                         </div>
                                         <div class="col s1 m1 l1"></div>
                                         <div class="col s4 m4 l4 right-align" id="icons_extra">
-                                                    <a class="btn-floating btn-small waves-effect waves-light blue" href="#modal10" title="Show URL"><i class="material-icons">remove_red_eye</i></a>
+                                                    <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue" href="#" title="Show URL" data-activates="dropdown11"><i class="material-icons">remove_red_eye</i></a>
 
                                                     <a class="btn-floating btn-small  waves-effect waves-light blue" href="{{ link.url }}" title="Visit Link" target="_blank"><i class="material-icons">open_in_new</i></a>
 
@@ -186,49 +188,50 @@
     </div>
 
     <!--  Sharing dropdown -->
-        <ul class="dropdown-content" id="dropdown10">
+        <ul class="dropdown-content" id="dropdown10" >
                                 <li>
                                     <a href = "#"> Share Via
                                 </a>
                                 </li>
                                 <li class="divider"></li>
 
-                                <li><a href = "https://www.facebook.com/sharer/sharer.php?u={{link.url}}">
-                                    <img height = 20px width = 20px src="/static/icons/fb.svg" alt="Facebook" /> | facebook
-                                </a></li>
+                                <li style="display: inline-block">
+                                    <a href = "https://www.facebook.com/sharer/sharer.php?u={{link.url}}" style="display: inline-block; padding: 5px">
+                                    <img height = 35px width = 35px src="/static/icons/fb.svg" alt="Facebook" / >
+                                </a>
 
-                                <li><a href = "https://twitter.com/home?status={{link.url}}">
-                                    <img height = 20px width = 20px src="/static/icons/Twitterbird.png" alt="Twitter" />  | twitter
-                                </a></li>
-                                <li><a href = "https://plus.google.com/share?url={{link.url}}">
-                                    <img height = 20px width = 20px src="/static/icons/gplus.png" alt="Google+" />  | google+
-                                </a></li>
-                                <li><a href = "http://www.reddit.com/submit?url={{link.url}}">
-                                    <img height = 20px width = 20px src="/static/icons/reddit.png" alt="Reddit" />  | reddit
-                                </a></li>
+                                <a href = "https://twitter.com/home?status={{link.url}}" style="display: inline-block; padding: 5px">
+                                    <img height = 35px width = 35px src="/static/icons/Twitterbird.png" alt="Twitter" />
+                                </a>
+                                <a href = "https://plus.google.com/share?url={{link.url}}" style="display: inline-block; padding: 5px">
+                                    <img height = 35px width = 35px src="/static/icons/gplus.png" alt="Google+" />
+                                </a>
+                                <a style="display: inline-block; padding: 5px" href = "http://www.reddit.com/submit?url={{link.url}}">
+                                    <img height = 35px width = 35px src="/static/icons/reddit.png" alt="Reddit" />
+                                </a>
 
-                               <li> <a href = "http://pinterest.com/pin/create/button/?url={{link.url}}&description={{link.description}}">
-                                    <img height = 20px width = 20px src="/static/icons/pinterest.svg" alt="Pinterest" /> | pinterest
+                                <a style="display: inline-block; padding: 5px" href = "http://pinterest.com/pin/create/button/?url={{link.url}}&description={{link.description}}">
+                                    <img height = 35px width = 35px src="/static/icons/pinterest.svg" alt="Pinterest" />
+                                </a>
+
+                                <a style="display: inline-block; padding: 5px" href = "https://www.linkedin.com/shareArticle?mini=true&url={{link.url}}">
+                                    <img height = 35px width = 35px src="/static/icons/linkedin.svg" alt="LinkedIn" />
                                 </a></li>
-
-                                <li><a href = "https://www.linkedin.com/shareArticle?mini=true&url={{link.url}}">
-                                    <img height = 20px width = 20px src="/static/icons/linkedin.svg" alt="LinkedIn" />  | linkedin
-                                </a></li>
-
-
                     </ul>
 
 
     <!-- Copy to Clipboard Dropdown -->
 
-    <ul id="dropdown11" class="dropdown-content">
-            <li>
-                <a id="link_url" href="{{ link.url }}" target="_blank"> {{ link.url }}
-                 <i class="material-icons" id="copy">content_copy</i>
+    <ul id="dropdown11" class="dropdown-content" >
+            <li style=" word-wrap: break-word; max-width: 300px; overflow: hidden">
+               <a style="word-wrap: break-word;"  id="link_url" href="{{ link.url }}" target="_blank"> {{ link.url }}
                 </a>
-
-
-        </li>
+            </li>
+            <li class="divider">
+            </li>
+            <li>
+                <button class="btn btn-block green white-text" id="copy">Copy to clipboard</button>
+            </li>
     </ul>
 
 
@@ -242,7 +245,7 @@
       constrainWidth: false, // Does not change width of dropdown to that of the activator
       hover: false, // Activate on hover
       gutter: 0, // Spacing from edge
-      belowOrigin: false, // Displays dropdown below the button
+      belowOrigin: true, // Displays dropdown below the button
       alignment: 'right', // Displays dropdown with edge aligned to the left of button
       stopPropagation: false // Stops event propagation
     }
@@ -303,8 +306,14 @@
                 }
         });
     });
+
+    var listHeight = $('#list').css('height');
+    console.log(listHeight.length);
+
     var comments_tab = $('#comments_tab');
     var comments_open = 0;
+    
+    
     comments_tab.click(function () {
         if(comments_open == 0)
         {
