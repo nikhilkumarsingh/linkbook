@@ -2,6 +2,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.contrib.auth.models import User
+from django.views.decorators.csrf import csrf_exempt
 
 from PIL import Image
 import pyimgur
@@ -27,10 +28,11 @@ def fetch_notifs(user):
                for notif in user.notifications.all()[:15]]
     return notifs
 
-
+@csrf_exempt
 def navbar(request):
     if request.is_ajax():
         books = [book.title for book in Book.objects.filter(user = request.user)]
+        print((request.user.notifications.count()))
 
         # check if any new notifications
         if len(request.user.notifications.unread()):
@@ -38,7 +40,7 @@ def navbar(request):
             notifs = fetch_notifs(request.user)
         else:
             new_notifs = False
-            if int(request.POST.get('notif')) == 1:
+            if 1:#int(request.POST.get('notif')) == 1:
                 notifs = fetch_notifs(request.user)
             else:
                 notifs = None
