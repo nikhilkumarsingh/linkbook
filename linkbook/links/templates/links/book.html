@@ -2,7 +2,7 @@
 {% load staticfiles %}
 {% load i18n %}
 
-{% block title %}{% endblock %}
+{% block title %}User Book{% endblock %}
 
 {% block body %}
     <style>
@@ -29,7 +29,7 @@
     </style>
     <div class = "container">
         <div class="row">
-            <h3 class="center blue-grey-text">{{user.username}}'s links</h3>
+            <h3 class="center blue-grey-text">{{user.username}}'s Book</h3>
         </div>
         <div class="row">
             {% for link in book %}
@@ -71,6 +71,13 @@
                     </div>
                 </div>
             {% endfor %}
+            {% if book == none or book|length == 0  %}
+                <div class="col s12 m12 l4"></div>
+                <div class="col s12 m12 l4 flow-text center">
+                    This Book is empty. No links here.
+                </div>
+                <div class="col s12 m12 l4"></div>
+            {% endif %}
         </div>
     </div>
     <script>

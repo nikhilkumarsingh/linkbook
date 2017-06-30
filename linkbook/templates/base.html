@@ -267,11 +267,9 @@
                                 books.html(str);
                                 books.material_select();
                             }
-
                             if(data['new_notifs'] === false){
                                 notif_master.removeClass('blue');
                                 notif_master.addClass('green');
-
                                 if(param === 0){
                                     return;
                                 }
@@ -279,7 +277,6 @@
                                 notif_master.removeClass('green');
                                 notif_master.addClass('blue');
                             }
-            
 
                             str = '';
                             for( i = 0; i < data['notifs'].length;i++){
@@ -290,42 +287,41 @@
                                     else{
                                         str += "<li>";
                                     }
-            
+
                                     str += ("<a href='/link/" + data['notifs'][i]['id'] + "/'>"
                                             + "<img src=" + data['notifs'][i]['pic'] + " height=20px width=20px/>&nbsp"
                                             + data['notifs'][i]['text'] + "</a></li>"
                                             + "<li class='divider'></li>");
                                 }
-            
+
                                 if(str === '')
                                 {
                                     str = '<li>No notifications</li>'
                                     notif_master.removeClass('blue');
                                     notif_master.addClass('green');
                                 }
-            
+
                                 // bind notifications
                                 notifs.html(str);
                             }
                         });
             }
 
-            
             $(document).ready(function(){
                 {% if request.user.is_authenticated %}
                     //initialize
                     var books = $("#BOOKS");
                     var notifs = $("#NOTIFS");
                     var notif_master = $("#MYNOTIF");
-            
+
                     LoadNotifications(1);
                     books.material_select();
                     notifs.material_select(true);
                     notif_master.dropdown();
                     window.setInterval(LoadNotifications, 6000, 0);
                 {% endif %}
-            
-                // to load user profile url on click 
+
+                // to load user profile url on click
                 $(".button-collapse").sideNav();
                 $('select').material_select();
                 $('#userProfilePicNavbar').click(function () {
@@ -333,14 +329,14 @@
                     window.location.href = url;
                 });
                 $('.modal').modal();
-            
+
                 // to auto-resize descrption field
                 $('#DESCRIPTION').trigger('autoresize');
                 $('.chips').material_chip();
                 $('#TITLE, #DESCRIPTION').characterCounter();
             });
-            
-            
+
+
             $("#MYNOTIF").click(function () {
                 var notif_master = $("#MYNOTIF");
                 notif_master.removeClass('blue');
@@ -350,8 +346,7 @@
                     type: 'get',
                 });
             });
-            
+
         </script>
     </body>
 </html>
-

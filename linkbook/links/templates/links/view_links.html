@@ -2,7 +2,7 @@
 {% load staticfiles %}
 {% load i18n %}
 
-{% block title %}{% endblock %}
+{% block title %}user links{% endblock %}
 
 {% block body %}
     <style>
@@ -78,6 +78,14 @@
                                 </div>
                               </div>
                            </div>
+                                </div>
+                            {% empty %}
+                                <div class="row">
+                                    <div class="col s12 m12 l4"></div>
+                                    <div class="col s12 m12 l4 flow-text center">
+                                        No links in this Book. Empty!
+                                    </div>
+                                    <div class="col s12 m12 l4"></div>
                                 </div>
                             {% endfor %}
                             </div>

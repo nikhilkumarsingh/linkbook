@@ -17,8 +17,6 @@
         margin: 0px;
         padding: 0px;
     }
-
-
     </style>
     <div class="container">
         <div class="row">
@@ -238,7 +236,6 @@
 
     <script>
     $(function () {
-
         $('.dropdown-button').dropdown({
       inDuration: 300,
       outDuration: 225,
@@ -249,7 +246,6 @@
       alignment: 'right', // Displays dropdown with edge aligned to the left of button
       stopPropagation: false // Stops event propagation
     });
-
         var converter = new showdown.Converter();
         var descr = $("#DESCR");
         text = descr.html();
@@ -257,8 +253,6 @@
                                              .replace('h3','h6').replace('h4','h7');
         descr.html(new_text);
         console.log(descr.html());
-
-
         var b = $('#btn_url');
         var disp = false;
         var URL = $('#url');
@@ -313,14 +307,12 @@
                 }
         });
     });
-
     var listHeight = $('#list').css('height');
     console.log(listHeight.length);
-
     var comments_tab = $('#comments_tab');
     var comments_open = 0;
-    
-    
+
+
     comments_tab.click(function () {
         if(comments_open == 0)
         {
@@ -336,7 +328,8 @@
         });
         $('.modal').modal();
         var copy = $('#copy');
-        copy.click(function () {
+        copy.click(function ()
+        {
             var linkUrl = $('#link_url');
             copyToClipboard(linkUrl);
             Materialize.toast('copied to clipboard', 2000);
@@ -346,7 +339,6 @@
         console.log("Hello");
         $('#card_image_div').css({'display' : 'none'});
     });
-
     function copyToClipboard(element) {
     var $temp = $("<input>");
     $("body").append($temp);
@@ -354,7 +346,6 @@
     document.execCommand("copy");
     $temp.remove();
 }
-
     </script>
 
 {% endblock %}
