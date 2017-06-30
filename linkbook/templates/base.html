@@ -252,7 +252,8 @@
                 var notifs = $("#NOTIFS");
                 var notif_master = $("#MYNOTIF");
                 $.ajax({ 
-                 url: '/navbar/?notif='+param,
+                 url: '/navbar/',
+                 data: {'notif':param},
                  type: 'post',
                  success :function(data, status){
                     console.log(data);
