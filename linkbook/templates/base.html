@@ -291,7 +291,7 @@
                                         str += "<li>";
                                     }
             
-                                    str += ("<a href='/link/" + data['notifs'][i]['id'] + "/'>"
+                                    str += ("<a href=" + data['notifs'][i]['url'] + ">"
                                             + "<img src=" + data['notifs'][i]['pic'] + " height=20px width=20px/>&nbsp"
                                             + data['notifs'][i]['text'] + "</a></li>"
                                             + "<li class='divider'></li>");

@@ -8,6 +8,7 @@ from PIL import Image
 import pyimgur
 import os
 from notifications.models import Notification
+from notifications.signals import notify
 
 from linkbook.links.models import Link, Book
 from linkbook.core.forms import UpdateProfileForm
@@ -23,10 +24,21 @@ def index(request):
 
 def fetch_notifs(user):
     # fetch last 15 notifications
-    notifs = [{'id': notif.target.id, 'text': notif. __str__(), 
-               'unread': notif.unread, 'pic': notif.actor.profile.pic} 
-               for notif in user.notifications.all()[:15]]
+    notifs = []
+    for notif in user.notifications.all()[:15]:
+        mydict = {}
+        if notif.verb == "followed":
+            mydict['url'] = "/" + notif.actor.username
+            mydict['text'] = notif. __str__().replace(notif.recipient.username, "you")
+        else:
+            mydict['url'] = "/link/" + str(notif.target.id)
+            mydict['text'] = notif. __str__()
+
+        mydict['unread'] = notif.unread
+        mydict['pic'] = notif.actor.profile.pic
+        notifs.append(mydict)       
     return notifs
+
 
 @csrf_exempt
 def navbar(request):
@@ -135,6 +147,8 @@ def follow_profile(request):
             follow_button = "1"
         else:
             user.profile.followers.add(request.user.profile)
+            notify.send(request.user, recipient = user, 
+                    target = user, verb = "followed")
             follow_button = "2"
         follower_count = user.profile.followers.count()
 
