@@ -38,8 +38,10 @@ def navbar(request):
             notifs = fetch_notifs(request.user)
         else:
             new_notifs = False
-            if int(request.GET.get('notif')) == 1:
+            if int(request.POST.get('notif')) == 1:
                 notifs = fetch_notifs(request.user)
+            else:
+                notifs = None
 
         return JsonResponse({'books':books, 'notifs':notifs, 'new_notifs':new_notifs})
 
