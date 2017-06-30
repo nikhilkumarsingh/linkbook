@@ -333,6 +333,20 @@
         $('#DESCRIPTION').trigger('autoresize');
         $('.chips').material_chip();
         $('#TITLE, #DESCRIPTION').characterCounter();
+
+
+        var allowSubmit = true;
+        var frm = $('form');
+        frm.onsubmit = function () {
+            console.log("hello");
+           if (allowSubmit)
+               allowSubmit = false;
+           else
+               return false;
+        }
+
+
+
     });
    </script>
 </body>

@@ -6,7 +6,7 @@
 
 {% block body %}
     <style>
-    .btn
+    .btn1
     {
         width: 100%;
         margin: 0px;
@@ -59,7 +59,7 @@
                                                     </div>
                                                     <div class="col s12 m2 l2"></div>
                                                     <div class="col s12 m3 l3">
-                                                       <button title="copy to clipboard" class="btn black white-text" id="copy"> <i class="material-icons black" style="color: white">content_copy</i></button>
+                                                       <button title="copy to clipboard" class="btn btn1 black white-text" id="copy"> <i class="material-icons black" style="color: white">content_copy</i></button>
                                                     </div>
                                                 </div>
 
@@ -143,17 +143,17 @@
                     <div class="row">
                         <div class="col s12 m4 l4">
                             <span> <sup id="upvotes_count">{{ upvotes }}</sup><sup> upvote(s)</sup></span>
-                            <button class="btn green upvote upvote_upper_button waves-effect waves-light {{upvote_button}} center" id="upvote_button" link_id = "{{ link.id }}"> <i class="material-icons" style="color: white; background-color: transparent">thumb_up</i> </button>
+                            <button class="btn btn1 green upvote upvote_upper_button waves-effect waves-light {{upvote_button}} center" id="upvote_button" link_id = "{{ link.id }}"> <i class="material-icons" style="color: white; background-color: transparent">thumb_up</i> </button>
                         </div>
                         <div class="col s12 m4 l4">
                             <span> <sup id="downvotes_count">{{ downvotes }} </sup><sup> downvote(s)</sup></span>
-                                    <button title="downvote" class="btn waves-effect waves-light  red btn-block white-text downvote downvote_upper_button {{ downvote_button }}" id="downvote_button" link_id = "{{ link.id }}" > <i class="material-icons" style="color: white; background-color: transparent" >thumb_down</i></button>
+                                    <button title="downvote" class="btn btn1 waves-effect waves-light  red btn-block white-text downvote downvote_upper_button {{ downvote_button }}" id="downvote_button" link_id = "{{ link.id }}" > <i class="material-icons" style="color: white; background-color: transparent" >thumb_down</i></button>
                         </div>
                         <div class="col s12 m4 l4">
                             <span>
                                 <sup>{{link.comment_set.count}} comment(s)</sup>
                             </span>
-                            <button class="btn blue waves-light center waves-effect" id="comments_tab">Comments</button>
+                            <button class="btn btn1 blue waves-light center waves-effect" id="comments_tab">Comments</button>
                         </div>
                     </div>
                     </li>
@@ -177,7 +177,7 @@
                         {% csrf_token %}
                         <div class="input-field">
                         {{ comment_form.as_p }}
-                        <button type="submit" class="btn blue waves-effect waves-light">Comment</button>
+                        <button type="submit" class="btn btn1 blue waves-effect waves-light">Comment</button>
                             </div>
                     </form>
                 </li>
@@ -197,7 +197,7 @@
 
                                 <li style="display: inline-block">
                                     <a href = "https://www.facebook.com/sharer/sharer.php?u={{link.url}}" style="display: inline-block; padding: 5px">
-                                    <img height = 35px width = 35px src="/static/icons/fb.svg" alt="Facebook" / >
+                                    <img height = 35px width = 35px src="/static/icons/fb.svg" alt="Facebook"  >
                                 </a>
 
                                 <a href = "https://twitter.com/home?status={{link.url}}" style="display: inline-block; padding: 5px">
