@@ -20,12 +20,29 @@ def index(request):
     return render(request, 'core/index.html')
 
 
+def fetch_notifs(user):
+    # fetch last 15 notifications
+    notifs = [{'id': notif.target.id, 'text': notif. __str__(), 
+               'unread': notif.unread, 'pic': notif.actor.profile.pic} 
+               for notif in user.notifications.all()[:15]]
+    return notifs
+
+
 def navbar(request):
     if request.is_ajax():
         books = [book.title for book in Book.objects.filter(user = request.user)]
-        notifs = [{'id':notif.target.id, 'text': notif. __str__(), 'pic': notif.actor.profile.pic} 
-        for notif in request.user.notifications.unread()]
-        return JsonResponse({'books':books, 'notifs':notifs})
+
+        # check if any new notifications
+        if len(request.user.notifications.unread()):
+            new_notifs = True
+            notifs = fetch_notifs(request.user)
+        else:
+            new_notifs = False
+            if int(request.GET.get('notif')) == 1:
+                notifs = fetch_notifs(request.user)
+
+        return JsonResponse({'books':books, 'notifs':notifs, 'new_notifs':new_notifs})
+
 
 
 def username_slugs(request, username):
