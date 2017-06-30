@@ -63,7 +63,7 @@
                     <li><a href="#modal1">Login</a></li>
                     <li><a href="signup" > Sign Up</a></li>
                     {% else %}
-                    <li><a href="/profile" >Profile</a></li>
+                    <li><a href="/{{request.user.username}}" >Profile</a></li>
                     <li><a href="/logout">Logout</a></li>
                     {% endif %}
                 </ul>
