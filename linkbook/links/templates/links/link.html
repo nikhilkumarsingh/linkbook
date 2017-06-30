@@ -17,12 +17,13 @@
         margin: 0px;
         padding: 0px;
     }
+
     </style>
     <div class="container">
         <div class="row">
             <div class="col s1 m3 l3"></div>
             <div class="col s10 m6 l6">
-                <ul class="collection hoverable " style="border: 1px solid #607d8b" id="list">
+                <ul class="collection hoverable "  style="border: 1px solid #607d8b" id="list">
                     <li class="collection-item avatar">
                       <div class="row">
                         <!-- user avatar -->
@@ -35,17 +36,17 @@
                                 <i class="material-icons circle blue-grey">description</i>
                                 <div>
                                     <div class="row" style="margin-bottom: 0px">
-                                        <div class="col s7 m7 l7">
+                                        <div class="col s12 m12 l7">
                                             <a href = "{{link.url}}" target="_blank" class="title"> <h5>{{link.title | linebreaksbr}}</h5>
                                             </a>
                                         </div>
-                                        <div class="col s1 m1 l1"></div>
-                                        <div class="col s4 m4 l4 right-align" id="icons_extra">
-                                                    <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue" href="#" title="Show URL" data-activates="dropdown11"><i class="material-icons">remove_red_eye</i></a>
+                                        <div class="col s12 m12 l5 right-align" id="icons_extra">
+                                                    <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue" href="#" title="Show URL" data-activates="dropdown11" id="show_url_button"><i class="material-icons">remove_red_eye</i></a>
 
                                                     <a class="btn-floating btn-small  waves-effect waves-light blue" href="{{ link.url }}" title="Visit Link" target="_blank"><i class="material-icons">open_in_new</i></a>
 
                                                     <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue" href="#" title="Share" data-beloworigin="true" data-activates="dropdown10"><i class="material-icons">share</i></a>
+                                            <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue" href="#" id="copy" title="Copy to clipboard" ><i class="material-icons">content_copy</i></a>
 
                                         </div>
                                     </div>
@@ -161,8 +162,7 @@
                       <i class="material-icons circle blue-grey">comment</i>
                         <span class="title blue-grey-text">Comments</span>
                         <p class="green-text">{{link.comment_set.count}} comment(s) on this link:</p>
-                        <p>
-
+                        <p id="comments_div_p">
                     {% for comment in link.comment_set.all %}
                         <div>
                             <span style="font-weight: 800">{{ comment.user }} <sub>[{{comment.date}}]</sub> :</span>
@@ -171,12 +171,20 @@
                     {% endfor %}
                         </p>
 
-                <form method="post" action="/link/{{link.id}}/comment/" role="form">
-                        {% csrf_token %}
+                <form>
+
                         <div class="input-field">
                         {{ comment_form.as_p }}
-                        <button type="submit" class="btn blue waves-effect waves-light">Comment</button>
+
                             </div>
+                    <div class="row">
+                        <div class="col s12 m12 l4">
+                            <button class="btn blue waves-effect waves-light" id="commentSubmitButton">Comment</button>
+                        </div>
+                        <div class="col s12 m12 l4"></div>
+                        <div class="col s12 m12 l4"></div>
+                    </div>
+
                     </form>
                 </li>
                 </ul>
@@ -186,7 +194,7 @@
     </div>
 
     <!--  Sharing dropdown -->
-        <ul class="dropdown-content" id="dropdown10" >
+        <ul class="dropdown-content" id="dropdown10" style="max-width: 200px">
                                 <li>
                                     <a href = "#"> Share Via
                                 </a>
@@ -195,7 +203,7 @@
 
                                 <li style="display: inline-block">
                                     <a href = "https://www.facebook.com/sharer/sharer.php?u={{link.url}}" style="display: inline-block; padding: 5px">
-                                    <img height = 35px width = 35px src="/static/icons/fb.svg" alt="Facebook" / >
+                                    <img height = 35px width = 35px src="/static/icons/fb.svg" alt="Facebook" >
                                 </a>
 
                                 <a href = "https://twitter.com/home?status={{link.url}}" style="display: inline-block; padding: 5px">
@@ -219,23 +227,35 @@
 
 
     <!-- Copy to Clipboard Dropdown -->
-
-    <ul id="dropdown11" class="dropdown-content" >
-            <li style=" word-wrap: break-word; max-width: 300px; overflow: hidden">
-               <a style="word-wrap: break-word;"  id="link_url" href="{{ link.url }}" target="_blank"> {{ link.url }}
-                </a>
-            </li>
-            <li class="divider">
-            </li>
+    <ul id="dropdown11" class="dropdown-content" style="max-width: 200px" >
             <li>
-                <button class="btn btn-block green white-text" id="copy">Copy to clipboard</button>
+                <div class="row" style="max-width: 100%; ;overflow-x: scroll; padding: 1%; margin: 0px;">
+                    <span>
+               <a  id="link_url" href="{{ link.url }}" target="_blank" style="display: inline-block;" > {{ link.url }}</a>
+</span>
+              <!--      <span>
+                    <i class="material-icons circle right" id="copy" style="display: inline-block;"  > content_copy</i>
+</span> -->
+                    </div>
             </li>
     </ul>
 
 
 
     <script>
+
+    function RefreshDropdown()
+    {
+      //   var width = $('#list').css('width');
+       // console.log("Width");
+       // console.log(width);
+      //  $('#dropdown11').css({'max-width' : width });
+
+    }
+
     $(function () {
+
+
         $('.dropdown-button').dropdown({
       inDuration: 300,
       outDuration: 225,
@@ -307,8 +327,19 @@
                 }
         });
     });
-    var listHeight = $('#list').css('height');
-    console.log(listHeight.length);
+
+
+    var show_url_button = $('#show_url_button');
+    show_url_button.click(function () {
+        console.log("Hello");
+        selectText('link_url');
+    });
+
+
+
+   // var listHeight = $('#list').css('height');
+   // console.log(listHeight.length);
+
     var comments_tab = $('#comments_tab');
     var comments_open = 0;
 
@@ -334,10 +365,49 @@
             copyToClipboard(linkUrl);
             Materialize.toast('copied to clipboard', 2000);
         });
+
+
+        var commentsSubmitButton = $('#commentSubmitButton');
+
+        commentsSubmitButton.click(function ()
+        {
+            commentsSubmitButton.addClass('disabled');
+            var text = $('textarea').val();
+            if(!$.trim(text))
+            {
+                alert("Cant add empty comments");
+                commentsSubmitButton.removeClass('disabled');
+                return;
+            }
+            // Removing excess white spaces from text area.
+            text.replace(/\s+/g, " ").replace(/^\s|\s$/g, "");
+            // @Nikhil Kumar Type url here
+            var url = '';
+            $.get(url, {comment : text}, function (data, status) {
+
+                // data must contain a date attribute. As date and time will be set using server time.
+                var comments_div_p = $('#comments_div_p');
+                var str = '';
+                str += '<div>' + '<span style="font-weight: 800">{{ user.username }} <sub>' + data.date + '</sub> :</span>' + '<span>' + text + '</span></div>';
+
+                comments_div_p.append(str);
+                commentsSubmitButton.removeClass('disabled');
+
+            });
+
+
+        });
+
+
+
+//        window.setTimeout(RefreshDropdown, 5000);
     });
     $('img').on('error', function () {
         console.log("Hello");
         $('#card_image_div').css({'display' : 'none'});
+
+
+
     });
     function copyToClipboard(element) {
     var $temp = $("<input>");
@@ -346,6 +416,20 @@
     document.execCommand("copy");
     $temp.remove();
 }
+
+function selectText(containerid) {
+        if (document.selection) {
+            var range = document.body.createTextRange();
+            range.moveToElementText(document.getElementById(containerid));
+            range.select();
+        } else if (window.getSelection) {
+            var range = document.createRange();
+            range.selectNode(document.getElementById(containerid));
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+        }
+    }
+
     </script>
 
 {% endblock %}
