@@ -2,7 +2,7 @@
 {% load staticfiles %}
 {% load i18n %}
 
-{% block title %}{% endblock %}
+{% block title %}user books{% endblock %}
 
 {% block body %}
     <style>
@@ -35,6 +35,14 @@
             </div>
             </a>
         </div>
+        {% empty %}
+            <div class="row">
+                <div class="col s12 m12 l3"></div>
+            <div class="col s12 m12 l6 flow-text center">
+                Empty. {{ user.username }} has no books.
+            </div>
+            <div class="col s12 m12 l3"></div>
+            </div>
     {% endfor %}
     </div>
 </div>
