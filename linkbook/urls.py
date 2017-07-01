@@ -25,8 +25,8 @@ urlpatterns = [
     url(r'^link/(?P<id>\d+)/$', linkbook_link_views.link, name='link'),
     url(r'^link/new/$', linkbook_link_views.create_link, name = 'create_link'),
     url(r'^link/(?P<id>\d+)/edit/$', linkbook_link_views.edit_link, name='edit_link'),    
-    url(r'^link/(?P<id>\d+)/comment/$', linkbook_link_views.create_comment, name = 'create_comment'),
     url(r'^link/(?P<id>\d+)/vote/$', linkbook_link_views.vote_link, name = 'vote_link'),
+    url(r'comment/', linkbook_link_views.ajax_comment, name = 'ajax_comment'),
 
     url(r'^tags/(?P<tag_name>[-\w]+)/$', linkbook_link_views.view_tag, name='view_tag'),
 

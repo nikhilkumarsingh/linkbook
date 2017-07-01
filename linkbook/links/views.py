@@ -4,6 +4,8 @@ from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 from django.contrib.auth.models import User
+from django.views.decorators.csrf import csrf_exempt
+
 
 from linkbook.links.forms import LinkForm, BookForm, CommentForm
 from linkbook.links.models import Link, Book, Comment
@@ -186,6 +188,28 @@ def edit_book(request, id):
         return render(request, 'links/edit_book.html', {'book':book})
 
 
+@csrf_exempt
+@login_required
+def ajax_comment(request):
+    if request.is_ajax():
+        comment = Comment()
+        comment.user = request.user
+        comment.link = Link.objects.get(id = request.POST.get('link_id'))
+        comment.text = request.POST.get('text')
+        comment.save()
+        notify.send(request.user, recipient = comment.link.user, 
+            target = comment.link, verb = "commented on")
+        return JsonResponse({'date':comment.date.strftime('%b %d, %Y, %H:%M %p')})
+
+
+@login_required
+def view_tag(request, tag_name):
+    tagged = Link.objects.filter(tags__name = tag_name)
+    return render(request, "links/tags.html/", {'tag': tagged, 'tagname' : tag_name})
+
+
+'''
+# not required now
 @login_required
 def create_comment(request, id):
     if request.method == 'POST':
@@ -199,9 +223,4 @@ def create_comment(request, id):
             notify.send(request.user, recipient = comment.link.user, 
                 target = comment.link, verb = "commented on")
             return redirect('/link/{}'.format(id))
-
-
-@login_required
-def view_tag(request, tag_name):
-    tagged = Link.objects.filter(tags__name = tag_name)
-    return render(request, "links/tags.html/", {'tag': tagged, 'tagname' : tag_name})
+'''
