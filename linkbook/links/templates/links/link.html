@@ -4,6 +4,13 @@
 {% block title %}{{link}}{% endblock %}
 {% block body %}
 <style>
+
+    .row
+    {
+        margin: 0px;  !important;
+        padding: 0px;  !important;
+
+    }
     .btn
     {
     width: 100%;
@@ -15,14 +22,33 @@
     margin: 0px;
     padding: 0px;
     }
+    #comments_div_p
+    {
+        max-height: 200px;
+        overflow-y: scroll;
+    }
+    .commentsListItems
+    {
+        overflow-x: hidden;
+        word-break: break-all;
+        word-wrap: break-word;
+        padding: 1px;
+        margin: 1px;
+    }
+    .comments_inside_div
+    {
+        height: 100%;
+        padding: 1px;
+        vertical-align: middle;
+    }
 </style>
-<div class="container">
-    <div class="row">
-        <div class="col s1 m3 l3"></div>
-        <div class="col s10 m6 l6">
+<div class="container" style="padding: 0px; margin: 0px">
+    <div class="row" style="padding: 0px; margin: 0px">
+        <div class="col s1 m1 l3"></div>
+        <div class="col s10 m10 l6">
             <ul class="collection hoverable "  style="border: 1px solid #607d8b" id="list">
                 <li class="collection-item avatar">
-                    <div class="row">
+                    <div class="row"  style="padding: 0px; margin: 0px">
                         <!-- user avatar -->
                         <img class="responsive-img circle"  height = "40px" width="40px" src="{{link.user.profile.pic}}" />
                         &nbsp; &nbsp;
@@ -39,7 +65,7 @@
                                         </a>
                                     </div>
                                     <div class="col s12 m12 l5 right-align" id="icons_extra">
-                                        <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue" href="#" title="Show URL" data-activates="dropdown11" id="show_url_button"><i class="material-icons">remove_red_eye</i></a>
+                                        <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue hide-on-med-and-down" href="#" title="Show URL" data-activates="dropdown11" id="show_url_button"><i class="material-icons">remove_red_eye</i></a>
                                         <a class="btn-floating btn-small  waves-effect waves-light blue" href="{{ link.url }}" title="Visit Link" target="_blank"><i class="material-icons">open_in_new</i></a>
                                         <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue" href="#" title="Share" data-beloworigin="true" data-activates="dropdown10"><i class="material-icons">share</i></a>
                                         <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue" href="#" id="copy" title="Copy to clipboard" ><i class="material-icons">content_copy</i></a>
@@ -48,11 +74,11 @@
                                 <div id="modal10" class="modal">
                                     <div class="modal-content">
                                         <div class="row">
-                                            <div class="col s12 m7 l7">
+                                            <div class="col s12 m12 l7">
                                                 <div class="title"><a id="link_url" href="{{ link.url }}" target="_blank"> {{ link.url }}</a>  </div>
                                             </div>
-                                            <div class="col s12 m2 l2"></div>
-                                            <div class="col s12 m3 l3">
+                                            <div class="col s12 m12 l2"></div>
+                                            <div class="col s12 m12 l3">
                                                 <button title="copy to clipboard" class="btn black white-text" id="copy"> <i class="material-icons black" style="color: white">content_copy</i></button>
                                             </div>
                                         </div>
@@ -126,17 +152,17 @@
                     </p>
                 </li>
                 {% if request.user.is_authenticated %}
-                <li class="collection-item avatar">
-                    <div class="row">
-                        <div class="col s12 m4 l4">
+                <li class="collection-item avatar" style="padding: 0px; margin: 0px">
+                    <div class="row" style="padding: 0px; margin: 0px">
+                        <div class="col s12 m12 l4">
                             <span> <sup id="upvotes_count">{{ upvotes }}</sup><sup> upvote(s)</sup></span>
                             <button class="btn green upvote upvote_upper_button waves-effect waves-light {{upvote_button}} center" id="upvote_button" link_id = "{{ link.id }}"> <i class="material-icons" style="color: white; background-color: transparent">thumb_up</i> </button>
                         </div>
-                        <div class="col s12 m4 l4">
+                        <div class="col s12 m12 l4">
                             <span> <sup id="downvotes_count">{{ downvotes }} </sup><sup> downvote(s)</sup></span>
                             <button title="downvote" class="btn waves-effect waves-light  red btn-block white-text downvote downvote_upper_button {{ downvote_button }}" id="downvote_button" link_id = "{{ link.id }}" > <i class="material-icons" style="color: white; background-color: transparent" >thumb_down</i></button>
                         </div>
-                        <div class="col s12 m4 l4">
+                        <div class="col s12 m12 l4">
                             <span>
                             <sup><span id="num_comments1">{{link.comment_set.count}}</span> comment(s)</sup>
                             </span>
@@ -149,22 +175,25 @@
                     <i class="material-icons circle blue-grey">comment</i>
                     <span class="title blue-grey-text">Comments</span>
                     <p class="green-text"><span id="num_comments2">{{link.comment_set.count}}</span> comment(s) on this link:</p>
-                    <p id="comments_div_p">
+                    <ul class="collection" id="comments_div_p">
                         {% for comment in link.comment_set.all %}
-                    <div>
+                    <li class="collection-item avatar commentsListItems valign-wrapper" style="padding: 0px; margin: 0px">
+                    <img src="{{ comment.user.profile.pic }}" class="responsive-img circle">
+                        <div class = "comments_inside_div">
+
                         <span style="font-weight: 800"><a href="/{{comment.user}}/">{{ comment.user }}</a> 
                         <sub>[{{comment.date}}]</sub> :</span>
                         <span>{{ comment.text }}</span>
-                        <div class="divider"></div>
                     </div>
+                    </li>
                     {% endfor %}
-                    </p>
+                    </ul>
                     <form>
                         <div class="input-field">
                             {{ comment_form.as_p }}
                         </div>
                     </form>
-                    <div class="row">
+                    <div class="row" style="padding: 0px; margin: 0px">
                         <div class="col s12 m12 l4">
                             <button class="btn blue waves-effect waves-light" id="commentSubmitButton">Comment</button>
                         </div>
@@ -174,7 +203,7 @@
                 </li>
             </ul>
         </div>
-        <div class="col s1 m3 l3"></div>
+        <div class="col s1 m1 l3"></div>
     </div>
 </div>
 <!--  Sharing dropdown -->
@@ -345,7 +374,6 @@
                 commentsSubmitButton.removeClass('disabled');
                 return;
             }
-
             // increase number of comments by 1
             $('#num_comments1').html(Number($('#num_comments1').html()) + 1);
             $('#num_comments2').html(Number($('#num_comments2').html()) + 1);
@@ -357,17 +385,22 @@
                 url: '/comment/',
                 type: 'post',
                 data: {'text':text, 
-                       'link_id':{{link.id}}, 
+                       'link_id':{{link.id}}
                     },
                 success :function(data, status){
                     console.log(data);
                     var comments_div_p = $('#comments_div_p');
                     var str = '';
-                    str += '<div>' + '<span style="font-weight: 800"><a href="/{{request.user}}/">{{request.user}}</a> <sub>[' + data['date'] + ']</sub> :</span>' + '<span>' + text + '</span></div>' 
-                        + '<div class="divider"></div>';
-                    comments_div_p.prepend(str);
+                  //  str += '<div>' + '<span style="font-weight: 800"><a href="/{{request.user}}/">{{request.user}}</a> <sub>[' + data['date'] + ']</sub> :</span>' + '<span>' + text + '</span></div>'
+                       str += '<div class="divider"></div>';
+
+                    str += '<li class="collection-item avatar valign-wrapper commentsListItems"><img src="{{ request.user.profile.pic }}" class="responsive-img circle"><div class="comments_inside_div"> <span style="font-weight: 800"><a href="/{{request.user}}/">{{ request.user }}</a>                      <sub>[' + data['date'] + ']</sub> :</span>' +
+                        '<span>' + text + '</span></div></li>';
+
+                    comments_div_p.append(str);
                     commentsSubmitButton.removeClass('disabled');
-                },
+                   $("#comments_div_p").scrollTop($("#comments_div_p")[0].scrollHeight);
+                }
             });
 
             commentsSubmitButton.removeClass('disabled');

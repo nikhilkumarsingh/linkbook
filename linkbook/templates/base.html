@@ -51,7 +51,7 @@
                     <li><a class="btn-floating  waves-effect waves-light green" href="#modal2" title="Create new book" ><i class="material-icons">queue</i></a></li>
                     <li><a class="btn-floating waves-effect waves-light green" href="#modal3" title="Create new link" ><i class="material-icons">note_add</i></a>
                     </li>
-                    <li><a class='dropdown-button btn-floating waves-effect waves-light blue' data-beloworigin="true" href='#!' data-activates='NOTIFS' id="MYNOTIF" data-constrainwidth="false" height = "50px"><i id = "NOTIF_ICON" class="material-icons">notifications</i></a></li>
+                    <li><a class='dropdown-button btn-floating waves-effect waves-light green' data-beloworigin="true" href='#!' data-activates='NOTIFS' id="MYNOTIF" data-constrainwidth="false" height = "50px"><i id = "NOTIF_ICON" class="material-icons">notifications</i></a></li>
                     <li><a href="/logout/?next={{request.path}}">Logout</a></li>
                     {% endif %}
                 </ul>
@@ -269,6 +269,7 @@
                             }
 
                             if(data['new_notifs'] === false){
+                                notif_master.removeClass('pulse');
                                 notif_master.removeClass('blue');
                                 notif_master.addClass('green');
 
@@ -277,6 +278,7 @@
                                 }
                             }else{
                                 notif_master.removeClass('green');
+                                notif_master.addClass('pulse');
                                 notif_master.addClass('blue');
                             }
             
@@ -300,6 +302,7 @@
                                 if(str === '')
                                 {
                                     str = '<li>No notifications</li>'
+                                    notif_master.removeClass('pulse');
                                     notif_master.removeClass('blue');
                                     notif_master.addClass('green');
                                 }
@@ -343,11 +346,12 @@
             
             $("#MYNOTIF").click(function () {
                 var notif_master = $("#MYNOTIF");
+                notif_master.removeClass('pulse');
                 notif_master.removeClass('blue');
                 notif_master.addClass('green');
                 $.ajax({
                     url: '/inbox/notifications/mark-all-as-read/',
-                    type: 'get',
+                    type: 'get'
                 });
             });
             
