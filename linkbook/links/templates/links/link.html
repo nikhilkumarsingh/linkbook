@@ -27,10 +27,10 @@
         max-height: 200px;
         overflow-y: scroll;
     }
-    .commentsListItems
+    .commentsListItem
     {
-        overflow-x: hidden;
-        word-break: break-all;
+        max-width: 100%;
+      /*  word-break: break-all;*/
         word-wrap: break-word;
         padding: 1px;
         margin: 1px;
@@ -53,6 +53,7 @@
                         <img class="responsive-img circle"  height = "40px" width="40px" src="{{link.user.profile.pic}}" />
                         &nbsp; &nbsp;
                         <span class="title blue-grey-text ">{{ link.user }} <sub>{{ link.date }}</sub></span> <br><span class="title blue-grey-text"><sup>&nbsp; &nbsp;&nbsp; Last updated : {{ link.last_updated }}</sup>  </span>
+                        <br><br>
                     </div>
                     <div class="row" style="margin: 0px;">
                         <div class="col s12 m12 l12">
@@ -171,19 +172,19 @@
                     </div>
                 </li>
                 {% endif %}
-                <li class="collection-item avatar" id="comments" style="display: none">
+                <li class="collection-item avatar" id="comments" style="display: none; margin: 0px">
                     <i class="material-icons circle blue-grey">comment</i>
                     <span class="title blue-grey-text">Comments</span>
                     <p class="green-text"><span id="num_comments2">{{link.comment_set.count}}</span> comment(s) on this link:</p>
                     <ul class="collection" id="comments_div_p">
                         {% for comment in link.comment_set.all %}
-                    <li class="collection-item avatar commentsListItems valign-wrapper" style="padding: 0px; margin: 0px">
-                    <img src="{{ comment.user.profile.pic }}" class="responsive-img circle">
-                        <div class = "comments_inside_div">
-
-                        <span style="font-weight: 800"><a href="/{{comment.user}}/">{{ comment.user }}</a> 
-                        <sub>[{{comment.date}}]</sub> :</span>
-                        <span>{{ comment.text }}</span>
+                    <li class="collection-item avatar commentsListItem">
+                    <a href="/{{comment.user}}/"><img src="{{ comment.user.profile.pic }}" class="responsive-img circle" titile="{{ comment.user }}">
+                       </a>
+                        <div class = "comments_inside_div commentsListItem">
+                        <p style="font-weight: 800" class="commentsListItem hide-on-med-and-down"><a href="/{{comment.user}}/">{{ comment.user }}</a>
+                        <sub class="commentsListItem">[{{comment.date}}]</sub> :</p>
+                        <p class="commentsListItem">{{ comment.text }}</p>
                     </div>
                     </li>
                     {% endfor %}
@@ -394,8 +395,12 @@
                   //  str += '<div>' + '<span style="font-weight: 800"><a href="/{{request.user}}/">{{request.user}}</a> <sub>[' + data['date'] + ']</sub> :</span>' + '<span>' + text + '</span></div>'
                        str += '<div class="divider"></div>';
 
-                    str += '<li class="collection-item avatar valign-wrapper commentsListItems"><img src="{{ request.user.profile.pic }}" class="responsive-img circle"><div class="comments_inside_div"> <span style="font-weight: 800"><a href="/{{request.user}}/">{{ request.user }}</a>                      <sub>[' + data['date'] + ']</sub> :</span>' +
-                        '<span>' + text + '</span></div></li>';
+                  /*  str += '<li class="collection-item avatar commentsListItems"><img src="{{ request.user.profile.pic }}" class="responsive-img circle"><div class="comments_inside_div"> <span style="font-weight: 800"><a href="/{{request.user}}/">{{ request.user }}</a>                      <sub>[' + data['date'] + ']</sub> :</span>' +
+                        '<span>' + text + '</span></div></li>';*/
+
+                    str += '<li class="collection-item avatar commentsListItem">' +
+                    '<a href="/{{request.user}}/"><img src="{{ request.user.profile.pic }}" class="responsive-img circle" titile="{{ request.user }}">' +
+                       '</a><div class = "comments_inside_div commentsListItem"><p style="font-weight: 800" class="commentsListItem hide-on-med-and-down"><a href="/{{request.user}}/">{{ request.user }}</a><sub class="commentsListItem">[' + data['date'] + ']</sub> :</p>                        <p class="commentsListItem">' + text + '</p>' + '</div></li>'
 
                     comments_div_p.append(str);
                     commentsSubmitButton.removeClass('disabled');

@@ -56,6 +56,11 @@
                     {% endif %}
                 </ul>
                 <ul class="side-nav" id="mobile-demo">
+                {%  if request.user.is_authenticated %}
+                <li><div class="user-view">
+      <a href="/{{ request.user }}/"><img class="responsive-img small square" src="{{ request.user.profile.pic }}"><div class="black-text center-align"> {{ request.user }} </div></a>
+    </div></li>
+                {% endif %}
                     <li class="active "><a href="/">Home</a></li>
                     <li><a href="#">About Us </a></li>
                     <li><a  href="#">Project</a></li>
@@ -63,8 +68,13 @@
                     <li><a href="#modal1">Login</a></li>
                     <li><a href="signup" > Sign Up</a></li>
                     {% else %}
-                    <li><a href="/{{request.user.username}}" >Profile</a></li>
-                    <li><a href="/logout">Logout</a></li>
+
+                    <li><a  href="#modal2" title="Create new book" ><i class="material-icons">queue</i>Create new book</a>
+                    </li>
+                    <li><a href="#modal3" title="Create new link" ><i class="material-icons">note_add</i>Create new  link</a>
+                    </li>
+                    <li><a class='dropdown-button' data-beloworigin="true" href='#!' data-activates='NOTIFS' id="MYNOTIF" data-constrainwidth="false"><i id = "NOTIF_ICON" class="material-icons">notifications</i>Notifications</a></li>
+                    <li><a href="/logout/?next={{request.path}}">Logout</a></li>
                     {% endif %}
                 </ul>
             </div>
