@@ -15,6 +15,25 @@
     margin: 0px;
     padding: 0px;
     }
+    #comments_div_p
+    {
+        max-height: 200px;
+        overflow-y: scroll;
+    }
+    .commentsListItems
+    {
+        overflow-x: hidden;
+        word-break: break-all;
+        word-wrap: break-word;
+        padding: 1px;
+        margin: 1px;
+    }
+    .comments_inside_div
+    {
+        height: 100%;
+        padding: 1px;
+        vertical-align: middle;
+    }
 </style>
 <div class="container">
     <div class="row">
@@ -149,16 +168,19 @@
                     <i class="material-icons circle blue-grey">comment</i>
                     <span class="title blue-grey-text">Comments</span>
                     <p class="green-text"><span id="num_comments2">{{link.comment_set.count}}</span> comment(s) on this link:</p>
-                    <p id="comments_div_p">
+                    <ul class="collection" id="comments_div_p">
                         {% for comment in link.comment_set.all %}
-                    <div>
+                    <li class="collection-item avatar commentsListItems valign-wrapper">
+                    <img src="{{ comment.user.profile.pic }}" class="responsive-img circle">
+                        <div class = "comments_inside_div">
+
                         <span style="font-weight: 800"><a href="/{{comment.user}}/">{{ comment.user }}</a> 
                         <sub>[{{comment.date}}]</sub> :</span>
                         <span>{{ comment.text }}</span>
-                        <div class="divider"></div>
                     </div>
+                    </li>
                     {% endfor %}
-                    </p>
+                    </ul>
                     <form>
                         <div class="input-field">
                             {{ comment_form.as_p }}
@@ -345,7 +367,6 @@
                 commentsSubmitButton.removeClass('disabled');
                 return;
             }
-
             // increase number of comments by 1
             $('#num_comments1').html(Number($('#num_comments1').html()) + 1);
             $('#num_comments2').html(Number($('#num_comments2').html()) + 1);
@@ -357,17 +378,22 @@
                 url: '/comment/',
                 type: 'post',
                 data: {'text':text, 
-                       'link_id':{{link.id}}, 
+                       'link_id':{{link.id}}
                     },
                 success :function(data, status){
                     console.log(data);
                     var comments_div_p = $('#comments_div_p');
                     var str = '';
-                    str += '<div>' + '<span style="font-weight: 800"><a href="/{{request.user}}/">{{request.user}}</a> <sub>[' + data['date'] + ']</sub> :</span>' + '<span>' + text + '</span></div>' 
-                        + '<div class="divider"></div>';
-                    comments_div_p.prepend(str);
+                  //  str += '<div>' + '<span style="font-weight: 800"><a href="/{{request.user}}/">{{request.user}}</a> <sub>[' + data['date'] + ']</sub> :</span>' + '<span>' + text + '</span></div>'
+                       str += '<div class="divider"></div>';
+
+                    str += '<li class="collection-item avatar valign-wrapper commentsListItems"><img src="{{ request.user.profile.pic }}" class="responsive-img circle"><div class="comments_inside_div"> <span style="font-weight: 800"><a href="/{{request.user}}/">{{ request.user }}</a>                      <sub>[' + data['date'] + ']</sub> :</span>' +
+                        '<span>' + text + '</span></div></li>';
+
+                    comments_div_p.append(str);
                     commentsSubmitButton.removeClass('disabled');
-                },
+                   $("#comments_div_p").scrollTop($("#comments_div_p")[0].scrollHeight);
+                }
             });
 
             commentsSubmitButton.removeClass('disabled');
