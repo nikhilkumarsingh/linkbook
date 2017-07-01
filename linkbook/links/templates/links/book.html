@@ -8,7 +8,7 @@
     <style>
         .card1
         {
-            height : 320px;
+            height : 310px;
         }
         .description
         {
@@ -27,14 +27,14 @@
             height : 37px;
         }
     </style>
-    <div class = "container">
-        <div class="row">
-            <h3 class="center blue-grey-text">{{user.username}}'s Book</h3>
+    <div class = "container" style="padding: 0px; margin: 0px">
+        <div class="row" style="padding: 0px; margin: 0px">
+            <h3 class="center blue-grey-text" style="padding: 1%">{{user.username}}'s Book</h3>
         </div>
-        <div class="row">
+        <div class="row" style="padding: 0px; margin: 0px">
             {% for link in book %}
                 <div class="col s12 m12 l4">
-                    <div class="row">
+                    <div class="row" style="padding: 0px; margin: 0px">
                         <div class="col s12 m12 l12">
                 <div class="card card1 horizontal hoverable white-text blue-grey lighten-1">
                   <div class="card-stacked">

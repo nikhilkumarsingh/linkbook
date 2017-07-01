@@ -37,8 +37,8 @@
 </style>
 <div class="container">
     <div class="row">
-        <div class="col s1 m3 l3"></div>
-        <div class="col s10 m6 l6">
+        <div class="col s1 m1 l3"></div>
+        <div class="col s10 m10 l6">
             <ul class="collection hoverable "  style="border: 1px solid #607d8b" id="list">
                 <li class="collection-item avatar">
                     <div class="row">
@@ -67,11 +67,11 @@
                                 <div id="modal10" class="modal">
                                     <div class="modal-content">
                                         <div class="row">
-                                            <div class="col s12 m7 l7">
+                                            <div class="col s12 m12 l7">
                                                 <div class="title"><a id="link_url" href="{{ link.url }}" target="_blank"> {{ link.url }}</a>  </div>
                                             </div>
-                                            <div class="col s12 m2 l2"></div>
-                                            <div class="col s12 m3 l3">
+                                            <div class="col s12 m12 l2"></div>
+                                            <div class="col s12 m12 l3">
                                                 <button title="copy to clipboard" class="btn black white-text" id="copy"> <i class="material-icons black" style="color: white">content_copy</i></button>
                                             </div>
                                         </div>
@@ -147,15 +147,15 @@
                 {% if request.user.is_authenticated %}
                 <li class="collection-item avatar">
                     <div class="row">
-                        <div class="col s12 m4 l4">
+                        <div class="col s12 m12 l4">
                             <span> <sup id="upvotes_count">{{ upvotes }}</sup><sup> upvote(s)</sup></span>
                             <button class="btn green upvote upvote_upper_button waves-effect waves-light {{upvote_button}} center" id="upvote_button" link_id = "{{ link.id }}"> <i class="material-icons" style="color: white; background-color: transparent">thumb_up</i> </button>
                         </div>
-                        <div class="col s12 m4 l4">
+                        <div class="col s12 m12 l4">
                             <span> <sup id="downvotes_count">{{ downvotes }} </sup><sup> downvote(s)</sup></span>
                             <button title="downvote" class="btn waves-effect waves-light  red btn-block white-text downvote downvote_upper_button {{ downvote_button }}" id="downvote_button" link_id = "{{ link.id }}" > <i class="material-icons" style="color: white; background-color: transparent" >thumb_down</i></button>
                         </div>
-                        <div class="col s12 m4 l4">
+                        <div class="col s12 m12 l4">
                             <span>
                             <sup><span id="num_comments1">{{link.comment_set.count}}</span> comment(s)</sup>
                             </span>
@@ -196,7 +196,7 @@
                 </li>
             </ul>
         </div>
-        <div class="col s1 m3 l3"></div>
+        <div class="col s1 m1 l3"></div>
     </div>
 </div>
 <!--  Sharing dropdown -->

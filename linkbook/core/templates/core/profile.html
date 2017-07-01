@@ -24,11 +24,15 @@
     .row
     {
         width: 100%;
+        margin: 1px;
+        padding: 0px;
     }
 
     .container
     {
         width : 100%;
+        margin: 1px;
+        padding:0px;
     }
 
     .col
@@ -55,8 +59,8 @@
     }
 
     </style>
-    <div class="container">
-        <div class="row">
+    <div class="container" style="padding: 0px">
+        <div class="row" style="padding: 0px; margin: 0px">
         <!-- First Column : Profile page card -->
             <div class="col s12 m12 l4">
                 <br><br>
@@ -98,7 +102,7 @@
         <!-- Second Column started -->
             <div class="col s12 m12 l8">
             <br>
-                <div class="row" style="border-bottom: 3px solid lightgray; padding: 0px">
+                <div class="row" style="border-bottom: 3px solid lightgray; padding: 0px;">
                     <div class="col s6 m6 l6" id="popularLinksDiv">
                                     <div class="header center center-align" id="popularLinksTab" style="padding: 0px; cursor:pointer;">
                         <h5 style="padding: 0px; cursor: pointer" id="popularLinksHeading">Popular Links</h5><br>
@@ -111,7 +115,7 @@
 
                     </div>
                 </div>
-                <div class="row" id="popularLinks">
+                <div class="row" id="popularLinks" style="padding: 0px; margin: 0px">
                     <div class="col s12 m12 l6">
                         {% if links.0 == none %}
                         {% else %}
@@ -187,7 +191,7 @@
                         {% endif %}
                     </div>
 
-                    <div class="col s12 m12 l6">
+                    <div class="col s12 m12 l6"">
 
                                                 {% if links.1 == none %}
                         {% else %}
@@ -266,7 +270,7 @@
 
                     </div>
             </div>
-                <div class="row" id="popularBooks">
+                <div class="row" id="popularBooks" style="padding: 0px; margin: 0px">
                     <div class="col s12 m12 l6">
                         {% if books.0 == none %}
                         {% else %}
