@@ -41,6 +41,22 @@
         padding: 1px;
         vertical-align: middle;
     }
+
+    .btn-floating
+    {
+        margin: 1px;
+    }
+
+    .modalD
+    {
+        padding: 2px;
+        word-wrap: break-word;
+        max-width: 100%;
+        display: block;
+        height: 100%;
+        text-transform: none;
+    }
+
 </style>
 <div class="container" style="padding: 0px; margin: 0px">
     <div class="row" style="padding: 0px; margin: 0px">
@@ -60,44 +76,32 @@
                             <i class="material-icons circle blue-grey">description</i>
                             <div>
                                 <div class="row" style="margin-bottom: 0px">
-                                    <div class="col s12 m12 l2">
+                                    <div class="col s12 m12 l7">
                                         <a href = "{{link.url}}" target="_blank" class="title">
                                             <h5>{{link.title | linebreaksbr}}</h5>
                                         </a>
                                     </div>
-                                    <div class="col s12 m12 l10 right right-align" id="icons_extra">
-                                     <div class="fixed-action-btn horizontal click-to-toggle" style="position: relative; top: 10px; padding: 0px; right: -30px">
-                                    <a style="margin-top: 4%" class="btn-floating btn-small red">
-      <i class="material-icons">menu</i>
-    </a>
-            <ul>
-                <li><a class="btn-floating dropdown-button btn-small waves-effect waves-light blue hide-on-med-and-down" href="#" title="Show URL" data-activates="dropdown11" id="show_url_button"><i class="material-icons">remove_red_eye</i></a></li>
-                <li><a class="btn-floating btn-small  waves-effect waves-light blue" href="{{ link.url }}" title="Visit Link" target="_blank"><i class="material-icons">open_in_new</i></a></li>
-                <li><a class="btn-floating btn-small dropdown-button  blue" href="#" title="Share" data-beloworigin="true" data-activates="dropdown10"><i class="material-icons">share</i></a></li>
-                <li><a class="btn-floating btn-small dropdown-button  blue" href="#" id="copy" title="Copy to clipboard" ><i class="material-icons">content_copy</i></a></li>
+                  <div class="col s12 m12 l5 right right-align" id="icons_extra">
+                  <div class="row" style="margin: 0px; padding: 0px">
+                      <div class="col s12 m12 l12">
+
+                          <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue" href="#" title="Show URL" data-activates="dropdown11" id="show_url_button"><i class="material-icons">remove_red_eye</i></a>
+                                        <a class="btn-floating btn-small  waves-effect waves-light blue" href="{{ link.url }}" title="Visit Link" target="_blank"><i class="material-icons">open_in_new</i></a>
+                                        <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue" href="#" title="Share" data-beloworigin="true" data-activates="dropdown10"><i class="material-icons">share</i></a>
+
+                      </div>
+                      <div class="col s12 m12 l12">
+                                        <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue" href="#" id="copy" title="Copy to clipboard" ><i class="material-icons">content_copy</i></a>
                                         {% if request.user == link.user %}
+                                            <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue" href="/link/{{ link.id }}/edit" id="edit" title="Edit Link" ><i class="material-icons">edit</i></a>
+                                            <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue" href="#modalDelete" id="delete_icon" title="Delete Link" ><i class="material-icons">delete</i></a>
 
-                                            <li> <a class="btn-floating dropdown-button btn-small  blue" href="/link/{{ link.id }}/edit" id="edit" title="Edit Link" ><i class="material-icons">edit</i></a></li>
-
-                                            </ul>
-                                            </div>
-<!--
-                                        <div class="fixed-action-btn horizontal" style="position: relative;">
-    <a class="btn-floating btn-large red" style="position: absolute;right: 10px;top: 5px;">
-      <i class="large material-icons" >mode_edit</i>
-    </a>
-    <ul>
-      <li><a class="btn-floating red"><i class="material-icons">insert_chart</i></a></li>
-      <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
-      <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
-      <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
-    </ul>
-  </div>
-
--->
-                                            </div>
+                      </div>
+                  </div>
 
                                         {% endif %}
+                  <br>
+                  </div>
                                     </div>
                                 </div>
                                 <div id="modal10" class="modal">
@@ -182,20 +186,21 @@
                 {% if request.user.is_authenticated %}
                 <li class="collection-item avatar" style="padding: 0px; margin: 0px">
                     <div class="row" style="padding: 0px; margin: 0px">
-                        <div class="col s12 m12 l4">
+                        <div class="col s6 m4 l4" >
                             <span> <sup id="upvotes_count">{{ upvotes }}</sup><sup> upvote(s)</sup></span>
                             <button class="btn green upvote upvote_upper_button waves-effect waves-light {{upvote_button}} center" id="upvote_button" link_id = "{{ link.id }}"> <i class="material-icons" style="color: white; background-color: transparent">thumb_up</i> </button>
                         </div>
-                        <div class="col s12 m12 l4">
+                        <div class="col s6 m4 l4" >
                             <span> <sup id="downvotes_count">{{ downvotes }} </sup><sup> downvote(s)</sup></span>
                             <button title="downvote" class="btn waves-effect waves-light  red btn-block white-text downvote downvote_upper_button {{ downvote_button }}" id="downvote_button" link_id = "{{ link.id }}" > <i class="material-icons" style="color: white; background-color: transparent" >thumb_down</i></button>
                         </div>
-                        <div class="col s12 m12 l4">
+                        <div class="col s12 m4 l4">
                             <span>
                             <sup><span id="num_comments1">{{link.comment_set.count}}</span> comment(s)</sup>
                             </span>
                             <button class="btn blue waves-light center waves-effect" id="comments_tab">Comments</button>
                         </div>
+                        <br><br><br><br>
                     </div>
                 </li>
                 {% endif %}
@@ -265,6 +270,22 @@
         </div>
     </li>
 </ul>
+
+    <div class="modal" id="modalDelete">
+        <div class="modal-content">
+            <div class="container">
+                <div class="row">
+                    <h4 class="center-align red-text flow-text">Are you sure?</h4>
+                    <div class="col s12 m12 l12 " style="margin: 2px">
+                        <button id="deleteOne" class="btn red white-text modalD">Delete link from current book only</button>
+                    </div>
+                    <div id="deleteCompletely" class="col s12 m12 l12" style="margin: 2px">
+                        <button class="btn red white-text modalD ">Delete this link completely from all of your books</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 
