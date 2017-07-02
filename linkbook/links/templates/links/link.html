@@ -182,17 +182,7 @@
                     <span class="title blue-grey-text">Comments</span>
                     <p class="green-text"><span id="num_comments2">{{link.comment_set.count}}</span> comment(s) on this link:</p>
                     <ul class="collection" id="comments_div_p">
-                        {% for comment in link.comment_set.all %}
-                    <li class="collection-item avatar commentsListItem">
-                    <a href="/{{comment.user}}/"><img src="{{ comment.user.profile.pic }}" class="responsive-img circle" titile="{{ comment.user }}">
-                       </a>
-                        <div class = "comments_inside_div commentsListItem">
-                        <p style="font-weight: 800" class="commentsListItem hide-on-med-and-down"><a href="/{{comment.user}}/">{{ comment.user }}</a>
-                        <sub class="commentsListItem">[{{comment.date}}]</sub> :</p>
-                        <p class="commentsListItem">{{ comment.text }}</p>
-                    </div>
-                    </li>
-                    {% endfor %}
+					<!-- All comments to be loaded here -->            
                     </ul>
                     <form>
                         <div class="input-field">
@@ -266,10 +256,46 @@
       //  $('#dropdown11').css({'max-width' : width });
     
     }
-    
-    $(function () {
-    
-    
+
+
+    function LoadComments(params){
+    	$.ajax({
+    		url: '/comment/load/',
+    		type: 'get',
+    		data: {'link_id': "{{link.id}}"},
+    		success: function(data, status){
+
+    			var comments_div_p = $('#comments_div_p');
+                var str = '';
+                var comments = data['comments'];
+
+                for(i=0; i<comments.length; i++){
+                	str += '<div class="divider"></div>' 
+                		+ '<li class="collection-item avatar commentsListItem">' 
+                		+ '<a href="/' + comments[i]['user'] + '/"><img src=' + comments[i]['pic']
+                		+ ' class="responsive-img circle" title=' + comments[i]['user'] + '></a>' 
+                		+ '<div class = "comments_inside_div commentsListItem">'
+                		+ '<p style="font-weight: 800" class="commentsListItem hide-on-med-and-down">'
+                		+ '<a href="/' + comments[i]['user'] + '/">' + comments[i]['user'] + '</a>'
+                		+ '<sub class="commentsListItem">[' + comments[i]['time'] + ']</sub>:</p>'
+                		+ '<p class="commentsListItem">' + comments[i]['text'] + '</p></div></li>'
+                }
+           
+                comments_div_p.html(str);
+                $("#comments_div_p").scrollTop($("#comments_div_p")[0].scrollHeight);
+
+                // increase number of comments by 1
+            	$('#num_comments1').html(Number(data['count']));
+            	$('#num_comments2').html(Number(data['count']));
+    		}
+    	});
+    }
+
+
+    $(function(){
+    	// load comments initially
+    	LoadComments();
+
         $('.dropdown-button').dropdown({
           inDuration: 300,
           outDuration: 225,
@@ -285,56 +311,55 @@
         var disp = false;
         var URL = $('#url');
         b.click(function () {
-            if(disp)
-            {
+            if(disp){
                 URL.css({'display' : 'none'});
                 b.html("Show URL");
-            }
-            else
-            {
+            }else{
                 URL.css({'display' : 'block'});
                 b.html("Hide URL");
             }
             disp = 1 - disp;
         });
-    $('.upvote_upper_button').click(function(){
-    var link_id;
-    link_id = $(this).attr("link_id");
-    $.get('/link/{{link.id}}/vote/', {type: 'U'}, function(data){
-               $('#upvotes_count').html(data['upvotes']);
-               $('#downvotes_count').html(data['downvotes']);
-               $('.upvote').removeClass('lighten-5');
-               $('.downvote').removeClass('lighten-5');
-               //$(".downvote").toggleClass(data['downvote_button']);
-                console.log(data.upvote_button);
-                console.log(data.downvote_button);
-                if(data['upvote_button'] == '')
-                {
-                }
-                else
-                {
-                    $('.upvote').addClass('lighten-5');
-                }
-        });
-    });
-    $('.downvote_upper_button').click(function(){
-    var link_id;
-    link_id = $(this).attr("link_id");
-    $.get('/link/{{link.id}}/vote/', {type: 'D'}, function(data){
-               $('#downvotes_count').html(data['downvotes']);
-               $('#upvotes_count').html(data['upvotes']);
-               $('.upvote').removeClass('lighten-5');
-               $('.downvote').removeClass('lighten-5');
-              // $(".downvote").addClass(data['downvote_button']);
-                if(data['downvote_button'] == '')
-                {
-                }
-                else
-                {
-                    $('.downvote').addClass('lighten-5');
-                }
-        });
-    });
+
+
+	    $('.upvote_upper_button').click(function(){
+	    var link_id;
+	    link_id = $(this).attr("link_id");
+	    $.get('/link/{{link.id}}/vote/', {type: 'U'}, function(data){
+	               $('#upvotes_count').html(data['upvotes']);
+	               $('#downvotes_count').html(data['downvotes']);
+	               $('.upvote').removeClass('lighten-5');
+	               $('.downvote').removeClass('lighten-5');
+	               //$(".downvote").toggleClass(data['downvote_button']);
+	                console.log(data.upvote_button);
+	                console.log(data.downvote_button);
+	                if(data['upvote_button'] == '')
+	                {
+	                }
+	                else
+	                {
+	                    $('.upvote').addClass('lighten-5');
+	                }
+	        });
+	    });
+	    $('.downvote_upper_button').click(function(){
+	    var link_id;
+	    link_id = $(this).attr("link_id");
+	    $.get('/link/{{link.id}}/vote/', {type: 'D'}, function(data){
+	               $('#downvotes_count').html(data['downvotes']);
+	               $('#upvotes_count').html(data['upvotes']);
+	               $('.upvote').removeClass('lighten-5');
+	               $('.downvote').removeClass('lighten-5');
+	              // $(".downvote").addClass(data['downvote_button']);
+	                if(data['downvote_button'] == '')
+	                {
+	                }
+	                else
+	                {
+	                    $('.downvote').addClass('lighten-5');
+	                }
+	        });
+	    });
     
     
         var show_url_button = $('#show_url_button');
@@ -380,36 +405,19 @@
                 commentsSubmitButton.removeClass('disabled');
                 return;
             }
-            // increase number of comments by 1
-            $('#num_comments1').html(Number($('#num_comments1').html()) + 1);
-            $('#num_comments2').html(Number($('#num_comments2').html()) + 1);
 
             // Removing excess white spaces from text area.
             text.replace(/\s+/g, " ").replace(/^\s|\s$/g, "");
             
             $.ajax({
-                url: '/comment/',
+                url: '/comment/create/',
                 type: 'post',
                 data: {'text':text, 
                        'link_id':{{link.id}}
                     },
                 success :function(data, status){
-                    console.log(data);
-                    var comments_div_p = $('#comments_div_p');
-                    var str = '';
-                  //  str += '<div>' + '<span style="font-weight: 800"><a href="/{{request.user}}/">{{request.user}}</a> <sub>[' + data['date'] + ']</sub> :</span>' + '<span>' + text + '</span></div>'
-                       str += '<div class="divider"></div>';
-
-                  /*  str += '<li class="collection-item avatar commentsListItems"><img src="{{ request.user.profile.pic }}" class="responsive-img circle"><div class="comments_inside_div"> <span style="font-weight: 800"><a href="/{{request.user}}/">{{ request.user }}</a>                      <sub>[' + data['date'] + ']</sub> :</span>' +
-                        '<span>' + text + '</span></div></li>';*/
-
-                    str += '<li class="collection-item avatar commentsListItem">' +
-                    '<a href="/{{request.user}}/"><img src="{{ request.user.profile.pic }}" class="responsive-img circle" titile="{{ request.user }}">' +
-                       '</a><div class = "comments_inside_div commentsListItem"><p style="font-weight: 800" class="commentsListItem hide-on-med-and-down"><a href="/{{request.user}}/">{{ request.user }}</a><sub class="commentsListItem">[' + data['date'] + ']</sub> :</p>                        <p class="commentsListItem">' + text + '</p>' + '</div></li>'
-
-                    comments_div_p.append(str);
-                    commentsSubmitButton.removeClass('disabled');
-                   $("#comments_div_p").scrollTop($("#comments_div_p")[0].scrollHeight);
+                	console.log(data);
+                	LoadComments();
                 }
             });
 
@@ -420,6 +428,7 @@
         //window.setTimeout(RefreshDropdown, 5000);
     });
     
+
     $('img').on('error', function () {
         console.log("Hello");
         $('#card_image_div').css({'display' : 'none'});

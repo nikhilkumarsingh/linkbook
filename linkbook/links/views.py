@@ -14,6 +14,8 @@ from taggit.models import Tag
 from taggit.utils import _parse_tags
 from .PyOpenGraph import PyOpenGraph
 from notifications.signals import notify
+import humanize
+from datetime import datetime, timezone
 
 UP = 0
 DOWN = 1
@@ -188,9 +190,22 @@ def edit_book(request, id):
         return render(request, 'links/edit_book.html', {'book':book})
 
 
+def ajax_load_comment(request):
+    if request.is_ajax():
+        comments = []
+        for comment in Comment.objects.filter(link__id = request.GET.get('link_id')):
+            c = {}
+            c['text'] = comment.text
+            c['user'] = comment.user.username
+            c['pic'] = comment.user.profile.pic
+            c['time'] = humanize.naturaltime(datetime.now(timezone.utc) - comment.date)
+            comments.append(c)
+        return JsonResponse({'comments':comments, 'count': len(comments)})
+
+
 @csrf_exempt
 @login_required
-def ajax_comment(request):
+def ajax_create_comment(request):
     if request.is_ajax():
         comment = Comment()
         comment.user = request.user
@@ -199,7 +214,7 @@ def ajax_comment(request):
         comment.save()
         notify.send(request.user, recipient = comment.link.user, 
             target = comment.link, verb = "commented on")
-        return JsonResponse({'date':comment.date.strftime('%b %d, %Y, %H:%M %p')})
+        return JsonResponse({'done': True})
 
 
 @login_required
