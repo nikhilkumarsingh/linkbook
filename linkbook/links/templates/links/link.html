@@ -60,19 +60,42 @@
                             <i class="material-icons circle blue-grey">description</i>
                             <div>
                                 <div class="row" style="margin-bottom: 0px">
-                                    <div class="col s12 m12 l6">
+                                    <div class="col s12 m12 l2">
                                         <a href = "{{link.url}}" target="_blank" class="title">
                                             <h5>{{link.title | linebreaksbr}}</h5>
                                         </a>
                                     </div>
-                                    <div class="col s12 m12 l6 right-align" id="icons_extra">
-                                        <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue hide-on-med-and-down" href="#" title="Show URL" data-activates="dropdown11" id="show_url_button"><i class="material-icons">remove_red_eye</i></a>
-                                        <a class="btn-floating btn-small  waves-effect waves-light blue" href="{{ link.url }}" title="Visit Link" target="_blank"><i class="material-icons">open_in_new</i></a>
-                                        <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue" href="#" title="Share" data-beloworigin="true" data-activates="dropdown10"><i class="material-icons">share</i></a>
-                                        <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue" href="#" id="copy" title="Copy to clipboard" ><i class="material-icons">content_copy</i></a>
+                                    <div class="col s12 m12 l10 right right-align" id="icons_extra">
+                                     <div class="fixed-action-btn horizontal click-to-toggle" style="position: relative; top: 10px; padding: 0px; right: -30px">
+                                    <a style="margin-top: 4%" class="btn-floating btn-small red">
+      <i class="material-icons">menu</i>
+    </a>
+            <ul>
+                <li><a class="btn-floating dropdown-button btn-small waves-effect waves-light blue hide-on-med-and-down" href="#" title="Show URL" data-activates="dropdown11" id="show_url_button"><i class="material-icons">remove_red_eye</i></a></li>
+                <li><a class="btn-floating btn-small  waves-effect waves-light blue" href="{{ link.url }}" title="Visit Link" target="_blank"><i class="material-icons">open_in_new</i></a></li>
+                <li><a class="btn-floating btn-small dropdown-button  blue" href="#" title="Share" data-beloworigin="true" data-activates="dropdown10"><i class="material-icons">share</i></a></li>
+                <li><a class="btn-floating btn-small dropdown-button  blue" href="#" id="copy" title="Copy to clipboard" ><i class="material-icons">content_copy</i></a></li>
                                         {% if request.user == link.user %}
 
-                                            <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue" href="/link/{{ link.id }}/edit" id="edit" title="Edit Link" ><i class="material-icons">edit</i></a>
+                                            <li> <a class="btn-floating dropdown-button btn-small  blue" href="/link/{{ link.id }}/edit" id="edit" title="Edit Link" ><i class="material-icons">edit</i></a></li>
+
+                                            </ul>
+                                            </div>
+<!--
+                                        <div class="fixed-action-btn horizontal" style="position: relative;">
+    <a class="btn-floating btn-large red" style="position: absolute;right: 10px;top: 5px;">
+      <i class="large material-icons" >mode_edit</i>
+    </a>
+    <ul>
+      <li><a class="btn-floating red"><i class="material-icons">insert_chart</i></a></li>
+      <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
+      <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
+      <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
+    </ul>
+  </div>
+
+-->
+                                            </div>
 
                                         {% endif %}
                                     </div>
@@ -95,7 +118,6 @@
                             <span id = "DESCR" style="font-size: 100%">{{link.description}}</span>
                             <span id="url" style="display: none"><a href="{{ link.url }}" target="_blank"> {{ link.url }} </a></span>
                         </div>
-                    </div>
                 </li>
                 <!-- Open Graph data -->
                 {% if show_og and og.title != None %}
@@ -256,9 +278,8 @@
       //  $('#dropdown11').css({'max-width' : width });
     
     }
-
-
-    function LoadComments(params){
+    function LoadComments(){
+        console.log("Load Comments called");
     	$.ajax({
     		url: '/comment/load/',
     		type: 'get',
@@ -268,29 +289,34 @@
     			var comments_div_p = $('#comments_div_p');
                 var str = '';
                 var comments = data['comments'];
+                var i;
+                for( i = 0; i <comments.length ; i++)
+                {
+                	str += '<li class="divider"></li>'
+                		+ '<li class="collection-item avatar commentsListItem">'
 
-                for(i=0; i<comments.length; i++){
-                	str += '<div class="divider"></div>' 
-                		+ '<li class="collection-item avatar commentsListItem">' 
+                        + '<div class="row">'
+
                 		+ '<a href="/' + comments[i]['user'] + '/"><img src=' + comments[i]['pic']
                 		+ ' class="responsive-img circle" title=' + comments[i]['user'] + '></a>' 
-                		+ '<div class = "comments_inside_div commentsListItem">'
-                		+ '<p style="font-weight: 800" class="commentsListItem hide-on-med-and-down">'
-                		+ '<a href="/' + comments[i]['user'] + '/">' + comments[i]['user'] + '</a>'
-                		+ '<sub class="commentsListItem">[' + comments[i]['time'] + ']</sub>:</p>'
-                		+ '<p class="commentsListItem">' + comments[i]['text'] + '</p></div></li>'
+                		+ '<div class = "col s12 m12 l4 " comments_inside_div commentsListItem">'
+                		+ '<p style="font-weight: 800" class="commentsListItem ">'
+                		+ '<a class="hide-on-med-and-down" href="/' + comments[i]['user'] + '/">' + comments[i]['user'] + '</a>'
+                		+ '<sub class="commentsListItem grey-text">' + comments[i]['time'] + '</sub></p>' + '</div>'
+                            + '<div class="col s12 m12 l8">'
+                		+ '<p class="commentsListItem">' + comments[i]['text'] + '</p></div></div></li>'
                 }
            
                 comments_div_p.html(str);
-                $("#comments_div_p").scrollTop($("#comments_div_p")[0].scrollHeight);
 
+                $("#comments_div_p").scrollTop($("#comments_div_p")[0].scrollHeight);
                 // increase number of comments by 1
+
             	$('#num_comments1').html(Number(data['count']));
             	$('#num_comments2').html(Number(data['count']));
     		}
     	});
     }
-
 
     $(function(){
     	// load comments initially
@@ -382,6 +408,7 @@
                 comments_tab.html("Comments");
             }
             comments_open = 1 - comments_open;
+            LoadComments();
         });
 
 
