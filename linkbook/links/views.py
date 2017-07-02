@@ -24,6 +24,7 @@ vote_color = "lighten-5"
 
 def link(request, id):
     link = get_object_or_404(Link, id = id)
+    link_time = humanize.naturaltime(datetime.now(timezone.utc) - link.date)
     comment_form = CommentForm()
     upvotes = link.votes.count(action = UP)
     downvotes = link.votes.count(action = DOWN)
@@ -59,7 +60,7 @@ def link(request, id):
 
     return render(request, 'links/link.html', 
         {'link': link, 'comment_form': comment_form, 'og': og, 'show_og': show_og,
-        'upvotes': upvotes, 'downvotes': downvotes,
+        'upvotes': upvotes, 'downvotes': downvotes, 'time': link_time,
         'upvote_button': upvote_button, 'downvote_button': downvote_button})
 
 
@@ -168,11 +169,19 @@ def vote_link(request, id):
 @login_required
 def create_book(request):
     if request.method == 'POST':
+        books = Book.objects.filter(user = request.user).filter(title = request.POST.get('TITLE'))
+        
+        # book with same name
+        if len(books):
+            error = "Book with this name already exists!"
+            return render(request, 'links/new_book.html', {'error':error})
+
         book = Book()
         book.user = request.user
         book.title = request.POST.get('TITLE')
         book.description = request.POST.get('DESCRIPTION')
         book.save()
+        
         return redirect('/')
     else:
         return render(request, 'links/new_book.html')
