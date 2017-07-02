@@ -67,21 +67,13 @@
                     <div class="row"  style="padding: 0px; margin: 0px">
                         <!-- user avatar -->
                         <img class="responsive-img circle"  height = "40px" width="40px" src="{{link.user.profile.pic}}" />
-                        <span class="title blue-grey-text ">{{ link.user }}<br/>
+                        <div class="row">
+                            <div class="col s12 m4 l4">
+                                <span class="title blue-grey-text ">{{ link.user }}<br/>
                         <sup>{{ time }}</sup></span>
                         <br><br>
-                    </div>
-                    <div class="row" style="margin: 0px;">
-                        <div class="col s12 m12 l12">
-                            <i class="material-icons circle blue-grey">description</i>
-                            <div>
-                                <div class="row" style="margin-bottom: 0px">
-                                    <div class="col s12 m12 l7">
-                                        <a href = "{{link.url}}" target="_blank" class="title">
-                                            <h5>{{link.title | linebreaksbr}}</h5>
-                                        </a>
-                                    </div>
-                  <div class="col s12 m12 l5 right right-align" id="icons_extra" style="margin: 0px; padding: 0px">
+                            </div>
+                           <div class="col s12 m8 l8 right right-align hide-on-med-and-down" id="icons_extra" style="margin: 0px; padding: 0px">
 
        <!--           <a class='dropdown-button btn' href='#' data-activates='dropdownButtons'>Drop Me!</a> -->
 
@@ -95,9 +87,40 @@
                       </div>
                   </div>
 
-
-                  <br>
                   </div>
+
+                            <div class="col s12 m8 l8 left left-align hide-on-large-only" id="icons_extra" style="margin: 0px; padding: 0px">
+
+       <!--           <a class='dropdown-button btn' href='#' data-activates='dropdownButtons'>Drop Me!</a> -->
+
+                   <div class="row left left-align" style="margin: 0px; padding: 0px">
+                      <div class="col s12 m12 l12 left left-align" style="margin: 0px; padding: 0px">
+
+                          <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue" href="#" title="Show URL" data-activates="dropdown11" id="show_url_button"><i class="material-icons">remove_red_eye</i></a>
+                                        <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue" href="#" title="Share" data-beloworigin="true" data-activates="dropdown10"><i class="material-icons">share</i></a>
+                          <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue" href="#" title="More actions" data-activates="dropdownButtons" id="more_actions"><i class="material-icons">more_horiz</i></a>
+
+                      </div>
+                  </div>
+
+                  </div>
+
+
+
+                        </div>
+
+                    </div>
+                    <div class="row" style="margin: 0px;">
+                        <div class="col s12 m12 l12">
+                            <i class="material-icons circle blue-grey">description</i>
+                            <div>
+                                <div class="row" style="margin-bottom: 0px">
+                                    <div class="col s12 m12 l7">
+                                        <a href = "{{link.url}}" target="_blank" class="title">
+                                            <h5>{{link.title | linebreaksbr}}</h5>
+                                        </a>
+                                    </div>
+
                                     </div>
                                 </div>
                                 <div id="modal10" class="modal">
@@ -195,6 +218,9 @@
                             <sup><span id="num_comments1">{{link.comment_set.count}}</span> comment(s)</sup>
                             </span>
                             <button class="btn blue waves-light center waves-effect" id="comments_tab">Comments</button>
+                        </div>
+                       <div class="col s12 m12 l12 hide-on-large-only">
+                            <br><br>
                         </div>
                         <br><br><br><br>
                     </div>
