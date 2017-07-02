@@ -1,4 +1,4 @@
-.row
+    .row
     {
         width: 100%;
 
@@ -35,3 +35,19 @@
     }
 
 */
+
+    .notifications_normal
+    {
+        width: 100%;
+      /*  word-break: break-all;*/
+        word-wrap: break-word;
+        padding: 1px;
+        margin: 1px;
+        white-space: pre-wrap;
+      /*  font-size: small;*/
+    }
+
+    .notifications_unread
+    {
+        background-color: lightblue;
+    }
