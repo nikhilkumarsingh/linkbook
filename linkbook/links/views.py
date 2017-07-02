@@ -168,11 +168,20 @@ def vote_link(request, id):
 @login_required
 def create_book(request):
     if request.method == 'POST':
+        books = Book.objects.filter(user = request.user).filter(title = request.POST.get('TITLE'))
+        
+        # book with same name
+        if len(books):
+            error = "Book with this name already exists!"
+            return render(request, 'links/new_book.html', {'error':error})
+        print(books)
+        '''
         book = Book()
         book.user = request.user
         book.title = request.POST.get('TITLE')
         book.description = request.POST.get('DESCRIPTION')
         book.save()
+        '''
         return redirect('/')
     else:
         return render(request, 'links/new_book.html')

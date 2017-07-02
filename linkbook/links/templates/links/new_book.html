@@ -12,6 +12,7 @@
             <h4 class="center">Create your own book</h4>
                 <form method="post" action="{% url 'create_book' %}" role="form">
                 {% csrf_token %}
+                    <div>{{error}}</div>
                     <div class="input-field">
                         <i class="material-icons prefix">title</i>
                         <input class="input" type="text" id="TITLE" name="TITLE" maxlength="30" data-length="30">
