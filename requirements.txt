@@ -5,11 +5,16 @@ decorator==4.0.11
 defusedxml==0.5.0
 dj-database-url==0.4.1
 Django==1.11.1
+django-ajax-comments==1.1.0.dev1
+django-contrib-comments==1.8.0
 django-model-utils==3.0.0
 django-notifications-hq==1.3
 django-taggit==0.22.1
 django-vote==2.1.4
+djangorestframework==3.6.3
+docutils==0.13.1
 gunicorn==19.6.0
+humanize==0.5.1
 idna==2.5
 ipython==6.1.0
 ipython-genutils==0.2.0
