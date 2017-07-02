@@ -82,25 +82,21 @@
                                             <h5>{{link.title | linebreaksbr}}</h5>
                                         </a>
                                     </div>
-                  <div class="col s12 m12 l5 right right-align" id="icons_extra">
-                  <div class="row" style="margin: 0px; padding: 0px">
-                      <div class="col s12 m12 l12">
+                  <div class="col s12 m12 l5 right right-align" id="icons_extra" style="margin: 0px; padding: 0px">
+
+       <!--           <a class='dropdown-button btn' href='#' data-activates='dropdownButtons'>Drop Me!</a> -->
+
+                   <div class="row right right-align" style="margin: 0px; padding: 0px">
+                      <div class="col s12 m12 l12 right right-align" style="margin: 0px; padding: 0px">
 
                           <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue" href="#" title="Show URL" data-activates="dropdown11" id="show_url_button"><i class="material-icons">remove_red_eye</i></a>
-                                        <a class="btn-floating btn-small  waves-effect waves-light blue" href="{{ link.url }}" title="Visit Link" target="_blank"><i class="material-icons">open_in_new</i></a>
                                         <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue" href="#" title="Share" data-beloworigin="true" data-activates="dropdown10"><i class="material-icons">share</i></a>
-
-                      </div>
-                      <div class="col s12 m12 l12">
-                                        <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue" href="#" id="copy" title="Copy to clipboard" ><i class="material-icons">content_copy</i></a>
-                                        {% if request.user == link.user %}
-                                            <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue" href="/link/{{ link.id }}/edit" id="edit" title="Edit Link" ><i class="material-icons">edit</i></a>
-                                            <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue" href="#modalDelete" id="delete_icon" title="Delete Link" ><i class="material-icons">delete</i></a>
+                          <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue" href="#" title="More actions" data-activates="dropdownButtons" id="more_actions"><i class="material-icons">more_horiz</i></a>
 
                       </div>
                   </div>
 
-                                        {% endif %}
+
                   <br>
                   </div>
                                     </div>
@@ -277,16 +273,33 @@
             <div class="container">
                 <div class="row">
                     <h4 class="center-align red-text flow-text">Are you sure?</h4>
-                    <div class="col s12 m12 l12 " style="margin: 2px">
-                        <button id="deleteOne" class="btn red white-text modalD">Delete link from current book only</button>
+                    <div  class="col s12 m12 l12" style="margin: 2px">
+                        <button id="deleteCompletely" class="btn red white-text modalD ">Delete this link completely from all of your books</button>
                     </div>
-                    <div id="deleteCompletely" class="col s12 m12 l12" style="margin: 2px">
-                        <button class="btn red white-text modalD ">Delete this link completely from all of your books</button>
-                    </div>
+                    <div class="col s12 m12 l12  red-text center-align">
+                        <br>
+                        This action will delete all copies of the links in your books. This action can't be undone in future. </div>
                 </div>
             </div>
         </div>
     </div>
+
+
+     <!--<a class='dropdown-button btn' href='#' data-activates='dropdown1'>Drop Me!</a>-->
+
+  <!-- Dropdown Structure for buttons -->
+  <ul id='dropdownButtons' class='dropdown-content'>
+      <li> <a class="waves-effect waves-light" href="{{ link.url }}" title="Visit Link" target="_blank">Visit link</a></li>
+
+     <li><a class="dropdown-buttonwaves-effect waves-light" href="#" id="copy" title="Copy to clipboard" >Copy to clipboard</a></li>
+                                        {% if request.user == link.user %}
+                                           <li> <a class="dropdown-button waves-effect waves-light " href="/link/{{ link.id }}/edit" id="edit" title="Edit Link" >Edit</a></li>
+                                            <li><a class=" dropdown-button  waves-effect waves-light " href="#modalDelete" id="delete_icon" title="Delete Link" >Delete </a></li>
+
+                                        {% endif %}
+
+
+  </ul>
 
 
 
