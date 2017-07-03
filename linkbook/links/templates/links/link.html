@@ -571,7 +571,6 @@
     
 
     $('img').on('error', function () {
-        console.log("Hello");
         $('#card_image_div').css({'display' : 'none'});
     });
     
@@ -596,6 +595,20 @@
             window.getSelection().addRange(range);
         }
     }
+
+    // delete link
+    $('#deleteCompletely').click(function(){
+        $.ajax({
+            url: '/link/{{link.id}}/delete/',
+            type: 'post',
+            success: function(data, status){
+                console.log(data);
+                window.location = "/{{request.user.username}}/";
+            }
+
+        });
+
+    });
     
 </script>
 {% endblock %}
