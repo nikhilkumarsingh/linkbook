@@ -119,6 +119,24 @@ def edit_link(request, id):
 
 
 @login_required
+def import_link(request, id):
+    if request.method == 'POST':
+        book = Book.objects.get(id = id)
+        new_links = [Link.objects.get(id = int(id)) for id in request.POST.getlist('LINKS')]
+        for link in new_links:
+            link.books.add(book)
+            link.save()
+        book.save()
+        return redirect('/{}/?show=links'.format(book.user.username))
+
+
+@login_required
+def delete_link(request, id):
+    pass
+
+
+
+@login_required
 def vote_link(request, id):
     if request.method == 'GET':
         vote_type = request.GET['type']

@@ -79,25 +79,20 @@
                         <!-- Import Links Modal -->
                         <div class="modal" id="modalImport{{ book.id }}">
                             <div class="modal-content" style="height: 100%">
-                                <form method="get" role="form">
+                                <form action="/import/{{book.id}}/" method="post" role="form">
+                                {% csrf_token %}
                                 <div class="row">
-                                    <h5 class="center-align">Import Links </h5>
+                                    <h5 class="center-align">Import Links</h5>
                                 </div>
-                                    <div class="input-field">                                                                           <select multiple id="links_menu">
-                                            <option selected disabled >Select Links to import into this book</option>
-                                            {% for temp in view_books %}
-                                                {% if temp.id != book.id %}
-                                                    {% for link in temp.link_set.all %}
-                                                        {% if link not in book.link_set.all %}
-
-                                                            <option value="{{ link.id }}" name="{{ link.id }}">{{ link.title }} ( {{ temp.title }} )</option>
-
-                                                        {% endif %}
-                                                    {% endfor %}
+                                    <div class="input-field">
+                                        <select multiple name="LINKS" id="LINKS">
+                                            <option selected disabled >Select links to import into {{book.title}}</option>
+                                            {% for link in view_links %}
+                                                {% if link not in book.link_set.all %}
+                                                    <option name="{{link.id}}" value="{{link.id}}">{{link.title}}</option>
                                                 {% endif %}
                                             {% endfor %}
                                         </select>
-                                        <label for="links_menu">Choose links to import</label>
                                     </div>
                                 <input hidden type="text" value="{{ book.id }}" name="import">
                                 <button type="submit" class="btn submit">Submit</button>
@@ -107,7 +102,8 @@
                                 <div class="col s1 m1 1l"></div>
                                 <div class="col s10 m10 1l0 flow-text center-align">
                                     <br>
-                                    You can import links using this option. Multiple links can be selected to import into this book.
+                                    A book can have multiple links!<br>
+                                    A link can be a part of multiple books!
                                     <br>
                                 </div>
                                 <div class="col s1 m1 1l"></div>
@@ -116,7 +112,7 @@
                         </div>
                         <!-- Delete Book Modal -->
 
-                        <div class="modal" id="modalDelete{{ book.id }}">
+    <div class="modal" id="modalDelete{{ book.id }}">
         <div class="modal-content">
             <div class="container">
                 <div class="row">
@@ -188,6 +184,8 @@
             </div>
         </div>
     </div>
+
+
     <script>
 
         $(function () {
@@ -227,11 +225,10 @@
       },
       complete: function() { //alert('Closed');
            } // Callback for Modal close
-    }
-  );
+    });
 
-        });
-    </script>
+});
+</script>
 
 {% endblock%}
 

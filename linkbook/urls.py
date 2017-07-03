@@ -34,6 +34,7 @@ urlpatterns = [
     url(r'^book/(?P<id>\d+)/$', linkbook_link_views.book, name='book'),
     url(r'^book/(?P<id>\d+)/edit/$', linkbook_link_views.edit_book, name='edit_book'),
     url(r'^book/new/$', linkbook_link_views.create_book, name = 'create_book'),
+    url(r'^import/(?P<id>\d+)/$', linkbook_link_views.import_link, name='import_link'),
 
     url(r'^follow/$', linkbook_core_views.follow_profile, name = 'follow_profile'),    
     url(r'^followers/$', linkbook_core_views.get_follower_list, name = 'get_follower_list'),    
