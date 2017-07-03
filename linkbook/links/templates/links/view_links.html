@@ -2,7 +2,7 @@
 {% load staticfiles %}
 {% load i18n %}
 
-{% block title %}user links{% endblock %}
+{% block title %}{{user.first_name}}'s links{% endblock %}
 
 {% block body %}
     <style>
@@ -118,7 +118,7 @@
                 <div class="row">
                     <h4 class="center-align red-text flow-text">Are you sure?</h4>
                     <div  class="col s12 m12 l12 center center-align" style="margin: 2px">
-                        <button id="deleteCompletely" class="btn red white-text waves-effect waves-light">Delete this Book</button>
+                        <button id="deleteCompletely" class="btn red white-text waves-effect waves-light" value="{{book.id}}">Delete this book</button>
                     </div>
                     <div class="col s12 m12 l12  red-text center-align">
                         <br>
@@ -228,6 +228,20 @@
     });
 
 });
+
+    // delete book
+    $('#deleteCompletely').click(function(){
+        $.ajax({
+            url: '/delete/book/' + this.value + '/',
+            type: 'post',
+            success: function(data, status){
+                console.log(data);
+                window.location = "/{{request.user.username}}/?show=links";
+            }
+
+        });
+
+    });
 </script>
 
 {% endblock%}

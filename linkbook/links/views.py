@@ -131,12 +131,6 @@ def import_link(request, id):
 
 
 @login_required
-def delete_link(request, id):
-    pass
-
-
-
-@login_required
 def vote_link(request, id):
     if request.method == 'GET':
         vote_type = request.GET['type']
@@ -215,6 +209,14 @@ def edit_book(request, id):
         return redirect("/book/{}/".format(id))
     else:
         return render(request, 'links/edit_book.html', {'book':book})
+
+
+
+@login_required
+def delete_book(request, id):
+    if request.is_ajax():
+        Book.objects.get(id = id).delete()
+        return JsonResponse({'status':1})
 
 
 def ajax_load_comment(request):

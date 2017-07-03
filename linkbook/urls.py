@@ -26,6 +26,8 @@ urlpatterns = [
     url(r'^link/new/$', linkbook_link_views.create_link, name = 'create_link'),
     url(r'^link/(?P<id>\d+)/edit/$', linkbook_link_views.edit_link, name='edit_link'),    
     url(r'^link/(?P<id>\d+)/vote/$', linkbook_link_views.vote_link, name = 'vote_link'),
+    url(r'^import/(?P<id>\d+)/$', linkbook_link_views.import_link, name='import_link'),
+
     url(r'comment/load/', linkbook_link_views.ajax_load_comment, name = 'ajax_load_comment'),
     url(r'comment/create/', linkbook_link_views.ajax_create_comment, name = 'ajax_create_comment'),
 
@@ -34,7 +36,8 @@ urlpatterns = [
     url(r'^book/(?P<id>\d+)/$', linkbook_link_views.book, name='book'),
     url(r'^book/(?P<id>\d+)/edit/$', linkbook_link_views.edit_book, name='edit_book'),
     url(r'^book/new/$', linkbook_link_views.create_book, name = 'create_book'),
-    url(r'^import/(?P<id>\d+)/$', linkbook_link_views.import_link, name='import_link'),
+    url(r'^delete/book/(?P<id>\d+)/$', linkbook_link_views.delete_book, name='delete_book'),
+
 
     url(r'^follow/$', linkbook_core_views.follow_profile, name = 'follow_profile'),    
     url(r'^followers/$', linkbook_core_views.get_follower_list, name = 'get_follower_list'),    
