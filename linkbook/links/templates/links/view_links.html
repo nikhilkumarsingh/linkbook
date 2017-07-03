@@ -118,7 +118,7 @@
                 <div class="row">
                     <h4 class="center-align red-text flow-text">Are you sure?</h4>
                     <div  class="col s12 m12 l12 center center-align" style="margin: 2px">
-                        <button id="deleteCompletely" class="btn red white-text waves-effect waves-light" value="{{book.id}}">Delete this book</button>
+                        <button class="btn red white-text deleteCompletely waves-effect waves-light" value="{{book.id}}">Delete this book</button>
                     </div>
                     <div class="col s12 m12 l12  red-text center-align">
                         <br>
@@ -128,7 +128,6 @@
             </div>
         </div>
     </div>
-
 
                         </div>
                         <div class="collapsible-body">
@@ -162,6 +161,27 @@
                                   <a href="{{link.url}}" target="_blank">Visit link</a>
                                   {% if request.user == link.user %}
                                     <a href="/link/{{link.id}}/edit">Edit</a>
+                                    <a href="#modalRemove{{ book.id }}{{ link.id }}" title="Remove the link from this book" >Remove from book</a>
+
+
+                                        <div class="modal" id="modalRemove{{ book.id }}{{ link.id }}">
+                                            <div class="modal-content">
+                                                <div class="container">
+                                                    <div class="row">
+                                                        <h4 class="center-align red-text flow-text">Are you sure?</h4>
+                                                        <div  class="col s12 m12 l12 center center-align" style="margin: 2px">
+                                                            <button class="btn red white-text RemoveButton waves-effect waves-light" value="{{book.id}}{{ link.id }}" >Remove the link from this book</button>
+                                                        </div>
+                                                        <div class="col s12 m12 l12  red-text center-align">
+                                                            <br>
+                                                            This action will remove the link from this book but not your profile.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
                                   {% endif %}
                                 </div>
                               </div>
@@ -199,6 +219,7 @@
             });
 
             $('.collapsible').collapsible();
+          //  $('.collapsible').collapsible('destroy');
 
             $('.dropdown-button').dropdown({
                 inDuration: 300,
@@ -208,29 +229,32 @@
                   gutter: 0, // Spacing from edge
                   belowOrigin: true, // Displays dropdown below the button
                   alignment: 'left', // Displays dropdown with edge aligned to the left of button
-                  stopPropagation: true // Stops event propagation
+                  stopPropagation: true, // Stops event propagation
+
     });
 
-    $('.modal').modal({
-      dismissible: true, // Modal can be dismissed by clicking outside of the modal
-      opacity: .5, // Opacity of modal background
-      inDuration: 300, // Transition in duration
-      outDuration: 200, // Transition out duration
-      startingTop: '4%', // Starting top style attribute
-      endingTop: '10%', // Ending top style attribute
-      ready: function(modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
-        alert("Ready");
-        event.stopPropagation();
-        console.log(modal, trigger);
-      },
-      complete: function() { //alert('Closed');
-           } // Callback for Modal close
-    });
+         $('.modal').modal({
+          dismissible: true, // Modal can be dismissed by clicking outside of the modal
+          opacity: .5, // Opacity of modal background
+          inDuration: 300, // Transition in duration
+          outDuration: 200, // Transition out duration
+          startingTop: '4%', // Starting top style attribute
+          endingTop: '10%', // Ending top style attribute
+          ready: function(modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
+           // alert("Ready");
+            console.log(modal, trigger);
+           // $('.collapsible').collapsible();
+            $('.collapsible').collapsible('destroy');
+          },
+          complete: function() { //alert('Closed');
 
-});
+              $('.collapsible').collapsible();
+               } // Callback for Modal close
+        }
+      );
 
-    // delete book
-    $('#deleteCompletely').click(function(){
+
+    $('.deleteCompletely').click(function(){
         $.ajax({
             url: '/book/' + this.value + '/delete/',
             type: 'post',
@@ -242,6 +266,28 @@
         });
 
     });
+
+
+    /* @Nikhil Kumar write your request here */
+
+    $('.RemoveButton').click(function () {
+
+        var value = this.value;
+        console.log(typeof value);
+        var book = Number(value[0]);  // Book id
+        var link = Number(value[1]);  // Link id
+        console.log(book);
+        console.log(link);
+
+        /* Ajax Request */
+
+        $.ajax();
+
+    });
+
+});
+    // delete book
+
 </script>
 
 {% endblock%}

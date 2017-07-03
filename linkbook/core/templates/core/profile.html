@@ -57,7 +57,22 @@
         overflow: hidden;
         height : 37px;
     }
-
+    .profile_buttons
+    {
+       /* border: 1px groove lightgray;*/
+        padding: 0px;
+        -webkit-box-shadow: 2px 7px 29px -1px rgba(199,199,199,1);
+    -moz-box-shadow: 2px 7px 29px -1px rgba(199,199,199,1);
+    box-shadow: 2px 7px 29px -1px rgba(199,199,199,1);
+        }
+    .profile_buttons .badge
+    {
+        background-color: #26a69a;
+        color: white;
+        margin-top: 4%;
+        margin-right: 5%;
+        border-radius: 10%;
+    }
     </style>
     <div class="container" style="padding: 0px">
         <div class="row" style="padding: 0px; margin: 0px">
@@ -86,12 +101,12 @@
                       <div class="container">
                           <div class="row">
                                 <div class="col s12 l6 m12">
-                                    <button class="btn btn-flat blue darken-1" id="follower_count">follower(s):{{ follower_count }} </button>
-                                    <button class="btn btn-flat blue darken-1" id = "following_count">following : {{ following_count }}</button>
+                                    <button class="btn btn-flat white darken-1 profile_buttons" id="follower_count">followers<span class="badge">{{ follower_count }}</span></button>
+                                    <button class="btn btn-flat white profile_buttons darken-1" id = "following_count">following <span class="badge"> {{ following_count }}</span></button>
                                 </div>
                                 <div class="col s12 l6 m12">
-                                     <a href="/{{ user.username }}?show=links" target="_blank" class="btn btn-flat green">{{ link_count }} link(s)</a>
-                                     <a href="/{{ user.username }}?show=books" target="_blank" class="btn btn-flat green">{{ book_count }} books(s)</a>
+                                     <a  href="/{{ user.username }}?show=links" target="_blank" class="btn btn-flat white darken-1 profile_buttons">links<span class="badge" style="margin-top: 4%"> {{ link_count }} </span></a>
+                                     <a href="/{{ user.username }}?show=books" target="_blank" class="btn btn-flat white darken-1 profile_buttons" >books<span class="badge" style="margin-top: 4%"> {{ book_count }}</span></a>
                                 </div>
                             </div>
                       </div>
@@ -191,7 +206,7 @@
                         {% endif %}
                     </div>
 
-                    <div class="col s12 m12 l6"">
+                    <div class="col s12 m12 l6">
 
                                                 {% if links.1 == none %}
                         {% else %}
@@ -350,7 +365,7 @@
     </div>
 
     <!-- Modals -->
-    <div id="modal5" class="modal">
+    <div id="modal15" class="modal">
         <div class="modal-content" id="followers_modal_content">
             <ul class="collection" id="followers_modal_list">
 
@@ -424,8 +439,10 @@
          $('#follower_count').click(function(){
           $.get('/followers/', {user: "{{user.username}}"}, function(data){
               data = data.data;
+              console.log("Data");
               console.log(data);
-              $('#modal5').modal('open');
+
+
               var list = $('#followers_modal_list');
               var str = '';
               str += '<li class="collection-item">';
@@ -443,6 +460,7 @@
                   str += '</li>';
               }
               list.html(str);
+              $('#modal15').modal('open');
           });
         });
 
@@ -492,6 +510,8 @@
         $('#follower_count').html(data['follower_count'] + " followers");
         });
     });
+            $('.modal').modal();
+
 
         });
     </script>
