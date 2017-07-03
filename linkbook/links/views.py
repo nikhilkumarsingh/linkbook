@@ -218,6 +218,15 @@ def edit_book(request, id):
         return render(request, 'links/edit_book.html', {'book':book})
 
 
+@login_required
+def remove_book_link(request, b_id, l_id):
+    if request.is_ajax():
+        link = Link.objects.get(id = l_id)
+        link.books.remove(Book.objects.get(id = b_id))
+        link.save()
+        return JsonResponse({'status':1})
+
+
 
 @login_required
 def delete_book(request, id):

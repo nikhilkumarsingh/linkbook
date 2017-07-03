@@ -170,7 +170,7 @@
                                                     <div class="row">
                                                         <h4 class="center-align red-text flow-text">Are you sure?</h4>
                                                         <div  class="col s12 m12 l12 center center-align" style="margin: 2px">
-                                                            <button class="btn red white-text RemoveButton waves-effect waves-light" value="{{book.id}}{{ link.id }}" >Remove the link from this book</button>
+                                                            <button class="btn red white-text RemoveButton waves-effect waves-light" value="{{book.id}}-{{ link.id }}" >Remove the link from this book</button>
                                                         </div>
                                                         <div class="col s12 m12 l12  red-text center-align">
                                                             <br>
@@ -268,20 +268,20 @@
     });
 
 
-    /* @Nikhil Kumar write your request here */
-
     $('.RemoveButton').click(function () {
 
-        var value = this.value;
-        console.log(typeof value);
-        var book = Number(value[0]);  // Book id
-        var link = Number(value[1]);  // Link id
-        console.log(book);
-        console.log(link);
+        var values = this.value.split('-');
+        var book = Number(values[0]);
+        var link = Number(values[1]);
 
-        /* Ajax Request */
+        $.ajax({
+            url: '/book/'+book+'/remove/'+link+'/',
+            type: 'post',
+            success: function(data, status){
+                window.location = "/{{request.user.username}}/?show=links";
+            }
 
-        $.ajax();
+        });
 
     });
 
