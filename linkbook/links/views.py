@@ -201,7 +201,7 @@ def create_book(request):
         book.description = request.POST.get('DESCRIPTION')
         book.save()
         
-        return redirect('/')
+        return redirect('/'+request.user.username+'/?show=links')
     else:
         return render(request, 'links/new_book.html')
 
