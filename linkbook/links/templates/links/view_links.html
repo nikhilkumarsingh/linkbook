@@ -26,23 +26,115 @@
             overflow: hidden;
             height : 37px;
         }
+
+        .special
+        {
+            background-color: #26a69a
+        }
+
+        .optionsButton
+        {
+            height: 100%;
+        }
+
+        .collapsible-header
+        {
+            padding: 7px;
+        }
     </style>
     <div class="container">
         <div class="row">
 
             <div class="col s12 m12 l12">
-                <ul class="collapsible popout" data-collapsible="expandable">
+                <ul class="collapsible popout" data-collapsible="accordion">
                     {% for book in view_books %}
                     <li>
-                      {% if forloop.counter|add:0|divisibleby:3 %}
-                        <div class="collapsible-header blue-grey white-text" >
-                      {% endif %}
-                      {% if forloop.counter|add:1|divisibleby:3 %}
-                        <div class="collapsible-header blue-grey white-text" >
-                      {% endif %}
-                      {% if forloop.counter|add:2|divisibleby:3 %}
-                        <div class="collapsible-header blue-grey white-text">
-                      {% endif %}<i class="material-icons">whatshot</i>{{book.title}}</div>
+                        <div class="collapsible-header blue-grey" >
+                            <div class="row white-text" style="padding: 0px; margin: 0px ">
+                                <div class="col s12 m6 l6">
+                                        <i class="material-icons">whatshot</i>{{book.title}}
+                                </div>
+                                <div class="col s6 m3 l3">
+                                    <span class="badge right  white-text flow-text special" >{{ book.link_set.all|length }} links</span>
+                                </div>
+                                <div class="col s6 m3 l3">
+                                    {% if request.user.is_authenticated %}
+                                    {% if request.user == book.user %}
+                                    <a class="dropdown-button btn right optionsButton waves-effect waves-light hide-on-med-and-down" href="#" data-activates="dropdownBook{{ book.id }}" id="{{ book.id }}"> More Options
+                                    </a>
+                                        <a class="dropdown-button btn waves-effect waves-light hide-on-large-only" href="#" data-activates="dropdownBook{{ book.id }}" id="{{ book.id }}" style="text-transform: lowercase">more</a>
+                                    {% endif %}
+                                {% endif %}
+                                </div>
+                            </div>
+
+                        <!-- DropDown Structure -->
+
+                        <ul id='dropdownBook{{ book.id }}' class='dropdown-content'>
+                                <li><a href="#modalImport{{ book.id }}"><i class="material-icons">import_export</i> Import links</a></li>
+                                <li><a href="/book/{{ book.id }}/edit"><i class="material-icons">edit</i>Edit</a></li>
+                                <li><a href="#modalDelete{{ book.id }}"><i class="material-icons">delete</i>Delete</a></li>
+                        </ul>
+
+                        <!-- Import Links Modal -->
+                        <div class="modal" id="modalImport{{ book.id }}">
+                            <div class="modal-content" style="height: 100%">
+                                <form method="get" role="form">
+                                <div class="row">
+                                    <h5 class="center-align">Import Links </h5>
+                                </div>
+                                    <div class="input-field">                                                                           <select multiple id="links_menu">
+                                            <option selected disabled >Select Links to import into this book</option>
+                                            {% for temp in view_books %}
+                                                {% if temp.id != book.id %}
+                                                    {% for link in temp.link_set.all %}
+                                                        {% if link not in book.link_set.all %}
+
+                                                            <option value="{{ link.id }}" name="{{ link.id }}">{{ link.title }} ( {{ temp.title }} )</option>
+
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                {% endif %}
+                                            {% endfor %}
+                                        </select>
+                                        <label for="links_menu">Choose links to import</label>
+                                    </div>
+                                <input hidden type="text" value="{{ book.id }}" name="import">
+                                <button type="submit" class="btn submit">Submit</button>
+                                </form>
+
+                            <div class="row">
+                                <div class="col s1 m1 1l"></div>
+                                <div class="col s10 m10 1l0 flow-text center-align">
+                                    <br>
+                                    You can import links using this option. Multiple links can be selected to import into this book.
+                                    <br>
+                                </div>
+                                <div class="col s1 m1 1l"></div>
+                            </div>
+                            </div>
+                        </div>
+                        <!-- Delete Book Modal -->
+
+                        <div class="modal" id="modalDelete{{ book.id }}">
+        <div class="modal-content">
+            <div class="container">
+                <div class="row">
+                    <h4 class="center-align red-text flow-text">Are you sure?</h4>
+                    <div  class="col s12 m12 l12 center center-align" style="margin: 2px">
+                        <button id="deleteCompletely" class="btn red white-text waves-effect waves-light">Delete this Book</button>
+                    </div>
+                    <div class="col s12 m12 l12  red-text center-align">
+                        <br>
+                        This action will delete this book from your profile. This action can't be undone.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+                        </div>
                         <div class="collapsible-body">
                             <div class="row" style="padding: 2%">
                             {% for link in book.link_set.all %}
@@ -108,13 +200,37 @@
                 window.location.href = url;
             });
 
-        });
+            $('.collapsible').collapsible();
 
-        $(document).ready(function(){
-        $('.collapsible').collapsible();
-        });
-          
+            $('.dropdown-button').dropdown({
+                inDuration: 300,
+                outDuration: 225,
+                  constrainWidth: false, // Does not change width of dropdown to that of the activator
+                  hover: true, // Activate on hover
+                  gutter: 0, // Spacing from edge
+                  belowOrigin: true, // Displays dropdown below the button
+                  alignment: 'left', // Displays dropdown with edge aligned to the left of button
+                  stopPropagation: true // Stops event propagation
+    });
 
+    $('.modal').modal({
+      dismissible: true, // Modal can be dismissed by clicking outside of the modal
+      opacity: .5, // Opacity of modal background
+      inDuration: 300, // Transition in duration
+      outDuration: 200, // Transition out duration
+      startingTop: '4%', // Starting top style attribute
+      endingTop: '10%', // Ending top style attribute
+      ready: function(modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
+        alert("Ready");
+        event.stopPropagation();
+        console.log(modal, trigger);
+      },
+      complete: function() { //alert('Closed');
+           } // Callback for Modal close
+    }
+  );
+
+        });
     </script>
 
 {% endblock%}
