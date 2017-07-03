@@ -80,9 +80,9 @@
                    <div class="row right right-align" style="margin: 0px; padding: 0px">
                       <div class="col s12 m12 l12 right right-align" style="margin: 0px; padding: 0px">
 
-                          <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue" href="#" title="Show URL" data-activates="dropdown11" id="show_url_button"><i class="material-icons">remove_red_eye</i></a>
-                                        <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue" href="#" title="Share" data-beloworigin="true" data-activates="dropdown10"><i class="material-icons">share</i></a>
-                          <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue" href="#" title="More actions" data-activates="dropdownButtons" id="more_actions"><i class="material-icons">more_horiz</i></a>
+                          <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue" href="#" title="Show URL" data-activates="dropdown21" id="show_url_button"><i class="material-icons">remove_red_eye</i></a>
+                                        <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue" href="#" title="Share" data-beloworigin="true" data-activates="dropdown20"><i class="material-icons">share</i></a>
+                          <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue" href="#" title="More actions" data-activates="dropdownButtons1" id="more_actions"><i class="material-icons">more_horiz</i></a>
 
                       </div>
                   </div>
@@ -90,8 +90,6 @@
                   </div>
 
                             <div class="col s12 m8 l8 left left-align hide-on-large-only" id="icons_extra" style="margin: 0px; padding: 0px">
-
-       <!--           <a class='dropdown-button btn' href='#' data-activates='dropdownButtons'>Drop Me!</a> -->
 
                    <div class="row left left-align" style="margin: 0px; padding: 0px">
                       <div class="col s12 m12 l12 left left-align" style="margin: 0px; padding: 0px">
@@ -279,8 +277,51 @@
         </a>
     </li>
 </ul>
+
+
+    <ul class="dropdown-content" id="dropdown20" style="max-width: 200px">
+    <li>
+        <a href = "#"> Share Via
+        </a>
+    </li>
+    <li class="divider"></li>
+    <li style="display: inline-block">
+        <a href = "https://www.facebook.com/sharer/sharer.php?u={{link.url}}" style="display: inline-block; padding: 5px">
+        <img height = 35px width = 35px src="/static/icons/fb.svg" alt="Facebook" >
+        </a>
+        <a href = "https://twitter.com/home?status={{link.url}}" style="display: inline-block; padding: 5px">
+        <img height = 35px width = 35px src="/static/icons/Twitterbird.png" alt="Twitter" />
+        </a>
+        <a href = "https://plus.google.com/share?url={{link.url}}" style="display: inline-block; padding: 5px">
+        <img height = 35px width = 35px src="/static/icons/gplus.png" alt="Google+" />
+        </a>
+        <a style="display: inline-block; padding: 5px" href = "http://www.reddit.com/submit?url={{link.url}}">
+        <img height = 35px width = 35px src="/static/icons/reddit.png" alt="Reddit" />
+        </a>
+        <a style="display: inline-block; padding: 5px" href = "http://pinterest.com/pin/create/button/?url={{link.url}}&description={{link.description}}">
+        <img height = 35px width = 35px src="/static/icons/pinterest.svg" alt="Pinterest" />
+        </a>
+        <a style="display: inline-block; padding: 5px" href = "https://www.linkedin.com/shareArticle?mini=true&url={{link.url}}">
+        <img height = 35px width = 35px src="/static/icons/linkedin.svg" alt="LinkedIn" />
+        </a>
+    </li>
+</ul>
+
 <!-- Copy to Clipboard Dropdown -->
 <ul id="dropdown11" class="dropdown-content" style="max-width: 200px" >
+    <li>
+        <div class="row" style="max-width: 100%; ;overflow-x: scroll; padding: 1%; margin: 0px;">
+            <span>
+            <a  id="link_url" href="{{ link.url }}" target="_blank" style="display: inline-block;" > {{ link.url }}</a>
+            </span>
+            <!--      <span>
+                <i class="material-icons circle right" id="copy" style="display: inline-block;"  > content_copy</i>
+                </span> -->
+        </div>
+    </li>
+</ul>
+
+    <ul id="dropdown21" class="dropdown-content" style="max-width: 200px" >
     <li>
         <div class="row" style="max-width: 100%; ;overflow-x: scroll; padding: 1%; margin: 0px;">
             <span>
@@ -314,6 +355,19 @@
 
   <!-- Dropdown Structure for buttons -->
   <ul id='dropdownButtons' class='dropdown-content'>
+      <li> <a class="waves-effect waves-light" href="{{ link.url }}" title="Visit Link" target="_blank">Visit link</a></li>
+
+     <li><a class="dropdown-buttonwaves-effect waves-light" href="#" id="copy" title="Copy to clipboard" >Copy to clipboard</a></li>
+                                        {% if request.user == link.user %}
+                                           <li> <a class="dropdown-button waves-effect waves-light " href="/link/{{ link.id }}/edit" id="edit" title="Edit Link" >Edit</a></li>
+                                            <li><a class=" dropdown-button  waves-effect waves-light " href="#modalDelete" id="delete_icon" title="Delete Link" >Delete </a></li>
+
+                                        {% endif %}
+
+
+  </ul>
+
+     <ul id='dropdownButtons1' class='dropdown-content'>
       <li> <a class="waves-effect waves-light" href="{{ link.url }}" title="Visit Link" target="_blank">Visit link</a></li>
 
      <li><a class="dropdown-buttonwaves-effect waves-light" href="#" id="copy" title="Copy to clipboard" >Copy to clipboard</a></li>
