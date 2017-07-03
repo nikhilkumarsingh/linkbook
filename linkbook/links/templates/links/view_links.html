@@ -44,7 +44,6 @@
     </style>
     <div class="container">
         <div class="row">
-
             <div class="col s12 m12 l12">
                 <ul class="collapsible popout" data-collapsible="accordion">
                     {% for book in view_books %}
@@ -199,7 +198,74 @@
                             </div>
                         </div>
                     </li>
+
                   {% endfor %}
+
+<!-- Universal Book element -->
+
+                    <li>
+                        <div class="collapsible-header blue-grey lighten-3">
+                            <div class="row white-text" style="padding: 0px; margin: 0px ">
+                                <div class="col s12 m6 l6">
+                                        <i class="material-icons">whatshot</i>Universal Book
+                                </div>
+                                <div class="col s6 m3 l3">
+                                    <span class="badge right  white-text flow-text special" >{{ view_links|length }} links</span>
+                                </div>
+                                <div class="col s6 m3 l3">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="collapsible-body">
+                            <div class="row" style="padding: 2%">
+                            {% for link in view_links %}
+                                <div class="col s12 m12 l6">
+                                <div class="card card1 horizontal hoverable blue-grey white-text lighten-1">
+                              <div class="card-stacked">
+                                  <div class="card_link" id="{{ link.id }}"  style="cursor: pointer;">
+                                  <div class="card-title center"><h5>{{link.title}}</h5></div>
+                                  <div class="card-content" id="{{ link.id }}">
+                                  <p class="description">{{ link.description }}</p>
+                                  <p class="BooksP">Books:
+                                    {% for book in link.books.all %}
+                                        <span class="chip">
+                                      <strong><a href = "/../book/{{book.id}}/">{{book.title}}</a></strong>
+                                        </span>
+                                    {% endfor %}
+                                  </p>
+                                  <p class="TagsP">Tags:
+                                    {% for tag in link.tags.all %}
+                                        <span class="chip">
+                                      <strong><a href = "/../tags/{{tag.name}}/">{{tag.name}}</a></strong>
+                                        </span>
+                                    {% endfor %}
+                                  </p>
+                                  <p>{{link.comment_set.count}} comment(s)</p>
+                                </div>
+                                  </div>
+                                <div class="card-action">
+                                  <a href="{{link.url}}" target="_blank">Visit link</a>
+                                  {% if request.user == link.user %}
+                                    <a href="/link/{{link.id}}/edit">Edit</a>
+                                  {% endif %}
+                                </div>
+                              </div>
+                           </div>
+                                </div>
+                            {% empty %}
+                                <div class="row">
+                                    <div class="col s12 m12 l4"></div>
+                                    <div class="col s12 m12 l4 flow-text center">
+                                        You don't have any links till yet
+                                    </div>
+                                    <div class="col s12 m12 l4"></div>
+                                </div>
+                            {% endfor %}
+                            </div>
+                        </div>
+                    </li>
+
       </ul>
             </div>
         </div>
