@@ -232,7 +232,7 @@
     // delete book
     $('#deleteCompletely').click(function(){
         $.ajax({
-            url: '/delete/book/' + this.value + '/',
+            url: '/book/' + this.value + '/delete/',
             type: 'post',
             success: function(data, status){
                 console.log(data);

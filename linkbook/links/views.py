@@ -131,6 +131,13 @@ def import_link(request, id):
 
 
 @login_required
+def delete_link(request, id):
+    if request.is_ajax():
+        Link.objects.get(id = id).delete()
+        return JsonResponse({'status':1})
+
+
+@login_required
 def vote_link(request, id):
     if request.method == 'GET':
         vote_type = request.GET['type']

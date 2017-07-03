@@ -26,17 +26,20 @@ def fetch_notifs(user):
     # fetch last 15 notifications
     notifs = []
     for notif in user.notifications.all()[:15]:
-        mydict = {}
-        if notif.verb == "followed":
-            mydict['url'] = "/" + notif.actor.username
-            mydict['text'] = notif. __str__().replace(notif.recipient.username, "you")
-        else:
-            mydict['url'] = "/link/" + str(notif.target.id)
-            mydict['text'] = notif. __str__()
+        try:
+            mydict = {}
+            if notif.verb == "followed":
+                mydict['url'] = "/" + notif.actor.username
+                mydict['text'] = notif. __str__().replace(notif.recipient.username, "you")
+            else:
+                mydict['url'] = "/link/" + str(notif.target.id)
+                mydict['text'] = notif. __str__()
 
-        mydict['unread'] = notif.unread
-        mydict['pic'] = notif.actor.profile.pic
-        notifs.append(mydict)       
+            mydict['unread'] = notif.unread
+            mydict['pic'] = notif.actor.profile.pic
+            notifs.append(mydict)       
+        except:
+            notif.delete()
     return notifs
 
 
