@@ -62,9 +62,9 @@
        /* border: 1px groove lightgray;*/
         padding: 0px;
         -webkit-box-shadow: 2px 7px 29px -1px rgba(199,199,199,1);
--moz-box-shadow: 2px 7px 29px -1px rgba(199,199,199,1);
-box-shadow: 2px 7px 29px -1px rgba(199,199,199,1);
-    }
+    -moz-box-shadow: 2px 7px 29px -1px rgba(199,199,199,1);
+    box-shadow: 2px 7px 29px -1px rgba(199,199,199,1);
+        }
     .profile_buttons .badge
     {
         background-color: #26a69a;
@@ -510,6 +510,8 @@ box-shadow: 2px 7px 29px -1px rgba(199,199,199,1);
         $('#follower_count').html(data['follower_count'] + " followers");
         });
     });
+            $('.modal').modal();
+
 
         });
     </script>
