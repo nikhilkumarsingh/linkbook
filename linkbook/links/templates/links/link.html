@@ -357,7 +357,7 @@
   <ul id='dropdownButtons' class='dropdown-content'>
       <li> <a class="waves-effect waves-light" href="{{ link.url }}" title="Visit Link" target="_blank">Visit link</a></li>
 
-     <li><a class="dropdown-buttonwaves-effect waves-light" href="#" id="copy" title="Copy to clipboard" >Copy to clipboard</a></li>
+     <li><a class="waves-effect waves-light copy" href="#" title="Copy to clipboard" >Copy to clipboard</a></li>
                                         {% if request.user == link.user %}
                                            <li> <a class="dropdown-button waves-effect waves-light " href="/link/{{ link.id }}/edit" id="edit" title="Edit Link" >Edit</a></li>
                                             <li><a class=" dropdown-button  waves-effect waves-light " href="#modalDelete" id="delete_icon" title="Delete Link" >Delete </a></li>
@@ -370,7 +370,7 @@
      <ul id='dropdownButtons1' class='dropdown-content'>
       <li> <a class="waves-effect waves-light" href="{{ link.url }}" title="Visit Link" target="_blank">Visit link</a></li>
 
-     <li><a class="dropdown-buttonwaves-effect waves-light" href="#" id="copy" title="Copy to clipboard" >Copy to clipboard</a></li>
+     <li><a class="waves-effect waves-light copy" href="#" title="Copy to clipboard" >Copy to clipboard</a></li>
                                         {% if request.user == link.user %}
                                            <li> <a class="dropdown-button waves-effect waves-light " href="/link/{{ link.id }}/edit" id="edit" title="Edit Link" >Edit</a></li>
                                             <li><a class=" dropdown-button  waves-effect waves-light " href="#modalDelete" id="delete_icon" title="Delete Link" >Delete </a></li>
@@ -527,7 +527,7 @@
 
 
         $('.modal').modal();
-        var copy = $('#copy');
+        var copy = $('.copy');
         copy.click(function (){
             var linkUrl = $('#link_url');
             copyToClipboard(linkUrl);
