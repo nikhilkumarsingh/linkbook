@@ -61,9 +61,9 @@
     {
        /* border: 1px groove lightgray;*/
         padding: 0px;
-        -webkit-box-shadow: 2px 7px 29px -1px rgba(199,199,199,1);
-    -moz-box-shadow: 2px 7px 29px -1px rgba(199,199,199,1);
-    box-shadow: 2px 7px 29px -1px rgba(199,199,199,1);
+        -webkit-box-shadow: 10px 10px 18px -9px rgba(194,190,194,1);
+        -moz-box-shadow: 10px 10px 18px -9px rgba(194,190,194,1);
+        box-shadow: 10px 10px 18px -9px rgba(194,190,194,1);
         }
     .profile_buttons .badge
     {
@@ -390,7 +390,7 @@
             cards.click(function () {
                 var id = this.id;
                 var url = '/link/' + id;
-                window.open(url);
+                window.location.href = url;
             });
 
             var books = $('.card_book');
