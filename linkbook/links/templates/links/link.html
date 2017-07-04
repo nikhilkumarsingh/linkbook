@@ -67,9 +67,46 @@
                     <div class="row"  style="padding: 0px; margin: 0px">
                         <!-- user avatar -->
                         <img class="responsive-img circle"  height = "40px" width="40px" src="{{link.user.profile.pic}}" />
-                        <span class="title blue-grey-text ">{{ link.user }}<br/>
+                        <div class="row">
+                            <div class="col s12 m4 l4">
+                                <span class="title blue-grey-text ">{{ link.user }}<br/>
                         <sup>{{ time }}</sup></span>
                         <br><br>
+                            </div>
+                           <div class="col s12 m8 l8 right right-align hide-on-med-and-down" id="icons_extra" style="margin: 0px; padding: 0px">
+
+       <!--           <a class='dropdown-button btn' href='#' data-activates='dropdownButtons'>Drop Me!</a> -->
+
+                   <div class="row right right-align" style="margin: 0px; padding: 0px">
+                      <div class="col s12 m12 l12 right right-align" style="margin: 0px; padding: 0px">
+
+                          <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue" href="#" title="Show URL" data-activates="dropdown21" id="show_url_button"><i class="material-icons">remove_red_eye</i></a>
+                                        <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue" href="#" title="Share" data-beloworigin="true" data-activates="dropdown20"><i class="material-icons">share</i></a>
+                          <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue" href="#" title="More actions" data-activates="dropdownButtons1" id="more_actions"><i class="material-icons">more_horiz</i></a>
+
+                      </div>
+                  </div>
+
+                  </div>
+
+                            <div class="col s12 m8 l8 left left-align hide-on-large-only" id="icons_extra" style="margin: 0px; padding: 0px">
+
+                   <div class="row left left-align" style="margin: 0px; padding: 0px">
+                      <div class="col s12 m12 l12 left left-align" style="margin: 0px; padding: 0px">
+
+                          <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue" href="#" title="Show URL" data-activates="dropdown11" id="show_url_button"><i class="material-icons">remove_red_eye</i></a>
+                                        <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue" href="#" title="Share" data-beloworigin="true" data-activates="dropdown10"><i class="material-icons">share</i></a>
+                          <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue" href="#" title="More actions" data-activates="dropdownButtons" id="more_actions"><i class="material-icons">more_horiz</i></a>
+
+                      </div>
+                  </div>
+
+                  </div>
+
+
+
+                        </div>
+
                     </div>
                     <div class="row" style="margin: 0px;">
                         <div class="col s12 m12 l12">
@@ -81,23 +118,7 @@
                                             <h5>{{link.title | linebreaksbr}}</h5>
                                         </a>
                                     </div>
-                  <div class="col s12 m12 l5 right right-align" id="icons_extra" style="margin: 0px; padding: 0px">
 
-       <!--           <a class='dropdown-button btn' href='#' data-activates='dropdownButtons'>Drop Me!</a> -->
-
-                   <div class="row right right-align" style="margin: 0px; padding: 0px">
-                      <div class="col s12 m12 l12 right right-align" style="margin: 0px; padding: 0px">
-
-                          <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue" href="#" title="Show URL" data-activates="dropdown11" id="show_url_button"><i class="material-icons">remove_red_eye</i></a>
-                                        <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue" href="#" title="Share" data-beloworigin="true" data-activates="dropdown10"><i class="material-icons">share</i></a>
-                          <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue" href="#" title="More actions" data-activates="dropdownButtons" id="more_actions"><i class="material-icons">more_horiz</i></a>
-
-                      </div>
-                  </div>
-
-
-                  <br>
-                  </div>
                                     </div>
                                 </div>
                                 <div id="modal10" class="modal">
@@ -196,6 +217,9 @@
                             </span>
                             <button class="btn blue waves-light center waves-effect" id="comments_tab">Comments</button>
                         </div>
+                       <div class="col s12 m12 l12 hide-on-large-only">
+                            <br><br>
+                        </div>
                         <br><br><br><br>
                     </div>
                 </li>
@@ -253,8 +277,51 @@
         </a>
     </li>
 </ul>
+
+
+    <ul class="dropdown-content" id="dropdown20" style="max-width: 200px">
+    <li>
+        <a href = "#"> Share Via
+        </a>
+    </li>
+    <li class="divider"></li>
+    <li style="display: inline-block">
+        <a href = "https://www.facebook.com/sharer/sharer.php?u={{link.url}}" style="display: inline-block; padding: 5px">
+        <img height = 35px width = 35px src="/static/icons/fb.svg" alt="Facebook" >
+        </a>
+        <a href = "https://twitter.com/home?status={{link.url}}" style="display: inline-block; padding: 5px">
+        <img height = 35px width = 35px src="/static/icons/Twitterbird.png" alt="Twitter" />
+        </a>
+        <a href = "https://plus.google.com/share?url={{link.url}}" style="display: inline-block; padding: 5px">
+        <img height = 35px width = 35px src="/static/icons/gplus.png" alt="Google+" />
+        </a>
+        <a style="display: inline-block; padding: 5px" href = "http://www.reddit.com/submit?url={{link.url}}">
+        <img height = 35px width = 35px src="/static/icons/reddit.png" alt="Reddit" />
+        </a>
+        <a style="display: inline-block; padding: 5px" href = "http://pinterest.com/pin/create/button/?url={{link.url}}&description={{link.description}}">
+        <img height = 35px width = 35px src="/static/icons/pinterest.svg" alt="Pinterest" />
+        </a>
+        <a style="display: inline-block; padding: 5px" href = "https://www.linkedin.com/shareArticle?mini=true&url={{link.url}}">
+        <img height = 35px width = 35px src="/static/icons/linkedin.svg" alt="LinkedIn" />
+        </a>
+    </li>
+</ul>
+
 <!-- Copy to Clipboard Dropdown -->
 <ul id="dropdown11" class="dropdown-content" style="max-width: 200px" >
+    <li>
+        <div class="row" style="max-width: 100%; ;overflow-x: scroll; padding: 1%; margin: 0px;">
+            <span>
+            <a  id="link_url" href="{{ link.url }}" target="_blank" style="display: inline-block;" > {{ link.url }}</a>
+            </span>
+            <!--      <span>
+                <i class="material-icons circle right" id="copy" style="display: inline-block;"  > content_copy</i>
+                </span> -->
+        </div>
+    </li>
+</ul>
+
+    <ul id="dropdown21" class="dropdown-content" style="max-width: 200px" >
     <li>
         <div class="row" style="max-width: 100%; ;overflow-x: scroll; padding: 1%; margin: 0px;">
             <span>
@@ -290,7 +357,7 @@
   <ul id='dropdownButtons' class='dropdown-content'>
       <li> <a class="waves-effect waves-light" href="{{ link.url }}" title="Visit Link" target="_blank">Visit link</a></li>
 
-     <li><a class="dropdown-buttonwaves-effect waves-light" href="#" id="copy" title="Copy to clipboard" >Copy to clipboard</a></li>
+     <li><a class="waves-effect waves-light copy" href="#" title="Copy to clipboard" >Copy to clipboard</a></li>
                                         {% if request.user == link.user %}
                                            <li> <a class="dropdown-button waves-effect waves-light " href="/link/{{ link.id }}/edit" id="edit" title="Edit Link" >Edit</a></li>
                                             <li><a class=" dropdown-button  waves-effect waves-light " href="#modalDelete" id="delete_icon" title="Delete Link" >Delete </a></li>
@@ -300,223 +367,324 @@
 
   </ul>
 
+     <ul id='dropdownButtons1' class='dropdown-content'>
+      <li> <a class="waves-effect waves-light" href="{{ link.url }}" title="Visit Link" target="_blank">Visit link</a></li>
+
+     <li><a class="waves-effect waves-light copy" href="#" title="Copy to clipboard" >Copy to clipboard</a></li>
+                                        {% if request.user == link.user %}
+                                           <li> <a class="dropdown-button waves-effect waves-light " href="/link/{{ link.id }}/edit" id="edit" title="Edit Link" >Edit</a></li>
+                                            <li><a class=" dropdown-button  waves-effect waves-light " href="#modalDelete" id="delete_icon" title="Delete Link" >Delete </a></li>
+
+                                        {% endif %}
 
 
+  </ul>
 
-<script>
-    function RefreshDropdown()
-    {
-      //   var width = $('#list').css('width');
-       // console.log("Width");
-       // console.log(width);
-      //  $('#dropdown11').css({'max-width' : width });
-    
-    }
-    function LoadComments(){
+<!-- Edit comment Modal -->
+    <div class="modal" id="modalEditComment">
+        <div class="modal-content">
+            <div class="row">
+                <h5 class="center-align blue-text">Edit/Delete Comment</h5>
+                <div class="col s1 m1 l1"></div>
+                <div class="col s10 m10 l10">
+                    <div class="input-field">
+                        <textarea id="modalEditCommentTextarea">
+
+                        </textarea>
+                        <div class="row">
+                            <div class="col 12 m12 l6">
+                                <button class="btn" id="editCommentButton">Save</button>
+                            </div>
+                            <div class="col 12 m12 l6">
+                                <button class="btn red white-text" id="deleteCommentButton">Delete</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col s1 m1 l1"></div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+
+        var commentsOperationsVariable = -1;
+        var globalCommentsObject;
+        function ModifyComments(commentId)
+        {
+            console.log("Modify comments Called");
+            console.log(commentId);
+            var textAreaEditComment = $('#modalEditCommentTextarea');
+            var commentToBeModified = globalCommentsObject[commentId];
+            textAreaEditComment.val(commentToBeModified.text);
+            commentsOperationsVariable = commentToBeModified.id;
+        }
+
+        function LoadComments(){
         console.log("Load Comments called");
     	$.ajax({
     		url: '/comment/load/',
     		type: 'get',
     		data: {'link_id': "{{link.id}}"},
     		success: function(data, status){
-
     			var comments_div_p = $('#comments_div_p');
                 var str = '';
                 var comments = data['comments'];
+                globalCommentsObject = comments;
+                console.log(comments);
                 var i;
                 for( i = 0; i <comments.length ; i++)
                 {
                 	str += '<li class="divider"></li>'
                 		+ '<li class="collection-item avatar commentsListItem">'
-
                         + '<div class="row">'
-
                 		+ '<a href="/' + comments[i]['user'] + '/"><img src=' + comments[i]['pic']
-                		+ ' class="responsive-img circle" title=' + comments[i]['user'] + '></a>' 
-                		+ '<div class = "col s12 m12 l4 " comments_inside_div commentsListItem">'
+                		+ ' class="responsive-img circle" title=' + comments[i]['user'] + '></a>'
+                		+ '<div class = "col s12 m12 l12 " comments_inside_div commentsListItem">'
                 		+ '<p style="font-weight: 800" class="commentsListItem ">'
-                		+ '<a class="hide-on-med-and-down" href="/' + comments[i]['user'] + '/">' + comments[i]['user'] + '</a>'
-                		+ '<sub class="commentsListItem grey-text">' + comments[i]['time'] + '</sub></p>' + '</div>'
-                            + '<div class="col s12 m12 l8">'
-                		+ '<p class="commentsListItem">' + comments[i]['text'] + '</p></div></div></li>'
+                		+ '<a class="hide-on-med-and-down" href="/' + comments[i]['user'] + '/">' + comments[i]['user'] + '</a>' + '<span>&nbsp;&nbsp;' + comments[i]['text'] + '</span>'
+                		+ '</p>' + '</div>'
+                            + '<div class="col s12 m12 l12">'
+                          +  '<sub class="commentsListItem grey-text">' + comments[i]['time'] + '</sub>';
+                    if(comments[i]['user'] === "{{request.user.username}}")
+                    {
+                        str += '<sub><a href="#modalEditComment" onclick="ModifyComments(' + i + ')" > &nbsp;&nbsp;&nbsp; Edit/Delete</a><sub>';
+                    }
+                    str += '</div></div></li>';
                 }
-           
-                comments_div_p.html(str);
 
+                comments_div_p.html(str);
                 $("#comments_div_p").scrollTop($("#comments_div_p")[0].scrollHeight);
                 // increase number of comments by 1
-
             	$('#num_comments1').html(Number(data['count']));
             	$('#num_comments2').html(Number(data['count']));
     		}
     	});
     }
-
-    $(function(){
-    	// load comments initially
-    	LoadComments();
-
-        $('.dropdown-button').dropdown({
-          inDuration: 300,
-          outDuration: 225,
-          constrainWidth: false, // Does not change width of dropdown to that of the activator
-          hover: false, // Activate on hover
-          gutter: 0, // Spacing from edge
-          belowOrigin: true, // Displays dropdown below the button
-          alignment: 'right', // Displays dropdown with edge aligned to the left of button
-          stopPropagation: false // Stops event propagation
-        });
-
-        var b = $('#btn_url');
-        var disp = false;
-        var URL = $('#url');
-        b.click(function () {
-            if(disp){
-                URL.css({'display' : 'none'});
-                b.html("Show URL");
-            }else{
-                URL.css({'display' : 'block'});
-                b.html("Hide URL");
-            }
-            disp = 1 - disp;
-        });
-
-
-	    $('.upvote_upper_button').click(function(){
-	    var link_id;
-	    link_id = $(this).attr("link_id");
-	    $.get('/link/{{link.id}}/vote/', {type: 'U'}, function(data){
-	               $('#upvotes_count').html(data['upvotes']);
-	               $('#downvotes_count').html(data['downvotes']);
-	               $('.upvote').removeClass('lighten-5');
-	               $('.downvote').removeClass('lighten-5');
-	               //$(".downvote").toggleClass(data['downvote_button']);
-	                console.log(data.upvote_button);
-	                console.log(data.downvote_button);
-	                if(data['upvote_button'] == '')
-	                {
-	                }
-	                else
-	                {
-	                    $('.upvote').addClass('lighten-5');
-	                }
-	        });
-	    });
-	    $('.downvote_upper_button').click(function(){
-	    var link_id;
-	    link_id = $(this).attr("link_id");
-	    $.get('/link/{{link.id}}/vote/', {type: 'D'}, function(data){
-	               $('#downvotes_count').html(data['downvotes']);
-	               $('#upvotes_count').html(data['upvotes']);
-	               $('.upvote').removeClass('lighten-5');
-	               $('.downvote').removeClass('lighten-5');
-	              // $(".downvote").addClass(data['downvote_button']);
-	                if(data['downvote_button'] == '')
-	                {
-	                }
-	                else
-	                {
-	                    $('.downvote').addClass('lighten-5');
-	                }
-	        });
-	    });
-    
-    
-        var show_url_button = $('#show_url_button');
-        show_url_button.click(function () {
-            selectText('link_url');
-        });
-
-    
-        var comments_tab = $('#comments_tab');
-        var comments_open = 0;
-        
-        
-        comments_tab.click(function () {
-            if(comments_open == 0){
-                $('#comments').css({'display' : 'block'});
-                comments_tab.html("Hide Comments");
-            }
-            else{
-                $('#comments').css({'display' : 'none'});
-                comments_tab.html("Comments");
-            }
-            comments_open = 1 - comments_open;
+        $(function(){
+            // load comments initially
             LoadComments();
-        });
 
-
-        $('.modal').modal();
-        var copy = $('#copy');
-        copy.click(function (){
-            var linkUrl = $('#link_url');
-            copyToClipboard(linkUrl);
-            Materialize.toast('copied to clipboard', 2000);
-        });
-    
-    
-        var commentsSubmitButton = $('#commentSubmitButton');
-        commentsSubmitButton.click(function (){
-            commentsSubmitButton.addClass('disabled');
-            var text = $('#id_text').val();
-            $('#id_text').val('');
-
-            if(!$.trim(text)){
-                alert("Can't add empty comments!");
-                commentsSubmitButton.removeClass('disabled');
-                return;
-            }
-
-            // Removing excess white spaces from text area.
-            text.replace(/\s+/g, " ").replace(/^\s|\s$/g, "");
-            
-            $.ajax({
-                url: '/comment/create/',
-                type: 'post',
-                data: {'text':text, 
-                       'link_id':{{link.id}}
-                    },
-                success :function(data, status){
-                	console.log(data);
-                	LoadComments();
-                }
+            $('.dropdown-button').dropdown({
+              inDuration: 300,
+              outDuration: 225,
+              constrainWidth: false, // Does not change width of dropdown to that of the activator
+              hover: false, // Activate on hover
+              gutter: 0, // Spacing from edge
+              belowOrigin: true, // Displays dropdown below the button
+              alignment: 'right', // Displays dropdown with edge aligned to the left of button
+              stopPropagation: false // Stops event propagation
             });
 
-            commentsSubmitButton.removeClass('disabled');
-        });
-    
-    
-        //window.setTimeout(RefreshDropdown, 5000);
-    });
-    
+            var b = $('#btn_url');
+            var disp = false;
+            var URL = $('#url');
+            b.click(function () {
+                if(disp){
+                    URL.css({'display' : 'none'});
+                    b.html("Show URL");
+                }else{
+                    URL.css({'display' : 'block'});
+                    b.html("Hide URL");
+                }
+                disp = 1 - disp;
+            });
 
-    $('img').on('error', function () {
-        console.log("Hello");
-        $('#card_image_div').css({'display' : 'none'});
-    });
-    
-    
-    function copyToClipboard(element) {
-    var $temp = $("<input>");
-    $("body").append($temp);
-    $temp.val($(element).text()).select();
-    document.execCommand("copy");
-    $temp.remove();
-    }
-    
-    function selectText(containerid) {
-        if (document.selection) {
-            var range = document.body.createTextRange();
-            range.moveToElementText(document.getElementById(containerid));
-            range.select();
-        } else if (window.getSelection) {
-            var range = document.createRange();
-            range.selectNode(document.getElementById(containerid));
-            window.getSelection().removeAllRanges();
-            window.getSelection().addRange(range);
+
+            $('.upvote_upper_button').click(function(){
+            var link_id;
+            link_id = $(this).attr("link_id");
+            $.get('/link/{{link.id}}/vote/', {type: 'U'}, function(data){
+                       $('#upvotes_count').html(data['upvotes']);
+                       $('#downvotes_count').html(data['downvotes']);
+                       $('.upvote').removeClass('lighten-5');
+                       $('.downvote').removeClass('lighten-5');
+                       //$(".downvote").toggleClass(data['downvote_button']);
+                        console.log(data.upvote_button);
+                        console.log(data.downvote_button);
+                        if(data['upvote_button'] == '')
+                        {
+                        }
+                        else
+                        {
+                            $('.upvote').addClass('lighten-5');
+                        }
+                });
+            });
+            $('.downvote_upper_button').click(function(){
+            var link_id;
+            link_id = $(this).attr("link_id");
+            $.get('/link/{{link.id}}/vote/', {type: 'D'}, function(data){
+                       $('#downvotes_count').html(data['downvotes']);
+                       $('#upvotes_count').html(data['upvotes']);
+                       $('.upvote').removeClass('lighten-5');
+                       $('.downvote').removeClass('lighten-5');
+                      // $(".downvote").addClass(data['downvote_button']);
+                        if(data['downvote_button'] == '')
+                        {
+                        }
+                        else
+                        {
+                            $('.downvote').addClass('lighten-5');
+                        }
+                });
+            });
+
+
+            var show_url_button = $('#show_url_button');
+            show_url_button.click(function () {
+                selectText('link_url');
+            });
+
+
+            var comments_tab = $('#comments_tab');
+            var comments_open = 0;
+
+
+            comments_tab.click(function () {
+                if(comments_open == 0){
+                    $('#comments').css({'display' : 'block'});
+                    comments_tab.html("Hide Comments");
+                }
+                else{
+                    $('#comments').css({'display' : 'none'});
+                    comments_tab.html("Comments");
+                }
+                comments_open = 1 - comments_open;
+                LoadComments();
+            });
+
+
+            $('.modal').modal();
+            var copy = $('.copy');
+            copy.click(function (){
+                var linkUrl = $('#link_url');
+                copyToClipboard(linkUrl);
+                Materialize.toast('copied to clipboard', 2000);
+            });
+
+
+            var commentsSubmitButton = $('#commentSubmitButton');
+            commentsSubmitButton.click(function (){
+                commentsSubmitButton.addClass('disabled');
+                var text = $('#id_text').val();
+                $('#id_text').val('');
+
+                if(!$.trim(text)){
+                    alert("Can't add empty comments!");
+                    commentsSubmitButton.removeClass('disabled');
+                    return;
+                }
+
+                // Removing excess white spaces from text area.
+                text.replace(/\s+/g, " ").replace(/^\s|\s$/g, "");
+
+                $.ajax({
+                    url: '/comment/create/',
+                    type: 'post',
+                    data: {'text':text,
+                           'link_id':{{link.id}}
+                        },
+                    success :function(data, status){
+                        console.log(data);
+                        LoadComments();
+                    }
+                });
+
+                commentsSubmitButton.removeClass('disabled');
+            });
+
+
+            /* Events for edit and delete Comments */
+            $('#editCommentButton').click(function () {
+
+                var textAreaEditComment = $('#modalEditCommentTextarea');
+                var text = textAreaEditComment.val();
+                if(!$.trim(text)){
+                    alert("Can't add empty comments!");
+                    commentsSubmitButton.removeClass('disabled');
+                    return;
+                }
+                
+                // Removing excess white spaces from text area.
+                text.replace(/\s+/g, " ").replace(/^\s|\s$/g, "");
+
+                // ID of comment to be edited
+                var commentIndex = commentsOperationsVariable;
+
+                $.ajax({
+                    url : '/comment/'+commentIndex+'/edit/',
+                    type: 'post',
+                    data: {'text':text},
+                    success :function(data, status){
+                        console.log(data);
+                        $('#modalEditComment').modal('close');
+                        LoadComments();
+                    }
+                });
+            });
+
+
+            $('#deleteCommentButton').click(function () {
+
+                var commentIndex = commentsOperationsVariable;
+                $.ajax({
+                    url : '/comment/'+commentIndex+'/delete/',
+                    type: 'post',
+                    success :function(data, status){
+                        console.log(data);
+                        $('#modalEditComment').modal('close');
+                        LoadComments();
+                    }
+                });
+            });
+
+
+        });
+
+
+        $('img').on('error', function () {
+            $('#card_image_div').css({'display' : 'none'});
+        });
+
+
+        function copyToClipboard(element) {
+        var $temp = $("<input>");
+        $("body").append($temp);
+        $temp.val($(element).text()).select();
+        document.execCommand("copy");
+        $temp.remove();
         }
-    }
-    
-</script>
+
+        function selectText(containerid) {
+            if (document.selection) {
+                var range = document.body.createTextRange();
+                range.moveToElementText(document.getElementById(containerid));
+                range.select();
+            } else if (window.getSelection) {
+                 range = document.createRange();
+                range.selectNode(document.getElementById(containerid));
+                window.getSelection().removeAllRanges();
+                window.getSelection().addRange(range);
+            }
+        }
+
+        // delete link
+        $('#deleteCompletely').click(function(){
+            $.ajax({
+                url: '/link/{{link.id}}/delete/',
+                type: 'post',
+                success: function(data, status){
+                    console.log(data);
+                    window.location = "/{{request.user.username}}/";
+                }
+
+            });
+
+        });
+
+    </script>
 {% endblock %}
 

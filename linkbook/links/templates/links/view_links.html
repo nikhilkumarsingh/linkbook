@@ -2,7 +2,7 @@
 {% load staticfiles %}
 {% load i18n %}
 
-{% block title %}user links{% endblock %}
+{% block title %}{{user.first_name}}'s links{% endblock %}
 
 {% block body %}
     <style>
@@ -26,26 +26,199 @@
             overflow: hidden;
             height : 37px;
         }
+
+        .special
+        {
+            background-color: #26a69a
+        }
+
+        .optionsButton
+        {
+            height: 100%;
+        }
+
+        .collapsible-header
+        {
+            padding: 7px;
+        }
     </style>
     <div class="container">
-        <div class="row">
-
+        <div class="row" style="margin: 1px; padding: 1px">
             <div class="col s12 m12 l12">
-                <ul class="collapsible popout" data-collapsible="expandable">
+                <ul class="collapsible popout" data-collapsible="accordion">
                     {% for book in view_books %}
                     <li>
-                      {% if forloop.counter|add:0|divisibleby:3 %}
-                        <div class="collapsible-header blue-grey white-text" >
-                      {% endif %}
-                      {% if forloop.counter|add:1|divisibleby:3 %}
-                        <div class="collapsible-header blue-grey white-text" >
-                      {% endif %}
-                      {% if forloop.counter|add:2|divisibleby:3 %}
-                        <div class="collapsible-header blue-grey white-text">
-                      {% endif %}<i class="material-icons">whatshot</i>{{book.title}}</div>
+                        <div class="collapsible-header blue-grey" >
+                            <div class="row white-text" style="padding: 0px; margin: 0px ">
+                                <div class="col s12 m6 l6">
+                                        <i class="material-icons">whatshot</i>{{book.title}}
+                                </div>
+                                <div class="col s6 m3 l3">
+                                    <span class="badge right  white-text flow-text special" >{{ book.link_set.all|length }} links</span>
+                                </div>
+                                <div class="col s6 m3 l3">
+                                    {% if request.user.is_authenticated %}
+                                    {% if request.user == book.user %}
+                                    <a class="dropdown-button btn right optionsButton waves-effect waves-light hide-on-med-and-down" href="#" data-activates="dropdownBook{{ book.id }}" id="{{ book.id }}"> More Options
+                                    </a>
+                                        <a class="dropdown-button btn waves-effect waves-light hide-on-large-only" href="#" data-activates="dropdownBook{{ book.id }}" id="{{ book.id }}" style="text-transform: lowercase">more</a>
+                                    {% endif %}
+                                {% endif %}
+                                </div>
+                            </div>
+
+                        <!-- DropDown Structure -->
+
+                        <ul id='dropdownBook{{ book.id }}' class='dropdown-content'>
+                                <li><a class="dropdown_links" href="#modalImport{{ book.id }}"><i class="material-icons">import_export</i> Import links</a></li>
+                                <li><a class="dropdown_links" href="/book/{{ book.id }}/edit"><i class="material-icons">edit</i>Edit</a></li>
+                                <li><a class="dropdown_links" href="#modalDelete{{ book.id }}"><i class="material-icons">delete</i>Delete</a></li>
+                        </ul>
+
+                        <!-- Import Links Modal -->
+                        <div class="modal" id="modalImport{{ book.id }}">
+                            <div class="modal-content" style="height: 100%">
+                                <form action="/import/{{book.id}}/" method="post" role="form">
+                                {% csrf_token %}
+                                <div class="row">
+                                    <h5 class="center-align">Import Links</h5>
+                                </div>
+                                    <div class="input-field">
+                                        <select multiple name="LINKS" id="LINKS">
+                                            <option selected disabled >Select links to import into {{book.title}}</option>
+                                            {% for link in view_links %}
+                                                {% if link not in book.link_set.all %}
+                                                    <option name="{{link.id}}" value="{{link.id}}">{{link.title}}</option>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                <input hidden type="text" value="{{ book.id }}" name="import">
+                                <button type="submit" class="btn submit">Submit</button>
+                                </form>
+
+                            <div class="row">
+                                <div class="col s1 m1 1l"></div>
+                                <div class="col s10 m10 1l0 flow-text center-align">
+                                    <br>
+                                    A book can have multiple links!<br>
+                                    A link can be a part of multiple books!
+                                    <br>
+                                </div>
+                                <div class="col s1 m1 1l"></div>
+                            </div>
+                            </div>
+                        </div>
+                        <!-- Delete Book Modal -->
+
+    <div class="modal" id="modalDelete{{ book.id }}">
+        <div class="modal-content">
+            <div class="container">
+                <div class="row">
+                    <h4 class="center-align red-text flow-text">Are you sure?</h4>
+                    <div  class="col s12 m12 l12 center center-align" style="margin: 2px">
+                        <button class="btn red white-text deleteCompletely waves-effect waves-light" value="{{book.id}}">Delete this book</button>
+                    </div>
+                    <div class="col s12 m12 l12  red-text center-align">
+                        <br>
+                        This action will delete this book from your profile. This action can't be undone.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+                        </div>
                         <div class="collapsible-body">
                             <div class="row" style="padding: 2%">
                             {% for link in book.link_set.all %}
+                                <div class="col s12 m12 l6">
+                                <div class="card card1 horizontal hoverable blue-grey white-text lighten-1">
+                              <div class="card-stacked">
+                                  <div class="card_link" id="{{ link.id }}"  style="cursor: pointer;">
+                                  <div class="card-title center"><h5>{{link.title}}</h5></div>
+                                  <div class="card-content" id="{{ link.id }}">
+                                  <p class="description">{{ link.description }}</p>
+                                  <p class="BooksP">Books:
+                                    {% for book in link.books.all %}
+                                        <span class="chip">
+                                      <strong><a href = "/../book/{{book.id}}/">{{book.title}}</a></strong>
+                                        </span>
+                                    {% endfor %}
+                                  </p>
+                                  <p class="TagsP">Tags:
+                                    {% for tag in link.tags.all %}
+                                        <span class="chip">
+                                      <strong><a href = "/../tags/{{tag.name}}/">{{tag.name}}</a></strong>
+                                        </span>
+                                    {% endfor %}
+                                  </p>
+                                  <p>{{link.comment_set.count}} comment(s)</p>
+                                </div>
+                                  </div>
+                                <div class="card-action">
+                                  <a href="{{link.url}}" target="_blank">Visit link</a>
+                                  {% if request.user == link.user %}
+                                    <a href="/link/{{link.id}}/edit">Edit</a>
+                                    <a href="#modalRemove{{ book.id }}{{ link.id }}" title="Remove the link from this book" >Remove from book</a>
+
+
+                                        <div class="modal" id="modalRemove{{ book.id }}{{ link.id }}">
+                                            <div class="modal-content">
+                                                <div class="container">
+                                                    <div class="row">
+                                                        <h4 class="center-align red-text flow-text">Are you sure?</h4>
+                                                        <div  class="col s12 m12 l12 center center-align" style="margin: 2px">
+                                                            <button class="btn red white-text RemoveButton waves-effect waves-light" value="{{book.id}}-{{ link.id }}" >Remove the link from this book</button>
+                                                        </div>
+                                                        <div class="col s12 m12 l12  red-text center-align">
+                                                            <br>
+                                                            This action will remove the link from this book but not your profile.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                  {% endif %}
+                                </div>
+                              </div>
+                           </div>
+                                </div>
+                            {% empty %}
+                                <div class="row">
+                                    <div class="col s12 m12 l4"></div>
+                                    <div class="col s12 m12 l4 flow-text center">
+                                        No links in this Book. Empty!
+                                    </div>
+                                    <div class="col s12 m12 l4"></div>
+                                </div>
+                            {% endfor %}
+                            </div>
+                        </div>
+                    </li>
+
+                  {% endfor %}
+
+<!-- Universal Book element -->
+
+                    <li>
+                        <div class="collapsible-header blue-grey lighten-3">
+                            <div class="row white-text" style="padding: 0px; margin: 0px ">
+                                <div class="col s12 m6 l6">
+                                        <i class="material-icons">whatshot</i>Universal Book
+                                </div>
+                                <div class="col s6 m3 l3">
+                                    <span class="badge right  white-text flow-text special" >{{ view_links|length }} links</span>
+                                </div>
+                                <div class="col s6 m3 l3 right">
+                                    <i class="material-icons right" id="infoUniversal">info_outline</i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="collapsible-body">
+                            <div class="row" style="padding: 2%">
+                            {% for link in view_links %}
                                 <div class="col s12 m12 l6">
                                 <div class="card card1 horizontal hoverable blue-grey white-text lighten-1">
                               <div class="card-stacked">
@@ -83,7 +256,7 @@
                                 <div class="row">
                                     <div class="col s12 m12 l4"></div>
                                     <div class="col s12 m12 l4 flow-text center">
-                                        No links in this Book. Empty!
+                                        You don't have any links till yet.
                                     </div>
                                     <div class="col s12 m12 l4"></div>
                                 </div>
@@ -91,11 +264,13 @@
                             </div>
                         </div>
                     </li>
-                  {% endfor %}
+
       </ul>
             </div>
         </div>
     </div>
+
+
     <script>
 
         $(function () {
@@ -108,14 +283,103 @@
                 window.location.href = url;
             });
 
+            $('.collapsible').collapsible();
+          //  $('.collapsible').collapsible('destroy');
+
+            $('.dropdown-button').dropdown({
+                inDuration: 300,
+                outDuration: 225,
+                  constrainWidth: false, // Does not change width of dropdown to that of the activator
+                  hover: true, // Activate on hover
+                  gutter: 0, // Spacing from edge
+                  belowOrigin: true, // Displays dropdown below the button
+                  alignment: 'left', // Displays dropdown with edge aligned to the left of button
+                  stopPropagation: true, // Stops event propagation
+
+    });
+
+         $('.modal').modal({
+          dismissible: true, // Modal can be dismissed by clicking outside of the modal
+          opacity: .5, // Opacity of modal background
+          inDuration: 300, // Transition in duration
+          outDuration: 200, // Transition out duration
+          startingTop: '4%', // Starting top style attribute
+          endingTop: '10%', // Ending top style attribute
+          ready: function(modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
+           // alert("Ready");
+            console.log(modal, trigger);
+           // $('.collapsible').collapsible();
+            $('.collapsible').collapsible('destroy');
+          },
+          complete: function() { //alert('Closed');
+
+              $('.collapsible').collapsible();
+               } // Callback for Modal close
+        }
+      );
+
+
+    $('.deleteCompletely').click(function(){
+        $.ajax({
+            url: '/book/' + this.value + '/delete/',
+            type: 'post',
+            success: function(data, status){
+                console.log(data);
+                window.location = "/{{request.user.username}}/?show=links";
+            }
+
         });
 
-        $(document).ready(function(){
-        $('.collapsible').collapsible();
-        });
-          
+    });
 
-    </script>
+
+    $('.RemoveButton').click(function () {
+
+        var values = this.value.split('-');
+        var book = Number(values[0]);
+        var link = Number(values[1]);
+
+        $.ajax({
+            url: '/book/'+book+'/remove/'+link+'/',
+            type: 'post',
+            success: function(data, status){
+                window.location = "/{{request.user.username}}/?show=links";
+            }
+
+        });
+
+    });
+
+    $('.collapsible-header #infoUniversal').click(function (e) {
+
+        e.stopPropagation();
+        Materialize.toast('This is universal book. It contains all of your links. It cant be edited or modified in any way.', 10000,'',function ()
+        {
+         //  $('.collapsible').collapsible();
+        });
+
+    });
+
+   $('.dropdown_links').click(function (e) {
+
+       e.stopPropagation();
+       var id = $(this).attr('href');
+       console.log(id);
+       $(id ).modal('open');
+
+   });
+
+   $('.optionsButton').click(function (e) {
+
+       e.stopPropagation();
+
+   })
+
+
+
+});
+
+</script>
 
 {% endblock%}
 

@@ -8,17 +8,17 @@
         <!-- This will help in zooming in mobile-->
         <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <!--Import materialize.css-->
-        <link type="text/css" rel="stylesheet" href="/static/materialize/css/materialize.css"  media="screen,projection"/>
+        <link type="text/css" rel="stylesheet" href="/static/library/css/materialize.css"  media="screen,projection"/>
         <title>
             LinkBook | {% block title %}{% endblock %}
         </title>
-        <script src = "/static/materialize/js/jquery.js"></script>
-        <script src = '/static/materialize/js/materialize.js'> </script>
+        <script src = "/static/library/js/jquery.js"></script>
+        <script src = '/static/library/js/materialize.js'> </script>
         <script src = 'https://cdnjs.cloudflare.com/ajax/libs/showdown/1.7.1/showdown.min.js'></script>
-        <link type="text/css" rel="stylesheet" href="/static/materialize/css/basic.css"  media="screen,projection"/>
+        <link type="text/css" rel="stylesheet" href="/static/library/css/basic.css"  media="screen,projection"/>
         {% if not request.user.is_authenticated %}
         <!-- required for social login buttons -->
-        <link rel="stylesheet" type="text/css" href="/static/materialize/css/override_buttons.css">
+        <link rel="stylesheet" type="text/css" href="/static/library/css/override_buttons.css">
         <link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
         {% endif %}
         <script src="{% static 'notifications/notify.js' %}" type="text/javascript"></script>
@@ -58,7 +58,7 @@
                     <li ><a href="/signup" class="right">Sign Up</a></li>
                     {% else %}
                     <li>
-                        <img class="responsive-img square hoverable"  style= "vertical-align: middle; cursor: pointer;" height = "40px" width="40px"   src="{{request.user.profile.pic}}" id="userProfilePicNavbar">&nbsp;{{request.user.first_name}}
+                        <img class="responsive-img circle hoverable"  style= "vertical-align: middle; cursor: pointer;" height = "40px" width="40px"   src="{{request.user.profile.pic}}" id="userProfilePicNavbar">&nbsp;{{request.user.first_name}}
                     </li>
                     <li><a class="btn-floating  waves-effect waves-light green" href="#modal2" title="Create new book" ><i class="material-icons">queue</i></a></li>
                     <li><a class="btn-floating waves-effect waves-light green" href="#modal3" title="Create new link" ><i class="material-icons">note_add</i></a>
@@ -381,8 +381,6 @@
                     var url = "/" + "{{ request.user.username }}";
                     window.location.href = url;
                 });
-                $('.modal').modal();
-            
                 // to auto-resize descrption field
                 $('#DESCRIPTION').trigger('autoresize');
                 $('.chips').material_chip();

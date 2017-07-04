@@ -26,14 +26,22 @@ urlpatterns = [
     url(r'^link/new/$', linkbook_link_views.create_link, name = 'create_link'),
     url(r'^link/(?P<id>\d+)/edit/$', linkbook_link_views.edit_link, name='edit_link'),    
     url(r'^link/(?P<id>\d+)/vote/$', linkbook_link_views.vote_link, name = 'vote_link'),
+    url(r'^link/(?P<id>\d+)/delete/$', linkbook_link_views.delete_link, name = 'delete_link'),
+    url(r'^import/(?P<id>\d+)/$', linkbook_link_views.import_link, name='import_link'),
+
     url(r'comment/load/', linkbook_link_views.ajax_load_comment, name = 'ajax_load_comment'),
     url(r'comment/create/', linkbook_link_views.ajax_create_comment, name = 'ajax_create_comment'),
+    url(r'comment/(?P<id>\d+)/edit/', linkbook_link_views.ajax_edit_comment, name = 'ajax_edit_comment'),
+    url(r'comment/(?P<id>\d+)/delete/', linkbook_link_views.ajax_delete_comment, name = 'ajax_delete_comment'),
 
     url(r'^tags/(?P<tag_name>[-\w]+)/$', linkbook_link_views.view_tag, name='view_tag'),
 
     url(r'^book/(?P<id>\d+)/$', linkbook_link_views.book, name='book'),
-    url(r'^book/(?P<id>\d+)/edit/$', linkbook_link_views.edit_book, name='edit_book'),
     url(r'^book/new/$', linkbook_link_views.create_book, name = 'create_book'),
+    url(r'^book/(?P<id>\d+)/edit/$', linkbook_link_views.edit_book, name='edit_book'),
+    url(r'^book/(?P<id>\d+)/delete/$', linkbook_link_views.delete_book, name='delete_book'),
+    url(r'^book/(?P<b_id>\d+)/remove/(?P<l_id>\d+)/$', linkbook_link_views.remove_book_link, name='remove_book_link'),
+
 
     url(r'^follow/$', linkbook_core_views.follow_profile, name = 'follow_profile'),    
     url(r'^followers/$', linkbook_core_views.get_follower_list, name = 'get_follower_list'),    

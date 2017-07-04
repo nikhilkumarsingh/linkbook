@@ -119,6 +119,25 @@ def edit_link(request, id):
 
 
 @login_required
+def import_link(request, id):
+    if request.method == 'POST':
+        book = Book.objects.get(id = id)
+        new_links = [Link.objects.get(id = int(id)) for id in request.POST.getlist('LINKS')]
+        for link in new_links:
+            link.books.add(book)
+            link.save()
+        book.save()
+        return redirect('/{}/?show=links'.format(book.user.username))
+
+
+@login_required
+def delete_link(request, id):
+    if request.is_ajax():
+        Link.objects.get(id = id).delete()
+        return JsonResponse({'status':1})
+
+
+@login_required
 def vote_link(request, id):
     if request.method == 'GET':
         vote_type = request.GET['type']
@@ -132,8 +151,9 @@ def vote_link(request, id):
                 link.save()
                 upvote_button = vote_color
                 downvote_button = ""
-                notify.send(request.user, recipient = link.user, 
-                    target = link, verb = "upvoted")
+                if link.user != request.user:
+                    notify.send(request.user, recipient = link.user, 
+                        target = link, verb = "upvoted")
             else:
                 link.votes.delete(request.user.id)
                 link.save()
@@ -152,8 +172,9 @@ def vote_link(request, id):
                 link.save()
                 downvote_button = vote_color
                 upvote_button = ""
-                notify.send(request.user, recipient = link.user, 
-                    target = link, verb = "downvoted")
+                if link.user != request.user:
+                    notify.send(request.user, recipient = link.user, 
+                        target = link, verb = "downvoted")
             else:
                 link.votes.delete(request.user.id)
                 link.save()
@@ -182,7 +203,7 @@ def create_book(request):
         book.description = request.POST.get('DESCRIPTION')
         book.save()
         
-        return redirect('/')
+        return redirect('/'+request.user.username+'/?show=links')
     else:
         return render(request, 'links/new_book.html')
 
@@ -199,11 +220,29 @@ def edit_book(request, id):
         return render(request, 'links/edit_book.html', {'book':book})
 
 
+@login_required
+def remove_book_link(request, b_id, l_id):
+    if request.is_ajax():
+        link = Link.objects.get(id = l_id)
+        link.books.remove(Book.objects.get(id = b_id))
+        link.save()
+        return JsonResponse({'status':1})
+
+
+
+@login_required
+def delete_book(request, id):
+    if request.is_ajax():
+        Book.objects.get(id = id).delete()
+        return JsonResponse({'status':1})
+
+
 def ajax_load_comment(request):
     if request.is_ajax():
         comments = []
         for comment in Comment.objects.filter(link__id = request.GET.get('link_id')):
             c = {}
+            c['id'] = comment.id
             c['text'] = comment.text
             c['user'] = comment.user.username
             c['pic'] = comment.user.profile.pic
@@ -221,8 +260,27 @@ def ajax_create_comment(request):
         comment.link = Link.objects.get(id = request.POST.get('link_id'))
         comment.text = request.POST.get('text')
         comment.save()
-        notify.send(request.user, recipient = comment.link.user, 
-            target = comment.link, verb = "commented on")
+        if comment.user != request.user:
+            notify.send(request.user, recipient = comment.link.user, 
+                target = comment.link, verb = "commented on")
+        return JsonResponse({'done': True})
+
+
+
+@csrf_exempt
+@login_required
+def ajax_edit_comment(request, id):
+    if request.is_ajax():
+        comment = Comment.objects.get(id = id)
+        comment.text = request.POST.get('text')
+        comment.save()
+        return JsonResponse({'done': True})
+
+
+@login_required
+def ajax_delete_comment(request, id):
+    if request.is_ajax():
+        Comment.objects.get(id = id).delete()
         return JsonResponse({'done': True})
 
 

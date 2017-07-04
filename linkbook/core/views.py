@@ -94,17 +94,20 @@ def fetch_notifs(user):
     # fetch last 15 notifications
     notifs = []
     for notif in user.notifications.all()[:15]:
-        mydict = {}
-        if notif.verb == "followed":
-            mydict['url'] = "/" + notif.actor.username
-            mydict['text'] = notif. __str__().replace(notif.recipient.username, "you")
-        else:
-            mydict['url'] = "/link/" + str(notif.target.id)
-            mydict['text'] = notif. __str__()
+        try:
+            mydict = {}
+            if notif.verb == "followed":
+                mydict['url'] = "/" + notif.actor.username
+                mydict['text'] = notif. __str__().replace(notif.recipient.username, "you")
+            else:
+                mydict['url'] = "/link/" + str(notif.target.id)
+                mydict['text'] = notif. __str__()
 
-        mydict['unread'] = notif.unread
-        mydict['pic'] = notif.actor.profile.pic
-        notifs.append(mydict)       
+            mydict['unread'] = notif.unread
+            mydict['pic'] = notif.actor.profile.pic
+            notifs.append(mydict)       
+        except:
+            notif.delete()
     return notifs
 
 
@@ -149,7 +152,7 @@ def username_slugs(request, username):
 
     elif action == 'links':
         user_links = Link.objects.filter(user = user)
-        user_books = Book.objects.filter(user = user)
+        user_books = Book.objects.filter(user = user).order_by('-last_updated')
         return render(request, 'links/view_links.html', 
             {'user': user, 'view_links':user_links, 'view_books':user_books})
 
@@ -183,11 +186,13 @@ def edit_profile(request, username):
             user.last_name = form.cleaned_data.get('last_name')
 
             if 'pic' in request.FILES:
-                Image.open(request.FILES['pic']).save(TEMP_IMAGE_PATH)
+                x,y,w,h = float(request.POST.get('imageX')), float(request.POST.get('imageY')), \
+                float(request.POST.get('imageW')),float(request.POST.get('imageH'))
+                Image.open(request.FILES['pic']).crop((x,y,x+w,y+h)).save(TEMP_IMAGE_PATH)
                 uploaded_image = pyimgur.Imgur(IMGUR_CLIENT_ID).upload_image(TEMP_IMAGE_PATH)
                 os.remove(TEMP_IMAGE_PATH) 
                 user.profile.pic = uploaded_image.link
-            
+                
             user.profile.save()
             user.save()
             return redirect('/{}/'.format(user.username))
