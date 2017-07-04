@@ -8,17 +8,17 @@
         <!-- This will help in zooming in mobile-->
         <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <!--Import materialize.css-->
-        <link type="text/css" rel="stylesheet" href="/static/materialize/css/materialize.css"  media="screen,projection"/>
+        <link type="text/css" rel="stylesheet" href="/static/library/css/materialize.css"  media="screen,projection"/>
         <title>
             LinkBook | {% block title %}{% endblock %}
         </title>
-        <script src = "/static/materialize/js/jquery.js"></script>
-        <script src = '/static/materialize/js/materialize.js'> </script>
+        <script src = "/static/library/js/jquery.js"></script>
+        <script src = '/static/library/js/materialize.js'> </script>
         <script src = 'https://cdnjs.cloudflare.com/ajax/libs/showdown/1.7.1/showdown.min.js'></script>
-        <link type="text/css" rel="stylesheet" href="/static/materialize/css/basic.css"  media="screen,projection"/>
+        <link type="text/css" rel="stylesheet" href="/static/library/css/basic.css"  media="screen,projection"/>
         {% if not request.user.is_authenticated %}
         <!-- required for social login buttons -->
-        <link rel="stylesheet" type="text/css" href="/static/materialize/css/override_buttons.css">
+        <link rel="stylesheet" type="text/css" href="/static/library/css/override_buttons.css">
         <link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
         {% endif %}
         <script src="{% static 'notifications/notify.js' %}" type="text/javascript"></script>

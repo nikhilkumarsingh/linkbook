@@ -19,12 +19,14 @@
                     <div class=" input-field">
                         {{ field }}
                         <label for="{{ field.label }}" class="active" >{{ field.label }} </label>
+                         {% for error in field.errors %}
+                            <span id = "control-label" class="red-text">{{ error }}</span>
+                             <br>
+                        {% endfor %}
                         {% if field.help_text %}
                             <span>{{ field.help_text|safe }}</span>
                         {% endif %}
-                        {% for error in field.errors %}
-                            <label id = "control-label">{{ error }}</label>
-                        {% endfor %}
+
                     </div>
                     {% endfor %}
                     <button type="submit" class="btn btn-primary btn-lg">{% trans 'Create an account' %}</button>
