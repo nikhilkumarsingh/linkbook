@@ -380,239 +380,301 @@
 
   </ul>
 
+<!-- Edit comment Modal -->
+    <div class="modal" id="modalEditComment">
+        <div class="modal-content">
+            <div class="row">
+                <h5 class="center-align blue-text">Edit/Delete Comment</h5>
+                <div class="col s1 m1 l1"></div>
+                <div class="col s10 m10 l10">
+                    <div class="input-field">
+                        <textarea id="modalEditCommentTextarea">
+
+                        </textarea>
+                        <div class="row">
+                            <div class="col 12 m12 l6">
+                                <button class="btn" id="editCommentButton">Save</button>
+                            </div>
+                            <div class="col 12 m12 l6">
+                                <button class="btn red white-text" id="deleteCommentButton">Delete</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col s1 m1 l1"></div>
+            </div>
+        </div>
+    </div>
 
 
+    <script>
 
-<script>
-    function RefreshDropdown()
-    {
-      //   var width = $('#list').css('width');
-       // console.log("Width");
-       // console.log(width);
-      //  $('#dropdown11').css({'max-width' : width });
-    
-    }
-    function LoadComments(){
+        var commentsOperationsVariable = -1;
+        var globalCommentsObject;
+        function ModifyComments(commentId)
+        {
+            commentsOperationsVariable = commentId;
+            console.log("Modify comments Called");
+            console.log(commentId);
+            var textAreaEditComment = $('#modalEditCommentTextarea');
+            var commentToBeModified = globalCommentsObject[commentId];
+            textAreaEditComment.val(commentToBeModified.text);
+        }
+         function LoadComments(){
         console.log("Load Comments called");
     	$.ajax({
     		url: '/comment/load/',
     		type: 'get',
     		data: {'link_id': "{{link.id}}"},
     		success: function(data, status){
-
     			var comments_div_p = $('#comments_div_p');
                 var str = '';
                 var comments = data['comments'];
+                globalCommentsObject = comments;
+                console.log(comments);
                 var i;
                 for( i = 0; i <comments.length ; i++)
                 {
                 	str += '<li class="divider"></li>'
                 		+ '<li class="collection-item avatar commentsListItem">'
-
                         + '<div class="row">'
-
                 		+ '<a href="/' + comments[i]['user'] + '/"><img src=' + comments[i]['pic']
-                		+ ' class="responsive-img circle" title=' + comments[i]['user'] + '></a>' 
-                		+ '<div class = "col s12 m12 l4 " comments_inside_div commentsListItem">'
+                		+ ' class="responsive-img circle" title=' + comments[i]['user'] + '></a>'
+                		+ '<div class = "col s12 m12 l12 " comments_inside_div commentsListItem">'
                 		+ '<p style="font-weight: 800" class="commentsListItem ">'
-                		+ '<a class="hide-on-med-and-down" href="/' + comments[i]['user'] + '/">' + comments[i]['user'] + '</a>'
-                		+ '<sub class="commentsListItem grey-text">' + comments[i]['time'] + '</sub></p>' + '</div>'
-                            + '<div class="col s12 m12 l8">'
-                		+ '<p class="commentsListItem">' + comments[i]['text'] + '</p></div></div></li>'
+                		+ '<a class="hide-on-med-and-down" href="/' + comments[i]['user'] + '/">' + comments[i]['user'] + '</a>' + '<span>' + comments[i]['text'] + '</span>'
+                		+ '</p>' + '</div>'
+                            + '<div class="col s12 m6 l6">'
+                          +  '<sub class="commentsListItem grey-text">' + comments[i]['time'] + '</sub>' +
+                		 '</div>' +
+                        '<div class ="col s12 m6 l6 ">' +
+                        '<a href="#modalEditComment" onclick="ModifyComments(' + i + ')" >Edit/Delete</a>' +
+                        '</div>' +
+                        '</div></li>'
                 }
-           
-                comments_div_p.html(str);
 
+                comments_div_p.html(str);
                 $("#comments_div_p").scrollTop($("#comments_div_p")[0].scrollHeight);
                 // increase number of comments by 1
-
             	$('#num_comments1').html(Number(data['count']));
             	$('#num_comments2').html(Number(data['count']));
     		}
     	});
     }
-
-    $(function(){
-    	// load comments initially
-    	LoadComments();
-
-        $('.dropdown-button').dropdown({
-          inDuration: 300,
-          outDuration: 225,
-          constrainWidth: false, // Does not change width of dropdown to that of the activator
-          hover: false, // Activate on hover
-          gutter: 0, // Spacing from edge
-          belowOrigin: true, // Displays dropdown below the button
-          alignment: 'right', // Displays dropdown with edge aligned to the left of button
-          stopPropagation: false // Stops event propagation
-        });
-
-        var b = $('#btn_url');
-        var disp = false;
-        var URL = $('#url');
-        b.click(function () {
-            if(disp){
-                URL.css({'display' : 'none'});
-                b.html("Show URL");
-            }else{
-                URL.css({'display' : 'block'});
-                b.html("Hide URL");
-            }
-            disp = 1 - disp;
-        });
-
-
-	    $('.upvote_upper_button').click(function(){
-	    var link_id;
-	    link_id = $(this).attr("link_id");
-	    $.get('/link/{{link.id}}/vote/', {type: 'U'}, function(data){
-	               $('#upvotes_count').html(data['upvotes']);
-	               $('#downvotes_count').html(data['downvotes']);
-	               $('.upvote').removeClass('lighten-5');
-	               $('.downvote').removeClass('lighten-5');
-	               //$(".downvote").toggleClass(data['downvote_button']);
-	                console.log(data.upvote_button);
-	                console.log(data.downvote_button);
-	                if(data['upvote_button'] == '')
-	                {
-	                }
-	                else
-	                {
-	                    $('.upvote').addClass('lighten-5');
-	                }
-	        });
-	    });
-	    $('.downvote_upper_button').click(function(){
-	    var link_id;
-	    link_id = $(this).attr("link_id");
-	    $.get('/link/{{link.id}}/vote/', {type: 'D'}, function(data){
-	               $('#downvotes_count').html(data['downvotes']);
-	               $('#upvotes_count').html(data['upvotes']);
-	               $('.upvote').removeClass('lighten-5');
-	               $('.downvote').removeClass('lighten-5');
-	              // $(".downvote").addClass(data['downvote_button']);
-	                if(data['downvote_button'] == '')
-	                {
-	                }
-	                else
-	                {
-	                    $('.downvote').addClass('lighten-5');
-	                }
-	        });
-	    });
-    
-    
-        var show_url_button = $('#show_url_button');
-        show_url_button.click(function () {
-            selectText('link_url');
-        });
-
-    
-        var comments_tab = $('#comments_tab');
-        var comments_open = 0;
-        
-        
-        comments_tab.click(function () {
-            if(comments_open == 0){
-                $('#comments').css({'display' : 'block'});
-                comments_tab.html("Hide Comments");
-            }
-            else{
-                $('#comments').css({'display' : 'none'});
-                comments_tab.html("Comments");
-            }
-            comments_open = 1 - comments_open;
+        $(function(){
+            // load comments initially
             LoadComments();
-        });
 
-
-        $('.modal').modal();
-        var copy = $('.copy');
-        copy.click(function (){
-            var linkUrl = $('#link_url');
-            copyToClipboard(linkUrl);
-            Materialize.toast('copied to clipboard', 2000);
-        });
-    
-    
-        var commentsSubmitButton = $('#commentSubmitButton');
-        commentsSubmitButton.click(function (){
-            commentsSubmitButton.addClass('disabled');
-            var text = $('#id_text').val();
-            $('#id_text').val('');
-
-            if(!$.trim(text)){
-                alert("Can't add empty comments!");
-                commentsSubmitButton.removeClass('disabled');
-                return;
-            }
-
-            // Removing excess white spaces from text area.
-            text.replace(/\s+/g, " ").replace(/^\s|\s$/g, "");
-            
-            $.ajax({
-                url: '/comment/create/',
-                type: 'post',
-                data: {'text':text, 
-                       'link_id':{{link.id}}
-                    },
-                success :function(data, status){
-                	console.log(data);
-                	LoadComments();
-                }
+            $('.dropdown-button').dropdown({
+              inDuration: 300,
+              outDuration: 225,
+              constrainWidth: false, // Does not change width of dropdown to that of the activator
+              hover: false, // Activate on hover
+              gutter: 0, // Spacing from edge
+              belowOrigin: true, // Displays dropdown below the button
+              alignment: 'right', // Displays dropdown with edge aligned to the left of button
+              stopPropagation: false // Stops event propagation
             });
 
-            commentsSubmitButton.removeClass('disabled');
-        });
-    
-    
-        //window.setTimeout(RefreshDropdown, 5000);
+            var b = $('#btn_url');
+            var disp = false;
+            var URL = $('#url');
+            b.click(function () {
+                if(disp){
+                    URL.css({'display' : 'none'});
+                    b.html("Show URL");
+                }else{
+                    URL.css({'display' : 'block'});
+                    b.html("Hide URL");
+                }
+                disp = 1 - disp;
+            });
+
+
+            $('.upvote_upper_button').click(function(){
+            var link_id;
+            link_id = $(this).attr("link_id");
+            $.get('/link/{{link.id}}/vote/', {type: 'U'}, function(data){
+                       $('#upvotes_count').html(data['upvotes']);
+                       $('#downvotes_count').html(data['downvotes']);
+                       $('.upvote').removeClass('lighten-5');
+                       $('.downvote').removeClass('lighten-5');
+                       //$(".downvote").toggleClass(data['downvote_button']);
+                        console.log(data.upvote_button);
+                        console.log(data.downvote_button);
+                        if(data['upvote_button'] == '')
+                        {
+                        }
+                        else
+                        {
+                            $('.upvote').addClass('lighten-5');
+                        }
+                });
+            });
+            $('.downvote_upper_button').click(function(){
+            var link_id;
+            link_id = $(this).attr("link_id");
+            $.get('/link/{{link.id}}/vote/', {type: 'D'}, function(data){
+                       $('#downvotes_count').html(data['downvotes']);
+                       $('#upvotes_count').html(data['upvotes']);
+                       $('.upvote').removeClass('lighten-5');
+                       $('.downvote').removeClass('lighten-5');
+                      // $(".downvote").addClass(data['downvote_button']);
+                        if(data['downvote_button'] == '')
+                        {
+                        }
+                        else
+                        {
+                            $('.downvote').addClass('lighten-5');
+                        }
+                });
+            });
+
+
+            var show_url_button = $('#show_url_button');
+            show_url_button.click(function () {
+                selectText('link_url');
+            });
+
+
+            var comments_tab = $('#comments_tab');
+            var comments_open = 0;
+
+
+            comments_tab.click(function () {
+                if(comments_open == 0){
+                    $('#comments').css({'display' : 'block'});
+                    comments_tab.html("Hide Comments");
+                }
+                else{
+                    $('#comments').css({'display' : 'none'});
+                    comments_tab.html("Comments");
+                }
+                comments_open = 1 - comments_open;
+                LoadComments();
+            });
+
 
             $('.modal').modal();
+            var copy = $('.copy');
+            copy.click(function (){
+                var linkUrl = $('#link_url');
+                copyToClipboard(linkUrl);
+                Materialize.toast('copied to clipboard', 2000);
+            });
 
-    });
-    
 
-    $('img').on('error', function () {
-        $('#card_image_div').css({'display' : 'none'});
-    });
-    
-    
-    function copyToClipboard(element) {
-    var $temp = $("<input>");
-    $("body").append($temp);
-    $temp.val($(element).text()).select();
-    document.execCommand("copy");
-    $temp.remove();
-    }
-    
-    function selectText(containerid) {
-        if (document.selection) {
-            var range = document.body.createTextRange();
-            range.moveToElementText(document.getElementById(containerid));
-            range.select();
-        } else if (window.getSelection) {
-            var range = document.createRange();
-            range.selectNode(document.getElementById(containerid));
-            window.getSelection().removeAllRanges();
-            window.getSelection().addRange(range);
-        }
-    }
+            var commentsSubmitButton = $('#commentSubmitButton');
+            commentsSubmitButton.click(function (){
+                commentsSubmitButton.addClass('disabled');
+                var text = $('#id_text').val();
+                $('#id_text').val('');
 
-    // delete link
-    $('#deleteCompletely').click(function(){
-        $.ajax({
-            url: '/link/{{link.id}}/delete/',
-            type: 'post',
-            success: function(data, status){
-                console.log(data);
-                window.location = "/{{request.user.username}}/";
-            }
+                if(!$.trim(text)){
+                    alert("Can't add empty comments!");
+                    commentsSubmitButton.removeClass('disabled');
+                    return;
+                }
+
+                // Removing excess white spaces from text area.
+                text.replace(/\s+/g, " ").replace(/^\s|\s$/g, "");
+
+                $.ajax({
+                    url: '/comment/create/',
+                    type: 'post',
+                    data: {'text':text,
+                           'link_id':{{link.id}}
+                        },
+                    success :function(data, status){
+                        console.log(data);
+                        LoadComments();
+                    }
+                });
+
+                commentsSubmitButton.removeClass('disabled');
+            });
+
+            /* Events for edit and delete Comments */
+
+            $('#editCommentButton').click(function () {
+
+                var textAreaEditComment = $('#modalEditCommentTextarea');
+                var text = textAreaEditComment.val();
+                if(!$.trim(text)){
+                    alert("Can't add empty comments!");
+                    commentsSubmitButton.removeClass('disabled');
+                    return;
+                }
+
+                // Removing excess white spaces from text area.
+                text.replace(/\s+/g, " ").replace(/^\s|\s$/g, "");
+
+                /* Variable for the index of the comment in the page */
+                var commentIndex = commentsOperationsVariable;
+
+                /* Write Ajax request here */
+                /* On success call LoadComments Fucntion plese @NikhilKumar */
+                $.ajax();
+
+
+            });
+
+
+            $('#deleteCommentButton').click(function () {
+
+                /* Variable for the index of the comment in the page */
+                var commentIndex = commentsOperationsVariable;
+                  /* Write Ajax request here */
+                /* On success call LoadComments Fucntion plese @NikhilKumar */
+                $.ajax();
+
+            });
+
 
         });
 
-    });
-    
-</script>
+
+        $('img').on('error', function () {
+            $('#card_image_div').css({'display' : 'none'});
+        });
+
+
+        function copyToClipboard(element) {
+        var $temp = $("<input>");
+        $("body").append($temp);
+        $temp.val($(element).text()).select();
+        document.execCommand("copy");
+        $temp.remove();
+        }
+
+        function selectText(containerid) {
+            if (document.selection) {
+                var range = document.body.createTextRange();
+                range.moveToElementText(document.getElementById(containerid));
+                range.select();
+            } else if (window.getSelection) {
+                 range = document.createRange();
+                range.selectNode(document.getElementById(containerid));
+                window.getSelection().removeAllRanges();
+                window.getSelection().addRange(range);
+            }
+        }
+
+        // delete link
+        $('#deleteCompletely').click(function(){
+            $.ajax({
+                url: '/link/{{link.id}}/delete/',
+                type: 'post',
+                success: function(data, status){
+                    console.log(data);
+                    window.location = "/{{request.user.username}}/";
+                }
+
+            });
+
+        });
+
+    </script>
 {% endblock %}
 
