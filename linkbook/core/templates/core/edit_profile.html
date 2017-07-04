@@ -5,6 +5,10 @@
 
 
 {% block body %}
+
+    <link href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" rel="stylesheet">
+        <link href="/static/library/css/jquery.cropper.min.css" rel="stylesheet">
+
     <div class="container">
         <br><br>
         <div class="row">
@@ -31,14 +35,38 @@
                 </form>
             </div>
             <div class="col s1 m3 l3"></div>
-
         </div>
 
+
+        <div class="modal" id="modalCropper">
+            <div class="modal-content">
+                <div class="row">
+                    <div class="col s12 m3 l4"></div>
+                    <div class="col s12 m5 l5 center center-align">
+                        <div id="cropper" class="my-cropper">
+
+                        </div>
+                        <br><br>
+                    </div>
+                    <div class="col s12 m3 l3">
+                        <button class="btn">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
+
+    <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+
+    <!-- Load the cropper code. -->
+    <script src="/static/library/js/jquery.cropper.min.js"></script>
     <script>
     $(function () {
 
         $('.modal').modal();
+
+
 
         var File = $('input[type="file"]');
         var Parent = File.parent();
@@ -55,6 +83,25 @@
         '<input class="file-path validate" type="text">' +
       '</div>';
         Parent.html(newStr);
+
+
+
+           $("#cropper").cropper({                 // initialize our cropper
+                change: function(evt, data) {       // declare the function to be executed when something changes
+                    console.log(data);
+            },
+               aspectRatio : 0.75
+
+
+           });
+
+
+        $("input[type=file]").change(function (evt)
+        {
+            $('#modalCropper').modal('open');
+            $("#cropper").cropper("loadImage", evt.target.files);
+
+        });
 
 
     });
