@@ -31,6 +31,8 @@ urlpatterns = [
 
     url(r'comment/load/', linkbook_link_views.ajax_load_comment, name = 'ajax_load_comment'),
     url(r'comment/create/', linkbook_link_views.ajax_create_comment, name = 'ajax_create_comment'),
+    url(r'comment/(?P<id>\d+)/edit/', linkbook_link_views.ajax_edit_comment, name = 'ajax_edit_comment'),
+    url(r'comment/(?P<id>\d+)/delete/', linkbook_link_views.ajax_delete_comment, name = 'ajax_delete_comment'),
 
     url(r'^tags/(?P<tag_name>[-\w]+)/$', linkbook_link_views.view_tag, name='view_tag'),
 
