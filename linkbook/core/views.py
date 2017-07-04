@@ -10,16 +10,82 @@ import os
 from notifications.models import Notification
 from notifications.signals import notify
 
-from linkbook.links.models import Link, Book
+from linkbook.links.models import Link, Book, Comment
+from linkbook.links.forms import LinkForm, BookForm, CommentForm
 from linkbook.core.forms import UpdateProfileForm
+
+from taggit.models import Tag
+from taggit.utils import _parse_tags
+from .PyOpenGraph import PyOpenGraph
+import humanize
+from datetime import datetime, timezone
 
 
 IMGUR_CLIENT_ID = "fd0c3e407af9974"
 TEMP_IMAGE_PATH = 'linkbook/media/temp.png'
 
+UP = 0
+DOWN = 1
+vote_color = "lighten-5"
 
 def index(request):
-    return render(request, 'core/index.html')
+    if request.method == 'GET':
+        user = User.objects.get(username = request.user)
+        followings = user.profile.following.all()
+        all_links = []
+        for following in followings:
+            links = Link.objects.filter(user = following.user)[:5]
+            for link in links:
+                row = {}
+                link_time = humanize.naturaltime(datetime.now(timezone.utc) - link.date)
+                comment_form = CommentForm()
+                upvotes = link.votes.count(action = UP)
+                downvotes = link.votes.count(action = DOWN)
+                upvoted = link.votes.exists(request.user.id, action = UP)
+                downvoted = link.votes.exists(request.user.id, action = DOWN)
+
+                # open graph data
+                show_og = True
+                og = PyOpenGraph(link.url)
+    
+                if not og.is_valid:
+                    show_og = False
+                elif og.image and og.image_height and og.image_width:
+                    ratio = int(og.image_height) / int(og.image_width)
+                    og.image_width = 150
+                    og.image_height = 150*ratio
+                else:
+                    og.image_width = 150
+                    og.image_height = 150
+
+
+            # upvote button config
+                if not upvoted:
+                    upvote_button = ""
+                else:
+                    upvote_button = vote_color
+
+            # downvote button config
+                if not downvoted:
+                    downvote_button = ""
+                else:
+                    downvote_button = vote_color
+
+                row['link'] = link
+                row['comment_form'] = comment_form
+                row['og'] = og
+                row['show_og'] = show_og
+                row['upvotes'] = upvotes
+                row['downvotes'] = downvotes
+                row['time'] = link_time
+                row['upvote_button'] = upvote_button
+                row['downvote_button'] = downvote_button
+
+                all_links.append(row)
+
+    #all_links.sort(key=time)
+
+    return render(request, 'core/index.html', {'all_links':all_links})
 
 
 def fetch_notifs(user):
