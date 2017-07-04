@@ -43,7 +43,7 @@
         }
     </style>
     <div class="container">
-        <div class="row">
+        <div class="row" style="margin: 1px; padding: 1px">
             <div class="col s12 m12 l12">
                 <ul class="collapsible popout" data-collapsible="accordion">
                     {% for book in view_books %}
@@ -70,9 +70,9 @@
                         <!-- DropDown Structure -->
 
                         <ul id='dropdownBook{{ book.id }}' class='dropdown-content'>
-                                <li><a href="#modalImport{{ book.id }}"><i class="material-icons">import_export</i> Import links</a></li>
-                                <li><a href="/book/{{ book.id }}/edit"><i class="material-icons">edit</i>Edit</a></li>
-                                <li><a href="#modalDelete{{ book.id }}"><i class="material-icons">delete</i>Delete</a></li>
+                                <li><a class="dropdown_links" href="#modalImport{{ book.id }}"><i class="material-icons">import_export</i> Import links</a></li>
+                                <li><a class="dropdown_links" href="/book/{{ book.id }}/edit"><i class="material-icons">edit</i>Edit</a></li>
+                                <li><a class="dropdown_links" href="#modalDelete{{ book.id }}"><i class="material-icons">delete</i>Delete</a></li>
                         </ul>
 
                         <!-- Import Links Modal -->
@@ -127,7 +127,6 @@
             </div>
         </div>
     </div>
-
                         </div>
                         <div class="collapsible-body">
                             <div class="row" style="padding: 2%">
@@ -212,8 +211,8 @@
                                 <div class="col s6 m3 l3">
                                     <span class="badge right  white-text flow-text special" >{{ view_links|length }} links</span>
                                 </div>
-                                <div class="col s6 m3 l3">
-
+                                <div class="col s6 m3 l3 right">
+                                    <i class="material-icons right" id="infoUniversal">info_outline</i>
                                 </div>
                             </div>
                         </div>
@@ -257,7 +256,7 @@
                                 <div class="row">
                                     <div class="col s12 m12 l4"></div>
                                     <div class="col s12 m12 l4 flow-text center">
-                                        You don't have any links till yet
+                                        You don't have any links till yet.
                                     </div>
                                     <div class="col s12 m12 l4"></div>
                                 </div>
@@ -351,8 +350,34 @@
 
     });
 
+    $('.collapsible-header #infoUniversal').click(function (e) {
+
+        e.stopPropagation();
+        Materialize.toast('This is universal book. It contains all of your links. It cant be edited or modified in any way.', 10000,'',function ()
+        {
+         //  $('.collapsible').collapsible();
+        });
+
+    });
+
+   $('.dropdown_links').click(function (e) {
+
+       e.stopPropagation();
+       var id = $(this).attr('href');
+       console.log(id);
+       $(id ).modal('open');
+
+   });
+
+   $('.optionsButton').click(function (e) {
+
+       e.stopPropagation();
+
+   })
+
+
+
 });
-    // delete book
 
 </script>
 
