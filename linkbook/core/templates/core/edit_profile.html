@@ -16,7 +16,7 @@
             <div class="col s10 m6 l6 card hoverable">
                 <br>
                 <h5 class="center">Edit your profile</h5>
-                <form action="/{{request.user.username}}/edit/" method="post" role="form" enctype="multipart/form-data">
+                <form action="/{{request.user.username}}/edit/" method="post" role="form" enctype="multipart/form-data" >
                     {% csrf_token %}
                     {% for field in form.visible_fields %}
                     <div class=" input-field">
@@ -30,11 +30,11 @@
                         {% endfor %}
                     </div>
                     {% endfor %}
-                    <input type="number" name="imageAspectRatio" id="imageAspectRatio" hidden="hidden" title="imageAspectRatio">
-                <input type="number" name="imageX" id="imageX" hidden="hidden" title="imageX">
-                <input type="number" name="imageY" id="imageY" hidden="hidden" title="imageY">
-                <input type="number" name="imageH" id="imageH" hidden="hidden" title="imageH">
-                <input type="number" name="imageW" id="imageW" hidden="hidden" title="imageW">
+                    <input type="text" name="imageAspectRatio" id="imageAspectRatio" hidden="hidden">
+                <input type="text" name="imageX" id="imageX" hidden="hidden" title="imageX" >
+                <input type="text" name="imageY" id="imageY" hidden="hidden" title="imageY" >
+                <input type="text" name="imageH" id="imageH" hidden="hidden" title="imageH" >
+                <input type="text" name="imageW" id="imageW" hidden="hidden" title="imageW">
                     <button type="submit" class="btn btn-primary btn-lg">{% trans 'Save' %}</button>
                     <br><br>
                 </form>
@@ -56,7 +56,7 @@
                         <br><br>
                     </div>
                     <div class="col s12 m3 l3">
-                        <button class="btn" id="saveCroppedImage">Save</button>
+                        <button type="submit" class="btn" id="saveCroppedImage">Save</button>
                     </div>
                 </div>
             </div>
