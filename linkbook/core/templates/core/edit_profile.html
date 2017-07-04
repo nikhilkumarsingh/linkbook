@@ -5,6 +5,10 @@
 
 
 {% block body %}
+
+    <link href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" rel="stylesheet">
+        <link href="/static/library/css/jquery.cropper.min.css" rel="stylesheet">
+
     <div class="container">
         <br><br>
         <div class="row">
@@ -26,19 +30,67 @@
                         {% endfor %}
                     </div>
                     {% endfor %}
+                    <input type="number" name="imageAspectRatio" id="imageAspectRatio" hidden="hidden" title="imageAspectRatio">
+                <input type="number" name="imageX" id="imageX" hidden="hidden" title="imageX">
+                <input type="number" name="imageY" id="imageY" hidden="hidden" title="imageY">
+                <input type="number" name="imageH" id="imageH" hidden="hidden" title="imageH">
+                <input type="number" name="imageW" id="imageW" hidden="hidden" title="imageW">
                     <button type="submit" class="btn btn-primary btn-lg">{% trans 'Save' %}</button>
                     <br><br>
                 </form>
             </div>
             <div class="col s1 m3 l3"></div>
-
         </div>
 
+
+        <div class="modal" id="modalCropper">
+            <div class="modal-content">
+                <div class="row">
+                    <div class="col s12 m3 l4">
+                        Adjust your new profile pic in the cropper and the save your new profile pic.
+                    </div>
+                    <div class="col s12 m5 l5 center center-align" style="padding: 1px">
+                        <div id="cropper" class="my-cropper" style="max-width: 100%; padding: 1px;">
+
+                        </div>
+                        <br><br>
+                    </div>
+                    <div class="col s12 m3 l3">
+                        <button class="btn" id="saveCroppedImage">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
+
+    <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+
+    <!-- Load the cropper code. -->
+    <script src="/static/library/js/jquery.cropper.min.js"></script>
     <script>
+
+    var unsavedChanges = false;
+    var imageUploaded = false;
+    var imageAspectRatio, imageX, imageY, imageW, imageH;
     $(function () {
 
-        $('.modal').modal();
+        $('.modal').modal({
+        dismissible: false, // Modal can be dismissed by clicking outside of the modal
+        opacity: .5, // Opacity of modal background
+        inDuration: 300, // Transition in duration
+        outDuration: 200, // Transition out duration
+        startingTop: '4%', // Starting top style attribute
+        endingTop: '10%', // Ending top style attribute
+        ready: function(modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
+        // alert("Ready");
+        //console.log(modal, trigger);
+      },
+      complete: function() {
+        //    alert('Closed');
+        } // Callback for Modal close
+    }
+  );
 
         var File = $('input[type="file"]');
         var Parent = File.parent();
@@ -56,6 +108,51 @@
       '</div>';
         Parent.html(newStr);
 
+
+        imageAspectRatio = $('#imageAspectRatio');
+        imageX = $('#imageX');
+        imageY = $('#imageY');
+        imageW = $('#imageW');
+        imageH = $('#imageH');
+
+           $("#cropper").cropper({                 // initialize our cropper
+                change: function(evt, data) {       // declare the function to be executed when something changes
+                    console.log("change");
+                    console.log(data);
+                    imageAspectRatio.val(data.aspect);
+                    imageX.val(data.x);
+                    imageY.val(data.y);
+                    imageW.val(data.w);
+                    imageH.val(data.h);
+            },
+               aspectRatio : 0.75
+           });
+
+
+
+        $("input[type=file]").change(function (evt)
+        {
+
+            if(evt.target.files.length !== 0)
+            {
+                $('#modalCropper').modal('open');
+                console.log(evt.target.files);
+                $("#cropper").cropper("loadImage", evt.target.files);
+                imageUploaded = true;
+            }
+            else
+            {
+                imageUploaded = false;
+            }
+
+        });
+
+
+        $('#saveCroppedImage').click(function ()
+        {
+
+            $('#modalCropper').modal('close');
+        });
 
     });
     </script>

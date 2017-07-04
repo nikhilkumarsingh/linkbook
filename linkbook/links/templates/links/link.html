@@ -446,16 +446,13 @@
                 		+ '<p style="font-weight: 800" class="commentsListItem ">'
                 		+ '<a class="hide-on-med-and-down" href="/' + comments[i]['user'] + '/">' + comments[i]['user'] + '</a>' + '<span>&nbsp;&nbsp;' + comments[i]['text'] + '</span>'
                 		+ '</p>' + '</div>'
-                            + '<div class="col s12 m6 l6">'
-                          +  '<sub class="commentsListItem grey-text">' + comments[i]['time'] + '</sub>' +
-                		 '</div>';
-
-                    if(comments[i]['user'] === "{{request.user.username}}"){
-                        str += '<div class ="col s12 m6 l6 ">' +
-                        '<a href="#modalEditComment" onclick="ModifyComments(' + i + ')" ><i class="material-icons">mode edit</i></a>' +
-                        '</div>';
+                            + '<div class="col s12 m12 l12">'
+                          +  '<sub class="commentsListItem grey-text">' + comments[i]['time'] + '</sub>';
+                    if(comments[i]['user'] === "{{request.user.username}}")
+                    {
+                        str += '<sub><a href="#modalEditComment" onclick="ModifyComments(' + i + ')" > &nbsp;&nbsp;&nbsp; Edit/Delete</a><sub>';
                     }
-                    str += '</div></li>';
+                    str += '</div></div></li>';
                 }
 
                 comments_div_p.html(str);
