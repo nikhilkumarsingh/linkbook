@@ -58,7 +58,7 @@
                     <li ><a href="/signup" class="right">Sign Up</a></li>
                     {% else %}
                     <li>
-                        <img class="responsive-img square hoverable"  style= "vertical-align: middle; cursor: pointer;" height = "40px" width="40px"   src="{{request.user.profile.pic}}" id="userProfilePicNavbar">&nbsp;{{request.user.first_name}}
+                        <img class="responsive-img circle hoverable"  style= "vertical-align: middle; cursor: pointer;" height = "40px" width="40px"   src="{{request.user.profile.pic}}" id="userProfilePicNavbar">&nbsp;{{request.user.first_name}}
                     </li>
                     <li><a class="btn-floating  waves-effect waves-light green" href="#modal2" title="Create new book" ><i class="material-icons">queue</i></a></li>
                     <li><a class="btn-floating waves-effect waves-light green" href="#modal3" title="Create new link" ><i class="material-icons">note_add</i></a>
