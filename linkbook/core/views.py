@@ -118,11 +118,13 @@ def edit_profile(request, username):
             user.last_name = form.cleaned_data.get('last_name')
 
             if 'pic' in request.FILES:
-                Image.open(request.FILES['pic']).save(TEMP_IMAGE_PATH)
+                x,y,w,h = float(request.POST.get('imageX')), float(request.POST.get('imageY')), \
+                float(request.POST.get('imageW')),float(request.POST.get('imageH'))
+                Image.open(request.FILES['pic']).crop((x,y,x+w,y+h)).save(TEMP_IMAGE_PATH)
                 uploaded_image = pyimgur.Imgur(IMGUR_CLIENT_ID).upload_image(TEMP_IMAGE_PATH)
                 os.remove(TEMP_IMAGE_PATH) 
                 user.profile.pic = uploaded_image.link
-            
+                
             user.profile.save()
             user.save()
             return redirect('/{}/'.format(user.username))
