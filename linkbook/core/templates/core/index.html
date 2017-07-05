@@ -112,20 +112,6 @@
                                     </div>
                                     </div>
                                 </div>
-                                <div id="modal10" class="modal">
-                             <!--       <div class="modal-content">
-                                        <div class="row">
-                                            <div class="col s12 m12 l7">
-                                                <div class="title"><a id="link_url" href="{{ ITEM.link.url }}" target="_blank"> {{ ITEM.link.url }}</a>  </div>
-                                            </div>
-                                            <div class="col s12 m12 l2"></div>
-                                            <div class="col s12 m12 l3">
-                                                <button title="copy to clipboard" class="btn black white-text" id="copy"> <i class="material-icons black" style="color: white">content_copy</i></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> -->
-                            </div>
                             <hr>
                             <span id = "DESCR" style="font-size: 100%">{{ITEM.link.description}}</span>
                             <span id="url" style="display: none"><a href="{{ ITEM.link.url }}" target="_blank"> {{ ITEM.link.url }} </a></span>
@@ -303,15 +289,15 @@
     </li>
 </ul>
 
-<!-- Copy to Clipboard Dropdown -->
+<!--  to Clipboard Dropdown -->
 <ul id="dropdown11{{ITEM.link.id}}" class="dropdown-content" style="max-width: 200px" >
     <li>
         <div class="row" style="max-width: 100%; ;overflow-x: scroll; padding: 1%; margin: 0px;">
             <span>
-            <a  id="link_url" href="{{ ITEM.link.url }}" target="_blank" style="display: inline-block;" > {{ ITEM.link.url }}</a>
+            <a  id="link_url{{ ITEM.link.id }}" href="{{ ITEM.link.url }}" target="_blank" style="display: inline-block;" > {{ ITEM.link.url }}</a>
             </span>
             <!--      <span>
-                <i class="material-icons circle right" id="copy" style="display: inline-block;"  > content_copy</i>
+                <i class="material-icons circle right" id="" style="display: inline-block;"  > content_</i>
                 </span> -->
         </div>
     </li>
@@ -321,10 +307,10 @@
     <li>
         <div class="row" style="max-width: 100%; ;overflow-x: scroll; padding: 1%; margin: 0px;">
             <span>
-            <a  id="link_url" href="{{ ITEM.link.url }}" target="_blank" style="display: inline-block;" > {{ ITEM.link.url }}</a>
+            <a  id="link_url{{ ITEM.link.id }}" href="{{ ITEM.link.url }}" target="_blank" style="display: inline-block;" > {{ ITEM.link.url }}</a>
             </span>
             <!--      <span>
-                <i class="material-icons circle right" id="copy" style="display: inline-block;"  > content_copy</i>
+                <i class="material-icons circle right" id="" style="display: inline-block;"  > content_</i>
                 </span> -->
         </div>
     </li>
@@ -337,7 +323,7 @@
   <ul id='dropdownButtons{{ITEM.link.id}}' class='dropdown-content'>
       <li> <a class="waves-effect waves-light" href="{{ ITEM.link.url }}" title="Visit Link" target="_blank">Visit link</a></li>
 
-     <li><a class="waves-effect waves-light copy" href="#" title="Copy to clipboard" >Copy to clipboard</a></li>
+     <li><a class="waves-effect waves-light copy" id="{{ ITEM.link.id }}"  href="#" title="Copy to clipboard" >Copy to clipboard</a></li>
                                         {% if request.user == ITEM.link.user %}
                                            <li> <a class="dropdown-button waves-effect waves-light " href="/link/{{ ITEM.link.id }}/edit" id="edit" title="Edit Link" >Edit</a></li>
                                             <li><a class=" dropdown-button  waves-effect waves-light " href="#modalDelete{{ITEM.link.id}}" id="delete_icon" title="Delete Link" >Delete </a></li>
@@ -350,7 +336,7 @@
      <ul id='dropdown1{{ITEM.link.id}}' class='dropdown-content'>
       <li> <a class="waves-effect waves-light" href="{{ ITEM.link.url }}" title="Visit Link" target="_blank">Visit link</a></li>
 
-     <li><a class="waves-effect waves-light copy" href="#" title="Copy to clipboard" >Copy to clipboard</a></li>
+     <li><a class="waves-effect waves-light copy" id="{{ ITEM.link.id }}" href="#" title="Copy to clipboard" >Copy to clipboard</a></li>
                                         {% if request.user == ITEM.link.user %}
                                            <li> <a class=" waves-effect waves-light " href="/link/{{ ITEM.link.id }}/edit" id="edit" title="Edit Link" >Edit</a></li>
                                             <li><a class="waves-effect waves-light " href="#modalDelete{{ITEM.link.id}}" id="delete_icon" title="Delete Link" >Delete </a></li>
@@ -561,11 +547,15 @@
             $('.modal').modal();
             var copy = $('.copy');
             copy.click(function (){
-                var linkUrl = $('#link_url');
+                console.log("Copied Called");
+                var id = this.id;
+                console.log("id is " + id);
+                var linkUrl = $('#link_url' + id).attr('href');
+                console.log("LinkUrl is");
+                console.log(linkUrl);
                 copyToClipboard(linkUrl);
-                Materialize.toast('copied to clipboard', 2000);
-            });
 
+            });
 
             var commentsSubmitButton = $('#commentSubmitButton');
             commentsSubmitButton.click(function (){
@@ -586,7 +576,7 @@
                     url: '/comment/create/',
                     type: 'post',
                     data: {'text':text,
-                           'link_id': 0
+                           'link_id': 19
                         },
                     success :function(data, status){
                         console.log(data);
@@ -652,11 +642,16 @@
 
 
         function copyToClipboard(element) {
-        var $temp = $("<input>");
-        $("body").append($temp);
-        $temp.val($(element).text()).select();
-        document.execCommand("copy");
-        $temp.remove();
+
+            var height = $('body').prop('scrollHeight');
+            console.log(height);
+            var $temp = $("<input>");
+            $("body").append($temp);
+            $temp.val(element).select();
+            document.execCommand("copy");
+            $temp.remove();
+            $("body").scrollTop($('body').scrollTop() + height);
+            Materialize.toast('copied to clipboard', 2000);
         }
 
         function selectText(containerid) {
