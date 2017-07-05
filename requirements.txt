@@ -24,8 +24,6 @@ ipython==6.1.0
 ipython-genutils==0.2.0
 jedi==0.10.2
 jsonfield==2.0.1
-matplotlib==2.0.2
-numpy==1.13.0
 oauthlib==2.0.2
 olefile==0.44
 pexpect==4.2.1
