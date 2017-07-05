@@ -30,7 +30,6 @@
                         {% endfor %}
                     </div>
                     {% endfor %}
-                <input type="text" name="imageAspectRatio" id="imageAspectRatio" hidden="hidden">
                 <input type="text" name="imageX" id="imageX" hidden="hidden" title="imageX" >
                 <input type="text" name="imageY" id="imageY" hidden="hidden" title="imageY" >
                 <input type="text" name="imageH" id="imageH" hidden="hidden" title="imageH" >
@@ -108,18 +107,13 @@
       '</div>';
         Parent.html(newStr);
 
-
-        imageAspectRatio = $('#imageAspectRatio');
         imageX = $('#imageX');
         imageY = $('#imageY');
         imageW = $('#imageW');
         imageH = $('#imageH');
 
-           $("#cropper").cropper({                 // initialize our cropper
-                change: function(evt, data) {       // declare the function to be executed when something changes
-                    console.log("change");
-                    console.log(data);
-                    imageAspectRatio.val(data.aspect);
+           $("#cropper").cropper({
+                change: function(evt, data) {
                     imageX.val(data.x);
                     imageY.val(data.y);
                     imageW.val(data.w);
@@ -128,15 +122,13 @@
                aspectRatio : 1.00
            });
 
-
-
         $("input[type=file]").change(function (evt)
         {
 
             if(evt.target.files.length !== 0)
             {
                 $('#modalCropper').modal('open');
-                console.log(evt.target.files);
+            //    console.log(evt.target.files);
                 $("#cropper").cropper("loadImage", evt.target.files);
                 imageUploaded = true;
             }
@@ -144,16 +136,12 @@
             {
                 imageUploaded = false;
             }
-
         });
-
-
         $('#saveCroppedImage').click(function ()
         {
 
             $('#modalCropper').modal('close');
         });
-
     });
     </script>
 {% endblock body %}

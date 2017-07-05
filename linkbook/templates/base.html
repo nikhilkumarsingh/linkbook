@@ -70,7 +70,7 @@
                 <ul class="side-nav" id="mobile-demo">
                 {%  if request.user.is_authenticated %}
                 <li><div class="user-view">
-      <a href="/{{ request.user }}/"><img class="responsive-img small square" src="{{ request.user.profile.pic }}"><div class="black-text center-align"> {{ request.user }} </div></a>
+      <a href="/{{ request.user }}/"><img class="responsive-img small circle" src="{{ request.user.profile.pic }}"><div class="black-text center-align"> {{ request.user }} </div></a>
     </div></li>
                 {% endif %}
                     <li class="active "><a href="/">Home</a></li>

@@ -1,433 +1,524 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% load i18n %}
-{% block title %}{{user.username}}{% endblock %}
+{% block title %}Home{% endblock %}
+
 {% block body %}
-    <style>
 
-    .btn-flat
+<style>
+    .row
     {
-        cursor: default;
-        text-transform: lowercase;
-        width: 100%;
-        margin: 5px;
+        margin: 0px;  !important;
+        padding: 0px;  !important;
     }
-    .card1 div
+    .btn
+    {
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+    }
+    p
+    {
+    margin: 0px;
+    padding: 0px;
+    }
+    #comments_div_p
+    {
+        max-height: 200px;
+        overflow-y: scroll;
+    }
+    .commentsListItem
+    {
+        max-width: 100%;
+      /*  word-break: break-all;*/
+        word-wrap: break-word;
+        padding: 1px;
+        margin: 1px;
+    }
+    .comments_inside_div
+    {
+        height: 100%;
+        padding: 1px;
+        vertical-align: middle;
+    }
+    .btn-floating
     {
         margin: 1px;
-        padding: 2px;
     }
-    .card1 .card-content1
+    .modalD
     {
         padding: 2px;
-        margin: 1px;
-        height: 100px;
+        word-wrap: break-word;
+        max-width: 100%;
+        display: block;
+        height: 100%;
+        text-transform: none;
     }
-    #popularLinksTab, #popularLinksTab
-    {
-        text-decoration-color: violet;
-    }
+</style>
 
-
-
-    </style>
-    <div class="container">
-        <div class="row">
-        <!-- First Column : Profile page card -->
-            <div class="col s12 m12 l4">
-                <br><br>
-                <div class="card " style="width: 100%">
-                    <div class="card-image">
-                        <img src="{{ user.profile.pic }}" class="responsive-img hoverable">
-                        <span class="card-title">{{ user.first_name }} {{ user.last_name }}</span>
-                    {% if request.user.is_authenticated %}
-                        {% if request.user == user %}
-
-                            <a class="btn-floating halfway-fab waves-effect waves-light" title="Edit" id="follow_button" href="edit"><i class="material-icons">edit</i></a>
-
-                        {% else %}
-                            {% if follow_button == "1" %}
-                            <a class="btn-floating halfway-fab waves-effect grey lighten-3 waves-light" title="unfollow" id="follow_button"><i class="material-icons">group_add</i></a>
-                            {% else  %}
-                            <a class="btn-floating halfway-fab waves-effect waves-light" title="follow" id="follow_button"><i class="material-icons">group_add</i></a>
-                            {% endif %}
-                        {% endif %}
-                    {% endif %}
-
-                    </div>
-                    <div class="card-content">
-                      <div class="container">
-                          <div class="row">
-                                <div class="col s12 l6 m12">
-                                    <button class="btn btn-flat blue darken-1" id="follower_count">{{ follower_count }} follower(s)</button>
-                                    <button class="btn btn-flat blue darken-1" id = "following_count">following {{ following_count }}</button>
-                                </div>
-                                <div class="col s12 l6 m12">
-                                     <button class="btn btn-flat green">{{ link_count }} link(s)</button>
-                                     <button class="btn btn-flat green">{{ book_count }} books(s)</button>
-                                </div>
-                            </div>
-
-                      </div>
-                    </div>
-                </div>
-            </div>
-        <!-- Ending of the first Column -->
-        <!-- Second Column started -->
-            <div class="col s12 m12 l8">
-                <div class="row" style="border-bottom: 3px solid violet">
-                    <div class="col s6 m6 l6">
-                                    <div class="header center center-align" id="popularLinksTab" style="padding: 0px; margin: 0px; cursor:pointer; text-decoration: underline">
-                        <h5 style="padding: 0px; margin: 0px; cursor: pointer">Popular Links</h5>
-                    </div>
-                    </div>
-                    <div class="col s6 m6 l6">
-                                    <div class="header center center-align" style="padding: 0px; margin: 0px; cursor: pointer" id="popularBooksTab">
-                        <h5 style="padding: 0px; margin: 0px" >Popular Books</h5>
-                    </div>
+{% for ITEM in all_links %}
+<div class="container" style="padding: 0px; margin: 0px">
+    <div class="row" style="padding: 0px; margin: 0px">
+        <div class="col s12 m1 l3"></div>
+        <div class="col s12 m10 l6">
+            <ul class="collection hoverable "  style="border: 1px solid #607d8b" id="list">
+                <li class="collection-item avatar">
+                    <div class="row"  style="padding: 0px; margin: 0px">
+                        <!-- user avatar -->
+                        <a href = "{{ITEM.link.user.username}}">
+                        <img class="responsive-img circle"  height = "40px" width="40px" src="{{ITEM.link.user.profile.pic}}" /></a>
+                        <a href = "{{ITEM.link.user.username}}"><span class="title blue-grey-text ">{{ ITEM.link.user }}<br/>
+                        <sup>{{ ITEM.time }}</sup></span></a>
                         <br><br>
                     </div>
-                </div>
-                <div class="row" id="popularLinks">
-                    <div class="col s12 m12 l6">
-                        {% if links.0 == none %}
-                        {% else %}
-                            <div class="container">
-                            <div class="card card1 horizontal hoverable white-text blue-grey lighten-1">
-                  <div class="card-stacked">
-                      <div class="card_link" id="{{links.0.id }}"  style="cursor: pointer;">
-                          <div class="card-title center"><h5>{{links.0.title}}</h5></div>
-                          <div class="card-content card-content1" id="{{links.0.id }}">
-                              <p>Books:
-                                {% for book in links.0.books.all %}
-                                    <span class="chip">
-                                  <strong><a href = "/../book/{{book.id}}/">{{book.title}}</a></strong>
-                                    </span>
-                                {% endfor %}
-                              </p>
-                              <p>Tags:
-                                {% for tag in links.0.tags.all %}
-                                    <span class="chip">
-                                  <strong><a href = "/../tags/{{tag.name}}/">{{tag.name}}</a></strong>
-                                    </span>
-                                {% endfor %}
-                              </p>
-                              <span>{{links.0.comment_set.count}} comment(s)</span>
-                          </div>
+                    <div class="row" style="margin: 0px;">
+                        <div class="col s12 m12 l12">
+                            <i class="material-icons circle blue-grey">description</i>
+                            <div>
+                                <div class="row" style="margin-bottom: 0px">
+                                    <div class="col s12 m12 l7">
+                                        <a href = "{{ITEM.link.url}}" target="_blank" class="title">
+                                            <h5>{{ITEM.link.title | linebreaksbr}}</h5>
+                                        </a>
+                                    </div>
+                  <div class="col s12 m12 l5 right right-align" id="icons_extra" style="margin: 0px; padding: 0px">
+
+       <!--           <a class='dropdown-button btn' href='#' data-activates='dropdownButtons'>Drop Me!</a> -->
+
+                   <div class="row right right-align" style="margin: 0px; padding: 0px">
+                      <div class="col s12 m12 l12 right right-align" style="margin: 0px; padding: 0px">
+
+                          <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue" href="#" title="Show URL" data-activates="dropdown11" id="show_url_button"><i class="material-icons">remove_red_eye</i></a>
+                                        <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue" href="#" title="Share" data-beloworigin="true" data-activates="dropdown10"><i class="material-icons">share</i></a>
+                          <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue" href="#" title="More actions" data-activates="dropdownButtons" id="more_actions"><i class="material-icons">more_horiz</i></a>
+
                       </div>
-                    <div class="card-action">
-                          <a href="{{links.0.url}}" target="_blank">visit link</a>
-                          {% if request.user == links.0.user %}
-                            <a href="/link/{{links.0.id}}/edit">Edit</a>
-                          {% endif %}
-                    </div>
                   </div>
-                            </div>
-                            </div>
-                        {% endif %}
 
 
-                        {% if links.2 == none %}
-                        {% else %}
-                        <div class="container">
-                            <div class="card card1 horizontal hoverable white-text blue-grey lighten-1">
-                  <div class="card-stacked">
-                      <div class="card_link" id="{{links.2.id }}"  style="cursor: pointer;">
-                      <div class="card-title center"><h5>{{links.2.title}}</h5></div>
-                      <div class="card-content card-content1" id="{{links.2.id }}">
-                      <p>Books:
-                        {% for book in links.2.books.all %}
-                            <span class="chip">
-                          <strong><a href = "/../book/{{book.id}}/">{{book.title}}</a></strong>
-                            </span>
-                        {% endfor %}
-                      </p>
-                      <p>Tags:
-                        {% for tag in links.2.tags.all %}
-                            <span class="chip">
-                          <strong><a href = "/../tags/{{tag.name}}/">{{tag.name}}</a></strong>
-                            </span>
-                        {% endfor %}
-                      </p>
-                      <span>{{links.2.comment_set.count}} comment(s)</span>
-                    </div>
-                      </div>
-                    <div class="card-action">
-                      <a href="{{links.2.url}}" target="_blank">visit link</a>
-                      {% if request.user == links.2.user %}
-                        <a href="/link/{{links.2.id}}/edit">Edit</a>
-                      {% endif %}
-                    </div>
+                  <br>
                   </div>
-                            </div>
-                                                </div>
-
-                        {% endif %}
-                    </div>
-
-                    <div class="col s12 m12 l6">
-
-                                                {% if links.1 == none %}
-                        {% else %}
-                                                    <div class="container">
-                            <div class="card card1 horizontal hoverable white-text blue-grey lighten-1">
-                  <div class="card-stacked">
-                      <div class="card_link" id="{{links.1.id }}"  style="cursor: pointer;">
-                      <div class="card-title center"><h5>{{links.1.title}}</h5></div>
-                      <div class="card-content card-content1" id="{{links.1.id }}">
-
-                      <p>Books:
-                        {% for book in links.1.books.all %}
-                            <span class="chip">
-                          <strong><a href = "/../book/{{book.id}}/">{{book.title}}</a></strong>
-                            </span>
-                        {% endfor %}
-                      </p>
-                      <p>Tags:
-                        {% for tag in links.1.tags.all %}
-                            <span class="chip">
-                          <strong><a href = "/../tags/{{tag.name}}/">{{tag.name}}</a></strong>
-                            </span>
-                        {% endfor %}
-                      </p>
-                      <span>{{links.1.comment_set.count}} comment(s)</span>
-                    </div>
-                      </div>
-                    <div class="card-action">
-                      <a href="{{links.1.url}}" target="_blank">visit link</a>
-                      {% if request.user == links.1.user %}
-                        <a href="/link/{{links.1.id}}/edit">Edit</a>
-                      {% endif %}
-                    </div>
-                  </div>
-                            </div>
-
-                                                    </div>
-
-                        {% endif %}
-
-                                            {% if links.3 == none %}
-                        {% else %}
-                                                <div class="container">
-                            <div class="card card1 horizontal hoverable white-text blue-grey lighten-1">
-                  <div class="card-stacked">
-                      <div class="card_link" id="{{links.3.id }}"  style="cursor: pointer;">
-                      <div class="card-title center"><h5>{{links.3.title}}</h5></div>
-                      <div class="card-content card-content1" id="{{links.3.id }}">
-                      <p>Books:
-                        {% for book in links.3.books.all %}
-                            <span class="chip">
-                          <strong><a href = "/../book/{{book.id}}/">{{book.title}}</a></strong>
-                            </span>
-                        {% endfor %}
-                      </p>
-                      <p>Tags:
-                        {% for tag in links.3.tags.all %}
-                            <span class="chip">
-                          <strong><a href = "/../tags/{{tag.name}}/">{{tag.name}}</a></strong>
-                            </span>
-                        {% endfor %}
-                      </p>
-                      <span>{{links.3.comment_set.count}} comment(s)</span>
-                    </div>
-                      </div>
-                    <div class="card-action">
-                      <a href="{{links.3.url}}" target="_blank">visit link</a>
-                      {% if request.user == links.3.user %}
-                        <a href="/link/{{links.3.id}}/edit">Edit</a>
-                      {% endif %}
-                    </div>
-                  </div>
-                            </div>
-                                                </div>
-
-                        {% endif %}
-
-                    </div>
-            </div>
-                <div class="row" id="popularBooks">
-                    <div class="col s12 m12 l6">
-                        {% if books.0 == none %}
-                        {% else %}
-                <div class="card card1 horizontal hoverable blue-grey white-text lighten-1" >
-                    <div class="card-stacked">
-                    <div id="{{ books.0.id }}" class="card_book" style="cursor: pointer">
-
-                          <div class="card-title center"><h4>{{ books.0.title }}</h4></div>
-                          <div class="card-content card-content1">
-                          <p>{{ books.0.description }}</p>
-                          <p>{{books.0.link_set.count}} link(s)</p>
-                        </div>
-                    </div>
-                        <div class="card-action"></div>
-                    </div>
-                </div>
-                        {% endif %}
-                        {% if books.2 == none %}
-                        {% else %}
-                            <div class="card card1 horizontal hoverable blue-grey white-text lighten-1 ">
-                            <div class="card-stacked">
-                                <div id="{{ books.2.id }}" class="card_book" style="cursor: pointer;">
-
-                      <div class="card-title center"><h4>{{ books.2.title }}</h4></div>
-                      <div class="card-content card-content1">
-                      <p>{{ books.2.description }}</p>
-                      <p>{{books.2.link_set.count}} link(s)</p>
-                    </div>
-                  </div>
-                                <div class="card-action"></div>
-                            </div>
-    </div>
-                        {% endif %}
-                    </div>
-
-                    <div class="col s12 m12 l6">
-
-                        {% if books.1 == none %}
-                        {% else %}
-                        <div class="card card1 horizontal hoverable blue-grey white-text lighten-1 " >
-                        <div class="card-stacked">
-                            <div id="{{ books.1.id }}" class="card_book" style="cursor:pointer;">
-
-                                  <div class="card-title center"><h4>{{ books.1.title }}</h4></div>
-                                  <div class="card-content card-content1">
-                                  <p>{{ books.1.description }}</p>
-                                  <p>{{books.1.link_set.count}} link(s)</p>
+                                    </div>
                                 </div>
-                              </div>
-                            <div class="card-action"></div>
+                                <div id="modal10" class="modal">
+                                    <div class="modal-content">
+                                        <div class="row">
+                                            <div class="col s12 m12 l7">
+                                                <div class="title"><a id="link_url" href="{{ ITEM.link.url }}" target="_blank"> {{ ITEM.link.url }}</a>  </div>
+                                            </div>
+                                            <div class="col s12 m12 l2"></div>
+                                            <div class="col s12 m12 l3">
+                                                <button title="copy to clipboard" class="btn black white-text" id="copy"> <i class="material-icons black" style="color: white">content_copy</i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+                            <hr>
+                            <span id = "DESCR" style="font-size: 100%">{{ITEM.link.description}}</span>
+                            <span id="url" style="display: none"><a href="{{ ITEM.link.url }}" target="_blank"> {{ ITEM.link.url }} </a></span>
                         </div>
-                        {% endif %}
+                </li>
+                <!-- Open Graph data -->
+                {% if ITEM.show_og and ITEM.og.title != None %}
+                <li class="collection-item avatar " style="padding: 4px">
+                    <div class="card hoverable horizontal">
+                        <div class="card-image" style="margin: 4px;" id="card_image_div">
+                            <img src="{{ITEM.og.image}}" class="responsive-image" height={{ ITEM.og.image_height}} width={{ ITEM.og.image_width }} id="card_image">
+                        </div>
 
-                        {% if books.3 == none %}
-                        {% else %}
-                <div class="card card1 horizontal hoverable blue-grey white-text lighten-1">
-                <div class="card-stacked" >
-                    <div id="{{ books.3.id }}" class="card_book" style="cursor: pointer">
-
-                      <div class="card-title center"><h4>{{ books.3.title }}</h4></div>
-                      <div class="card-content card-content1">
-                      <p>{{ books.3.description }}</p>
-                      <p>{{books.3.link_set.count}} link(s)</p>
+                        <div class="card-stacked">
+                            {%if ITEM.og.title != None %}
+                            <div class="card-content" style="padding: 2px">
+                                <span><span style="font-weight: bolder">{{ ITEM.og.title }}</span></span>
+                                <p style="font-size: 80%">{{ ITEM.og.description }}</p>
+                            </div>
+                            {% endif %}
+                        </div>
                     </div>
-                  </div>
-                    <div class="card-action"></div>
-                </div>
+                </li>
+                {% endif %}
+                <!-- End of open graph data -->
+                <!-- Sharing Options
+                    <li class="collection-item avatar">
+                      <i class="material-icons circle blue-grey">share</i>
+                        <span class="title blue-grey-text">Share</span>
+                        <p>
+                            <div>
+                                <a href = "https://www.facebook.com/sharer/sharer.php?u={{link.url}}">
+                                    <img height=41px width=41px src="/static/icons/fb.svg" alt="Facebook" />
+                                </a>
+                                <a href = "https://twitter.com/home?status={{link.url}}">
+                                    <img height=41px width=41px src="/static/icons/Twitterbird.png" alt="Twitter" />
+                                </a>
+                                <a href = "https://plus.google.com/share?url={{link.url}}">
+                                    <img height=41px width=41px src="/static/icons/gplus.png" alt="Google+" />
+                                </a>
+                                <a href = "http://www.reddit.com/submit?url={{link.url}}">
+                                    <img height=41px width=41px src="/static/icons/reddit.png" alt="Reddit" />
+                                </a>
+                                <a href = "http://pinterest.com/pin/create/button/?url={{link.url}}&description={{link.description}}">
+                                    <img height=41px width=41px src="/static/icons/pinterest.svg" alt="Pinterest" />
+                                </a>
+                                <a href = "https://www.linkedin.com/shareArticle?mini=true&url={{link.url}}">
+                                    <img height=41px width=41px src="/static/icons/linkedin.svg" alt="LinkedIn" />
+                                </a>
+                            </div>
+                        </p>
+                    </li>
+                    -->
+                <!-- Tags -->
+                <li class="collection-item avatar">
+                    <i class="material-icons circle blue-grey">assignment</i>
+                    <span class="title blue-grey-text">Tags</span>
+                    <p>
+                        {% for tag in ITEM.link.tags.all %}
+                    <div class="chip">
+                        <a href = "/../tags/{{tag.name}}/" style="text-decoration: underline">{{tag.name}}</a>
+                    </div>
+                    </a>
+                    {% endfor %}
+                    </p>
+                </li>
+                {% if request.user.is_authenticated %}
+                <li class="collection-item avatar" style="padding: 0px; margin: 0px">
+                    <div class="row" style="padding: 0px; margin: 0px">
+                        <div class="col s6 m4 l4" >
+                            <span> <sup id="upvotes_count">{{ ITEM.upvotes }}</sup><sup> upvote(s)</sup></span>
+                            <button class="btn green upvote upvote_upper_button waves-effect waves-light {{ITEM.upvote_button}} center" id="upvote_button" link_id = "{{ ITEM.link.id }}"> <i class="material-icons" style="color: white; background-color: transparent">thumb_up</i> </button>
+                        </div>
+                        <div class="col s6 m4 l4" >
+                            <span> <sup id="downvotes_count">{{ ITEM.downvotes }} </sup><sup> downvote(s)</sup></span>
+                            <button title="downvote" class="btn waves-effect waves-light  red btn-block white-text downvote downvote_upper_button {{ ITEM.downvote_button }}" id="downvote_button" link_id = "{{ ITEM.link.id }}" > <i class="material-icons" style="color: white; background-color: transparent" >thumb_down</i></button>
+                        </div>
+                        <div class="col s12 m4 l4">
+                            <span>
+                            <sup><span id="num_comments1">{{ITEM.link.comment_set.count}}</span> comment(s)</sup>
+                            </span>
+                            <button class="btn blue waves-light center waves-effect" id="comments_tab">Comments</button>
+                        </div>
+                        <br><br><br><br>
+                    </div>
+                </li>
+                {% endif %}
+                <li class="collection-item avatar" id="comments" style="display: none; margin: 0px">
+                    <i class="material-icons circle blue-grey">comment</i>
+                    <span class="title blue-grey-text">Comments</span>
+                    <p class="green-text"><span id="num_comments2">{{ITEM.link.comment_set.count}}</span> comment(s) on this link:</p>
+                    <ul class="collection" id="comments_div_p">
+					<!-- All comments to be loaded here -->
+                    </ul>
+                    <form>
+                        <div class="input-field">
+                            {{ ITEM.comment_form.as_p }}
+                        </div>
+                    </form>
+                    <div class="row" style="padding: 0px; margin: 0px">
+                        <div class="col s12 m12 l4">
+                            <button class="btn blue waves-effect waves-light" id="commentSubmitButton">Comment</button>
+                        </div>
+                        <div class="col s12 m12 l4"></div>
+                        <div class="col s12 m12 l4"></div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="col s12 m1 l3"></div>
     </div>
-                        {% endif %}
+</div>
+<!--  Sharing dropdown -->
+<ul class="dropdown-content" id="dropdown10" style="max-width: 200px">
+    <li>
+        <a href = "#"> Share Via
+        </a>
+    </li>
+    <li class="divider"></li>
+    <li style="display: inline-block">
+        <a href = "https://www.facebook.com/sharer/sharer.php?u={{ITEM.link.url}}" style="display: inline-block; padding: 5px">
+        <img height = 35px width = 35px src="/static/icons/fb.svg" alt="Facebook" >
+        </a>
+        <a href = "https://twitter.com/home?status={{ITEM.link.url}}" style="display: inline-block; padding: 5px">
+        <img height = 35px width = 35px src="/static/icons/Twitterbird.png" alt="Twitter" />
+        </a>
+        <a href = "https://plus.google.com/share?url={{ITEM.link.url}}" style="display: inline-block; padding: 5px">
+        <img height = 35px width = 35px src="/static/icons/gplus.png" alt="Google+" />
+        </a>
+        <a style="display: inline-block; padding: 5px" href = "http://www.reddit.com/submit?url={{ITEM.link.url}}">
+        <img height = 35px width = 35px src="/static/icons/reddit.png" alt="Reddit" />
+        </a>
+        <a style="display: inline-block; padding: 5px" href = "http://pinterest.com/pin/create/button/?url={{ITEM.link.url}}&description={{ITEM.link.description}}">
+        <img height = 35px width = 35px src="/static/icons/pinterest.svg" alt="Pinterest" />
+        </a>
+        <a style="display: inline-block; padding: 5px" href = "https://www.linkedin.com/shareArticle?mini=true&url={{ITEM.link.url}}">
+        <img height = 35px width = 35px src="/static/icons/linkedin.svg" alt="LinkedIn" />
+        </a>
+    </li>
+</ul>
+<!-- Copy to Clipboard Dropdown -->
+<ul id="dropdown11" class="dropdown-content" style="max-width: 200px" >
+    <li>
+        <div class="row" style="max-width: 100%; ;overflow-x: scroll; padding: 1%; margin: 0px;">
+            <span>
+            <a  id="link_url" href="{{ ITEM.link.url }}" target="_blank" style="display: inline-block;" > {{ ITEM.link.url }}</a>
+            </span>
+            <!--      <span>
+                <i class="material-icons circle right" id="copy" style="display: inline-block;"  > content_copy</i>
+                </span> -->
+        </div>
+    </li>
+</ul>
 
-
+    <div class="modal" id="modalDelete">
+        <div class="modal-content">
+            <div class="container">
+                <div class="row">
+                    <h4 class="center-align red-text flow-text">Are you sure?</h4>
+                    <div  class="col s12 m12 l12" style="margin: 2px">
+                        <button id="deleteCompletely" class="btn red white-text modalD ">Delete this link completely from all of your books</button>
                     </div>
+                    <div class="col s12 m12 l12  red-text center-align">
+                        <br>
+                        This action will delete all copies of the links in your books. This action can't be undone in future. </div>
                 </div>
             </div>
+        </div>
     </div>
-    </div>
 
-    <!-- Modals -->
-    <div id="modal5" class="modal">
-    <div class="modal-content" id="followers_modal_content">
 
-    </div>
-  </div>
+     <!--<a class='dropdown-button btn' href='#' data-activates='dropdown1'>Drop Me!</a>-->
 
-        <div id="modal6" class="modal">
-    <div class="modal-content" id="following_modal_content">
+  <!-- Dropdown Structure for buttons -->
+  <ul id='dropdownButtons' class='dropdown-content'>
+      <li> <a class="waves-effect waves-light" href="{{ ITEM.link.url }}" title="Visit Link" target="_blank">Visit link</a></li>
 
-    </div>
-  </div>
+     <li><a class="dropdown-buttonwaves-effect waves-light" href="#" id="copy" title="Copy to clipboard" >Copy to clipboard</a></li>
+                                        {% if request.user == ITEM.link.user %}
+                                           <li> <a class="dropdown-button waves-effect waves-light " href="/link/{{ ITEM.link.id }}/edit" id="edit" title="Edit Link" >Edit</a></li>
+                                            <li><a class=" dropdown-button  waves-effect waves-light " href="#modalDelete" id="delete_icon" title="Delete Link" >Delete </a></li>
 
-    <script>
+                                        {% endif %}
 
-        $(function () {
 
-            var cards = $('.card_link');
+  </ul>
+{% endfor %}
+<script>
+    function RefreshDropdown()
+    {
+      //   var width = $('#list').css('width');
+       // console.log("Width");
+       // console.log(width);
+      //  $('#dropdown11').css({'max-width' : width });
 
-            cards.click(function () {
-                var id = this.id;
-                var url = '/link/' + id;
-                window.open(url);
+    }
+    function LoadComments(){
+        console.log("Load Comments called");
+    	$.ajax({
+    		url: '/comment/load/',
+    		type: 'get',
+    		data: {'link_id': "{{ITEM.link.id}}"},
+    		success: function(data, status){
+    			var comments_div_p = $('#comments_div_p');
+                var str = '';
+                var comments = data['comments'];
+                var i;
+                for( i = 0; i <comments.length ; i++)
+                {
+                	str += '<li class="divider"></li>'
+                		+ '<li class="collection-item avatar commentsListItem">'
+                        + '<div class="row">'
+                		+ '<a href="/' + comments[i]['user'] + '/"><img src=' + comments[i]['pic']
+                		+ ' class="responsive-img circle" title=' + comments[i]['user'] + '></a>'
+                		+ '<div class = "col s12 m12 l4 " comments_inside_div commentsListItem">'
+                		+ '<p style="font-weight: 800" class="commentsListItem ">'
+                		+ '<a class="hide-on-med-and-down" href="/' + comments[i]['user'] + '/">' + comments[i]['user'] + '</a>'
+                		+ '<sub class="commentsListItem grey-text">' + comments[i]['time'] + '</sub></p>' + '</div>'
+                            + '<div class="col s12 m12 l8">'
+                		+ '<p class="commentsListItem">' + comments[i]['text'] + '</p></div></div></li>'
+                }
+
+                comments_div_p.html(str);
+                $("#comments_div_p").scrollTop($("#comments_div_p")[0].scrollHeight);
+                // increase number of comments by 1
+            	$('#num_comments1').html(Number(data['count']));
+            	$('#num_comments2').html(Number(data['count']));
+    		}
+    	});
+    }
+    $(function(){
+    	// load comments initially
+    	LoadComments();
+        $('.dropdown-button').dropdown({
+          inDuration: 300,
+          outDuration: 225,
+          constrainWidth: false, // Does not change width of dropdown to that of the activator
+          hover: false, // Activate on hover
+          gutter: 0, // Spacing from edge
+          belowOrigin: true, // Displays dropdown below the button
+          alignment: 'right', // Displays dropdown with edge aligned to the left of button
+          stopPropagation: false // Stops event propagation
+        });
+        var b = $('#btn_url');
+        var disp = false;
+        var URL = $('#url');
+        b.click(function () {
+            if(disp){
+                URL.css({'display' : 'none'});
+                b.html("Show URL");
+            }else{
+                URL.css({'display' : 'block'});
+                b.html("Hide URL");
+            }
+            disp = 1 - disp;
+        });
+	    $('.upvote_upper_button').click(function(){
+	    var link_id;
+	    link_id = $(this).attr("link_id");
+	    $.get('/link/{{ITEM.link.id}}/vote/', {type: 'U'}, function(data){
+	               $('#upvotes_count').html(data['upvotes']);
+	               $('#downvotes_count').html(data['downvotes']);
+	               $('.upvote').removeClass('lighten-5');
+	               $('.downvote').removeClass('lighten-5');
+	               //$(".downvote").toggleClass(data['downvote_button']);
+	                console.log(data.upvote_button);
+	                console.log(data.downvote_button);
+	                if(data['upvote_button'] == '')
+	                {
+	                }
+	                else
+	                {
+	                    $('.upvote').addClass('lighten-5');
+	                }
+	        });
+	    });
+	    $('.downvote_upper_button').click(function(){
+	    var link_id;
+	    link_id = $(this).attr("link_id");
+	    $.get('/link/{{ITEM.link.id}}/vote/', {type: 'D'}, function(data){
+	               $('#downvotes_count').html(data['downvotes']);
+	               $('#upvotes_count').html(data['upvotes']);
+	               $('.upvote').removeClass('lighten-5');
+	               $('.downvote').removeClass('lighten-5');
+	              // $(".downvote").addClass(data['downvote_button']);
+	                if(data['downvote_button'] == '')
+	                {
+	                }
+	                else
+	                {
+	                    $('.downvote').addClass('lighten-5');
+	                }
+	        });
+	    });
+
+
+        var show_url_button = $('#show_url_button');
+        show_url_button.click(function () {
+            selectText('link_url');
+        });
+
+        var comments_tab = $('#comments_tab');
+        var comments_open = 0;
+
+
+        comments_tab.click(function () {
+            if(comments_open == 0){
+                $('#comments').css({'display' : 'block'});
+                comments_tab.html("Hide Comments");
+            }
+            else{
+                $('#comments').css({'display' : 'none'});
+                comments_tab.html("Comments");
+            }
+            comments_open = 1 - comments_open;
+            LoadComments();
+        });
+        $('.modal').modal();
+        var copy = $('#copy');
+        copy.click(function (){
+            var linkUrl = $('#link_url');
+            copyToClipboard(linkUrl);
+            Materialize.toast('copied to clipboard', 2000);
+        });
+
+
+        var commentsSubmitButton = $('#commentSubmitButton');
+        commentsSubmitButton.click(function (){
+            commentsSubmitButton.addClass('disabled');
+            var text = $('#id_text').val();
+            $('#id_text').val('');
+            if(!$.trim(text)){
+                alert("Can't add empty comments!");
+                commentsSubmitButton.removeClass('disabled');
+                return;
+            }
+            // Removing excess white spaces from text area.
+            text.replace(/\s+/g, " ").replace(/^\s|\s$/g, "");
+
+            $.ajax({
+                url: '/comment/create/',
+                type: 'post',
+                data: {'text':text,
+                       'link_id':{{ITEM.link.id}}
+                    },
+                success :function(data, status){
+                	console.log(data);
+                	LoadComments();
+                }
             });
-
-            var books = $('.card_book');
-            books.click(function () {
-
-                var id = this.id;
-                var url = '/book/' + id;
-                window.open(url);
-
-            });
-
-
-
-            var popularLinks = $('#popularLinks');
-        var popularBooks = $('#popularBooks');
-        var popularLinksTab = $('#popularLinksTab');
-        var popularBooksTab = $('#popularBooksTab');
-        popularBooks.css({'display' : 'none'});
-
-        popularBooksTab.click(function () {
-
-            popularLinks.css({'display' : 'none' });
-            popularBooks.css({'display' : 'block'});
-            popularBooksTab.css({'text-decoration' : 'underline'});
-            popularLinksTab.css({'text-decoration' : 'none'});
-
+            commentsSubmitButton.removeClass('disabled');
         });
 
-        popularLinksTab.click(function () {
 
-            popularBooks.css({'display' : 'none'});
-            popularLinks.show({'display' : 'block'});
-            popularLinksTab.css({'text-decoration' : 'underline'});
-            popularBooksTab.css({'text-decoration' : 'none'});
-
-            });
-
-         $('#follower_count').click(function(){
-          $.get('/followers/', {user: "{{user.username}}"}, function(data){
-              data = data.data;
-              console.log(data);
-              $('#modal5').modal('open');
-
-          });
-        });
-
-        $('#following_count').click(function(){
-          $.get('/following/', {user: "{{user.username}}"}, function(data){
-              data = data.data;
-              console.log(data);
-                $('#modal6').modal('open');
-          });
-        });
-
-        $('#follow_button').click(function(){
-    $.get('/follow/', {to_follow: "{{user.username}}"}, function(data){
-
-        var fButton = $('#follow_button');
-
-        if(data['follow_button'] === '1')
-        {
-            //$('#follow_button').removeClass('grey');
-            fButton.removeClass('grey');
-            fButton.removeClass('lighten-3');
-            fButton.attr('title', 'follow');
-        }
-        else
-        {
-            //$('#follow_button').addClass('grey');
-            fButton.addClass('grey');
-            fButton.addClass('lighten-3');
-            fButton.attr('title', 'unfollow')
-        }
-       // $('#follow_button').html(data['follow_button']);
-        $('#follower_count').html(data['follower_count'] + " followers");
-        });
-
+        //window.setTimeout(RefreshDropdown, 5000);
     });
-            $('.modal').modal();
+
+    $('img').on('error', function () {
+        console.log("Hello");
+        $('#card_image_div').css({'display' : 'none'});
+    });
 
 
-        });
-    </script>
+    function copyToClipboard(element) {
+    var $temp = $("<input>");
+    $("body").append($temp);
+    $temp.val($(element).text()).select();
+    document.execCommand("copy");
+    $temp.remove();
+    }
+
+    function selectText(containerid) {
+        if (document.selection) {
+            var range = document.body.createTextRange();
+            range.moveToElementText(document.getElementById(containerid));
+            range.select();
+        } else if (window.getSelection) {
+            var range = document.createRange();
+            range.selectNode(document.getElementById(containerid));
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+        }
+    }
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+{% block body %}
+
+
+<script>
+    $(function () {
+        $('.modal').modal();
+    });
+</script>
+
+
+
 {% endblock body %}
