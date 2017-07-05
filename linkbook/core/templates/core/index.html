@@ -214,13 +214,13 @@
 					<!-- All comments to be loaded here -->
                     </ul>
                     <form>
-                        <div class="input-field">
+                        <div class="input-field" id="">
                             {{ ITEM.comment_form.as_p }}
                         </div>
                     </form>
                     <div class="row" style="padding: 0px; margin: 0px">
                         <div class="col s12 m12 l4">
-                            <button class="btn blue waves-effect waves-light" id="commentSubmitButton">Comment</button>
+                            <button class="btn blue waves-effect waves-light commentSubmitButton" id="commentSubmitButton{{ ITEM.link.id }}">Comment</button>
                         </div>
                         <div class="col s12 m12 l4"></div>
                         <div class="col s12 m12 l4"></div>
@@ -541,8 +541,9 @@
                 LoadComments(id);
             });
 
-            var commentsSubmitButton = $('#commentSubmitButton');
+            var commentsSubmitButton = $('.commentSubmitButton');
             commentsSubmitButton.click(function (){
+
                 commentsSubmitButton.addClass('disabled');
                 var text = $('#id_text').val();
                 $('#id_text').val('');
