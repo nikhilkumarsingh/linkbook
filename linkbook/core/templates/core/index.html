@@ -60,10 +60,10 @@
 </style>
 
 {% for ITEM in all_links %}
-<div class="container" style="padding: 0px; margin: 0px">
+<div class="container" style="padding: 0px; margin: 0px" >
     <div class="row" style="padding: 0px; margin: 0px">
         <div class="col s12 m1 l3"></div>
-        <div class="col s12 m10 l6">
+        <div class="col s12 m10 l6 link_card" id="{{ ITEM.link.id }}">
             <ul class="collection hoverable "  style="border: 1px solid #607d8b" id="list">
                 <li class="collection-item avatar">
                     <div class="row"  style="padding: 0px; margin: 0px">
@@ -81,9 +81,9 @@
                    <div class="row right right-align" style="margin: 0px; padding: 0px">
                       <div class="col s12 m12 l12 right right-align" style="margin: 0px; padding: 0px">
 
-                          <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue" href="#" title="Show URL" data-activates="dropdown21{{ITEM.link.id}}" id="show_url_button"><i class="material-icons">remove_red_eye</i></a>
-                                        <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue" href="#" title="Share" data-beloworigin="true" data-activates="dropdown20{{ITEM.link.id}}"><i class="material-icons">share</i></a>
-                          <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue" href="#" title="More actions" data-activates="dropdown1{{ITEM.link.id}}" id="more_actions"><i class="material-icons">more_horiz</i></a>
+                          <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue show_url_button" href="#" title="Show URL" data-activates="dropdownRemoverX{{ITEM.link.id}}" id="{{ ITEM.link.id }}"><i class="material-icons">remove_red_eye</i></a>
+                                        <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue" href="#" title="Share" data-beloworigin="true" data-activates="dropdownShare{{ITEM.link.id}}"><i class="material-icons">share</i></a>
+                          <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue" href="#" title="More actions" data-activates="dropdownMore{{ITEM.link.id}}" id="more_actions"><i class="material-icons">more_horiz</i></a>
                       </div>
                   </div>
                   </div>
@@ -92,8 +92,8 @@
                    <div class="row left left-align" style="margin: 0px; padding: 0px">
                       <div class="col s12 m12 l12 left left-align" style="margin: 0px; padding: 0px">
 
-                          <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue" href="#" title="Show URL" data-activates="dropdown11{{ITEM.link.id}}" id="show_url_button"><i class="material-icons">remove_red_eye</i></a>
-                                        <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue" href="#" title="Share" data-beloworigin="true" data-activates="dropdown10{{ITEM.link.id}}"><i class="material-icons">share</i></a>
+                          <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue show_url_button" href="#" title="Show URL" data-activates="dropdownRemove{{ITEM.link.id}}" id="{{ ITEM.link.id }}"><i class="material-icons">remove_red_eye</i></a>
+                                        <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue" href="#" title="Share" data-beloworigin="true" data-activates="dropdownMore0{{ITEM.link.id}}"><i class="material-icons">share</i></a>
                           <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue" href="#" title="More actions" data-activates="dropdownButtons{{ITEM.link.id}}" id="more_actions"><i class="material-icons">more_horiz</i></a>
                       </div>
                   </div>
@@ -178,22 +178,25 @@
                     {% endfor %}
                     </p>
                 </li>
+
+
+
                 {% if request.user.is_authenticated %}
                 <li class="collection-item avatar" style="padding: 0px; margin: 0px">
                     <div class="row" style="padding: 0px; margin: 0px">
                         <div class="col s6 m4 l4" >
-                            <span> <sup id="upvotes_count">{{ upvotes }}</sup><sup> upvote(s)</sup></span>
-                            <button class="btn green upvote upvote_upper_button waves-effect waves-light {{upvote_button}} center" id="upvote_button" link_id = "{{ ITEM.link.id }}"> <i class="material-icons" style="color: white; background-color: transparent">thumb_up</i> </button>
+                            <span> <sup id="upvotes_count{{ ITEM.link.id }}">{{ ITEM.upvotes }}</sup><sup> upvote(s)</sup></span>
+                            <button class="btn green upvote upvote_upper_button waves-effect waves-light {{ITEM.upvote_button}} center" id="upvote_button{{ ITEM.link.id }}" link_id = "{{ ITEM.link.id }}"> <i class="material-icons" style="color: white; background-color: transparent">thumb_up</i> </button>
                         </div>
                         <div class="col s6 m4 l4" >
-                            <span> <sup id="downvotes_count">{{ downvotes }} </sup><sup> downvote(s)</sup></span>
-                            <button title="downvote" class="btn waves-effect waves-light  red btn-block white-text downvote downvote_upper_button {{ downvote_button }}" id="downvote_button" link_id = "{{ ITEM.link.id }}" > <i class="material-icons" style="color: white; background-color: transparent" >thumb_down</i></button>
+                            <span> <sup id="downvotes_count{{ ITEM.link.id }}">{{ ITEM.downvotes }} </sup><sup> downvote(s)</sup></span>
+                            <button title="downvote" class="btn waves-effect waves-light  red btn-block white-text downvote downvote_upper_button {{ ITEM.downvote_button }}" id="downvote_button{{ ITEM.link.id }}" link_id = "{{ ITEM.link.id }}" > <i class="material-icons" style="color: white; background-color: transparent" >thumb_down</i></button>
                         </div>
                         <div class="col s12 m4 l4">
                             <span>
-                            <sup><span id="num_comments1">{{ITEM.link.comment_set.count}}</span> comment(s)</sup>
+                            <sup><span id="num_comments1{{ ITEM.link.id }}">{{ITEM.link.comment_set.count}}</span> comment(s)</sup>
                             </span>
-                            <button class="btn blue waves-light center waves-effect" id="comments_tab">Comments</button>
+                            <button class="btn blue waves-light center comments_tab waves-effect" id="comments_tab{{ ITEM.link.id }}">Comments</button>
                         </div>
                        <div class="col s12 m12 l12 hide-on-large-only">
                             <br><br>
@@ -202,16 +205,17 @@
                     </div>
                 </li>
                 {% endif %}
-                <li class="collection-item avatar" id="comments" style="display: none; margin: 0px">
+
+                <li class="collection-item avatar" id="comments{{ ITEM.link.id }}" style="display: none; margin: 0px">
                     <i class="material-icons circle blue-grey">comment</i>
                     <span class="title blue-grey-text">Comments</span>
-                    <p class="green-text"><span id="num_comments2">{{ITEM.link.comment_set.count}}</span> comment(s) on this link:</p>
-                    <ul class="collection" id="comments_div_p">
+                    <p class="green-text"><span id="num_comments2{{ ITEM.link.id }}">{{ITEM.link.comment_set.count}}</span> comment(s) on this link:</p>
+                    <ul class="collection" id="comments_div_p{{ ITEM.link.id }}">
 					<!-- All comments to be loaded here -->
                     </ul>
                     <form>
                         <div class="input-field">
-                            {{ comment_form.as_p }}
+                            {{ ITEM.comment_form.as_p }}
                         </div>
                     </form>
                     <div class="row" style="padding: 0px; margin: 0px">
@@ -228,11 +232,15 @@
     </div>
 </div>
     
-    
+
+
+
+
+
 <!--  Sharing dropdown -->
     
     
-<ul class="dropdown-content" id="dropdown10{{ITEM.link.id}}" style="max-width: 200px">
+<ul class="dropdown-content" id="dropdownMore0{{ITEM.link.id}}" style="max-width: 200px">
     <li>
         <a href = "#"> Share Via
         </a>
@@ -261,7 +269,8 @@
 </ul>
 
 
-    <ul class="dropdown-content" id="dropdown20{{ITEM.link.id}}" style="max-width: 200px">
+    <!- sharing dropdown mobile -->
+    <ul class="dropdown-content" id="dropdownShare{{ITEM.link.id}}" style="max-width: 200px">
     <li>
         <a href = "#"> Share Via
         </a>
@@ -289,8 +298,8 @@
     </li>
 </ul>
 
-<!--  to Clipboard Dropdown -->
-<ul id="dropdown11{{ITEM.link.id}}" class="dropdown-content" style="max-width: 200px" >
+<!-- Copy to Clipboard Drop down -->
+<ul id="dropdownRemove{{ITEM.link.id}}" class="dropdown-content" style="max-width: 200px" >
     <li>
         <div class="row" style="max-width: 100%; ;overflow-x: scroll; padding: 1%; margin: 0px;">
             <span>
@@ -303,7 +312,7 @@
     </li>
 </ul>
 
-    <ul id="dropdown21{{ITEM.link.id}}" class="dropdown-content" style="max-width: 200px" >
+    <ul id="dropdownRemoverX{{ITEM.link.id}}" class="dropdown-content" style="max-width: 200px" >
     <li>
         <div class="row" style="max-width: 100%; ;overflow-x: scroll; padding: 1%; margin: 0px;">
             <span>
@@ -317,7 +326,7 @@
 </ul>
 
 
-     <!--<a class='dropdown-button btn' href='#' data-activates='dropdown1'>Drop Me!</a>-->
+     <!--<a class='dropdown-button btn' href='#' data-activates='dropdownMore'>Drop Me!</a>-->
 
   <!-- Dropdown Structure for buttons -->
   <ul id='dropdownButtons{{ITEM.link.id}}' class='dropdown-content'>
@@ -333,7 +342,7 @@
 
   </ul>
 
-     <ul id='dropdown1{{ITEM.link.id}}' class='dropdown-content'>
+     <ul id='dropdownMore{{ITEM.link.id}}' class='dropdown-content'>
       <li> <a class="waves-effect waves-light" href="{{ ITEM.link.url }}" title="Visit Link" target="_blank">Visit link</a></li>
 
      <li><a class="waves-effect waves-light copy" id="{{ ITEM.link.id }}" href="#" title="Copy to clipboard" >Copy to clipboard</a></li>
@@ -355,7 +364,7 @@
                 <div class="row">
                     <h4 class="center-align red-text flow-text">Are you sure?</h4>
                     <div  class="col s12 m12 l12" style="margin: 2px">
-                        <button id="deleteCompletely" class="btn red white-text modalD ">Delete this link completely from all of your books</button>
+                        <button  class="btn red white-text modalD deleteCompletely " id="{{ ITEM.link.id }}">Delete this link completely from all of your books</button>
                     </div>
                     <div class="col s12 m12 l12  red-text center-align">
                         <br>
@@ -409,14 +418,15 @@
             commentsOperationsVariable = commentToBeModified.id;
         }
 
-        function LoadComments(){
+        function LoadComments(linkId){
         console.log("Load Comments called");
+        console.log(linkId);
     	$.ajax({
     		url: '/comment/load/',
     		type: 'get',
-    		data: {'link_id': "{{link.id}}"},
+    		data: {'link_id': linkId},
     		success: function(data, status){
-    			var comments_div_p = $('#comments_div_p');
+    			var comments_div_p = $('#comments_div_p' + linkId);
                 var str = '';
                 var comments = data['comments'];
                 globalCommentsObject = comments;
@@ -443,51 +453,30 @@
                 }
 
                 comments_div_p.html(str);
-                $("#comments_div_p").scrollTop($("#comments_div_p")[0].scrollHeight);
+                $("#comments_div_p" + linkId).scrollTop($("#comments_div_p" + linkId)[0].scrollHeight);
                 // increase number of comments by 1
-            	$('#num_comments1').html(Number(data['count']));
-            	$('#num_comments2').html(Number(data['count']));
+            	$('#num_comments1' + linkId).html(Number(data['count']));
+            	$('#num_comments2' + linkId).html(Number(data['count']));
     		}
     	});
     }
+
+
         $(function(){
             // load comments initially
-            LoadComments();
 
-            $('.dropdown-button').dropdown({
-              inDuration: 300,
-              outDuration: 225,
-              constrainWidth: false, // Does not change width of dropdown to that of the activator
-              hover: false, // Activate on hover
-              gutter: 0, // Spacing from edge
-              belowOrigin: true, // Displays dropdown below the button
-              alignment: 'right', // Displays dropdown with edge aligned to the left of button
-              stopPropagation: false // Stops event propagation
-            });
-
-            var b = $('#btn_url');
-            var disp = false;
-            var URL = $('#url');
-            b.click(function () {
-                if(disp){
-                    URL.css({'display' : 'none'});
-                    b.html("Show URL");
-                }else{
-                    URL.css({'display' : 'block'});
-                    b.html("Hide URL");
-                }
-                disp = 1 - disp;
-            });
-
+            {% for item in all_links %}
+                LoadComments({{ item.link.id }});
+            {% endfor %}
 
             $('.upvote_upper_button').click(function(){
             var link_id;
             link_id = $(this).attr("link_id");
-            $.get('/link/{{link.id}}/vote/', {type: 'U'}, function(data){
-                       $('#upvotes_count').html(data['upvotes']);
-                       $('#downvotes_count').html(data['downvotes']);
-                       $('.upvote').removeClass('lighten-5');
-                       $('.downvote').removeClass('lighten-5');
+            $.get('/link/' + link_id + '/vote/', {type: 'U'}, function(data){
+                       $('#upvotes_count' + link_id).html(data['upvotes']);
+                       $('#downvotes_count' + link_id).html(data['downvotes']);
+                       $('#upvote_button' + link_id).removeClass('lighten-5');
+                       $('#downvote_button' + link_id).removeClass('lighten-5');
                        //$(".downvote").toggleClass(data['downvote_button']);
                         console.log(data.upvote_button);
                         console.log(data.downvote_button);
@@ -496,65 +485,60 @@
                         }
                         else
                         {
-                            $('.upvote').addClass('lighten-5');
+                            $('#upvote_button' + link_id).addClass('lighten-5');
                         }
                 });
             });
+
+
             $('.downvote_upper_button').click(function(){
             var link_id;
             link_id = $(this).attr("link_id");
-            $.get('/link/{{link.id}}/vote/', {type: 'D'}, function(data){
-                       $('#downvotes_count').html(data['downvotes']);
-                       $('#upvotes_count').html(data['upvotes']);
-                       $('.upvote').removeClass('lighten-5');
-                       $('.downvote').removeClass('lighten-5');
+            $.get('/link/' + link_id + '/vote/', {type: 'D'}, function(data){
+                       $('#downvotes_count' + link_id).html(data['downvotes']);
+                       $('#upvotes_count' + link_id).html(data['upvotes']);
+                       $('#upvote_button' + link_id).removeClass('lighten-5');
+                       $('#downvote_button' + link_id).removeClass('lighten-5');
                       // $(".downvote").addClass(data['downvote_button']);
                         if(data['downvote_button'] == '')
                         {
                         }
                         else
                         {
-                            $('.downvote').addClass('lighten-5');
+                            $('#downvote_button' + link_id).addClass('lighten-5');
                         }
                 });
             });
 
 
-            var show_url_button = $('#show_url_button');
-            show_url_button.click(function () {
-                selectText('link_url');
-            });
+            var comments_tab = $('.comments_tab');
 
+            var comments_open = {};
 
-            var comments_tab = $('#comments_tab');
-            var comments_open = 0;
+            {% for item in all_links %}
+                comments_open[{{ item.link.id }}] = 0;
+            {% endfor %}
 
 
             comments_tab.click(function () {
-                if(comments_open == 0){
-                    $('#comments').css({'display' : 'block'});
-                    comments_tab.html("Hide Comments");
+                var id = this.id;
+                console.log(id);
+                id = id.split('');
+                console.log(id);
+                id.splice(0, 12);
+                console.log(id);
+                id = id.join("");
+                console.log(id);
+                if(comments_open[id] == 0){
+                    $('#comments' + id).css({'display' : 'block'});
+                    $('#comments_tab' + id).html("Hide Comments");
                 }
                 else{
-                    $('#comments').css({'display' : 'none'});
-                    comments_tab.html("Comments");
+                    $('#comments' + id).css({'display' : 'none'});
+                    $('comments_tab' + id).html("Comments");
                 }
-                comments_open = 1 - comments_open;
-                LoadComments();
-            });
-
-
-            $('.modal').modal();
-            var copy = $('.copy');
-            copy.click(function (){
-                console.log("Copied Called");
-                var id = this.id;
-                console.log("id is " + id);
-                var linkUrl = $('#link_url' + id).attr('href');
-                console.log("LinkUrl is");
-                console.log(linkUrl);
-                copyToClipboard(linkUrl);
-
+                comments_open[id] = 1 - comments_open[id];
+                LoadComments(id);
             });
 
             var commentsSubmitButton = $('#commentSubmitButton');
@@ -618,6 +602,42 @@
             });
 
 
+
+
+            var show_url_button = $('.show_url_button');
+            show_url_button.click(function () {
+                var str = 'link_url' + (this.id);
+                console.log(str);
+                selectText(str);
+            });
+
+
+
+           /*
+           $('.link_card').click(function () {
+
+                var id = this.id;
+                var url = '/link/' + id;
+                window.open(url);
+            });
+
+            $('.link_card a').click(function (e) {
+
+                e.stopPropagation();
+            });
+
+            $('.link_card button').click(function (e) {
+
+                e.stopPropagation();
+            });
+
+            $('.link_card .btn').click(function (e) {
+
+                e.stopPropagation();
+            });
+            */
+
+
             $('#deleteCommentButton').click(function () {
 
                 var commentIndex = commentsOperationsVariable;
@@ -633,7 +653,36 @@
             });
 
 
+
+            $('.modal').modal();
+            var copy = $('.copy');
+            copy.click(function (){
+                console.log("Copied Called");
+                var id = this.id;
+                console.log("id is " + id);
+                var linkUrl = $('#link_url' + id).attr('href');
+                console.log("LinkUrl is");
+                console.log(linkUrl);
+                copyToClipboard(linkUrl);
+
+            });
+
+
+
         });
+
+
+         $('.dropdown-button').dropdown({
+              inDuration: 300,
+              outDuration: 225,
+              constrainWidth: false, // Does not change width of dropdown to that of the activator
+              hover: false, // Activate on hover
+              gutter: 0, // Spacing from edge
+              belowOrigin: true, // Displays dropdown below the button
+              alignment: 'right', // Displays dropdown with edge aligned to the left of button
+              stopPropagation: false // Stops event propagation
+            });
+
 
 
         $('img').on('error', function () {
@@ -654,7 +703,8 @@
             Materialize.toast('copied to clipboard', 2000);
         }
 
-        function selectText(containerid) {
+        function selectText(containerid)
+        {
             if (document.selection) {
                 var range = document.body.createTextRange();
                 range.moveToElementText(document.getElementById(containerid));
@@ -668,9 +718,10 @@
         }
 
         // delete link
-        $('#deleteCompletely').click(function(){
+        $('.deleteCompletely').click(function(){
+            var id = this.id;
             $.ajax({
-                url: '/link/{{link.id}}/delete/',
+                url: '/link/' + id + '/delete/',
                 type: 'post',
                 success: function(data, status){
                     console.log(data);
