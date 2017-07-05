@@ -12,9 +12,6 @@ from linkbook.links import views as linkbook_link_views
 
 from taggit_templatetags2.views import TagCanvasListView
 
-
-
-
 urlpatterns = [
 
     url(r'^administrator/', admin.site.urls),
