@@ -12,13 +12,17 @@ from notifications.signals import notify
 
 from linkbook.links.models import Link, Book
 from linkbook.core.forms import UpdateProfileForm
+from linkbook.core.WC import wcloud_generator
 
 
 IMGUR_CLIENT_ID = "fd0c3e407af9974"
 TEMP_IMAGE_PATH = 'linkbook/media/temp.png'
+WC_IMAGE_PATH = 'linkbook/media/wc.png'
 
 
 def index(request):
+    tags =  [tag.name for tag in Link.tags.most_common()]
+    wcloud_generator(tags)
     return render(request, 'core/index.html')
 
 
