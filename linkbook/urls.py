@@ -10,8 +10,10 @@ from linkbook.core import views as linkbook_core_views
 from linkbook.authentication import views as linkbook_auth_views
 from linkbook.links import views as linkbook_link_views
 
+from taggit_templatetags2.views import TagCanvasListView
 
 urlpatterns = [
+
     url(r'^administrator/', admin.site.urls),
     url(r'^login', auth_views.login, {'template_name': 'authentication/login.html',
     	'redirect_authenticated_user': True}, name = 'login'),
@@ -34,7 +36,7 @@ urlpatterns = [
     url(r'comment/(?P<id>\d+)/edit/', linkbook_link_views.ajax_edit_comment, name = 'ajax_edit_comment'),
     url(r'comment/(?P<id>\d+)/delete/', linkbook_link_views.ajax_delete_comment, name = 'ajax_delete_comment'),
 
-    url(r'^tags/(?P<tag_name>[-\w]+)/$', linkbook_link_views.view_tag, name='view_tag'),
+    url(r'^tags/(?P<id>\d+)/(?P<tag_name>[-\w]+)/$', linkbook_link_views.view_tag, name='view_tag'),
 
     url(r'^book/(?P<id>\d+)/$', linkbook_link_views.book, name='book'),
     url(r'^book/new/$', linkbook_link_views.create_book, name = 'create_book'),

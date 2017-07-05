@@ -6,10 +6,18 @@
 
 
 {% block body %}
+
+    {% load taggit_templatetags2_tags %}
+{% include "taggit_templatetags2/tagcanvas_include_js_static.html" %}
+{% include_tagcanvas 'tag' '400 px' '400 px' 'view_tag' 'links.Link' %}
+
+
     <script>
 
         $('.modal').modal();
 
     </script>
+
+
 
 {% endblock body %}

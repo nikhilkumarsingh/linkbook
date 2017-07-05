@@ -9,7 +9,6 @@
     {
         margin: 0px;  !important;
         padding: 0px;  !important;
-
     }
     .btn
     {
@@ -41,12 +40,10 @@
         padding: 1px;
         vertical-align: middle;
     }
-
     .btn-floating
     {
         margin: 1px;
     }
-
     .modalD
     {
         padding: 2px;
@@ -56,7 +53,6 @@
         height: 100%;
         text-transform: none;
     }
-
 </style>
 
 {% for ITEM in all_links %}
@@ -134,7 +130,7 @@
                             {% endif %}
                         </div>
                     </div>
-                </li> 
+                </li>
                 {% endif %} -->
                 <!-- End of open graph data -->
                 <!-- Sharing Options
@@ -214,13 +210,13 @@
 					<!-- All comments to be loaded here -->
                     </ul>
                     <form>
-                        <div class="input-field" id="">
+                        <div class="input-field">
                             {{ ITEM.comment_form.as_p }}
                         </div>
                     </form>
                     <div class="row" style="padding: 0px; margin: 0px">
                         <div class="col s12 m12 l4">
-                            <button class="btn blue waves-effect waves-light commentSubmitButton" id="commentSubmitButton{{ ITEM.link.id }}">Comment</button>
+                            <button class="btn blue waves-effect waves-light" id="commentSubmitButton">Comment</button>
                         </div>
                         <div class="col s12 m12 l4"></div>
                         <div class="col s12 m12 l4"></div>
@@ -231,15 +227,15 @@
         <div class="col s12 m1 l3"></div>
     </div>
 </div>
-    
+
 
 
 
 
 
 <!--  Sharing dropdown -->
-    
-    
+
+
 <ul class="dropdown-content" id="dropdownMore0{{ITEM.link.id}}" style="max-width: 200px">
     <li>
         <a href = "#"> Share Via
@@ -417,7 +413,6 @@
             textAreaEditComment.val(commentToBeModified.text);
             commentsOperationsVariable = commentToBeModified.id;
         }
-
         function LoadComments(linkId){
         console.log("Load Comments called");
         console.log(linkId);
@@ -451,7 +446,6 @@
                     }
                     str += '</div></div></li>';
                 }
-
                 comments_div_p.html(str);
                 $("#comments_div_p" + linkId).scrollTop($("#comments_div_p" + linkId)[0].scrollHeight);
                 // increase number of comments by 1
@@ -460,15 +454,11 @@
     		}
     	});
     }
-
-
         $(function(){
             // load comments initially
-
             {% for item in all_links %}
                 LoadComments({{ item.link.id }});
             {% endfor %}
-
             $('.upvote_upper_button').click(function(){
             var link_id;
             link_id = $(this).attr("link_id");
@@ -489,8 +479,6 @@
                         }
                 });
             });
-
-
             $('.downvote_upper_button').click(function(){
             var link_id;
             link_id = $(this).attr("link_id");
@@ -509,17 +497,11 @@
                         }
                 });
             });
-
-
             var comments_tab = $('.comments_tab');
-
             var comments_open = {};
-
             {% for item in all_links %}
                 comments_open[{{ item.link.id }}] = 0;
             {% endfor %}
-
-
             comments_tab.click(function () {
                 var id = this.id;
                 console.log(id);
@@ -540,23 +522,18 @@
                 comments_open[id] = 1 - comments_open[id];
                 LoadComments(id);
             });
-
-            var commentsSubmitButton = $('.commentSubmitButton');
+            var commentsSubmitButton = $('#commentSubmitButton');
             commentsSubmitButton.click(function (){
-
                 commentsSubmitButton.addClass('disabled');
                 var text = $('#id_text').val();
                 $('#id_text').val('');
-
                 if(!$.trim(text)){
                     alert("Can't add empty comments!");
                     commentsSubmitButton.removeClass('disabled');
                     return;
                 }
-
                 // Removing excess white spaces from text area.
                 text.replace(/\s+/g, " ").replace(/^\s|\s$/g, "");
-
                 $.ajax({
                     url: '/comment/create/',
                     type: 'post',
@@ -568,14 +545,10 @@
                         LoadComments();
                     }
                 });
-
                 commentsSubmitButton.removeClass('disabled');
             });
-
-
             /* Events for edit and delete Comments */
             $('#editCommentButton').click(function () {
-
                 var textAreaEditComment = $('#modalEditCommentTextarea');
                 var text = textAreaEditComment.val();
                 if(!$.trim(text)){
@@ -583,13 +556,10 @@
                     commentsSubmitButton.removeClass('disabled');
                     return;
                 }
-
                 // Removing excess white spaces from text area.
                 text.replace(/\s+/g, " ").replace(/^\s|\s$/g, "");
-
                 // ID of comment to be edited
                 var commentIndex = commentsOperationsVariable;
-
                 $.ajax({
                     url : '/comment/'+commentIndex+'/edit/',
                     type: 'post',
@@ -601,46 +571,29 @@
                     }
                 });
             });
-
-
-
-
             var show_url_button = $('.show_url_button');
             show_url_button.click(function () {
                 var str = 'link_url' + (this.id);
                 console.log(str);
                 selectText(str);
             });
-
-
-
            /*
            $('.link_card').click(function () {
-
                 var id = this.id;
                 var url = '/link/' + id;
                 window.open(url);
             });
-
             $('.link_card a').click(function (e) {
-
                 e.stopPropagation();
             });
-
             $('.link_card button').click(function (e) {
-
                 e.stopPropagation();
             });
-
             $('.link_card .btn').click(function (e) {
-
                 e.stopPropagation();
             });
             */
-
-
             $('#deleteCommentButton').click(function () {
-
                 var commentIndex = commentsOperationsVariable;
                 $.ajax({
                     url : '/comment/'+commentIndex+'/delete/',
@@ -652,9 +605,6 @@
                     }
                 });
             });
-
-
-
             $('.modal').modal();
             var copy = $('.copy');
             copy.click(function (){
@@ -665,14 +615,8 @@
                 console.log("LinkUrl is");
                 console.log(linkUrl);
                 copyToClipboard(linkUrl);
-
             });
-
-
-
         });
-
-
          $('.dropdown-button').dropdown({
               inDuration: 300,
               outDuration: 225,
@@ -683,16 +627,10 @@
               alignment: 'right', // Displays dropdown with edge aligned to the left of button
               stopPropagation: false // Stops event propagation
             });
-
-
-
         $('img').on('error', function () {
             $('#card_image_div').css({'display' : 'none'});
         });
-
-
         function copyToClipboard(element) {
-
             var height = $('body').prop('scrollHeight');
             console.log(height);
             var $temp = $("<input>");
@@ -703,7 +641,6 @@
             $("body").scrollTop($('body').scrollTop() + height);
             Materialize.toast('copied to clipboard', 2000);
         }
-
         function selectText(containerid)
         {
             if (document.selection) {
@@ -717,7 +654,6 @@
                 window.getSelection().addRange(range);
             }
         }
-
         // delete link
         $('.deleteCompletely').click(function(){
             var id = this.id;
@@ -730,6 +666,5 @@
                 }
             });
         });
-
 </script>
 {% endblock body %}
