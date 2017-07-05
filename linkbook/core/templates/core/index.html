@@ -1,8 +1,527 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% load i18n %}
-
 {% block title %}Home{% endblock %}
+
+{% block body %}
+
+<style>
+
+    .row
+    {
+        margin: 0px;  !important;
+        padding: 0px;  !important;
+
+    }
+    .btn
+    {
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+    }
+    p
+    {
+    margin: 0px;
+    padding: 0px;
+    }
+    #comments_div_p
+    {
+        max-height: 200px;
+        overflow-y: scroll;
+    }
+    .commentsListItem
+    {
+        max-width: 100%;
+      /*  word-break: break-all;*/
+        word-wrap: break-word;
+        padding: 1px;
+        margin: 1px;
+    }
+    .comments_inside_div
+    {
+        height: 100%;
+        padding: 1px;
+        vertical-align: middle;
+    }
+
+    .btn-floating
+    {
+        margin: 1px;
+    }
+
+    .modalD
+    {
+        padding: 2px;
+        word-wrap: break-word;
+        max-width: 100%;
+        display: block;
+        height: 100%;
+        text-transform: none;
+    }
+
+</style>
+
+{% for ITEM in all_links %}
+<div class="container" style="padding: 0px; margin: 0px">
+    <div class="row" style="padding: 0px; margin: 0px">
+        <div class="col s12 m1 l3"></div>
+        <div class="col s12 m10 l6">
+            <ul class="collection hoverable "  style="border: 1px solid #607d8b" id="list">
+                <li class="collection-item avatar">
+                    <div class="row"  style="padding: 0px; margin: 0px">
+                        <!-- user avatar -->
+                        <a href = "{{ITEM.link.user.username}}">
+                        <img class="responsive-img circle"  height = "40px" width="40px" src="{{ITEM.link.user.profile.pic}}" /></a>
+                        <a href = "{{ITEM.link.user.username}}"><span class="title blue-grey-text ">{{ ITEM.link.user }}<br/>
+                        <sup>{{ ITEM.time }}</sup></span></a>
+                        <br><br>
+                    </div>
+                    <div class="row" style="margin: 0px;">
+                        <div class="col s12 m12 l12">
+                            <i class="material-icons circle blue-grey">description</i>
+                            <div>
+                                <div class="row" style="margin-bottom: 0px">
+                                    <div class="col s12 m12 l7">
+                                        <a href = "{{ITEM.link.url}}" target="_blank" class="title">
+                                            <h5>{{ITEM.link.title | linebreaksbr}}</h5>
+                                        </a>
+                                    </div>
+                  <div class="col s12 m12 l5 right right-align" id="icons_extra" style="margin: 0px; padding: 0px">
+
+       <!--           <a class='dropdown-button btn' href='#' data-activates='dropdownButtons'>Drop Me!</a> -->
+
+                   <div class="row right right-align" style="margin: 0px; padding: 0px">
+                      <div class="col s12 m12 l12 right right-align" style="margin: 0px; padding: 0px">
+
+                          <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue" href="#" title="Show URL" data-activates="dropdown11" id="show_url_button"><i class="material-icons">remove_red_eye</i></a>
+                                        <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue" href="#" title="Share" data-beloworigin="true" data-activates="dropdown10"><i class="material-icons">share</i></a>
+                          <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue" href="#" title="More actions" data-activates="dropdownButtons" id="more_actions"><i class="material-icons">more_horiz</i></a>
+
+                      </div>
+                  </div>
+
+
+                  <br>
+                  </div>
+                                    </div>
+                                </div>
+                                <div id="modal10" class="modal">
+                                    <div class="modal-content">
+                                        <div class="row">
+                                            <div class="col s12 m12 l7">
+                                                <div class="title"><a id="link_url" href="{{ ITEM.link.url }}" target="_blank"> {{ ITEM.link.url }}</a>  </div>
+                                            </div>
+                                            <div class="col s12 m12 l2"></div>
+                                            <div class="col s12 m12 l3">
+                                                <button title="copy to clipboard" class="btn black white-text" id="copy"> <i class="material-icons black" style="color: white">content_copy</i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <span id = "DESCR" style="font-size: 100%">{{ITEM.link.description}}</span>
+                            <span id="url" style="display: none"><a href="{{ ITEM.link.url }}" target="_blank"> {{ ITEM.link.url }} </a></span>
+                        </div>
+                </li>
+                <!-- Open Graph data -->
+                {% if ITEM.show_og and ITEM.og.title != None %}
+                <li class="collection-item avatar " style="padding: 4px">
+                    <div class="card hoverable horizontal">
+                        <div class="card-image" style="margin: 4px;" id="card_image_div">
+                            <img src="{{ITEM.og.image}}" class="responsive-image" height={{ ITEM.og.image_height}} width={{ ITEM.og.image_width }} id="card_image">
+                        </div>
+
+                        <div class="card-stacked">
+                            {%if ITEM.og.title != None %}
+                            <div class="card-content" style="padding: 2px">
+                                <span><span style="font-weight: bolder">{{ ITEM.og.title }}</span></span>
+                                <p style="font-size: 80%">{{ ITEM.og.description }}</p>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </li>
+                {% endif %}
+                <!-- End of open graph data -->
+                <!-- Sharing Options
+                    <li class="collection-item avatar">
+                      <i class="material-icons circle blue-grey">share</i>
+                        <span class="title blue-grey-text">Share</span>
+                        <p>
+                            <div>
+                                <a href = "https://www.facebook.com/sharer/sharer.php?u={{link.url}}">
+                                    <img height=41px width=41px src="/static/icons/fb.svg" alt="Facebook" />
+                                </a>
+                                <a href = "https://twitter.com/home?status={{link.url}}">
+                                    <img height=41px width=41px src="/static/icons/Twitterbird.png" alt="Twitter" />
+                                </a>
+                                <a href = "https://plus.google.com/share?url={{link.url}}">
+                                    <img height=41px width=41px src="/static/icons/gplus.png" alt="Google+" />
+                                </a>
+                                <a href = "http://www.reddit.com/submit?url={{link.url}}">
+                                    <img height=41px width=41px src="/static/icons/reddit.png" alt="Reddit" />
+                                </a>
+                                <a href = "http://pinterest.com/pin/create/button/?url={{link.url}}&description={{link.description}}">
+                                    <img height=41px width=41px src="/static/icons/pinterest.svg" alt="Pinterest" />
+                                </a>
+                                <a href = "https://www.linkedin.com/shareArticle?mini=true&url={{link.url}}">
+                                    <img height=41px width=41px src="/static/icons/linkedin.svg" alt="LinkedIn" />
+                                </a>
+                            </div>
+                        </p>
+                    </li>
+                    -->
+                <!-- Tags -->
+                <li class="collection-item avatar">
+                    <i class="material-icons circle blue-grey">assignment</i>
+                    <span class="title blue-grey-text">Tags</span>
+                    <p>
+                        {% for tag in ITEM.link.tags.all %}
+                    <div class="chip">
+                        <a href = "/../tags/{{tag.name}}/" style="text-decoration: underline">{{tag.name}}</a>
+                    </div>
+                    </a>
+                    {% endfor %}
+                    </p>
+                </li>
+                {% if request.user.is_authenticated %}
+                <li class="collection-item avatar" style="padding: 0px; margin: 0px">
+                    <div class="row" style="padding: 0px; margin: 0px">
+                        <div class="col s6 m4 l4" >
+                            <span> <sup id="upvotes_count">{{ ITEM.upvotes }}</sup><sup> upvote(s)</sup></span>
+                            <button class="btn green upvote upvote_upper_button waves-effect waves-light {{ITEM.upvote_button}} center" id="upvote_button" link_id = "{{ ITEM.link.id }}"> <i class="material-icons" style="color: white; background-color: transparent">thumb_up</i> </button>
+                        </div>
+                        <div class="col s6 m4 l4" >
+                            <span> <sup id="downvotes_count">{{ ITEM.downvotes }} </sup><sup> downvote(s)</sup></span>
+                            <button title="downvote" class="btn waves-effect waves-light  red btn-block white-text downvote downvote_upper_button {{ ITEM.downvote_button }}" id="downvote_button" link_id = "{{ ITEM.link.id }}" > <i class="material-icons" style="color: white; background-color: transparent" >thumb_down</i></button>
+                        </div>
+                        <div class="col s12 m4 l4">
+                            <span>
+                            <sup><span id="num_comments1">{{ITEM.link.comment_set.count}}</span> comment(s)</sup>
+                            </span>
+                            <button class="btn blue waves-light center waves-effect" id="comments_tab">Comments</button>
+                        </div>
+                        <br><br><br><br>
+                    </div>
+                </li>
+                {% endif %}
+                <li class="collection-item avatar" id="comments" style="display: none; margin: 0px">
+                    <i class="material-icons circle blue-grey">comment</i>
+                    <span class="title blue-grey-text">Comments</span>
+                    <p class="green-text"><span id="num_comments2">{{ITEM.link.comment_set.count}}</span> comment(s) on this link:</p>
+                    <ul class="collection" id="comments_div_p">
+					<!-- All comments to be loaded here -->            
+                    </ul>
+                    <form>
+                        <div class="input-field">
+                            {{ ITEM.comment_form.as_p }}
+                        </div>
+                    </form>
+                    <div class="row" style="padding: 0px; margin: 0px">
+                        <div class="col s12 m12 l4">
+                            <button class="btn blue waves-effect waves-light" id="commentSubmitButton">Comment</button>
+                        </div>
+                        <div class="col s12 m12 l4"></div>
+                        <div class="col s12 m12 l4"></div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="col s12 m1 l3"></div>
+    </div>
+</div>
+<!--  Sharing dropdown -->
+<ul class="dropdown-content" id="dropdown10" style="max-width: 200px">
+    <li>
+        <a href = "#"> Share Via
+        </a>
+    </li>
+    <li class="divider"></li>
+    <li style="display: inline-block">
+        <a href = "https://www.facebook.com/sharer/sharer.php?u={{ITEM.link.url}}" style="display: inline-block; padding: 5px">
+        <img height = 35px width = 35px src="/static/icons/fb.svg" alt="Facebook" >
+        </a>
+        <a href = "https://twitter.com/home?status={{ITEM.link.url}}" style="display: inline-block; padding: 5px">
+        <img height = 35px width = 35px src="/static/icons/Twitterbird.png" alt="Twitter" />
+        </a>
+        <a href = "https://plus.google.com/share?url={{ITEM.link.url}}" style="display: inline-block; padding: 5px">
+        <img height = 35px width = 35px src="/static/icons/gplus.png" alt="Google+" />
+        </a>
+        <a style="display: inline-block; padding: 5px" href = "http://www.reddit.com/submit?url={{ITEM.link.url}}">
+        <img height = 35px width = 35px src="/static/icons/reddit.png" alt="Reddit" />
+        </a>
+        <a style="display: inline-block; padding: 5px" href = "http://pinterest.com/pin/create/button/?url={{ITEM.link.url}}&description={{ITEM.link.description}}">
+        <img height = 35px width = 35px src="/static/icons/pinterest.svg" alt="Pinterest" />
+        </a>
+        <a style="display: inline-block; padding: 5px" href = "https://www.linkedin.com/shareArticle?mini=true&url={{ITEM.link.url}}">
+        <img height = 35px width = 35px src="/static/icons/linkedin.svg" alt="LinkedIn" />
+        </a>
+    </li>
+</ul>
+<!-- Copy to Clipboard Dropdown -->
+<ul id="dropdown11" class="dropdown-content" style="max-width: 200px" >
+    <li>
+        <div class="row" style="max-width: 100%; ;overflow-x: scroll; padding: 1%; margin: 0px;">
+            <span>
+            <a  id="link_url" href="{{ ITEM.link.url }}" target="_blank" style="display: inline-block;" > {{ ITEM.link.url }}</a>
+            </span>
+            <!--      <span>
+                <i class="material-icons circle right" id="copy" style="display: inline-block;"  > content_copy</i>
+                </span> -->
+        </div>
+    </li>
+</ul>
+
+    <div class="modal" id="modalDelete">
+        <div class="modal-content">
+            <div class="container">
+                <div class="row">
+                    <h4 class="center-align red-text flow-text">Are you sure?</h4>
+                    <div  class="col s12 m12 l12" style="margin: 2px">
+                        <button id="deleteCompletely" class="btn red white-text modalD ">Delete this link completely from all of your books</button>
+                    </div>
+                    <div class="col s12 m12 l12  red-text center-align">
+                        <br>
+                        This action will delete all copies of the links in your books. This action can't be undone in future. </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+     <!--<a class='dropdown-button btn' href='#' data-activates='dropdown1'>Drop Me!</a>-->
+
+  <!-- Dropdown Structure for buttons -->
+  <ul id='dropdownButtons' class='dropdown-content'>
+      <li> <a class="waves-effect waves-light" href="{{ ITEM.link.url }}" title="Visit Link" target="_blank">Visit link</a></li>
+
+     <li><a class="dropdown-buttonwaves-effect waves-light" href="#" id="copy" title="Copy to clipboard" >Copy to clipboard</a></li>
+                                        {% if request.user == ITEM.link.user %}
+                                           <li> <a class="dropdown-button waves-effect waves-light " href="/link/{{ ITEM.link.id }}/edit" id="edit" title="Edit Link" >Edit</a></li>
+                                            <li><a class=" dropdown-button  waves-effect waves-light " href="#modalDelete" id="delete_icon" title="Delete Link" >Delete </a></li>
+
+                                        {% endif %}
+
+
+  </ul>
+{% endfor %}
+<script>
+    function RefreshDropdown()
+    {
+      //   var width = $('#list').css('width');
+       // console.log("Width");
+       // console.log(width);
+      //  $('#dropdown11').css({'max-width' : width });
+    
+    }
+    function LoadComments(){
+        console.log("Load Comments called");
+    	$.ajax({
+    		url: '/comment/load/',
+    		type: 'get',
+    		data: {'link_id': "{{ITEM.link.id}}"},
+    		success: function(data, status){
+
+    			var comments_div_p = $('#comments_div_p');
+                var str = '';
+                var comments = data['comments'];
+                var i;
+                for( i = 0; i <comments.length ; i++)
+                {
+                	str += '<li class="divider"></li>'
+                		+ '<li class="collection-item avatar commentsListItem">'
+
+                        + '<div class="row">'
+
+                		+ '<a href="/' + comments[i]['user'] + '/"><img src=' + comments[i]['pic']
+                		+ ' class="responsive-img circle" title=' + comments[i]['user'] + '></a>' 
+                		+ '<div class = "col s12 m12 l4 " comments_inside_div commentsListItem">'
+                		+ '<p style="font-weight: 800" class="commentsListItem ">'
+                		+ '<a class="hide-on-med-and-down" href="/' + comments[i]['user'] + '/">' + comments[i]['user'] + '</a>'
+                		+ '<sub class="commentsListItem grey-text">' + comments[i]['time'] + '</sub></p>' + '</div>'
+                            + '<div class="col s12 m12 l8">'
+                		+ '<p class="commentsListItem">' + comments[i]['text'] + '</p></div></div></li>'
+                }
+           
+                comments_div_p.html(str);
+
+                $("#comments_div_p").scrollTop($("#comments_div_p")[0].scrollHeight);
+                // increase number of comments by 1
+
+            	$('#num_comments1').html(Number(data['count']));
+            	$('#num_comments2').html(Number(data['count']));
+    		}
+    	});
+    }
+
+    $(function(){
+    	// load comments initially
+    	LoadComments();
+
+        $('.dropdown-button').dropdown({
+          inDuration: 300,
+          outDuration: 225,
+          constrainWidth: false, // Does not change width of dropdown to that of the activator
+          hover: false, // Activate on hover
+          gutter: 0, // Spacing from edge
+          belowOrigin: true, // Displays dropdown below the button
+          alignment: 'right', // Displays dropdown with edge aligned to the left of button
+          stopPropagation: false // Stops event propagation
+        });
+
+        var b = $('#btn_url');
+        var disp = false;
+        var URL = $('#url');
+        b.click(function () {
+            if(disp){
+                URL.css({'display' : 'none'});
+                b.html("Show URL");
+            }else{
+                URL.css({'display' : 'block'});
+                b.html("Hide URL");
+            }
+            disp = 1 - disp;
+        });
+
+
+	    $('.upvote_upper_button').click(function(){
+	    var link_id;
+	    link_id = $(this).attr("link_id");
+	    $.get('/link/{{ITEM.link.id}}/vote/', {type: 'U'}, function(data){
+	               $('#upvotes_count').html(data['upvotes']);
+	               $('#downvotes_count').html(data['downvotes']);
+	               $('.upvote').removeClass('lighten-5');
+	               $('.downvote').removeClass('lighten-5');
+	               //$(".downvote").toggleClass(data['downvote_button']);
+	                console.log(data.upvote_button);
+	                console.log(data.downvote_button);
+	                if(data['upvote_button'] == '')
+	                {
+	                }
+	                else
+	                {
+	                    $('.upvote').addClass('lighten-5');
+	                }
+	        });
+	    });
+	    $('.downvote_upper_button').click(function(){
+	    var link_id;
+	    link_id = $(this).attr("link_id");
+	    $.get('/link/{{ITEM.link.id}}/vote/', {type: 'D'}, function(data){
+	               $('#downvotes_count').html(data['downvotes']);
+	               $('#upvotes_count').html(data['upvotes']);
+	               $('.upvote').removeClass('lighten-5');
+	               $('.downvote').removeClass('lighten-5');
+	              // $(".downvote").addClass(data['downvote_button']);
+	                if(data['downvote_button'] == '')
+	                {
+	                }
+	                else
+	                {
+	                    $('.downvote').addClass('lighten-5');
+	                }
+	        });
+	    });
+    
+    
+        var show_url_button = $('#show_url_button');
+        show_url_button.click(function () {
+            selectText('link_url');
+        });
+
+    
+        var comments_tab = $('#comments_tab');
+        var comments_open = 0;
+        
+        
+        comments_tab.click(function () {
+            if(comments_open == 0){
+                $('#comments').css({'display' : 'block'});
+                comments_tab.html("Hide Comments");
+            }
+            else{
+                $('#comments').css({'display' : 'none'});
+                comments_tab.html("Comments");
+            }
+            comments_open = 1 - comments_open;
+            LoadComments();
+        });
+
+
+        $('.modal').modal();
+        var copy = $('#copy');
+        copy.click(function (){
+            var linkUrl = $('#link_url');
+            copyToClipboard(linkUrl);
+            Materialize.toast('copied to clipboard', 2000);
+        });
+    
+    
+        var commentsSubmitButton = $('#commentSubmitButton');
+        commentsSubmitButton.click(function (){
+            commentsSubmitButton.addClass('disabled');
+            var text = $('#id_text').val();
+            $('#id_text').val('');
+
+            if(!$.trim(text)){
+                alert("Can't add empty comments!");
+                commentsSubmitButton.removeClass('disabled');
+                return;
+            }
+
+            // Removing excess white spaces from text area.
+            text.replace(/\s+/g, " ").replace(/^\s|\s$/g, "");
+            
+            $.ajax({
+                url: '/comment/create/',
+                type: 'post',
+                data: {'text':text, 
+                       'link_id':{{ITEM.link.id}}
+                    },
+                success :function(data, status){
+                	console.log(data);
+                	LoadComments();
+                }
+            });
+
+            commentsSubmitButton.removeClass('disabled');
+        });
+    
+    
+        //window.setTimeout(RefreshDropdown, 5000);
+    });
+    
+
+    $('img').on('error', function () {
+        console.log("Hello");
+        $('#card_image_div').css({'display' : 'none'});
+    });
+    
+    
+    function copyToClipboard(element) {
+    var $temp = $("<input>");
+    $("body").append($temp);
+    $temp.val($(element).text()).select();
+    document.execCommand("copy");
+    $temp.remove();
+    }
+    
+    function selectText(containerid) {
+        if (document.selection) {
+            var range = document.body.createTextRange();
+            range.moveToElementText(document.getElementById(containerid));
+            range.select();
+        } else if (window.getSelection) {
+            var range = document.createRange();
+            range.selectNode(document.getElementById(containerid));
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+        }
+    }
+    
+</script>
+
 
 
 
@@ -23,6 +542,7 @@
 
     });
 </script>
+
 
 
 {% endblock body %}
