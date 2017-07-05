@@ -1,0 +1,38 @@
+{% load taggit_templatetags2_tags %}
+
+{% if forvar %}
+	{% get_tagcloud as tags for forvar %}
+{% else %}
+	{% get_tagcloud as tags %}
+{% endif %}
+
+<div id="{{ element_id }}">
+
+	<canvas width="{{ width }}" height="{{ height }}" id="{{ element_id }}_canvas"></canvas>
+	
+	<div id="{{ element_id }}_tags">
+	
+		<ul>
+			{% if url_name %}
+			{% for tag in tags %}
+			<li>
+				<a href="{% url url_name tag.id tag.slug %}" class="tag_{{tag.slug}}" data-weight="{{tag.weight|floatformat:0}}">
+					{{tag}}
+				</a>
+			</li>
+			{% endfor %}
+			{% else %}
+			{% for tag in tags %}
+			<li>
+				<a href="#" class="tag_{{tag.slug}}" data-weight="{{tag.weight|floatformat:0}}">
+					{{tag}}
+				</a>
+			</li>
+			{% endfor %}
+			{% endif %}
+		</ul>
+	</div>
+
+</div>
+
+{% include "taggit_templatetags2/tagcanvas_include_js.html" with element_id=element_id %}

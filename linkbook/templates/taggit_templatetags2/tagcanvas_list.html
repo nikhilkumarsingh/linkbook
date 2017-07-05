@@ -1,0 +1,15 @@
+{% extends "taggit_templatetags2/tagcanvas_base.html" %}
+
+{% block "tagcanvas_js" %}
+	
+{% endblock %}
+
+{% block "tagcanvas_content" %}
+	<div id="tagcanvas_list">
+		{% for taggeditem in taggeditem_list %}
+			<div class="item">
+				{% include "taggit_templatetags2/tagcanvas_list_item.html" with item=taggeditem %}
+			</div>
+		{% endfor %}
+	</div>
+{% endblock %}
