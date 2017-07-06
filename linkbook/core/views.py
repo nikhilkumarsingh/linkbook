@@ -16,10 +16,8 @@ from linkbook.core.forms import UpdateProfileForm
 
 from taggit.models import Tag
 from taggit.utils import _parse_tags
-from .PyOpenGraph import PyOpenGraph
 import humanize
 from datetime import datetime, timezone
-
 
 IMGUR_CLIENT_ID = "fd0c3e407af9974"
 TEMP_IMAGE_PATH = 'linkbook/media/temp.png'
@@ -45,21 +43,6 @@ def index(request):
                     upvoted = link.votes.exists(request.user.id, action = UP)
                     downvoted = link.votes.exists(request.user.id, action = DOWN)
 
-                    # open graph data
-                    show_og = True
-                    og = PyOpenGraph(link.url)
-        
-                    if not og.is_valid:
-                        show_og = False
-                    elif og.image and og.image_height and og.image_width:
-                        ratio = int(og.image_height) / int(og.image_width)
-                        og.image_width = 150
-                        og.image_height = 150*ratio
-                    else:
-                        og.image_width = 150
-                        og.image_height = 150
-
-
                 # upvote button config
                     if not upvoted:
                         upvote_button = ""
@@ -74,8 +57,7 @@ def index(request):
 
                     row['link'] = link
                     row['comment_form'] = comment_form
-                    row['og'] = og
-                    row['show_og'] = show_og
+                    row['og'] = link.og_data
                     row['upvotes'] = upvotes
                     row['downvotes'] = downvotes
                     row['time'] = link_time
@@ -85,7 +67,6 @@ def index(request):
                     all_links.append(row)
 
         return render(request, 'core/index.html', {'all_links':all_links})
-
     else:
         return render(request, 'core/home.html')
 
