@@ -374,22 +374,22 @@
 
 
 <!-- Edit comment Modal -->
-    <div class="modal" id="modalEditComment">
+    <div class="modal modalEditComment" id="modalEditComment{{ ITEM.link.id }}">
         <div class="modal-content">
             <div class="row">
                 <h5 class="center-align blue-text">Edit/Delete Comment</h5>
                 <div class="col s1 m1 l1"></div>
                 <div class="col s10 m10 l10">
                     <div class="input-field">
-                        <textarea id="modalEditCommentTextarea">
+                        <textarea id="modalEditCommentTextarea{{ ITEM.link.id }}">
 
                         </textarea>
                         <div class="row">
                             <div class="col 12 m12 l6">
-                                <button class="btn" id="editCommentButton">Save</button>
+                                <button class="btn editCommentButton" id="editCommentButton{{ ITEM.link.id }}">Save</button>
                             </div>
                             <div class="col 12 m12 l6">
-                                <button class="btn red white-text" id="deleteCommentButton">Delete</button>
+                                <button class="btn red white-text deleteCommentButton" id="deleteCommentButton{{ ITEM.link.id }}">Delete</button>
                             </div>
                         </div>
 
@@ -403,13 +403,13 @@
 {% endfor %}
 <script>
         var commentsOperationsVariable = -1;
-        var globalCommentsObject;
-        function ModifyComments(commentId)
+        var globalCommentsObject = {};
+        function ModifyComments(linkId, commentId)
         {
             console.log("Modify comments Called");
             console.log(commentId);
-            var textAreaEditComment = $('#modalEditCommentTextarea');
-            var commentToBeModified = globalCommentsObject[commentId];
+            var textAreaEditComment = $('#modalEditCommentTextarea' + linkId);
+            var commentToBeModified = globalCommentsObject[linkId][commentId];
             textAreaEditComment.val(commentToBeModified.text);
             commentsOperationsVariable = commentToBeModified.id;
         }
@@ -424,7 +424,7 @@
     			var comments_div_p = $('#comments_div_p' + linkId);
                 var str = '';
                 var comments = data['comments'];
-                globalCommentsObject = comments;
+                globalCommentsObject[linkId] = comments;
                 console.log(comments);
                 var i;
                 for( i = 0; i <comments.length ; i++)
@@ -442,7 +442,7 @@
                           +  '<sub class="commentsListItem grey-text">' + comments[i]['time'] + '</sub>';
                     if(comments[i]['user'] === "{{request.user.username}}")
                     {
-                        str += '<sub><a href="#modalEditComment" onclick="ModifyComments(' + i + ')" > &nbsp;&nbsp;&nbsp; Edit/Delete</a><sub>';
+                        str += '<sub><a href="#modalEditComment' + linkId + '" onclick="ModifyComments(' +  linkId + ',' + i + ')" > &nbsp;&nbsp;&nbsp; Edit/Delete</a><sub>';
                     }
                     str += '</div></div></li>';
                 }
@@ -575,8 +575,16 @@
               //  commentsSubmitButton.removeClass('disabled');
             });
             /* Events for edit and delete Comments */
-            $('#editCommentButton').click(function () {
-                var textAreaEditComment = $('#modalEditCommentTextarea');
+            $('.editCommentButton').click(function () {
+
+                console.log("Edit comment called");
+                var id = this.id;
+                id = id.split('');
+                console.log(id);
+                 id.splice(0, 17);
+                id = id.join('');
+                console.log(id);
+                var textAreaEditComment = $('#modalEditCommentTextarea'  +id);
                 var text = textAreaEditComment.val();
                 if(!$.trim(text)){
                     alert("Can't add empty comments!");
@@ -593,11 +601,13 @@
                     data: {'text':text},
                     success :function(data, status){
                         console.log(data);
-                        $('#modalEditComment').modal('close');
-                        LoadComments();
+                        $('#modalEditComment' + id).modal('close');
+                        LoadComments(id);
                     }
                 });
             });
+
+
             var show_url_button = $('.show_url_button');
             show_url_button.click(function () {
                 var str = 'link_url' + (this.id);
@@ -620,15 +630,23 @@
                 e.stopPropagation();
             });
             */
-            $('#deleteCommentButton').click(function () {
-                var commentIndex = commentsOperationsVariable;
+            $('.deleteCommentButton').click(function () {
+
+                var id = this.id;
+                id = id.split('');
+                console.log(id);
+                 id.splice(0, 19);
+                id = id.join('');
+                console.log(id);
+
+                 commentIndex = commentsOperationsVariable;
                 $.ajax({
                     url : '/comment/'+commentIndex+'/delete/',
                     type: 'post',
                     success :function(data, status){
                         console.log(data);
-                        $('#modalEditComment').modal('close');
-                        LoadComments();
+                        $('#modalEditComment' + id).modal('close');
+                        LoadComments(id);
                     }
                 });
             });
