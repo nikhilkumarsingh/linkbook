@@ -22,6 +22,7 @@ urlpatterns = [
     url(r'^oauth/', include('social_django.urls', namespace='social')),
 
     url(r'^navbar/$', linkbook_core_views.navbar, name = 'navbar'),
+    url(r'^project/$', linkbook_core_views.project, name = 'project'),
     url(r'^inbox/notifications/', include(notifications.urls, namespace='notifications')),
 
     url(r'^link/(?P<id>\d+)/$', linkbook_link_views.link, name='link'),

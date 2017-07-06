@@ -26,6 +26,12 @@ UP = 0
 DOWN = 1
 vote_color = "lighten-5"
 
+
+def project(request):
+    return render(request, 'core/project.html')
+
+
+
 def index(request):
     if request.user.is_authenticated():
         if request.method == 'GET':
