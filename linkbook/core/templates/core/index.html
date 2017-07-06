@@ -109,13 +109,18 @@
                                     </div>
                                 </div>
                             <hr>
-                            <span id = "DESCR" style="font-size: 100%">{{ITEM.link.description}}</span>
+                            <span class = "DESCR" style="font-size: 100%">{{ITEM.link.description}}
+                                 </span>
+                            <span>
+                                <a href="/link/{{ITEM.link.id }}" target="_blank" class="read_more" style="display: none">Read more</a>
+                            </span>
                             <span id="url" style="display: none"><a href="{{ ITEM.link.url }}" target="_blank"> {{ ITEM.link.url }} </a></span>
                         </div>
                     </div>
                 </li>
                 {% if ITEM.link.og_data.title != None %}
                 <li class="collection-item avatar " style="padding: 4px">
+                <a href="{{ ITEM.link.url }}" style="text-decoration: none; color: black" target="_blank">
                     <div class="card hoverable horizontal">
                         {% if ITEM.link.og_data.image != None %}
                         <div class="card-image" style="margin: 4px;" id="card_image_div">
@@ -123,12 +128,17 @@
                         </div>
                         {% endif %}
                         <div class="card-stacked">
+
                             <div class="card-content" style="padding: 2px">
                                 <span><span style="font-weight: bolder">{{ ITEM.link.og_data.title }}</span></span>
-                                <p style="font-size: 80%">{{ ITEM.link.og_data.description }}</p>
+                                {% if ITEM.link.og_data.description != None %}
+                                    <p style="font-size: 80%">{{ ITEM.link.og_data.description }}</p>
+                                {% endif %}
                             </div>
+
                         </div>
                     </div>
+                </a>
                 </li>
                 {% endif %}
                 <!-- End of open graph data -->
@@ -161,15 +171,14 @@
                     </li>
                     -->
                 <!-- Tags -->
-                <li class="collection-item avatar">
-                    <i class="material-icons circle blue-grey">assignment</i>
-                    <span class="title blue-grey-text">Tags</span>
-                    <p>
+                <li class="collection-item avatar" style="padding: 5px; min-height: 10px">
+                    <!-- <i class="material-icons circle blue-grey">assignment</i> -->
+                  <!--  <span class="title blue-grey-text">Tags</span> -->
+                    <p style="margin: 1px; padding: 5px;">
                         {% for tag in ITEM.link.tags.all %}
                     <div class="chip">
                         <a href = "/../tags/{{tag.id}}/{{tag.name}}/" style="text-decoration: none">{{tag.name}}</a>
                     </div>
-                    </a>
                     {% endfor %}
                     </p>
                 </li>
@@ -573,6 +582,38 @@
                 });
               //  commentsSubmitButton.removeClass('disabled');
             });
+
+            $('.deleteCompletely').click(function(){
+            var id = this.id;
+            $.ajax({
+                url: '/link/' + id + '/delete/',
+                type: 'post',
+                success: function(data, status){
+                    console.log(data);
+                    window.location = "/{{request.user.username}}/";
+                }
+            });
+        });
+
+
+            $('.DESCR').each(function () {
+
+
+                var max_length = 150;
+                if($(this).html().length > max_length)
+                {
+
+                    console.log("Read_more");
+                    var short_content = $(this).html().substr(0, max_length);
+                    $(this).html(short_content);
+                    console.log($(this).next().children()[0]);
+                    $(this).next().children().css({'display' : 'inline-block'});
+                }
+
+            });
+
+
+
             /* Events for edit and delete Comments */
             $('.editCommentButton').click(function () {
 
@@ -690,16 +731,6 @@
             }
         }
         // delete link
-        $('.deleteCompletely').click(function(){
-            var id = this.id;
-            $.ajax({
-                url: '/link/' + id + '/delete/',
-                type: 'post',
-                success: function(data, status){
-                    console.log(data);
-                    window.location = "/{{request.user.username}}/";
-                }
-            });
-        });
+
 </script>
 {% endblock body %}

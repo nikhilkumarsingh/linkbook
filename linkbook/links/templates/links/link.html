@@ -64,7 +64,7 @@
         <div class="col s12 m1 l3 xl3"></div>
         <div class="col s12 m10 l6 xl6">
             <ul class="collection hoverable "  style="border: 1px solid #607d8b" id="list">
-                <li class="collection-item avatar">
+                <li class="collection-item avatar" style="border-bottom: none; height: 10px; padding-bottom: 0px">
                     <div class="row"  style="padding: 0px; margin: 0px">
                         <!-- user avatar -->
                         <img class="responsive-img circle"  height = "40px" width="40px" src="{{link.user.profile.pic}}" />
@@ -98,28 +98,27 @@
                           <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue" href="#" title="Show URL" data-activates="dropdown11" id="show_url_button"><i class="material-icons">remove_red_eye</i></a>
                                         <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue" href="#" title="Share" data-beloworigin="true" data-activates="dropdown10"><i class="material-icons">share</i></a>
                           <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue" href="#" title="More actions" data-activates="dropdownButtons" id="more_actions"><i class="material-icons">more_horiz</i></a>
-
                       </div>
                   </div>
-
                   </div>
-
-
-
                         </div>
-
                     </div>
+
+                </li>
+            <li class="collection-item" style="padding-left: 5px; padding-top: 0px; padding-bottom: 0px; padding-right: 0px">
                     <div class="row" style="margin: 0px;">
                         <div class="col s12 m12 l12 xl12">
-                            <i class="material-icons circle blue-grey">description</i>
+                     <!--       <i class="material-icons circle blue-grey">description</i> -->
                             <div>
-                                <div class="row" style="margin-bottom: 0px">
-                                    <div class="col s12 m12 l7 xl7">
+                                <div class="row" style="margin-bottom: 0px; padding: 3px">
+                                    <div class="col s12 m12 l12 xl12">
                                             <h5>{{link.title | linebreaksbr}}</h5>
                                     </div>
 
                                     </div>
                                 </div>
+
+
                                 <div id="modal10" class="modal">
                                     <div class="modal-content">
                                         <div class="row">
@@ -133,15 +132,21 @@
                                         </div>
                                     </div>
                                 </div>
+
+
                             </div>
-                            <hr>
+                    </div>
+                <li>
+                <li class="collection-item avatar">
+                <i class="material-icons circle blue-grey">description</i>
                             <span id = "DESCR" style="font-size: 100%">{{link.description}}</span>
                             <span id="url" style="display: none"><a href="{{ link.url }}" target="_blank"> {{ link.url }} </a></span>
-                        </div>
+
                 </li>
                 <!-- Open Graph data -->
                 {% if link.og_data.title != None %}
                 <li class="collection-item avatar " style="padding: 4px">
+                    <a href="{{ ITEM.link.url }}" style="text-decoration: none; color: black" target="_blank">
                     <div class="card hoverable horizontal">
                         {% if link.og_data.image != None %}
                         <div class="card-image" style="margin: 4px;" id="card_image_div">
@@ -151,10 +156,13 @@
                         <div class="card-stacked">
                             <div class="card-content" style="padding: 2px">
                                 <span><span style="font-weight: bolder">{{ link.og_data.title }}</span></span>
+                                {% if link.og_data.description != None %}
                                 <p style="font-size: 80%">{{ link.og_data.description }}</p>
+                                    {% endif %}
                             </div>
                         </div>
                     </div>
+                    </a>
                 </li>
                 {% endif %}
                 <!-- End of open graph data -->
@@ -187,34 +195,33 @@
                     </li>
                     -->
                 <!-- Tags -->
-                <li class="collection-item avatar">
-                    <i class="material-icons circle blue-grey">assignment</i>
-                    <span class="title blue-grey-text">Tags</span>
-                    <p>
+                <li class="collection-item avatar" style=" min-height: 10px">
+                     <i class="material-icons circle blue-grey">assignment</i>
+                  <!--  <span class="title blue-grey-text">Tags</span> -->
+                    <p style="margin: 1px; padding: 4px;">
                         {% for tag in link.tags.all %}
                     <div class="chip">
                         <a href = "/../tags/{{tag.id}}/{{tag.name}}/" style="text-decoration: none">{{tag.name}}</a>
                     </div>
-                    </a>
                     {% endfor %}
                     </p>
                 </li>
                 {% if request.user.is_authenticated %}
                 <li class="collection-item avatar" style="padding: 0px; margin: 0px">
                     <div class="row" style="padding: 0px; margin: 0px">
-                        <div class="col s6 m4 l4 xl4" >
+                        <div class="col s4 m4 l4 xl4" >
                             <span> <sup id="upvotes_count">{{ upvotes }}</sup><sup> upvote(s)</sup></span>
                             <button class="btn green upvote upvote_upper_button waves-effect waves-light {{upvote_button}} center" id="upvote_button" link_id = "{{ link.id }}"> <i class="material-icons" style="color: white; background-color: transparent">thumb_up</i> </button>
                         </div>
-                        <div class="col s6 m4 l4 xl4" >
+                        <div class="col s4 m4 l4 xl4" >
                             <span> <sup id="downvotes_count">{{ downvotes }} </sup><sup> downvote(s)</sup></span>
                             <button title="downvote" class="btn waves-effect waves-light  red btn-block white-text downvote downvote_upper_button {{ downvote_button }}" id="downvote_button" link_id = "{{ link.id }}" > <i class="material-icons" style="color: white; background-color: transparent" >thumb_down</i></button>
                         </div>
-                        <div class="col s12 m4 l4 xl4">
+                        <div class="col s4 m4 l4 xl4">
                             <span>
                             <sup><span id="num_comments1">{{link.comment_set.count}}</span> comment(s)</sup>
                             </span>
-                            <button class="btn blue waves-light center waves-effect" id="comments_tab">Comments</button>
+                            <button title="comment" class="btn waves-effect waves-light blue btn-block white-text" id="comments_tab" link_id = "{{ link.id }}" > <i class="material-icons" style="color: white; background-color: transparent" >comment</i></button>
                         </div>
                        <div class="col s12 m12 l12 xl12 hide-on-large-only">
                             <br><br>
