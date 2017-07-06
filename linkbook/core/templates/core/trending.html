@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load i18n %}
+{% block title %}Trending{% endblock %}
+
+
+
+{% block body %}
+	<div class="container center col s12 m8 l8 xl8" style="margin-top: 10%;">
+            {% load taggit_templatetags2_tags %}
+            {% include "taggit_templatetags2/tagcanvas_include_js_static.html" %}
+            {% include_tagcanvas 'tag' '400 px' '400 px' 'view_tag' 'links.Link' %}
+    </div>
+    <script>
+
+        $('.modal').modal();
+
+    </script>
+
+{% endblock body %}

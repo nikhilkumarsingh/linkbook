@@ -138,7 +138,7 @@ def username_slugs(request, username):
             {'user': user, 'view_links':user_links, 'view_books':user_books})
 
     elif action == 'upvoted':
-        upvoted_links = user.profile.upvoted_links.all()
+        upvoted_links = user.profile.upvoted_links.all()    
         return render(request, 'links/view_upvoted_links.html', {'links':upvoted_links})        
 
     else:
@@ -240,3 +240,8 @@ def get_following_list(request):
             row['pic'] = following.pic
             data.append(row)
         return JsonResponse({'data':data})
+
+
+def trending(request):
+    if request.method == 'GET':
+        return render(request, 'core/trending.html')
