@@ -39,6 +39,8 @@ urlpatterns = [
 
     url(r'^tags/(?P<id>\d+)/(?P<tag_name>[-\w]+)/$', linkbook_link_views.view_tag, name='view_tag'),
 
+    url(r'^trending/$', linkbook_core_views.trending, name = 'trending'),
+
     url(r'^book/(?P<id>\d+)/$', linkbook_link_views.book, name='book'),
     url(r'^book/new/$', linkbook_link_views.create_book, name = 'create_book'),
     url(r'^book/(?P<id>\d+)/edit/$', linkbook_link_views.edit_book, name='edit_book'),
