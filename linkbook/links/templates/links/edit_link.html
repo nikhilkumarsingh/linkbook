@@ -10,20 +10,20 @@
 
         <div class="row">
 
-            <div class="col s1 m3 l3"></div>
-            <div class="col s10 m6 l6 card hoverable">
+            <div class="col s1 m3 l3 xl3"></div>
+            <div class="col s10 m6 l6 xl6 card hoverable">
             <h4 class="center">Edit your link<h4>
                 <form method="post" action="/link/{{link.id}}/edit/" role="form">
                 {% csrf_token %}
                     <div class="row">
-                    <div class="col s12 m6 l6">
+                    <div class="col s12 m6 l6 xl6">
                         <div class="input-field">
                             <i class="material-icons prefix">open_in_browser</i>
                             <input type="text" class="input" name="URL" id="URL" value = "{{link.url}}">
                             <label for="URL" class="active">URL</label>
                         </div>
                     </div>
-                    <div class="col s12 m6 l6">
+                    <div class="col s12 m6 l6 xl6">
                         <div class="input-field">
                             <i class="material-icons prefix">title</i>
                             <input type="text" class="input" name="TITLE" id="TITLE" value = "{{link.title}}">
@@ -32,14 +32,14 @@
                     </div>
                 </div>
                     <div class="row">
-                    <div class="col s12 m6 l6">
+                    <div class="col s12 m6 l6 xl6">
                         <div class="input-field">
                         <i class="material-icons prefix">assignment</i>
                         <input type="text" class="input" name="TAGS" id="TAGS" value = "{{tag_text}}">
                         <label for="TAGS" class="active">Tags</label>
                     </div>
                     </div>
-                    <div class="col s12 m6 l6">
+                    <div class="col s12 m6 l6 xl6">
                          <div class="input-field">
                         <i class="material-icons prefix">book</i>
                         <select multiple title="Choose the books in which the current link has to be saved" id="BOOKS" name="BOOKS">
@@ -58,7 +58,7 @@
                 </div>
                     <div class="row">
 
-                    <div class=" col s12 m12 l12">
+                    <div class=" col s12 m12 l12 xl12">
                         <div class="input-field">
                         <i class="material-icons prefix">description</i>
                         <textarea class="input materialize-textarea" name="DESCRIPTION" id="DESCRIPTION">{{link.description}}</textarea>
@@ -70,7 +70,7 @@
                     <br><br>
                 </form>
             </div>
-            <div class="s1 m3 l3"></div>
+            <div class="s1 m3 l3 xl3"></div>
 
         </div>
     </div>
