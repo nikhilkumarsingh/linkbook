@@ -58,12 +58,12 @@
 
 {% for ITEM in all_links %}
 <div class="container" style="padding: 0px; margin: 0px">
-    <div class="row" style="padding: 0px; margin: 0px">
+    <div class="row center" style="padding: 0px; margin: 0px">
         <div class="col s12 m1 l3"></div>
         <div class="col s12 m10 l6">
             <ul class="collection hoverable "  style="border: 1px solid #607d8b" id="list">
                 <li class="collection-item avatar">
-                    <div class="row"  style="padding: 0px; margin: 0px">
+                    <div class="row center"  style="padding: 0px; margin: 0px">
                         <!-- user avatar -->
                         <a href = "{{ITEM.link.user.username}}">
                         <img class="responsive-img circle"  height = "40px" width="40px" src="{{ITEM.link.user.profile.pic}}" /></a>
@@ -71,11 +71,11 @@
                         <sup>{{ ITEM.time }}</sup></span></a>
                         <br><br>
                     </div>
-                    <div class="row" style="margin: 0px;">
+                    <div class="row center" style="margin: 0px;">
                         <div class="col s12 m12 l12">
                             <i class="material-icons circle blue-grey">description</i>
                             <div>
-                                <div class="row" style="margin-bottom: 0px">
+                                <div class="row center" style="margin-bottom: 0px">
                                     <div class="col s12 m12 l7">
                                         <a href = "{{ITEM.link.url}}" target="_blank" class="title">
                                             <h5>{{ITEM.link.title | linebreaksbr}}</h5>
@@ -85,7 +85,7 @@
 
        <!--           <a class='dropdown-button btn' href='#' data-activates='dropdownButtons'>Drop Me!</a> -->
 
-                   <div class="row right right-align" style="margin: 0px; padding: 0px">
+                   <div class="row center right right-align" style="margin: 0px; padding: 0px">
                       <div class="col s12 m12 l12 right right-align" style="margin: 0px; padding: 0px">
 
                           <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue" href="#" title="Show URL" data-activates="dropdown11" id="show_url_button"><i class="material-icons">remove_red_eye</i></a>
@@ -102,7 +102,7 @@
                                 </div>
                                 <div id="modal10" class="modal">
                                     <div class="modal-content">
-                                        <div class="row">
+                                        <div class="row center">
                                             <div class="col s12 m12 l7">
                                                 <div class="title"><a id="link_url" href="{{ ITEM.link.url }}" target="_blank"> {{ ITEM.link.url }}</a>  </div>
                                             </div>
@@ -182,7 +182,7 @@
                 </li>
                 {% if request.user.is_authenticated %}
                 <li class="collection-item avatar" style="padding: 0px; margin: 0px">
-                    <div class="row" style="padding: 0px; margin: 0px">
+                    <div class="row center" style="padding: 0px; margin: 0px">
                         <div class="col s6 m4 l4" >
                             <span> <sup id="upvotes_count">{{ ITEM.upvotes }}</sup><sup> upvote(s)</sup></span>
                             <button class="btn green upvote upvote_upper_button waves-effect waves-light {{ITEM.upvote_button}} center" id="upvote_button" link_id = "{{ ITEM.link.id }}"> <i class="material-icons" style="color: white; background-color: transparent">thumb_up</i> </button>
@@ -213,7 +213,7 @@
                             {{ ITEM.comment_form.as_p }}
                         </div>
                     </form>
-                    <div class="row" style="padding: 0px; margin: 0px">
+                    <div class="row center" style="padding: 0px; margin: 0px">
                         <div class="col s12 m12 l4">
                             <button class="btn blue waves-effect waves-light" id="commentSubmitButton">Comment</button>
                         </div>
@@ -257,7 +257,7 @@
 <!-- Copy to Clipboard Dropdown -->
 <ul id="dropdown11" class="dropdown-content" style="max-width: 200px" >
     <li>
-        <div class="row" style="max-width: 100%; ;overflow-x: scroll; padding: 1%; margin: 0px;">
+        <div class="row center" style="max-width: 100%; ;overflow-x: scroll; padding: 1%; margin: 0px;">
             <span>
             <a  id="link_url" href="{{ ITEM.link.url }}" target="_blank" style="display: inline-block;" > {{ ITEM.link.url }}</a>
             </span>
@@ -271,7 +271,7 @@
     <div class="modal" id="modalDelete">
         <div class="modal-content">
             <div class="container">
-                <div class="row">
+                <div class="row center">
                     <h4 class="center-align red-text flow-text">Are you sure?</h4>
                     <div  class="col s12 m12 l12" style="margin: 2px">
                         <button id="deleteCompletely" class="btn red white-text modalD ">Delete this link completely from all of your books</button>
@@ -325,7 +325,7 @@
                 {
                 	str += '<li class="divider"></li>'
                 		+ '<li class="collection-item avatar commentsListItem">'
-                        + '<div class="row">'
+                        + '<div class="row center">'
                 		+ '<a href="/' + comments[i]['user'] + '/"><img src=' + comments[i]['pic']
                 		+ ' class="responsive-img circle" title=' + comments[i]['user'] + '></a>'
                 		+ '<div class = "col s12 m12 l4 " comments_inside_div commentsListItem">'
@@ -510,7 +510,7 @@
 
 
 
-{% block body %}
+
 
 
 <script>

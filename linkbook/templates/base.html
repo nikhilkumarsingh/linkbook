@@ -2,404 +2,438 @@
 {% load notifications_tags %}
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <!-- This will help in zooming in mobile-->
-        <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <!--Import materialize.css-->
-        <link type="text/css" rel="stylesheet" href="/static/library/css/materialize.css"  media="screen,projection"/>
-        <title>
-            LinkBook | {% block title %}{% endblock %}
-        </title>
-        <script src = "/static/library/js/jquery.js"></script>
-        <script src = '/static/library/js/materialize.js'> </script>
-        <script src = 'https://cdnjs.cloudflare.com/ajax/libs/showdown/1.7.1/showdown.min.js'></script>
-        <link type="text/css" rel="stylesheet" href="/static/library/css/basic.css"  media="screen,projection"/>
-        {% if not request.user.is_authenticated %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- This will help in zooming in mobile-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="/static/library/css/materialize.css" media="screen,projection"/>
+    <title>
+        LinkBook | {% block title %}{% endblock %}
+    </title>
+    <script src="/static/library/js/jquery.js"></script>
+    <script src='/static/library/js/materialize.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/showdown/1.7.1/showdown.min.js'></script>
+    <link type="text/css" rel="stylesheet" href="/static/library/css/basic.css" media="screen,projection"/>
+    {% if not request.user.is_authenticated %}
         <!-- required for social login buttons -->
         <link rel="stylesheet" type="text/css" href="/static/library/css/override_buttons.css">
-        <link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
-        {% endif %}
-        <script src="{% static 'notifications/notify.js' %}" type="text/javascript"></script>
-        
-        <!-- <link type="text/css" rel="stylesheet" href="/static/materialize/css/Color_theme.css" media="screen,projection"> -->
-        {% block head %}
-        {% endblock %}
-    </head>
-    <body>
-        <nav class=" white-text" style="background-color: #26a69a">
-            <div class="nav-wrapper">
-                <a href="#" class="center brand-logo" >LinkBook</a>
-                <a href="#" data-activates="mobile-demo"  class="button-collapse" ><i class="material-icons">menu</i></a>
+        <link rel="stylesheet" type="text/css"
+              href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+    {% endif %}
+    <script src="{% static 'notifications/notify.js' %}" type="text/javascript"></script>
+
+    <!-- <link type="text/css" rel="stylesheet" href="/static/materialize/css/Color_theme.css" media="screen,projection"> -->
+    {% block head %}
+    {% endblock %}
+</head>
+<body>
+<nav class=" white-text" style="background-color: #26a69a">
+    <div class="nav-wrapper">
+        <a href="#" class="center brand-logo">LinkBook</a>
+        <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
 
 
-            {% if request.user.is_authenticated %}
+        {% if request.user.is_authenticated %}
 
-                <ul class="hide-on-med-and-down right">
-                    <li><a href="/logout/?next={{request.path}}">Logout</a></li>
-                </ul>
-                <ul class="right">
-              <li><a class='dropdown-button btn-floating waves-effect waves-light green' data-beloworigin="true" href='#!' data-activates='NOTIFS' id="MYNOTIF" data-constrainwidth="false" height = "50px"><i id = "NOTIF_ICON" class="material-icons">notifications</i></a></li>
+            <ul class="hide-on-med-and-down right">
+                <li><a href="/logout/?next={{ request.path }}">Logout</a></li>
+            </ul>
+            <ul class="right">
+                <li><a class='dropdown-button btn-floating waves-effect waves-light green' data-beloworigin="true"
+                       href='#!' data-activates='NOTIFS' id="MYNOTIF" data-constrainwidth="false" height="50px"><i
+                        id="NOTIF_ICON" class="material-icons">notifications</i></a></li>
 
             </ul>
-            {% endif %}
+        {% endif %}
 
-                <ul class="hide-on-med-and-down left">
-                    <li class="active left"><a href="/">Home</a></li>
-                    <li>
-                        <a class="left" href="#">About Us </a>
-                    </li>
-                    <li><a class="left" href="#">Project</a></li>
-                </ul>
-                <ul class="hide-on-med-and-down right">
-                    {% if not request.user.is_authenticated %}
-                    <li><a class="right" href="#modal1">Login</a></li>
-                    <li ><a href="/signup" class="right">Sign Up</a></li>
-                    {% else %}
-                    <li>
-                        <img class="responsive-img circle hoverable"  style= "vertical-align: middle; cursor: pointer;" height = "40px" width="40px"   src="{{request.user.profile.pic}}" id="userProfilePicNavbar">&nbsp;{{request.user.first_name}}
-                    </li>
-                    <li><a class="btn-floating  waves-effect waves-light green" href="#modal2" title="Create new book" ><i class="material-icons">queue</i></a></li>
-                    <li><a class="btn-floating waves-effect waves-light green" href="#modal3" title="Create new link" ><i class="material-icons">note_add</i></a>
-                    </li>
-                  <!--  <li><a class='dropdown-button btn-floating waves-effect waves-light green' data-beloworigin="true" href='#!' data-activates='NOTIFS' id="MYNOTIF" data-constrainwidth="false" height = "50px"><i id = "NOTIF_ICON" class="material-icons">notifications</i></a></li> -->
-
-                    {% endif %}
-                </ul>
-                <ul class="side-nav" id="mobile-demo">
-                {%  if request.user.is_authenticated %}
-                <li><div class="user-view">
-      <a href="/{{ request.user }}/"><img class="responsive-img small circle" src="{{ request.user.profile.pic }}"><div class="black-text center-align"> {{ request.user }} </div></a>
-    </div></li>
-                {% endif %}
-                    <li class="active "><a href="/">Home</a></li>
-                    <li><a href="#">About Us </a></li>
-                    <li><a  href="#">Project</a></li>
-                    {%  if not request.user.is_authenticated %}
-                    <li><a href="#modal1">Login</a></li>
-                    <li><a href="signup" > Sign Up</a></li>
-                    {% else %}
-
-                    <li><a  href="#modal2" title="Create new book" ><i class="material-icons">queue</i>Create new book</a>
-                    </li>
-                    <li><a href="#modal3" title="Create new link" ><i class="material-icons">note_add</i>Create new  link</a>
-                    </li>
-
-                    <li><a href="/logout/?next={{request.path}}">Logout</a></li>
-                    {% endif %}
-                </ul>
-
-            </div>
-        </nav>
-        <!-- Dropdown Structure -->
-        <ul id='NOTIFS' class='dropdown-content' style="max-width: 90%; min-width: 50%">
-
+        <ul class="hide-on-med-and-down left">
+            <li class="active left"><a href="/">Home</a></li>
+            <li>
+                <a class="left" href="#">About Us </a>
+            </li>
+            <li><a class="left" href="#">Project</a></li>
         </ul>
-        <!-- Notifications Modal -->
-            <div id="modal5" class="modal modal-fixed-footer">
-                <div class="modal-content">
-                    <div class="container">
-                        <ul class="collection" id="mobile-notifications">
+        <ul class="hide-on-med-and-down right">
+            {% if not request.user.is_authenticated %}
+                <li><a class="right" href="#modal1">Login</a></li>
+                <li><a href="/signup" class="right">Sign Up</a></li>
+            {% else %}
+                <li>
+                    <img class="responsive-img circle hoverable" style="vertical-align: middle; cursor: pointer;"
+                         height="40px" width="40px" src="{{ request.user.profile.pic }}" id="userProfilePicNavbar">&nbsp;{{ request.user.first_name }}
+                </li>
+                <li><a class="btn-floating  waves-effect waves-light green" href="#modal2" title="Create new book"><i
+                        class="material-icons">queue</i></a></li>
+                <li><a class="btn-floating waves-effect waves-light green" href="#modal3" title="Create new link"><i
+                        class="material-icons">note_add</i></a>
+                </li>
+                <!--  <li><a class='dropdown-button btn-floating waves-effect waves-light green' data-beloworigin="true" href='#!' data-activates='NOTIFS' id="MYNOTIF" data-constrainwidth="false" height = "50px"><i id = "NOTIF_ICON" class="material-icons">notifications</i></a></li> -->
 
-                        </ul>
+            {% endif %}
+        </ul>
+        <ul class="side-nav" id="mobile-demo">
+            {% if request.user.is_authenticated %}
+                <li>
+                    <div class="user-view">
+                        <a href="/{{ request.user }}/"><img class="responsive-img small circle"
+                                                            src="{{ request.user.profile.pic }}">
+                            <div class="black-text center-align"> {{ request.user }} </div>
+                        </a>
+                    </div>
+                </li>
+            {% endif %}
+            <li class="active "><a href="/">Home</a></li>
+            <li><a href="#">About Us </a></li>
+            <li><a href="#">Project</a></li>
+            {% if not request.user.is_authenticated %}
+                <li><a href="#modal1">Login</a></li>
+                <li><a href="signup"> Sign Up</a></li>
+            {% else %}
+
+                <li><a href="#modal2" title="Create new book"><i class="material-icons">queue</i>Create new book</a>
+                </li>
+                <li><a href="#modal3" title="Create new link"><i class="material-icons">note_add</i>Create new link</a>
+                </li>
+
+                <li><a href="/logout/?next={{ request.path }}">Logout</a></li>
+            {% endif %}
+        </ul>
+
+    </div>
+</nav>
+<!-- Dropdown Structure -->
+<ul id='NOTIFS' class='dropdown-content' style="max-width: 90%; min-width: 50%">
+
+</ul>
+<!-- Notifications Modal -->
+<div id="modal5" class="modal modal-fixed-footer">
+    <div class="modal-content">
+        <div class="container">
+            <ul class="collection" id="mobile-notifications">
+
+            </ul>
+        </div>
+    </div>
+    <div class="modal-footer">
+
+    </div>
+</div>
+<!-- LOGIN modal -->
+<div id="modal1" class="modal">
+    <div class="modal-content">
+        <div class="container">
+            <div class="row center">
+                <div class="col s12 m2 l2"></div>
+                <div class="col s12 m8 l8">
+                    <h5 class="center center-align blue-grey-text">LinkBook</h5>
+                </div>
+                <div class="col s12 m2 l2"></div>
+            </div>
+            <div class="row center">
+                <div class="col s12 m4 l4">
+                    <div>
+                        <a href="{% url 'social:begin' 'github' %}?next={{ request.path }}">
+                            <button class="btn black lighten-3 white-text btn-block "><span class="fa fa-github"
+                                                                                            style="text-transform: lowercase"> | continue with GitHub</span>
+                            </button>
+                        </a>
+                    </div>
+                    <br>
+                    <div>
+                        <a href="{% url 'social:begin' 'twitter' %}?next={{ request.path }}">
+                            <button class="btn btn-info blue white-text btn-block"><span class="fa fa-twitter"
+                                                                                         style="text-transform: lowercase"> | continue with Twitter</span>
+                            </button>
+                        </a>
+                    </div>
+                    <br>
+                    <div>
+                        <a href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}">
+                            <button class="btn btn-primary btn-block"><span class="fa fa-facebook"
+                                                                            style="text-transform: lowercase"> | continue with Facebook</span>
+                            </button>
+                        </a>
+                    </div>
+                    <br>
+                    <div>
+                        <a href="{% url 'social:begin' 'google-oauth2' %}?next={{ request.path }}">
+                            <button class="browser-default btn btn-danger btn-block"><span class="fa fa-google-plus"
+                                                                                           style="text-transform: lowercase"> | continue with google</span>
+                            </button>
+                        </a>
+                    </div>
+                    <br>
+                    <div>
+                        <a href="/signup/" class="center center-align">
+                            <button class="btn btn-default btn-block"><span class="fa fa-user"
+                                                                            style="text-transform: lowercase"> | Sign Up locally</span>
+                            </button>
+                        </a>
                     </div>
                 </div>
-                <div class="modal-footer">
-
+                <div class="col s12 m1 l1 hide-on-small-and-down" style="border-left: 1px solid black">
+                    <br><br><br><br><br><br><br><br><br><br><br><br><br>
+                </div>
+                <div class="col s12 m7 l7">
+                    <form method="post" action="{% url 'login' %}?next={{ request.path }}" role="form">
+                        {% csrf_token %}
+                        <div class="input-field{% if form.username.errors %} has-error{% endif %}">
+                            <label for="username" class="active">{% trans 'Username' %}</label>
+                            <input type="text" class="form-control" id="username" name="username">
+                            {% for error in form.username.errors %}
+                                <span class="red-text">{{ error }}</span><br>
+                            {% endfor %}
+                        </div>
+                        <div class="input-field{% if form.password.errors %} has-error{% endif %}">
+                            <label for="password" class="active">{% trans 'Password' %}</label>
+                            <input type="password" id="password" name="password">
+                            {% for error in form.password.errors %}
+                                <span class="red-text">{{ error }}</span><br>
+                            {% endfor %}
+                        </div>
+                        <button type="submit" class="btn waves-effect waves-light">{% trans 'Log in' %}</button>
+                        <br><br><br>
+                    </form>
                 </div>
             </div>
-        <!-- LOGIN modal -->
-        <div id="modal1" class="modal">
-            <div class="modal-content">
-                <div class="container">
-                    <div class="row">
-                        <div class="col s12 m2 l2"></div>
-                        <div class="col s12 m8 l8">
-                            <h5 class="center center-align blue-grey-text">LinkBook</h5>
-                        </div>
-                        <div class="col s12 m2 l2"></div>
-                    </div>
-                    <div class="row">
-                        <div class="col s12 m4 l4">
-                            <div>
-                                <a href="{% url 'social:begin' 'github' %}?next={{request.path}}"><button class="btn black lighten-3 white-text btn-block "><span class="fa fa-github" style="text-transform: lowercase"> | continue with GitHub</span></button></a>
-                            </div>
-                            <br>
-                            <div>
-                                <a href="{% url 'social:begin' 'twitter' %}?next={{request.path}}"><button class="btn btn-info blue white-text btn-block"><span class="fa fa-twitter" style="text-transform: lowercase"> | continue with Twitter</span></button> </a>
-                            </div>
-                            <br>
-                            <div>
-                                <a href="{% url 'social:begin' 'facebook' %}?next={{request.path}}"><button class="btn btn-primary btn-block"><span class="fa fa-facebook" style="text-transform: lowercase"> | continue with Facebook</span></button></a>
-                            </div>
-                            <br>
-                            <div>
-                                <a href="{% url 'social:begin' 'google-oauth2' %}?next={{request.path}}"> <button class="browser-default btn btn-danger btn-block"><span class="fa fa-google-plus" style="text-transform: lowercase"> | continue with google</span> </button> </a>
-                            </div>
-                            <br>
-                            <div>
-                                <a href = "/signup/" class="center center-align"><button class="btn btn-default btn-block"><span class="fa fa-user" style="text-transform: lowercase"> | Sign Up locally</span></button></a>
-                            </div>
-                        </div>
-                        <div class="col s12 m1 l1 hide-on-small-and-down" style="border-left: 1px solid black">
-                            <br><br><br><br><br><br><br><br><br><br><br><br><br>
-                        </div>
-                        <div class="col s12 m7 l7">
-                            <form method="post" action="{% url 'login' %}?next={{request.path}}" role="form">
-                                {% csrf_token %}
-                                <div class="input-field{% if form.username.errors %} has-error{% endif %}">
-                                    <label for="username" class="active">{% trans 'Username' %}</label>
-                                    <input type="text" class="form-control" id="username" name="username">
-                                    {% for error in form.username.errors %}
-                                    <span class="red-text">{{ error }}</span><br>
-                                    {% endfor %}
-                                </div>
-                                <div class="input-field{% if form.password.errors %} has-error{% endif %}">
-                                    <label for="password" class="active">{% trans 'Password' %}</label>
-                                    <input type="password"  id="password" name="password">
-                                    {% for error in form.password.errors %}
-                                    <span class="red-text">{{ error }}</span><br>
-                                    {% endfor %}
-                                </div>
-                                <button type="submit" class="btn waves-effect waves-light">{% trans 'Log in' %}</button>
-                                <br><br><br>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col s12 m4 l4"></div>
-                        <div class="col s12 m4 l4 center center-align">
-                        </div>
-                        <div class="col s12 m4 l4"></div>
-                    </div>
+            <div class="row center">
+                <div class="col s12 m4 l4"></div>
+                <div class="col s12 m4 l4 center center-align">
                 </div>
+                <div class="col s12 m4 l4"></div>
             </div>
         </div>
-        <!-- NEW BOOK modal -->
-        <div id="modal2" class="modal">
-            <div class="modal-content">
-                <h4 class="center">New Book</h4>
+    </div>
+</div>
+<!-- NEW BOOK modal -->
+<div id="modal2" class="modal">
+    <div class="modal-content">
+        <h4 class="center">New Book</h4>
 
-                <form method="post" action="{% url 'create_book' %}" role="form">
-                    {% csrf_token %}
-                    <div class="input-field">
+        <form method="post" action="{% url 'create_book' %}" role="form">
+            {% csrf_token %}
+            <div class="input-field">
+                <i class="material-icons prefix">title</i>
+                <input class="input" type="text" id="TITLE" name="TITLE" maxlength="30" data-length="30">
+                <label for="TITLE">Title</label>
+            </div>
+            <div class="input-field">
+                <div class="input-field">
+                    <i class="material-icons prefix">description</i>
+                    <textarea class="materialize-textarea" type="text" id="DESCRIPTION" name="DESCRIPTION"
+                              maxlength="255" data-length="255"></textarea>
+                    <label for="DESCRIPTION">Description</label>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-default">{% trans 'Save' %}</button>
+            <br><br>
+        </form>
+    </div>
+</div>
+<!-- NEW LINK MODAL -->
+<div id="modal3" class="modal">
+    <div class="modal-content">
+        <h4 class="center">New Link</h4>
+        <form method="post" action="{% url 'create_link' %}" role="form">
+            {% csrf_token %}
+            <div class="row center">
+                <div class="col s12 m6 l6">
+                    <div class="input-field ">
+                        <i class="material-icons prefix">open_in_browser</i>
+                        <input type="url" class="input validate" name="URL" id="URL" autocomplete="autocomplete"
+                               required>
+                        <label for="URL" class="active"
+                               data-error="Invalid URL, Example(Valid URL) : https://www.google.co.in." data-success="">URL</label>
+                    </div>
+                </div>
+                <div class="col s12 m6 l6">
+                    <div class="input-field ">
                         <i class="material-icons prefix">title</i>
-                        <input class="input" type="text" id="TITLE" name="TITLE" maxlength="30" data-length="30">
-                        <label for="TITLE">Title</label>
+                        <input type="text" class="input" name="TITLE" id="TITLE" autocomplete="autocomplete" required
+                               maxlength="30" data-length="30">
+                        <label for="TITLE" class="active">Title</label>
                     </div>
+                </div>
+            </div>
+            <div class="row center">
+                <div class="col s12 m6 l6">
+                    <div class="input-field ">
+                        <i class="material-icons prefix">assignment</i>
+                        <input type="text" class="input" name="TAGS" id="TAGS">
+                        <label for="TAGS" class="active">Tags</label>
+                    </div>
+                </div>
+                <div class="col s12 m6 l6">
+                    <div class="input-field ">
+                        <i class="material-icons prefix">book</i>
+                        <select multiple title="Choose the books in which the current link has to be saved" name="BOOKS"
+                                id="BOOKS">
+                            <label class="active" for="BOOKS">BOOKS</label>
+                            <option selected disabled>Choose Books here</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row center">
+                <div class=" col s12 m12 l12">
                     <div class="input-field">
-                        <div class="input-field">
-                            <i class="material-icons prefix">description</i>
-                            <textarea class="materialize-textarea" type="text" id="DESCRIPTION" name="DESCRIPTION" maxlength="255" data-length="255"></textarea>
-                            <label for="DESCRIPTION">Description</label>
-                        </div>
+                        <i class="material-icons prefix">description</i>
+                        <textarea class="input materialize-textarea" name="DESCRIPTION" id="DESCRIPTION"
+                                  maxlength="1000" data-length="1000"></textarea>
+                        <label for="DESCRIPTION" class="active">Description</label>
                     </div>
-                    <button type="submit" class="btn btn-default">{% trans 'Save' %}</button>
-                    <br><br>
-                </form>
+                </div>
             </div>
-        </div>
-        <!-- NEW LINK MODAL -->
-        <div id="modal3" class="modal">
-            <div class="modal-content">
-                <h4 class="center">New Link</h4>
-                <form method="post" action="{% url 'create_link' %}" role="form">
-                    {% csrf_token %}
-                    <div class="row">
-                        <div class="col s12 m6 l6">
-                            <div class="input-field ">
-                                <i class="material-icons prefix">open_in_browser</i>
-                                <input type="url" class="input validate" name="URL" id="URL" autocomplete="autocomplete" required>
-                                <label for="URL" class="active" data-error="Invalid URL, Example(Valid URL) : https://www.google.co.in." data-success="">URL</label>
-                            </div>
-                        </div>
-                        <div class="col s12 m6 l6">
-                            <div class="input-field ">
-                                <i class="material-icons prefix">title</i>
-                                <input type="text" class="input" name="TITLE" id="TITLE" autocomplete="autocomplete" required maxlength="30" data-length="30">
-                                <label for="TITLE" class="active">Title</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col s12 m6 l6">
-                            <div class="input-field ">
-                                <i class="material-icons prefix">assignment</i>
-                                <input type="text" class="input" name="TAGS" id="TAGS" >
-                                <label for="TAGS" class="active">Tags</label>
-                            </div>
-                        </div>
-                        <div class="col s12 m6 l6">
-                            <div class="input-field ">
-                                <i class="material-icons prefix">book</i>
-                                <select multiple title="Choose the books in which the current link has to be saved" name="BOOKS" id="BOOKS">
-                                    <label class="active" for="BOOKS">BOOKS</label>
-                                    <option selected disabled>Choose Books here</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class=" col s12 m12 l12">
-                            <div class="input-field">
-                                <i class="material-icons prefix">description</i>
-                                <textarea class="input materialize-textarea" name="DESCRIPTION" id="DESCRIPTION" maxlength="1000" data-length="1000"></textarea>
-                                <label for="DESCRIPTION" class="active">Description</label>
-                            </div>
-                        </div>
-                    </div>
-                    <button type="submit" class="btn">{% trans 'Save' %}</button>
-                </form>
-            </div>
-        </div>
-        {% block body %}
-        {% endblock body %}
-        <script>
+            <button type="submit" class="btn">{% trans 'Save' %}</button>
+        </form>
+    </div>
+</div>
+{% block body %}
+{% endblock body %}
+<script>
 
-        function ResetForm()
-        {
-            $(this).closest('form').find("input[type=text], textarea, input[type=password] select, input[type=url]").val("")
-        }
+    function ResetForm() {
+        $(this).closest('form').find("input[type=text], textarea, input[type=password] select, input[type=url]").val("")
+    }
 
-            // CSRF handling
-            function getCookie(name) {
-              var cookieValue = null;
-              if (document.cookie && document.cookie != '') {
-                  var cookies = document.cookie.split(';');
-                  for (var i = 0; i < cookies.length; i++) {
-                      var cookie = jQuery.trim(cookies[i]);
-                          // Does this cookie string begin with the name we want?
-                          if (cookie.substring(0, name.length + 1) == (name + '=')) {
-                              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                              break;
-                          }
-                      }
-                  }
-                  return cookieValue;
-              }
-              var csrftoken = getCookie('csrftoken');
-              function csrfSafeMethod(method) {
-                  // these HTTP methods do not require CSRF protection
-                  return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-              }
-              $.ajaxSetup({
-                  beforeSend: function(xhr, settings) {
-                      if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-                          xhr.setRequestHeader("X-CSRFToken", csrftoken);
-                      }
-                  }
-              });
-            
-            
-              function LoadNotifications(param){
-                var books = $("#BOOKS");
-                var notifs = $("#NOTIFS");
-                var notif_master = $("#MYNOTIF");
-                $.ajax({ 
-                 url: '/navbar/',
-                 data: {'notif':param},
-                 type: 'post',
-                 success :function(data, status){
-                    console.log(data);
-            
-                            // bind user books
-                            if(param == 1){
-                                str = '<option selected disabled>Choose Books here</option>';
-                                for(var i = 0;  i < data['books'].length; i++){
-                                    str +=('<option>' + data['books'][i] + '</option>');
-                                }
-                                books.html(str);
-                                books.material_select();
-                            }
-
-                            if(data['new_notifs'] === false){
-                                notif_master.removeClass('pulse');
-                                notif_master.removeClass('blue');
-                                notif_master.addClass('green');
-
-                                if(param === 0){
-                                    return;
-                                }
-                            }else{
-                                notif_master.removeClass('green');
-                                notif_master.addClass('pulse');
-                                notif_master.addClass('blue');
-                            }
-            
-
-                            str = '';
-                            for( i = 0; i < data['notifs'].length;i++)
-                            {
-                                if (data['notifs'][i]['unread']){
-                                        //give shading here
-                                        str += '<li class=" notifications_unread collection-item">';
-                                    }
-                                    else{
-                                        str += '<li class="collection-item">';
-                                    }
-            
-                                    str += ("<a style='max-width : 100%; padding : 1px; margin : 1px'  href=" + data['notifs'][i]['url'] + ">"
-                                            + "<img src=" + data['notifs'][i]['pic'] + " height=20px width=20px/> <span class='notifications_normal'>"
-                                            + data['notifs'][i]['text'] + "</span></a></li>");
-                                str += '<li class="divider"></li>'
-                            }
-            
-                                if(str === '')
-                                {
-                                    str = '<li>No notifications</li>';
-                                    notif_master.removeClass('pulse');
-                                    notif_master.removeClass('blue');
-                                    notif_master.addClass('green');
-                                }
-            
-                                // bind notifications
-                                notifs.html(str);
-                            }
-                        });
+    // CSRF handling
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
             }
+        }
+        return cookieValue;
+    }
+    var csrftoken = getCookie('csrftoken');
+    function csrfSafeMethod(method) {
+        // these HTTP methods do not require CSRF protection
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+    $.ajaxSetup({
+        beforeSend: function (xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
+    });
 
-            
-            $(document).ready(function(){
-                {% if request.user.is_authenticated %}
-                    //initialize
-                    var books = $("#BOOKS");
-                    var notifs = $("#NOTIFS");
-                    var notif_master = $("#MYNOTIF");
-            
-                    LoadNotifications(1);
+
+    function LoadNotifications(param) {
+        var books = $("#BOOKS");
+        var notifs = $("#NOTIFS");
+        var notif_master = $("#MYNOTIF");
+        $.ajax({
+            url: '/navbar/',
+            data: {'notif': param},
+            type: 'post',
+            success: function (data, status) {
+                console.log(data);
+
+                // bind user books
+                if (param == 1) {
+                    str = '<option selected disabled>Choose Books here</option>';
+                    for (var i = 0; i < data['books'].length; i++) {
+                        str += ('<option>' + data['books'][i] + '</option>');
+                    }
+                    books.html(str);
                     books.material_select();
-                    notifs.material_select(true);
-                    notif_master.dropdown();
-                    window.setInterval(LoadNotifications, 6000, 0);
-                {% endif %}
-            
-                // to load user profile url on click 
-                $(".button-collapse").sideNav();
-                $('select').material_select();
-                $('#userProfilePicNavbar').click(function () {
-                    var url = "/" + "{{ request.user.username }}";
-                    window.location.href = url;
-                });
-                // to auto-resize descrption field
-                $('#DESCRIPTION').trigger('autoresize');
-                $('.chips').material_chip();
-                $('#TITLE, #DESCRIPTION').characterCounter();
-            });
-            
-            
-            $("#MYNOTIF").click(function () {
-                var notif_master = $("#MYNOTIF");
-                notif_master.removeClass('pulse');
-                notif_master.removeClass('blue');
-                notif_master.addClass('green');
-                $.ajax({
-                    url: '/inbox/notifications/mark-all-as-read/',
-                    type: 'get'
-                });
-            });
-            
-        </script>
-    </body>
+                }
+
+                if (data['new_notifs'] === false) {
+                    notif_master.removeClass('pulse');
+                    notif_master.removeClass('blue');
+                    notif_master.addClass('green');
+
+                    if (param === 0) {
+                        return;
+                    }
+                } else {
+                    notif_master.removeClass('green');
+                    notif_master.addClass('pulse');
+                    notif_master.addClass('blue');
+                }
+
+
+                str = '';
+                for (i = 0; i < data['notifs'].length; i++) {
+                    if (data['notifs'][i]['unread']) {
+                        //give shading here
+                        str += '<li class=" notifications_unread collection-item">';
+                    }
+                    else {
+                        str += '<li class="collection-item">';
+                    }
+
+                    str += ("<a style='max-width : 100%; padding : 1px; margin : 1px'  href=" + data['notifs'][i]['url'] + ">"
+                    + "<img src=" + data['notifs'][i]['pic'] + " height=20px width=20px/> <span class='notifications_normal'>"
+                    + data['notifs'][i]['text'] + "</span></a></li>");
+                    str += '<li class="divider"></li>'
+                }
+
+                if (str === '') {
+                    str = '<li>No notifications</li>';
+                    notif_master.removeClass('pulse');
+                    notif_master.removeClass('blue');
+                    notif_master.addClass('green');
+                }
+
+                // bind notifications
+                notifs.html(str);
+            }
+        });
+    }
+
+
+    $(document).ready(function () {
+        {% if request.user.is_authenticated %}
+            //initialize
+            var books = $("#BOOKS");
+            var notifs = $("#NOTIFS");
+            var notif_master = $("#MYNOTIF");
+
+            LoadNotifications(1);
+            books.material_select();
+            notifs.material_select(true);
+            notif_master.dropdown();
+            window.setInterval(LoadNotifications, 6000, 0);
+        {% endif %}
+
+        // to load user profile url on click
+        $(".button-collapse").sideNav();
+        $('select').material_select();
+        $('#userProfilePicNavbar').click(function () {
+            var url = "/" + "{{ request.user.username }}";
+            window.location.href = url;
+        });
+        // to auto-resize descrption field
+        $('#DESCRIPTION').trigger('autoresize');
+        $('.chips').material_chip();
+        $('#TITLE, #DESCRIPTION').characterCounter();
+    });
+
+
+    $("#MYNOTIF").click(function () {
+        var notif_master = $("#MYNOTIF");
+        notif_master.removeClass('pulse');
+        notif_master.removeClass('blue');
+        notif_master.addClass('green');
+        $.ajax({
+            url: '/inbox/notifications/mark-all-as-read/',
+            type: 'get'
+        });
+    });
+
+</script>
+</body>
 </html>
 
