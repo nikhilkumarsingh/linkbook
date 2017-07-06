@@ -43,13 +43,13 @@
         }
     </style>
     <div class="container">
-        <div class="row" style="margin: 1px; padding: 1px">
+        <div class="row center" style="margin: 1px; padding: 1px">
             <div class="col s12 m12 l12">
                 <ul class="collapsible popout" data-collapsible="accordion">
                     {% for book in view_books %}
                     <li>
                         <div class="collapsible-header blue-grey" >
-                            <div class="row white-text" style="padding: 0px; margin: 0px ">
+                            <div class="row center white-text" style="padding: 0px; margin: 0px ">
                                 <div class="col s12 m6 l6">
                                         <i class="material-icons">whatshot</i>{{book.title}}
                                 </div>
@@ -80,7 +80,7 @@
                             <div class="modal-content" style="height: 100%">
                                 <form action="/import/{{book.id}}/" method="post" role="form">
                                 {% csrf_token %}
-                                <div class="row">
+                                <div class="row center">
                                     <h5 class="center-align">Import Links</h5>
                                 </div>
                                     <div class="input-field">
@@ -97,7 +97,7 @@
                                 <button type="submit" class="btn submit">Submit</button>
                                 </form>
 
-                            <div class="row">
+                            <div class="row center">
                                 <div class="col s1 m1 1l"></div>
                                 <div class="col s10 m10 1l0 flow-text center-align">
                                     <br>
@@ -114,7 +114,7 @@
     <div class="modal" id="modalDelete{{ book.id }}">
         <div class="modal-content">
             <div class="container">
-                <div class="row">
+                <div class="row center">
                     <h4 class="center-align red-text flow-text">Are you sure?</h4>
                     <div  class="col s12 m12 l12 center center-align" style="margin: 2px">
                         <button class="btn red white-text deleteCompletely waves-effect waves-light" value="{{book.id}}">Delete this book</button>
@@ -129,7 +129,7 @@
     </div>
                         </div>
                         <div class="collapsible-body">
-                            <div class="row" style="padding: 2%">
+                            <div class="row center" style="padding: 2%">
                             {% for link in book.link_set.all %}
                                 <div class="col s12 m12 l6">
                                 <div class="card card1 horizontal hoverable blue-grey white-text lighten-1">
@@ -165,7 +165,7 @@
                                         <div class="modal" id="modalRemove{{ book.id }}{{ link.id }}">
                                             <div class="modal-content">
                                                 <div class="container">
-                                                    <div class="row">
+                                                    <div class="row center">
                                                         <h4 class="center-align red-text flow-text">Are you sure?</h4>
                                                         <div  class="col s12 m12 l12 center center-align" style="margin: 2px">
                                                             <button class="btn red white-text RemoveButton waves-effect waves-light" value="{{book.id}}-{{ link.id }}" >Remove the link from this book</button>
@@ -186,7 +186,7 @@
                            </div>
                                 </div>
                             {% empty %}
-                                <div class="row">
+                                <div class="row center">
                                     <div class="col s12 m12 l4"></div>
                                     <div class="col s12 m12 l4 flow-text center">
                                         No links in this Book. Empty!
@@ -204,7 +204,7 @@
 
                     <li>
                         <div class="collapsible-header blue-grey lighten-3">
-                            <div class="row white-text" style="padding: 0px; margin: 0px ">
+                            <div class="row center white-text" style="padding: 0px; margin: 0px ">
                                 <div class="col s12 m6 l6">
                                         <i class="material-icons">whatshot</i>Universal Book
                                 </div>
@@ -217,7 +217,7 @@
                             </div>
                         </div>
                         <div class="collapsible-body">
-                            <div class="row" style="padding: 2%">
+                            <div class="row center" style="padding: 2%">
                             {% for link in view_links %}
                                 <div class="col s12 m12 l6">
                                 <div class="card card1 horizontal hoverable blue-grey white-text lighten-1">
@@ -253,7 +253,7 @@
                            </div>
                                 </div>
                             {% empty %}
-                                <div class="row">
+                                <div class="row center">
                                     <div class="col s12 m12 l4"></div>
                                     <div class="col s12 m12 l4 flow-text center">
                                         You don't have any links till yet.
