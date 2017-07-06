@@ -28,6 +28,12 @@
         padding: 0px;
     }
 
+    .insideMaterialIcon
+    {
+        margin-left: 1%;
+        margin-right: 1%;
+    }
+
     .container
     {
         padding:0px;
@@ -71,6 +77,12 @@
         margin-right: 5%;
         border-radius: 10%;
     }
+
+    #popularBooksHeading , #popularLinksHeading
+    {
+        margin: 0px;
+    }
+
     </style>
     <div class="container" style="padding: 0px">
         <div class="row" style="padding: 0px; margin: 0px">
@@ -108,7 +120,7 @@
                                 </div>
                                 <div class="col s12 l6 m12 xl6">
                                      <a  href="/{{ user.username }}?show=links" target="_blank" class="btn btn-flat white darken-1 profile_buttons">links<span class="badge" style="margin-top: 4%"> {{ link_count }} </span></a>
-                                     <a href="/{{ user.username }}?show=books" target="_blank" class="btn btn-flat white darken-1 profile_buttons" >books<span class="badge" style="margin-top: 4%"> {{ book_count }}</span></a>
+                                     <a href="/{{ user.username }}?show=upvoted" target="_blank" class="btn btn-flat white darken-1 profile_buttons" >upvoted<span class="badge" style="margin-top: 4%"> {{ user.profile.upvoted_links.count }}</span></a>
                                 </div>
                             </div>
                       </div>
@@ -122,14 +134,13 @@
                 <div class="row" style="border-bottom: 3px solid lightgray; padding: 0px;">
                     <div class="col s6 m6 l6 xl6" id="popularLinksDiv">
                                     <div class="header center center-align" id="popularLinksTab" style="padding: 0px; cursor:pointer;">
-                        <h5 style="padding: 0px; cursor: pointer" id="popularLinksHeading">Popular Links</h5><br>
+                        <h5 style="padding: 0px; font-weight: 900; cursor: pointer" id="popularLinksHeading"><br>Popular Links</h5><br>
                     </div>
                     </div>
                     <div class="col s6 m6 l6 xl6" id="popularBooksDiv">
                                     <div class="header center center-align" style="padding: 0px; cursor: pointer" id="popularBooksTab">
-                        <h5 id="popularBooksHeading" style="padding: 0px;" >Popular Books</h5><br>
-                    </div>
-
+                        <h5 id="popularBooksHeading" style="padding: 0px; font-weight: 900" ><br>Popular Books</h5><br>
+                                    </div>
                     </div>
                 </div>
                 <div class="row" id="popularLinks" style="padding: 0px; margin: 0px">
@@ -155,7 +166,13 @@
                                     </span>
                                 {% endfor %}
                               </p>
-                              <span>{{links.0.comment_set.count}} comment(s)</span>
+
+<br>
+                          <span class="insideMaterialIcon"><i class="material-icons">thumb_up</i><sup> {{links.0.comment_set.count}}</sup> </span>
+
+                          <span class="insideMaterialIcon"><i class="material-icons">thumb_down</i><sup> {{links.0.comment_set.count}}</sup> </span>
+                          <span class="insideMaterialIcon"><i class="material-icons">comment</i><sup> {{links.0.comment_set.count}}</sup> </span>
+
                           </div>
                       </div>
                     <div class="card-action">
@@ -192,7 +209,6 @@
                             </span>
                         {% endfor %}
                       </p>
-                      <span>{{links.2.comment_set.count}} comment(s)</span>
                     </div>
                       </div>
                     <div class="card-action">
@@ -233,7 +249,6 @@
                             </span>
                         {% endfor %}
                       </p>
-                      <span>{{links.1.comment_set.count}} comment(s)</span>
                     </div>
                       </div>
                     <div class="card-action">
@@ -270,7 +285,6 @@
                             </span>
                         {% endfor %}
                       </p>
-                      <span>{{links.3.comment_set.count}} comment(s)</span>
                     </div>
                       </div>
                     <div class="card-action">
