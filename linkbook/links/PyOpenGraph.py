@@ -14,11 +14,13 @@ class PyOpenGraph(object):
         
         if p.properties['image'] and p.properties['image:height'] and p.properties['image:width']:
             ratio = int(p.properties['image:height']) / int(p.properties['image:width'])
-            p.properties['image:width'] = 150
-            p.properties['image:height'] = 150*ratio
+            p.properties['image_width'] = 150
+            p.properties['image_height'] = 150*ratio
         else:
-            p.properties['image:width'] = 150
-            p.properties['image:height'] = 150
+            p.properties['image_width'] = 150
+            p.properties['image_height'] = 150
+        p.properties.pop('image:height', None)
+        p.properties.pop('image:width', None)
         self.properties = p.properties
         p.close()
     
