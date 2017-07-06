@@ -134,6 +134,7 @@ def vote_link(request, id):
         if vote_type == "U":
             if not upvoted:
                 link.votes.up(request.user.id)
+                link.num_vote_up += 1
                 link.save()
                 request.user.profile.upvoted_links.add(link)
                 upvote_button = vote_color
@@ -143,6 +144,7 @@ def vote_link(request, id):
                         target = link, verb = "upvoted")
             else:
                 link.votes.delete(request.user.id)
+                link.num_vote_up -= 1
                 link.save()
                 request.user.profile.upvoted_links.remove(link)
                 upvote_button = ""
@@ -157,6 +159,7 @@ def vote_link(request, id):
         elif vote_type == "D":
             if not downvoted:
                 link.votes.down(request.user.id)
+                link.num_vote_down += 1
                 link.save()
                 if link in request.user.profile.upvoted_links.all():
                     request.user.profile.upvoted_links.remove(link)
@@ -167,6 +170,7 @@ def vote_link(request, id):
                         target = link, verb = "downvoted")
             else:
                 link.votes.delete(request.user.id)
+                link.num_vote_down -= 1
                 link.save()
                 downvote_button = ""
                 upvote_button = ""
