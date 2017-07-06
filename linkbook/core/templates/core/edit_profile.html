@@ -12,8 +12,8 @@
     <div class="container">
         <br><br>
         <div class="row">
-            <div class="col s1 m3 l3"> </div>
-            <div class="col s10 m6 l6 card hoverable">
+            <div class="col s1 m3 l3 xl3"> </div>
+            <div class="col s10 m6 l6 xl6 card hoverable">
                 <br>
                 <h5 class="center">Edit your profile</h5>
                 <form action="/{{request.user.username}}/edit/" method="post" role="form" enctype="multipart/form-data" >
@@ -38,23 +38,23 @@
                     <br><br>
                 </form>
             </div>
-            <div class="col s1 m3 l3"></div>
+            <div class="col s1 m3 l3 xl3"></div>
         </div>
 
 
         <div class="modal" id="modalCropper">
             <div class="modal-content">
                 <div class="row">
-                    <div class="col s12 m3 l4">
+                    <div class="col s12 m3 l4 xl4">
                         Adjust your new profile pic in the cropper and the save your new profile pic.
                     </div>
-                    <div class="col s12 m5 l5 center center-align" style="padding: 1px">
+                    <div class="col s12 m5 l5 xl5 center center-align" style="padding: 1px">
                         <div id="cropper" class="my-cropper" style="max-width: 100%; padding: 1px;">
 
                         </div>
                         <br><br>
                     </div>
-                    <div class="col s12 m3 l3">
+                    <div class="col s12 m3 l3 xl3">
                         <button type="submit" class="btn" id="saveCroppedImage">Save</button>
                     </div>
                 </div>

@@ -9,8 +9,8 @@
     <link rel="stylesheet" type="text/css" href="/static/materialize/css/override_buttons.css">
     <link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
         <div class="row">
-            <div class="col s1 m3 l3"> </div>
-            <div class="col s10 m6 l6 card hoverable" style="margin: 1px; margin-top: 5px">
+            <div class="col s1 m3 l3 xl3"> </div>
+            <div class="col s10 m6 l6 xl6 card hoverable" style="margin: 1px; margin-top: 5px">
                 <br>
                 <h5 class="center">Sign Up to LinkBook</h5>
                 <form action="{% url 'signup' %}" method="post" role="form">
@@ -33,39 +33,39 @@
                     <br><br>
                 </form>
             </div>
-            <div class="col s1 m3 l3"></div>
+            <div class="col s1 m3 l3 xl3"></div>
 
         </div>
     <div class="row center-align" style="margin: 1px">
         <h5 style="margin-left: 0%">Or continue with : </h5>
     </div>
     <div class="row" style="margin: 1px">
-        <div class="col s1 m1 l1"></div>
-        <div class="col s10 m10 l10">
+        <div class="col s1 m1 l1 xl1"></div>
+        <div class="col s10 m10 l10 xl10">
 
             <div class="row">
-        <div class="col s12 m3 l3">
+        <div class="col s12 m3 l3 xl3">
                  <div>
                         <a href="{% url 'social:begin' 'github' %}"><button class="btn black lighten-3 white-text btn-block "><span class="fa fa-github" style="text-transform: lowercase"> |  GitHub</span></button></a>
                     </div>
         </div>
-        <div class="col s12 m3 l3">
+        <div class="col s12 m3 l3 xl3">
             <div>
                     <a href="{% url 'social:begin' 'twitter' %}"><button class="btn btn-info blue white-text btn-block"><span class="fa fa-twitter" style="text-transform: lowercase"> |  Twitter</span></button> </a>
                 </div>
         </div>
-        <div class="col s12 m3 l3">
+        <div class="col s12 m3 l3 xl3">
             <div>
                       <a href="{% url 'social:begin' 'facebook' %}"><button class="btn btn-primary btn-block"><span class="fa fa-facebook" style="text-transform: lowercase"> |  Facebook</span></button></a></div>
         </div>
-        <div class="col s12 m3 l3">
+        <div class="col s12 m3 l3 xl3">
             <div>
                         <a href="{% url 'social:begin' 'google-oauth2' %}"> <button class="browser-default btn btn-danger btn-block"><span class="fa fa-google-plus" style="text-transform: lowercase"> |  google</span> </button> </a>
                 </div>
         </div>
     </div>
         </div>
-        <div class="col s1 m1 l1"></div>
+        <div class="col s1 m1 l1 xl1"></div>
     </div>
 
 
