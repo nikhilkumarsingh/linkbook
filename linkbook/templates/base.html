@@ -81,6 +81,9 @@
 
             {% endif %}
         </ul>
+    </div>
+</nav>
+</div>
         <ul class="side-nav" id="mobile-demo">
             {% if request.user.is_authenticated %}
                 <li>
@@ -108,10 +111,7 @@
                 <li><a href="/logout/?next={{ request.path }}" style="font-family: Dosis; font-weight:600; font-size: 18px;">Logout</a></li>
             {% endif %}
         </ul>
-
-    </div>
-</nav>
-</div>
+        
 <!-- Dropdown Structure -->
 <ul id='NOTIFS' class='dropdown-content' style="max-width: 90%; min-width: 50%">
 
