@@ -29,19 +29,24 @@
     {% block head %}
     {% endblock %}
 </head>
+
+<style>
+@import url('https://fonts.googleapis.com/css?family=Dosis');
+</style>
+
 <body background="{% static 'link.jpg' %}" style="background-attachment: fixed;background-size: 100% 100%;">
 
 <div class="navbar-fixed">
 <nav class=" white-text" style="background-color: #26a69a">
     <div class="nav-wrapper">
-        <a href="#" class="center brand-logo">LinkBook</a>
+        <a href="#" class="center brand-logo" style="font-family: Dosis;font-weight: 800;font-size: 40px;">LinkBook</a>
         <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
 
 
         {% if request.user.is_authenticated %}
 
             <ul class="hide-on-med-and-down right">
-                <li><a href="/logout/?next={{ request.path }}">Logout</a></li>
+                <li><a href="/logout/?next={{ request.path }}" style="font-family: Dosis; font-weight:600; font-size: 18px;">Logout</a></li>
             </ul>
             <ul class="right">
                 <li><a class='dropdown-button btn-floating waves-effect waves-light green' data-beloworigin="true"
@@ -52,18 +57,18 @@
         {% endif %}
 
         <ul class="hide-on-med-and-down left">
-            <li class="active left"><a href="/">Home</a></li>
+            <li class="active left"><a href="/" style="font-family: Dosis; font-weight:600; font-size: 18px;">Home</a></li>
             <li>
-                <a class="left" href="#">About Us </a>
+                <a class="left" href="#" style="font-family: Dosis; font-weight:600; font-size: 18px;">About Us </a>
             </li>
-            <li><a class="left" href="#">Project</a></li>
+            <li><a class="left" href="#" style="font-family: Dosis; font-weight:600; font-size: 18px;">Project</a></li>
         </ul>
         <ul class="hide-on-med-and-down right">
             {% if not request.user.is_authenticated %}
-                <li><a class="right" href="#modal1">Login</a></li>
-                <li><a href="/signup" class="right">Sign Up</a></li>
+                <li><a class="right" href="#modal1" style="font-family: Dosis; font-weight:600; font-size: 18px;">Login</a></li>
+                <li><a href="/signup" class="right" style="font-family: Dosis; font-weight:600; font-size: 18px;">Sign Up</a></li>
             {% else %}
-                <li>
+                <li style="font-family: Dosis; font-weight:600; font-size: 18px;">
                     <img class="responsive-img circle hoverable" style="vertical-align: middle; cursor: pointer;"
                          height="40px" width="40px" src="{{ request.user.profile.pic }}" id="userProfilePicNavbar">&nbsp;{{ request.user.first_name }}
                 </li>
@@ -82,25 +87,25 @@
                     <div class="user-view">
                         <a href="/{{ request.user }}/"><img class="responsive-img small circle"
                                                             src="{{ request.user.profile.pic }}">
-                            <div class="black-text center-align"> {{ request.user }} </div>
+                            <div class="black-text center-align" style="font-family: Dosis; font-weight:600; font-size: 18px;" > {{ request.user }} </div>
                         </a>
                     </div>
                 </li>
             {% endif %}
-            <li class="active "><a href="/">Home</a></li>
-            <li><a href="#">About Us </a></li>
-            <li><a href="#">Project</a></li>
+            <li class="active "><a href="/" style="font-family: Dosis; font-weight:600; font-size: 18px;">Home</a></li>
+            <li><a href="#" style="font-family: Dosis; font-weight:600; font-size: 18px;">About Us </a></li>
+            <li><a href="#" style="font-family: Dosis; font-weight:600; font-size: 18px;">Project</a></li>
             {% if not request.user.is_authenticated %}
-                <li><a href="#modal1">Login</a></li>
-                <li><a href="signup"> Sign Up</a></li>
+                <li><a href="#modal1" style="font-family: Dosis; font-weight:600; font-size: 18px;">Login</a></li>
+                <li><a href="signup" style="font-family: Dosis; font-weight:600; font-size: 18px;"> Sign Up</a></li>
             {% else %}
 
-                <li><a href="#modal2" title="Create new book"><i class="material-icons">queue</i>Create new book</a>
+                <li><a href="#modal2" title="Create new book" style="font-family: Dosis; font-weight:600; font-size: 18px;"><i class="material-icons">queue</i>Create new book</a>
                 </li>
-                <li><a href="#modal3" title="Create new link"><i class="material-icons">note_add</i>Create new link</a>
+                <li><a href="#modal3" title="Create new link" style="font-family: Dosis; font-weight:600; font-size: 18px;"><i class="material-icons">note_add</i>Create new link</a>
                 </li>
 
-                <li><a href="/logout/?next={{ request.path }}">Logout</a></li>
+                <li><a href="/logout/?next={{ request.path }}" style="font-family: Dosis; font-weight:600; font-size: 18px;">Logout</a></li>
             {% endif %}
         </ul>
 
