@@ -44,19 +44,19 @@
     </style>
     <div class="container">
         <div class="row" style="margin: 1px; padding: 1px">
-            <div class="col s12 m12 l12">
+            <div class="col s12 m12 l12 xl12">
                 <ul class="collapsible popout" data-collapsible="accordion">
                     {% for book in view_books %}
                     <li>
                         <div class="collapsible-header blue-grey" >
                             <div class="row white-text" style="padding: 0px; margin: 0px ">
-                                <div class="col s12 m6 l6">
+                                <div class="col s12 m6 l6 xl6">
                                         <i class="material-icons">whatshot</i>{{book.title}}
                                 </div>
-                                <div class="col s6 m3 l3">
+                                <div class="col s6 m3 l3 xl3">
                                     <span class="badge right  white-text flow-text special" >{{ book.link_set.all|length }} links</span>
                                 </div>
-                                <div class="col s6 m3 l3">
+                                <div class="col s6 m3 l3 xl3">
                                     {% if request.user.is_authenticated %}
                                     {% if request.user == book.user %}
                                     <a class="dropdown-button btn right optionsButton waves-effect waves-light hide-on-med-and-down" href="#" data-activates="dropdownBook{{ book.id }}" id="{{ book.id }}"> More Options
@@ -99,7 +99,7 @@
 
                             <div class="row">
                                 <div class="col s1 m1 1l"></div>
-                                <div class="col s10 m10 1l0 flow-text center-align">
+                                <div class="col s10 m10 1l0 xl10 flow-text center-align">
                                     <br>
                                     A book can have multiple links!<br>
                                     A link can be a part of multiple books!
@@ -116,10 +116,10 @@
             <div class="container">
                 <div class="row">
                     <h4 class="center-align red-text flow-text">Are you sure?</h4>
-                    <div  class="col s12 m12 l12 center center-align" style="margin: 2px">
+                    <div  class="col s12 m12 l12 xl12 center center-align" style="margin: 2px">
                         <button class="btn red white-text deleteCompletely waves-effect waves-light" value="{{book.id}}">Delete this book</button>
                     </div>
-                    <div class="col s12 m12 l12  red-text center-align">
+                    <div class="col s12 m12 l12 xl12 red-text center-align">
                         <br>
                         This action will delete this book from your profile. This action can't be undone.
                     </div>
@@ -131,7 +131,7 @@
                         <div class="collapsible-body">
                             <div class="row" style="padding: 2%">
                             {% for link in book.link_set.all %}
-                                <div class="col s12 m12 l6">
+                                <div class="col s12 m12 l6 xl6">
                                 <div class="card card1 horizontal hoverable blue-grey white-text lighten-1">
                               <div class="card-stacked">
                                   <div class="card_link" id="{{ link.id }}"  style="cursor: pointer;">
@@ -167,10 +167,10 @@
                                                 <div class="container">
                                                     <div class="row">
                                                         <h4 class="center-align red-text flow-text">Are you sure?</h4>
-                                                        <div  class="col s12 m12 l12 center center-align" style="margin: 2px">
+                                                        <div  class="col s12 m12 l12 xl12 center center-align" style="margin: 2px">
                                                             <button class="btn red white-text RemoveButton waves-effect waves-light" value="{{book.id}}-{{ link.id }}" >Remove the link from this book</button>
                                                         </div>
-                                                        <div class="col s12 m12 l12  red-text center-align">
+                                                        <div class="col s12 m12 l12 xl12 red-text center-align">
                                                             <br>
                                                             This action will remove the link from this book but not your profile.
                                                         </div>
@@ -187,11 +187,11 @@
                                 </div>
                             {% empty %}
                                 <div class="row">
-                                    <div class="col s12 m12 l4"></div>
-                                    <div class="col s12 m12 l4 flow-text center">
+                                    <div class="col s12 m12 l4 xl4"></div>
+                                    <div class="col s12 m12 l4 xl4 flow-text center">
                                         No links in this Book. Empty!
                                     </div>
-                                    <div class="col s12 m12 l4"></div>
+                                    <div class="col s12 m12 l4 xl4"></div>
                                 </div>
                             {% endfor %}
                             </div>
@@ -205,13 +205,13 @@
                     <li>
                         <div class="collapsible-header blue-grey lighten-3">
                             <div class="row white-text" style="padding: 0px; margin: 0px ">
-                                <div class="col s12 m6 l6">
+                                <div class="col s12 m6 l6 xl6">
                                         <i class="material-icons">whatshot</i>Universal Book
                                 </div>
-                                <div class="col s6 m3 l3">
+                                <div class="col s6 m3 l3 xl3">
                                     <span class="badge right  white-text flow-text special" >{{ view_links|length }} links</span>
                                 </div>
-                                <div class="col s6 m3 l3 right">
+                                <div class="col s6 m3 l3 xl3 right">
                                     <i class="material-icons right" id="infoUniversal">info_outline</i>
                                 </div>
                             </div>
@@ -219,7 +219,7 @@
                         <div class="collapsible-body">
                             <div class="row" style="padding: 2%">
                             {% for link in view_links %}
-                                <div class="col s12 m12 l6">
+                                <div class="col s12 m12 l6 xl6">
                                 <div class="card card1 horizontal hoverable blue-grey white-text lighten-1">
                               <div class="card-stacked">
                                   <div class="card_link" id="{{ link.id }}"  style="cursor: pointer;">
@@ -254,11 +254,11 @@
                                 </div>
                             {% empty %}
                                 <div class="row">
-                                    <div class="col s12 m12 l4"></div>
-                                    <div class="col s12 m12 l4 flow-text center">
+                                    <div class="col s12 m12 l4 xl4"></div>
+                                    <div class="col s12 m12 l4 xl4 flow-text center">
                                         You don't have any links till yet.
                                     </div>
-                                    <div class="col s12 m12 l4"></div>
+                                    <div class="col s12 m12 l4 xl4"></div>
                                 </div>
                             {% endfor %}
                             </div>

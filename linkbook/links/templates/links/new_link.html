@@ -7,20 +7,20 @@
 {% block body %}
     <div class="container">
         <div class="row">
-            <div class="col s1 m3 l3"></div>
-            <div class="col s10 m6 l6 card hoverable">
+            <div class="col s1 m3 l3 xl3"></div>
+            <div class="col s10 m6 l6 xl6 card hoverable">
             <h4 class="center">Create your link</h4>
                 <form method="post" action="{% url 'create_link' %}" role="form">
                 {% csrf_token %}
                 <div class="row">
-                    <div class="col s12 m6 l6">
+                    <div class="col s12 m6 l6 xl6">
                         <div class="input-field">
                             <i class="material-icons prefix">open_in_browser</i>
                             <input type="url" class="input validate" name="URL" id="URL" autocomplete="autocomplete" required>
                             <label for="URL" class="active" data-error="Invalid URL, Example(Valid URL) : https://www.google.co.in." data-success="Correct">URL</label>
                         </div>
                     </div>
-                    <div class="col s12 m6 l6">
+                    <div class="col s12 m6 l6 xl6">
                         <div class="input-field">
                             <i class="material-icons prefix">title</i>
                             <input type="text" class="input" name="TITLE" id="TITLE" autocomplete="autocomplete" required maxlength="30" data-length="30">
@@ -29,7 +29,7 @@
                     </div>
                 </div>
                     <div class="row">
-                    <div class="col s12 m6 l6">
+                    <div class="col s12 m6 l6 xl6">
                         <div class="input-field">
                         <i class="material-icons prefix">assignment</i>
                         <input type="text" class="input" name="TAGS" id="TAGS" >
@@ -51,7 +51,7 @@
                 </div>
                     <div class="row">
 
-                    <div class=" col s12 m12 l12">
+                    <div class=" col s12 m12 l12 xl12">
                         <div class="input-field">
                         <i class="material-icons prefix">description</i>
                         <textarea class="input materialize-textarea" name="DESCRIPTION" id="DESCRIPTION" maxlength="1000" data-length="1000"></textarea>
@@ -63,7 +63,7 @@
                     <br><br>
                 </form>
             </div>
-            <div class="col s1 m3 l3"></div>
+            <div class="col s1 m3 l3 xl3"></div>
 
         </div>
     </div>
