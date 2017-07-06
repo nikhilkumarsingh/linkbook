@@ -2,7 +2,7 @@
 {% load staticfiles %}
 {% load i18n %}
 
-{% block title %}User Book{% endblock %}
+{% block title %}{{book.title}}{% endblock %}
 
 {% block body %}
     <style>
@@ -29,7 +29,7 @@
     </style>
     <div class = "container" style="padding: 0px;">
         <div class="row" style="padding: 0px; margin: 0px">
-            <h3 class="center blue-grey-text" style="padding: 1%">{{user.username}}'s Book</h3>
+            <h3 class="center blue-grey-text" style="padding: 1%">{{user.first_name}}'s Book</h3>
         </div>
         <div class="row" style="padding: 0px; margin: 0px">
             {% for link in book %}

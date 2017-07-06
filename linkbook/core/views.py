@@ -137,6 +137,10 @@ def username_slugs(request, username):
         return render(request, 'links/view_links.html', 
             {'user': user, 'view_links':user_links, 'view_books':user_books})
 
+    elif action == 'upvoted':
+        upvoted_links = user.profile.upvoted_links.all()
+        return render(request, 'links/view_upvoted_links.html', {'links':upvoted_links})        
+
     else:
         links = Link.objects.filter(user = user)[:5]
         books = Book.objects.filter(user = user)[:5]
