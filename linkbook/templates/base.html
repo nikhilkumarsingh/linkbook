@@ -28,7 +28,9 @@
     {% block head %}
     {% endblock %}
 </head>
-<body>
+<body background="{% static 'link.jpg' %}" style="background-attachment: fixed;background-size: 100% 100%;">
+
+<div class="navbar-fixed">
 <nav class=" white-text" style="background-color: #26a69a">
     <div class="nav-wrapper">
         <a href="#" class="center brand-logo">LinkBook</a>
@@ -103,6 +105,7 @@
 
     </div>
 </nav>
+</div>
 <!-- Dropdown Structure -->
 <ul id='NOTIFS' class='dropdown-content' style="max-width: 90%; min-width: 50%">
 
