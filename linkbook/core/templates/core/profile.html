@@ -80,7 +80,11 @@
                 <div class="card " style="width: 100%">
                     <div class="card-image">
                         <img src="{{ user.profile.pic }}" class="responsive-img hoverable">
-                        <span class="card-title">{{ user.first_name }} {{ user.last_name }}</span>
+                        <span class="card-title" style="padding: 0px; margin: 0px; font-weight: 400">
+                            {{ user.first_name }}  {{ user.last_name }}
+                        <p style="margin: 0px; font-size: small">@{{ user.username }}</p>
+                        </span>
+
                     {% if request.user.is_authenticated %}
                         {% if request.user == user %}
 
@@ -147,7 +151,7 @@
                               <p class="TagsP">Tags:
                                 {% for tag in links.0.tags.all %}
                                     <span class="chip">
-                                  <strong><a href = "/../tags/{{tag.name}}/">{{tag.name}}</a></strong>
+                                  <strong><a href = "/../tags/{{tag.id}}/{{tag.name}}/">{{tag.name}}</a></strong>
                                     </span>
                                 {% endfor %}
                               </p>
@@ -184,7 +188,7 @@
                       <p class="TagsP">Tags:
                         {% for tag in links.2.tags.all %}
                             <span class="chip">
-                          <strong><a href = "/../tags/{{tag.name}}/">{{tag.name}}</a></strong>
+                          <strong><a href = "/../tags/{{tag.id}}/{{tag.name}}/">{{tag.name}}</a></strong>
                             </span>
                         {% endfor %}
                       </p>
@@ -225,7 +229,7 @@
                       <p class="TagsP">Tags:
                         {% for tag in links.1.tags.all %}
                             <span class="chip">
-                          <strong><a href = "/../tags/{{tag.name}}/">{{tag.name}}</a></strong>
+                          <strong><a href = "/../tags/{{tag.id}}/{{tag.name}}/">{{tag.name}}</a></strong>
                             </span>
                         {% endfor %}
                       </p>
@@ -262,7 +266,7 @@
                       <p class="TagsP">Tags:
                         {% for tag in links.3.tags.all %}
                             <span class="chip">
-                          <strong><a href = "/../tags/{{tag.name}}/">{{tag.name}}</a></strong>
+                          <strong><a href = "/../tags/{{tag.id}}/{{tag.name}}/">{{tag.name}}</a></strong>
                             </span>
                         {% endfor %}
                       </p>

@@ -102,7 +102,7 @@
                             <div>
                                 <div class="row" style="margin-bottom: 0px">
                                     <div class="col s12 m12 l7 xl7">
-                                        <a href = "{{ITEM.link.url}}" target="_blank" class="title">
+                                        <a href = "/link/{{ ITEM.link.id }}" target="_blank" class="title">
                                             <h5>{{ITEM.link.title | linebreaksbr}}</h5>
                                         </a>
                                     </div>
@@ -167,7 +167,7 @@
                     <p>
                         {% for tag in ITEM.link.tags.all %}
                     <div class="chip">
-                        <a href = "/../tags/{{tag.name}}/" style="text-decoration: underline">{{tag.name}}</a>
+                        <a href = "/../tags/{{tag.id}}/{{tag.name}}/" style="text-decoration: none">{{tag.name}}</a>
                     </div>
                     </a>
                     {% endfor %}

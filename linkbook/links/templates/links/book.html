@@ -52,7 +52,7 @@
                       <p class="TagsP">Tags:
                         {% for tag in link.tags.all %}
                             <span class="chip">
-                          <strong><a href = "/../tags/{{tag.name}}/">{{tag.name}}</a></strong>
+                          <strong><a href = "/../tags/{{tag.id}}/{{tag.name}}/">{{tag.name}}</a></strong>
                             </span>
                         {% endfor %}
                       </p>
