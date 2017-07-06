@@ -10,24 +10,20 @@ class PyOpenGraph(object):
             html = "<html></html>"
         p = PyOpenGraphParser()
         p.feed(html)
-        self.url = p.properties['url']
-        self.site_name = p.properties['site_name']
-        self.title = p.properties['title']
-        self.description = p.properties['description']
-        self.image = p.properties['image']
-        self.image_height = p.properties['image:height']
-        self.image_width = p.properties['image:width']
-
+        print(p.properties)
+        
+        if p.properties['image'] and p.properties['image:height'] and p.properties['image:width']:
+            ratio = int(p.properties['image:height']) / int(p.properties['image:width'])
+            p.properties['image:width'] = 150
+            p.properties['image:height'] = 150*ratio
+        else:
+            p.properties['image:width'] = 150
+            p.properties['image:height'] = 150
+        self.properties = p.properties
         p.close()
     
-    def is_valid(self):
-        if any([self.title, self.image, self.description]):
-            return True
-        else:
-            return False
-    
     def __str__(self):
-        return self.title
+        return self.properties['title']
     
 
 class PyOpenGraphParser(HTMLParser):

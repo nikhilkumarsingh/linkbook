@@ -3,6 +3,8 @@ from datetime import datetime
 from django.contrib.auth.models import User
 from django.db import models
 from taggit.managers import TaggableManager
+from .PyOpenGraph import PyOpenGraph
+
 
 from jsonfield import JSONField
 from vote.models import VoteModel
@@ -40,6 +42,7 @@ class Link(VoteModel, models.Model):
 	tags = TaggableManager(blank = True)
 	books = models.ManyToManyField(Book)
 	last_updated = models.DateTimeField(blank = True, null = True)
+	og_data = JSONField(blank=True, null=True)
 
 	class Meta:
 		ordering = ('-date',)
@@ -49,8 +52,10 @@ class Link(VoteModel, models.Model):
 
 	def save(self, *args, **kwargs):
 		if not self.pk:
+			self.og_data = PyOpenGraph(self.url).properties
 			super(Link, self).save(*args, **kwargs)
 		else:
+			self.og_data = PyOpenGraph(self.url).properties
 			self.last_updated = datetime.now()
 			for book in self.books.all():
 				if book.tags is None:

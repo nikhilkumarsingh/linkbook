@@ -12,7 +12,6 @@ from linkbook.links.models import Link, Book, Comment
 
 from taggit.models import Tag
 from taggit.utils import _parse_tags
-from .PyOpenGraph import PyOpenGraph
 from notifications.signals import notify
 import humanize
 from datetime import datetime, timezone
@@ -31,20 +30,6 @@ def link(request, id):
     upvoted = link.votes.exists(request.user.id, action = UP)
     downvoted = link.votes.exists(request.user.id, action = DOWN)
 
-    # open graph data
-    show_og = True
-    og = PyOpenGraph(link.url)
-    
-    if not og.is_valid:
-        show_og = False
-    elif og.image and og.image_height and og.image_width:
-        ratio = int(og.image_height) / int(og.image_width)
-        og.image_width = 150
-        og.image_height = 150*ratio
-    else:
-        og.image_width = 150
-        og.image_height = 150
-
 
     # upvote button config
     if not upvoted:
@@ -59,8 +44,8 @@ def link(request, id):
         downvote_button = vote_color
 
     return render(request, 'links/link.html', 
-        {'link': link, 'comment_form': comment_form, 'og': og, 'show_og': show_og,
-        'upvotes': upvotes, 'downvotes': downvotes, 'time': link_time,
+        {'link': link, 'comment_form': comment_form, 'upvotes': upvotes, 
+        'downvotes': downvotes, 'time': link_time,
         'upvote_button': upvote_button, 'downvote_button': downvote_button})
 
 
