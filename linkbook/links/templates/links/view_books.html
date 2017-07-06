@@ -2,7 +2,7 @@
 {% load staticfiles %}
 {% load i18n %}
 
-{% block title %}user books{% endblock %}
+{% block title %}{{user.first_name}}'s books{% endblock %}
 
 {% block body %}
     <style>
@@ -12,15 +12,15 @@
             height: 65px;
         }
     </style>
-<div class = "container" style="padding: 0px; margin: 0px">
+<div class = "container" style="padding: 0px">
     <div class="row">
-        <h3 class="center blue-grey-text" style="padding: 1%">{{user.username}}'s Books</h3>
+        <h3 class="center blue-grey-text" style="padding: 1%">{{user.first_name}}'s Books</h3>
     </div>
-    <div class="row" style="padding: 0px; margin: 0px">
+    <div class="row" style="padding: 0px">
         {% for book in view_books %}
         <div class="col s12 m4 l4 xl4">
         <a href="/book/{{ book.id }}">
-            <div class="row" style="padding: 0px; margin: 0px">
+            <div class="row" style="padding: 0px">
                 <div class="col s12 m12 l12 xl12">
                     <div class="card horizontal hoverable blue-grey white-text lighten-1 ">
                           <div class="card-stacked">
@@ -36,7 +36,7 @@
             </a>
         </div>
         {% empty %}
-            <div class="row" style="padding: 0px; margin: 0px">
+            <div class="row" style="padding: 0px">
                 <div class="col s12 m12 l3 xl3"></div>
             <div class="col s12 m12 l6 xl6 flow-text center">
                 Empty. {{ user.username }} has no books.
