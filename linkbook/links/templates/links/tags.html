@@ -5,6 +5,17 @@
 {% block title %}{% endblock %}
 
 {% block body %}
+
+    <style>
+
+    .insideMaterialIcon
+    {
+        margin-right: 1%;
+        margin-left: 1%;
+    }
+
+    </style>
+
     <div class = "container">
 
     <div class="row">
@@ -26,7 +37,12 @@
                             </span>
                         {% endfor %}
                       </p>
-                      <p>{{link.comment_set.count}} comment(s)</p>
+<Br>
+                                                <span class="insideMaterialIcon"><i class="material-icons">thumb_up</i><sup> {{link.num_vote_up}}</sup> </span>
+
+                          <span class="insideMaterialIcon"><i class="material-icons">thumb_down</i><sup> {{link.num_vote_down}}</sup> </span>
+                          <span class="insideMaterialIcon"><i class="material-icons">comment</i><sup> {{link.comment_set.count}}</sup> </span>
+
                     </div>
                     <div class="card-action">
                       <a href="{{link.url}}" target="_blank">Visit link</a>

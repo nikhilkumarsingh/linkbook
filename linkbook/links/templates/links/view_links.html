@@ -41,6 +41,14 @@
         {
             padding: 7px;
         }
+
+
+        .insideMaterialIcon
+        {
+            margin-left: 1%;
+            margin-right: 1%;
+        }
+
     </style>
     <div class="container">
     <div class="row">
@@ -155,6 +163,13 @@
                                         </span>
                                     {% endfor %}
                                   </p>
+<br>
+
+                                                <span class="insideMaterialIcon"><i class="material-icons">thumb_up</i><sup> {{link.num_vote_up}}</sup> </span>
+
+                          <span class="insideMaterialIcon"><i class="material-icons">thumb_down</i><sup> {{link.num_vote_down}}</sup> </span>
+                          <span class="insideMaterialIcon"><i class="material-icons">comment</i><sup> {{link.comment_set.count}}</sup> </span>
+
                                 </div>
                                   </div>
                                 <div class="card-action">
@@ -242,6 +257,14 @@
                                         </span>
                                     {% endfor %}
                                   </p>
+                                  <br>
+
+
+                                                <span class="insideMaterialIcon"><i class="material-icons">thumb_up</i><sup> {{link.num_vote_up}}</sup> </span>
+
+                          <span class="insideMaterialIcon"><i class="material-icons">thumb_down</i><sup> {{link.num_vote_down}}</sup> </span>
+                          <span class="insideMaterialIcon"><i class="material-icons">comment</i><sup> {{link.comment_set.count}}</sup> </span>
+
                                 </div>
                                   </div>
                                 <div class="card-action">

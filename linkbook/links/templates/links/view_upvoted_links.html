@@ -6,11 +6,31 @@
 
 {% block body %}
     <style>
+        .card1
+        {
+            height : 310px;
+        }
         .description
         {
             overflow: hidden;
-            height: 65px;
+            max-height : 65px;
         }
+        .BooksP
+        {
+            overflow: hidden;
+            height : 37px;
+        }
+
+        .TagsP
+        {
+            overflow: hidden;
+            height : 37px;
+        }
+      .insideMaterialIcon
+    {
+        margin-left: 1%;
+        margin-right: 1%;
+    }
     </style>
 <div class = "container" style="padding: 0px">
     <div class="row">
@@ -39,6 +59,12 @@
                                         </span>
                                     {% endfor %}
                                   </p>
+                                  <br>
+
+                                                <span class="insideMaterialIcon"><i class="material-icons">thumb_up</i><sup> {{link.num_vote_up}}</sup> </span>
+
+                          <span class="insideMaterialIcon"><i class="material-icons">thumb_down</i><sup> {{link.num_vote_down}}</sup> </span>
+                          <span class="insideMaterialIcon"><i class="material-icons">comment</i><sup> {{link.comment_set.count}}</sup> </span>
                                 </div>
                                   </div>
                                 <div class="card-action">
