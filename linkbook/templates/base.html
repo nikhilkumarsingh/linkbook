@@ -124,14 +124,14 @@
 <div id="modal1" class="modal">
     <div class="modal-content">
         <div class="container">
-            <div class="row center">
+            <div class="row">
                 <div class="col s12 m2 l2"></div>
                 <div class="col s12 m8 l8">
                     <h5 class="center center-align blue-grey-text">LinkBook</h5>
                 </div>
                 <div class="col s12 m2 l2"></div>
             </div>
-            <div class="row center">
+            <div class="row">
                 <div class="col s12 m4 l4">
                     <div>
                         <a href="{% url 'social:begin' 'github' %}?next={{ request.path }}">
@@ -198,7 +198,7 @@
                     </form>
                 </div>
             </div>
-            <div class="row center">
+            <div class="row">
                 <div class="col s12 m4 l4"></div>
                 <div class="col s12 m4 l4 center center-align">
                 </div>
@@ -238,7 +238,7 @@
         <h4 class="center">New Link</h4>
         <form method="post" action="{% url 'create_link' %}" role="form">
             {% csrf_token %}
-            <div class="row center">
+            <div class="row">
                 <div class="col s12 m6 l6">
                     <div class="input-field ">
                         <i class="material-icons prefix">open_in_browser</i>
@@ -257,7 +257,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row center">
+            <div class="row">
                 <div class="col s12 m6 l6">
                     <div class="input-field ">
                         <i class="material-icons prefix">assignment</i>
@@ -276,7 +276,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row center">
+            <div class="row">
                 <div class=" col s12 m12 l12">
                     <div class="input-field">
                         <i class="material-icons prefix">description</i>
