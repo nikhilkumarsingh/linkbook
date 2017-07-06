@@ -50,12 +50,14 @@ class Link(VoteModel, models.Model):
 	def __str__(self):
 		return self.title
 
+	def save_og(self):
+		self.og_data = PyOpenGraph(self.url).properties
+
 	def save(self, *args, **kwargs):
 		if not self.pk:
 			self.og_data = PyOpenGraph(self.url).properties
 			super(Link, self).save(*args, **kwargs)
 		else:
-			self.og_data = PyOpenGraph(self.url).properties
 			self.last_updated = datetime.now()
 			for book in self.books.all():
 				if book.tags is None:

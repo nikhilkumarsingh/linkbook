@@ -10,7 +10,6 @@ class PyOpenGraph(object):
             html = "<html></html>"
         p = PyOpenGraphParser()
         p.feed(html)
-        print(p.properties)
         
         if p.properties['image'] and p.properties['image:height'] and p.properties['image:width']:
             ratio = int(p.properties['image:height']) / int(p.properties['image:width'])

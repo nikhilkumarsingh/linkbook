@@ -96,6 +96,7 @@ def edit_link(request, id):
                 link.books.remove(book)
             elif book not in link.books.all() and book.title in new_book_list:
                 link.books.add(book)
+        link.save_og()
         link.save()
         return redirect('/link/{}/'.format(link.id))
     else:
@@ -134,6 +135,7 @@ def vote_link(request, id):
             if not upvoted:
                 link.votes.up(request.user.id)
                 link.save()
+                request.user.profile.upvoted_links.add(link)
                 upvote_button = vote_color
                 downvote_button = ""
                 if link.user != request.user:
@@ -142,6 +144,7 @@ def vote_link(request, id):
             else:
                 link.votes.delete(request.user.id)
                 link.save()
+                request.user.profile.upvoted_links.remove(link)
                 upvote_button = ""
                 downvote_button = ""
         
@@ -155,6 +158,8 @@ def vote_link(request, id):
             if not downvoted:
                 link.votes.down(request.user.id)
                 link.save()
+                if link in request.user.profile.upvoted_links.all():
+                    request.user.profile.upvoted_links.remove(link)
                 downvote_button = vote_color
                 upvote_button = ""
                 if link.user != request.user:
