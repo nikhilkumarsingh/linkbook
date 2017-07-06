@@ -44,6 +44,7 @@ class Link(VoteModel, models.Model):
 	last_updated = models.DateTimeField(blank = True, null = True)
 	og_data = JSONField(blank=True, null=True)
 
+
 	class Meta:
 		ordering = ('-date',)
 
