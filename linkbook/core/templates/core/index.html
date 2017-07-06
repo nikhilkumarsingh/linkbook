@@ -114,24 +114,23 @@
                         </div>
                     </div>
                 </li>
-                <!-- Open Graph data -->
-             <!--   {% if show_og and og.title != None %}
+                {% if ITEM.link.og_data.title != None %}
                 <li class="collection-item avatar " style="padding: 4px">
                     <div class="card hoverable horizontal">
+                        {% if ITEM.link.og_data.image != None %}
                         <div class="card-image" style="margin: 4px;" id="card_image_div">
-                            <img src="{{og.image}}" class="responsive-image" height={{ og.image_height}} width={{ og.image_width }} id="card_image">
+                            <img src="{{ITEM.link.og_data.image}}" class="responsive-image" height={{ ITEM.link.og_data.image_height}} width={{ ITEM.link.og_data.image_width }} id="card_image">
                         </div>
+                        {% endif %}
                         <div class="card-stacked">
-                            {%if og.title != None %}
                             <div class="card-content" style="padding: 2px">
-                                <span><span style="font-weight: bolder">{{ og.title }}</span></span>
-                                <p style="font-size: 80%">{{ og.description }}</p>
+                                <span><span style="font-weight: bolder">{{ ITEM.link.og_data.title }}</span></span>
+                                <p style="font-size: 80%">{{ ITEM.link.og_data.description }}</p>
                             </div>
-                            {% endif %}
                         </div>
                     </div>
                 </li>
-                {% endif %} -->
+                {% endif %}
                 <!-- End of open graph data -->
                 <!-- Sharing Options
                     <li class="collection-item avatar">
