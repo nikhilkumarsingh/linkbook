@@ -89,7 +89,7 @@
                 <li>
                     <div class="user-view">
                         <a href="/{{ request.user }}/"><img class="responsive-img small circle"
-                                                            src="{{ request.user.profile.pic }}">
+                                                            src="{{ request.user.profile.pic }}" style="position: relative; width: 90%; height:90%;">
                             <div class="black-text center-align" style="font-family: Dosis; font-weight:600; font-size: 18px;" > {{ request.user }} </div>
                         </a>
                     </div>
@@ -111,7 +111,7 @@
                 <li><a href="/logout/?next={{ request.path }}" style="font-family: Dosis; font-weight:600; font-size: 18px;">Logout</a></li>
             {% endif %}
         </ul>
-        
+
 <!-- Dropdown Structure -->
 <ul id='NOTIFS' class='dropdown-content' style="max-width: 90%; min-width: 50%">
 
