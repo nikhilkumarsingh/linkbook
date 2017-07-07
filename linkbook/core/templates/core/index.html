@@ -208,7 +208,7 @@
                 {% if request.user.is_authenticated %}
                 <li class="collection-item avatar" style="padding: 0px; margin: 0px">
                     <div class="row" style="padding: 0px; margin: 0px">
-                        <div class="col s6 m4 l4 xl4" >
+                        <div class="col s4 m4 l4 xl4" >
                             <br>
                             <button class="btn green upvote upvote_upper_button waves-effect waves-light {{ITEM.upvote_button}} center" id="upvote_button{{ ITEM.link.id }}" link_id = "{{ ITEM.link.id }}"> 
 
@@ -221,7 +221,7 @@
                             {% endif %}
                             </button>
                         </div>
-                        <div class="col s6 m4 l4 xl4" >
+                        <div class="col s4 m4 l4 xl4" >
                             <br>
                             <button title="downvote" class="btn waves-effect waves-light  red btn-block white-text downvote downvote_upper_button {{ ITEM.downvote_button }}" id="downvote_button{{ ITEM.link.id }}" link_id = "{{ ITEM.link.id }}" > 
                             {% if ITEM.downvote_button == '' %}
@@ -233,7 +233,7 @@
                             {% endif %}
                             </button>
                         </div>
-                        <div class="col s12 m4 l4 xl4">
+                        <div class="col s4 m4 l4 xl4">
                             <br>
                             <button class="btn blue waves-light center comments_tab waves-effect" id="comments_tab{{ ITEM.link.id }}">
                             <i class='material-icons middle' style='color: white; cbackground-color: transparent' >comment</i>
