@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 
 from django.contrib.auth.models import User
 from django.db import models
@@ -27,7 +27,7 @@ class Book(models.Model):
 		if not self.pk:
 			super(Book, self).save(*args, **kwargs)
 		else:
-			self.last_updated = datetime.now()
+			self.last_updated = datetime.now(timezone.utc)
 			super(Book, self).save(*args, **kwargs)
 
 
@@ -59,7 +59,7 @@ class Link(VoteModel, models.Model):
 			self.og_data = PyOpenGraph(self.url).properties
 			super(Link, self).save(*args, **kwargs)
 		else:
-			self.last_updated = datetime.now()
+			self.last_updated = datetime.now(timezone.utc)
 			for book in self.books.all():
 				if book.tags is None:
 					book.tags = {}
