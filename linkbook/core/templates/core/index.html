@@ -741,16 +741,16 @@
             $('#card_image_div').css({'display' : 'none'});
         });
         function copyToClipboard(element) {
-            var height = $('body').prop('scrollHeight');
-            console.log(height);
+
+
             var $temp = $("<input>");
             $("body").append($temp);
             $temp.val(element).select();
             document.execCommand("copy");
             $temp.remove();
-            $("body").scrollTop($('body').scrollTop() + height);
             Materialize.toast('copied to clipboard', 2000);
         }
+
         function selectText(containerid)
         {
             if (document.selection) {
