@@ -53,6 +53,22 @@
         height: 100%;
         text-transform: none;
     }
+
+    .mobile-button
+    {
+        height: 30px;
+        width : 30px;
+        vertical-align: top;
+
+    }
+
+    .mobile-button-i
+    {
+        height: 30px;
+        width: 30px;
+    }
+
+
 </style>
 
 {% for ITEM in all_links %}
@@ -61,17 +77,17 @@
         <div class="col s12 m1 l3 xl3"></div>
         <div class="col s12 m10 l6 xl6 link_card" id="{{ ITEM.link.id }}">
             <ul class="collection hoverable "  style="border: 1px solid #607d8b" id="list">
-                <li class="collection-item avatar">
+                <li class="collection-item avatar" style="border-bottom: none; height: 10px; padding-bottom: 0px;">
                     <div class="row"  style="padding: 0px; margin: 0px">
                         <!-- user avatar -->
                         <img class="responsive-img circle"  height = "40px" width="40px" src="{{ITEM.link.user.profile.pic}}" />
                         <div class="row">
-                            <div class="col s12 m4 l4 xl4">
+                            <div class="col s4 m4 l4 xl4" style="word-wrap: break-word; margin: 0px; padding: 0px; font-size: 0.5em">
                                 <span class="title blue-grey-text ">{{ ITEM.link.user }}<br/>
                         <sup>{{ ITEM.time }}</sup></span>
                         <br><br>
                             </div>
-                           <div class="col s12 m8 l8 xl8 right right-align hide-on-med-and-down" id="icons_extra" style="margin: 0px; padding: 0px">
+                           <div class="col s8 m8 l8 xl8 right right-align hide-on-med-and-down" id="icons_extra" style="margin: 0px; padding: 0px">
 
 
                    <div class="row right right-align" style="margin: 0px; padding: 0px">
@@ -83,22 +99,23 @@
                       </div>
                   </div>
                   </div>
-                            <div class="col s12 m8 l8 xl8 left left-align hide-on-large-only" id="icons_extra" style="margin: 0px; padding: 0px">
+                            <div class="col s8 m8 l8 xl8 right right-align hide-on-large-only" id="icons_extra" style="margin: 0px; padding: 0px">
 
-                   <div class="row left left-align" style="margin: 0px; padding: 0px">
-                      <div class="col s12 m12 l12 xl12 left left-align" style="margin: 0px; padding: 0px">
+                   <div class="row right right-align" style="margin: 0px; padding: 0px">
+                      <div class="col s12 m12 l12 xl12 right right-align" style="margin: 0px; padding: 0px">
 
-                          <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue show_url_button" href="#" title="Show URL" data-activates="dropdownRemove{{ITEM.link.id}}" id="{{ ITEM.link.id }}"><i class="material-icons">remove_red_eye</i></a>
-                                        <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue" href="#" title="Share" data-beloworigin="true" data-activates="dropdownMore0{{ITEM.link.id}}"><i class="material-icons">share</i></a>
-                          <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue" href="#" title="More actions" data-activates="dropdownButtons{{ITEM.link.id}}" id="more_actions"><i class="material-icons">more_horiz</i></a>
+                          <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue show_url_button mobile-button" href="#" title="Show URL" data-activates="dropdownRemove{{ITEM.link.id}}" id="{{ ITEM.link.id }}"><i class="material-icons mobile-button-i" style="font-size: 1.5em; line-height: 10px">remove_red_eye</i></a>
+                                        <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue mobile-button" href="#" title="Share" data-beloworigin="true" data-activates="dropdownMore0{{ITEM.link.id}}"><i class="material-icons mobile-button-i" style="font-size: 1.5em; line-height: 10px">share</i></a>
+                          <a class="btn-floating dropdown-button btn-small waves-effect waves-light blue mobile-button" href="#" title="More actions" data-activates="dropdownButtons{{ITEM.link.id}}" id="more_actions"><i class="material-icons mobile-button-i" style="font-size: 1.5em; line-height: 10px">more_horiz</i></a>
                       </div>
                   </div>
                   </div>
                         </div>
                     </div>
+                </li>
+            <li class="collection-item" style="padding-left: 5px; padding-top: 0px; padding-bottom: 0px; padding-right: 0px">
                     <div class="row" style="margin: 0px;">
                         <div class="col s12 m12 l12 xl12">
-                            <i class="material-icons circle blue-grey">description</i>
                             <div>
                                 <div class="row" style="margin-bottom: 0px">
                                     <div class="col s12 m12 l7 xl7">
@@ -108,15 +125,18 @@
                                     </div>
                                     </div>
                                 </div>
-                            <hr>
+                             </div>
+                    </div>
+            </li>
+            <li class="collection-item avatar">
+                <i class="material-icons circle blue-grey">description</i>
                             <span class = "DESCR" style="font-size: 100%">{{ITEM.link.description}}
                                  </span>
                             <span>
                                 <a href="/link/{{ITEM.link.id }}" target="_blank" class="read_more" style="display: none">Read more</a>
                             </span>
                             <span id="url" style="display: none"><a href="{{ ITEM.link.url }}" target="_blank"> {{ ITEM.link.url }} </a></span>
-                        </div>
-                    </div>
+
                 </li>
                 {% if ITEM.link.og_data.title != None %}
                 <li class="collection-item avatar " style="padding: 4px">
