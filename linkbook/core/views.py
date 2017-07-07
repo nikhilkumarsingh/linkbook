@@ -7,6 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 from PIL import Image
 import pyimgur
 import os
+from collections import Counter
 from notifications.models import Notification
 from notifications.signals import notify
 
@@ -34,47 +35,45 @@ def project(request):
 
 def index(request):
     if request.user.is_authenticated():
-        if request.method == 'GET':
-            user = User.objects.get(username = request.user)
-            followings = user.profile.following.all()
-            all_links = []
-            for following in followings:
-                links = Link.objects.filter(user = following.user).order_by('-last_updated')
-                for link in links[:5]:
-                    row = {}
-                    link_time = humanize.naturaltime(datetime.now(timezone.utc) - link.date)
-                    comment_form = CommentForm()
-                    upvotes = link.votes.count(action = UP)
-                    downvotes = link.votes.count(action = DOWN)
-                    upvoted = link.votes.exists(request.user.id, action = UP)
-                    downvoted = link.votes.exists(request.user.id, action = DOWN)
-
-                # upvote button config
-                    if not upvoted:
-                        upvote_button = ""
-                    else:
-                        upvote_button = vote_color
-
-                # downvote button config
-                    if not downvoted:
-                        downvote_button = ""
-                    else:
-                        downvote_button = vote_color
-
-                    row['link'] = link
-                    row['comment_form'] = comment_form
-                    row['og'] = link.og_data
-                    row['upvotes'] = upvotes
-                    row['downvotes'] = downvotes
-                    row['time'] = link_time
-                    row['upvote_button'] = upvote_button
-                    row['downvote_button'] = downvote_button
-
-                    all_links.append(row)
-
-        return render(request, 'core/index.html', {'all_links':all_links})
+        followings = [p.user for p in request.user.profile.following.all()]
+        links = Link.objects.filter(user__in = followings).order_by('-date')
     else:
-        return render(request, 'core/home.html')
+        links = Link.objects.all().order_by('-date')
+
+    all_links = []
+
+    for link in links[:20]:
+        row = {}
+        link_time = humanize.naturaltime(datetime.now(timezone.utc) - link.date)
+
+        if request.user.is_authenticated():
+            upvoted = link.votes.exists(request.user.id, action = UP)
+            downvoted = link.votes.exists(request.user.id, action = DOWN)
+            # upvote button config
+            if not upvoted:
+                upvote_button = ""
+            else:
+                upvote_button = vote_color
+            # downvote button config
+            if not downvoted:
+                downvote_button = ""
+            else:
+                downvote_button = vote_color
+        else:
+            upvote_button = ""
+            downvote_button = ""
+
+        row['link'] = link
+        row['comment_form'] = CommentForm()
+        row['og'] = link.og_data
+        row['upvotes'] = link.votes.count(action = UP)
+        row['downvotes'] = link.votes.count(action = DOWN)
+        row['time'] = link_time
+        row['upvote_button'] = upvote_button
+        row['downvote_button'] = downvote_button
+        all_links.append(row)
+
+    return render(request, 'core/index.html', {'all_links':all_links})
 
 
 def fetch_notifs(user):
@@ -220,9 +219,21 @@ def follow_profile(request):
             'follow_button': follow_button})
 
 
+def recommend_users(request):
+    # fetch all links of user
+    user_links = Link.objects.filter(user = request.user)
+    # fetch links similar to each link of the user
+    similar_links = []
+    for link in user_links:
+        similar_links.extend(link.tags.similar_objects())
+    # fetch 10 most similar users from similar links
+    similar_users = Counter([link.user for link in similar_links 
+                            if link.user != request.user]).most_common(10)
+    return render(request, 'core/recommendor.html', {'users':similar_users})
+
+
 
 def get_follower_list(request):
-
     if request.method == 'GET':
         user = User.objects.get(username = request.GET['user'])
         followers = user.profile.followers.all()

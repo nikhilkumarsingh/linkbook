@@ -204,8 +204,6 @@
                 </li>
 
 
-
-                {% if request.user.is_authenticated %}
                 <li class="collection-item avatar" style="padding: 0px; margin: 0px">
                     <div class="row" style="padding: 0px; margin: 0px">
                         <div class="col s4 m4 l4 xl4" >
@@ -247,7 +245,6 @@
                         <br><br><br><br>
                     </div>
                 </li>
-                {% endif %}
 
                 <li class="collection-item avatar comments" id="comments{{ ITEM.link.id }}" style="display: none; margin: 0px">
                     <i class="material-icons circle blue-grey">comment</i>
@@ -526,6 +523,10 @@
 
 
             $('.upvote_upper_button').click(function(){
+                {% if not request.user.is_authenticated %}
+                    $("#modal1").modal('open');
+                    return;
+                {% endif %}
             var link_id;
             link_id = $(this).attr("link_id");
             $.get('/link/' + link_id + '/vote/', {type: 'U'}, function(data){
@@ -544,6 +545,10 @@
                 });
             });
             $('.downvote_upper_button').click(function(){
+                {% if not request.user.is_authenticated %}
+                    $("#modal1").modal('open');
+                    return;
+                {% endif %}
             var link_id;
             link_id = $(this).attr("link_id");
             $.get('/link/' + link_id + '/vote/', {type: 'D'}, function(data){
@@ -586,10 +591,13 @@
 
             var commentsSubmitButton = $('.commentSubmitButton');
             commentsSubmitButton.click(function (){
-                console.log("Called comment submit button");
+                {% if not request.user.is_authenticated %}
+                    $("#modal1").modal('open');
+                    return;
+                {% endif %}
+                
                 var id = this.id;
                 var formId = '#commentForm' + id;
-                //commentsSubmitButton.addClass('disabled');
 
                 var $textarea = $(formId + ' textarea');
                 var text = $textarea.val();
