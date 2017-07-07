@@ -31,11 +31,24 @@
 </head>
 
 <style>
+
 @import url('https://fonts.googleapis.com/css?family=Dosis');
+
+body{
+    background-attachment: fixed;
+    background-size: 100% 100%;
+    background-position: center;
+    background-attachment: fixed;"
+}
+
+@media screen and (max-width: 600px){
+    body {
+        background: #eaeae9;
+    }
+}
 </style>
 
-<body background="{% static 'link.jpg' %}" style="background-attachment: fixed;background-size: 100% 100%;background-repeat: no-repeat; 
-    background-position: center;background-attachment: fixed;">
+<body background="{% static 'link.jpg' %}">
 
 <div class="navbar-fixed">
 <nav class=" white-text" style="background-color: #26a69a">
