@@ -101,7 +101,7 @@
             <li><a href="/project" style="font-family: Dosis; font-weight:600; font-size: 18px;">Project</a></li>
             {% if not request.user.is_authenticated %}
                 <li><a href="#modal1" style="font-family: Dosis; font-weight:600; font-size: 18px;">Login</a></li>
-                <li><a href="signup" style="font-family: Dosis; font-weight:600; font-size: 18px;"> Sign Up</a></li>
+                <li><a href="/signup" style="font-family: Dosis; font-weight:600; font-size: 18px;"> Sign Up</a></li>
             {% else %}
 
                 <li><a href="#modal2" title="Create new book" style="font-family: Dosis; font-weight:600; font-size: 18px;"><i class="material-icons">queue</i>Create new book</a>
