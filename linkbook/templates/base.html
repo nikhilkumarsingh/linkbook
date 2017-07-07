@@ -58,11 +58,11 @@
 
         <ul class="hide-on-med-and-down left">
             <li class="active left"><a href="/" style="font-family: Dosis; font-weight:600; font-size: 18px;">Home</a></li>
-            <li>
-                <a class="left" href="#" style="font-family: Dosis; font-weight:600; font-size: 18px;">About Us </a>
-            </li>
+            <li><a class="left" href="/trending" style="font-family: Dosis; font-weight:600; font-size: 18px;">Trending</a></li>
             <li><a class="left" href="/project" style="font-family: Dosis; font-weight:600; font-size: 18px;">Project</a></li>
+            <li><a class="left" href="#" style="font-family: Dosis; font-weight:600; font-size: 18px;">About Us</a></li>
         </ul>
+        
         <ul class="hide-on-med-and-down right">
             {% if not request.user.is_authenticated %}
                 <li><a class="right" href="#modal1" style="font-family: Dosis; font-weight:600; font-size: 18px;">Login</a></li>
