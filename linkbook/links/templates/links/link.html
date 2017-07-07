@@ -210,18 +210,36 @@
                 <li class="collection-item avatar" style="padding: 0px; margin: 0px">
                     <div class="row" style="padding: 0px; margin: 0px">
                         <div class="col s4 m4 l4 xl4" >
-                            <span> <sup id="upvotes_count">{{ upvotes }}</sup><sup> upvote(s)</sup></span>
-                            <button class="btn green upvote upvote_upper_button waves-effect waves-light {{upvote_button}} center" id="upvote_button" link_id = "{{ link.id }}"> <i class="material-icons" style="color: white; background-color: transparent">thumb_up</i> </button>
+                            <br>
+                            <button class="btn green upvote upvote_upper_button waves-effect waves-light {{upvote_button}} center" id="upvote_button" link_id = "{{link.id }}"> 
+
+                            {% if upvote_button == '' %}
+                            <i class="material-icons" style="color: white; background-color: transparent">thumb_up</i> 
+                            <span style="vertical-align: top;">{{ upvotes }}</span>
+                            {% else %}
+                            <i class="material-icons" style="color: green; background-color: transparent">thumb_up</i> 
+                            <span style="vertical-align: top; color: green;">{{ upvotes }}</span>
+                            {% endif %}
+                            </button>
                         </div>
                         <div class="col s4 m4 l4 xl4" >
-                            <span> <sup id="downvotes_count">{{ downvotes }} </sup><sup> downvote(s)</sup></span>
-                            <button title="downvote" class="btn waves-effect waves-light  red btn-block white-text downvote downvote_upper_button {{ downvote_button }}" id="downvote_button" link_id = "{{ link.id }}" > <i class="material-icons" style="color: white; background-color: transparent" >thumb_down</i></button>
+                            <br>
+                            <button title="downvote" class="btn waves-effect waves-light  red btn-block white-text downvote downvote_upper_button {{ downvote_button }}" id="downvote_button" link_id = "{{ link.id }}" > 
+                            {% if downvote_button == '' %}
+                            <i class="material-icons" style="color: white; background-color: transparent">thumb_down</i> 
+                            <span style="vertical-align: top;">{{ downvotes }}</span>
+                            {% else %}
+                            <i class="material-icons" style="color: red; background-color: transparent">thumb_down</i> 
+                            <span style="vertical-align: top; color: red;">{{ downvotes }}</span>
+                            {% endif %}
+                            </button>
                         </div>
                         <div class="col s4 m4 l4 xl4">
-                            <span>
-                            <sup><span id="num_comments1">{{link.comment_set.count}}</span> comment(s)</sup>
-                            </span>
-                            <button title="comment" class="btn waves-effect waves-light blue btn-block white-text" id="comments_tab" link_id = "{{ link.id }}" > <i class="material-icons" style="color: white; background-color: transparent" >comment</i></button>
+                            <br>
+                            <button class="btn blue waves-light center comments_tab waves-effect" id="comments_tab">
+                            <i class='material-icons middle' style='color: white; cbackground-color: transparent' >comment</i>
+                            <span style="vertical-align: top;">{{link.comment_set.count}}</span>
+                            </button>
                         </div>
                        <div class="col s12 m12 l12 xl12 hide-on-large-only">
                             <br><br>
@@ -500,41 +518,35 @@
 
 
             $('.upvote_upper_button').click(function(){
-            var link_id;
-            link_id = $(this).attr("link_id");
-            $.get('/link/{{link.id}}/vote/', {type: 'U'}, function(data){
-                       $('#upvotes_count').html(data['upvotes']);
-                       $('#downvotes_count').html(data['downvotes']);
-                       $('.upvote').removeClass('lighten-5');
-                       $('.downvote').removeClass('lighten-5');
-                       //$(".downvote").toggleClass(data['downvote_button']);
-                        console.log(data.upvote_button);
-                        console.log(data.downvote_button);
-                        if(data['upvote_button'] == '')
-                        {
+                $.get('/link/{{link.id}}/vote/', {type: 'U'}, function(data){
+                       $('#downvote_button').removeClass('lighten-5');
+ 
+                        if(data['upvote_button'] == ''){
+                            $('#upvote_button').removeClass('lighten-5');
+                            $('#upvote_button').html("<i class='material-icons' style='color: white; background-color: transparent'>thumb_up</i> <span style='vertical-align: top;'>"
+                                + data['upvotes'] + "</span>");
+                        }else{
+                            $('#upvote_button').addClass('lighten-5');
+                            $('#upvote_button').html("<i class='material-icons' style='color: green; background-color: transparent'>thumb_up</i> <span style='vertical-align: top;color: green;'>"+data['upvotes'] + "</span>");
                         }
-                        else
-                        {
-                            $('.upvote').addClass('lighten-5');
-                        }
+                        $('#downvote_button').html("<i class='material-icons' style='color: white; background-color: transparent'>thumb_down</i> <span style='vertical-align: top;'>"+
+                            data['downvotes'] + "</span>");
                 });
             });
             $('.downvote_upper_button').click(function(){
-            var link_id;
-            link_id = $(this).attr("link_id");
-            $.get('/link/{{link.id}}/vote/', {type: 'D'}, function(data){
-                       $('#downvotes_count').html(data['downvotes']);
-                       $('#upvotes_count').html(data['upvotes']);
-                       $('.upvote').removeClass('lighten-5');
-                       $('.downvote').removeClass('lighten-5');
-                      // $(".downvote").addClass(data['downvote_button']);
-                        if(data['downvote_button'] == '')
-                        {
+                $.get('/link/{{link.id}}/vote/', {type: 'D'}, function(data){
+                       $('#upvote_button').removeClass('lighten-5');
+                       
+                        if(data['downvote_button'] == ''){
+                            $('#downvote_button').removeClass('lighten-5');
+                            $('#downvote_button').html("<i class='material-icons' style='color: white; background-color: transparent'>thumb_down</i> <span style='vertical-align: top;'>"+
+                            data['downvotes'] + "</span>");
+                        }else{
+                            $('#downvote_button').addClass('lighten-5');
+                            $('#downvote_button').html("<i class='material-icons' style='color: red; background-color: transparent'>thumb_down</i> <span style='vertical-align: top;color: red;'>"+ data['downvotes'] + "</span>");
                         }
-                        else
-                        {
-                            $('.downvote').addClass('lighten-5');
-                        }
+                        $('#upvote_button').html("<i class='material-icons' style='color: white; background-color: transparent'>thumb_up</i> <span style='vertical-align: top;'>"+
+                            data['upvotes'] + "</span>");
                 });
             });
 
@@ -556,7 +568,8 @@
                 }
                 else{
                     $('#comments').css({'display' : 'none'});
-                    comments_tab.html("<i class='material-icons' style='color: white; cbackground-color: transparent' >comment</i>");
+                    $('#comments_tab').html("<i class='material-icons' style='color: white; cbackground-color: transparent' >comment</i><span style='vertical-align: top;'> " + 
+                        globalCommentsObject.length + "</span>");
                 }
                 comments_open = 1 - comments_open;
                 LoadComments();
