@@ -27,21 +27,23 @@ def link(request, id):
     comment_form = CommentForm()
     upvotes = link.votes.count(action = UP)
     downvotes = link.votes.count(action = DOWN)
-    upvoted = link.votes.exists(request.user.id, action = UP)
-    downvoted = link.votes.exists(request.user.id, action = DOWN)
+    if request.user.is_authenticated():
+        upvoted = link.votes.exists(request.user.id, action = UP)
+        downvoted = link.votes.exists(request.user.id, action = DOWN)
+        # upvote button config
+        if not upvoted:
+            upvote_button = ""
+        else:
+            upvote_button = vote_color
 
-
-    # upvote button config
-    if not upvoted:
+        # downvote button config
+        if not downvoted:
+            downvote_button = ""
+        else:
+            downvote_button = vote_color
+    else:
         upvote_button = ""
-    else:
-        upvote_button = vote_color
-
-    # downvote button config
-    if not downvoted:
         downvote_button = ""
-    else:
-        downvote_button = vote_color
 
     return render(request, 'links/link.html', 
         {'link': link, 'comment_form': comment_form, 'upvotes': upvotes, 

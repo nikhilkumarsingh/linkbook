@@ -216,7 +216,7 @@
                     {% endfor %}
                     </p>
                 </li>
-                {% if request.user.is_authenticated %}
+                
                 <li class="collection-item avatar" style="padding: 0px; margin: 0px">
                     <div class="row" style="padding: 0px; margin: 0px">
                         <div class="col s4 m4 l4 xl4" >
@@ -257,7 +257,8 @@
                         <br><br><br><br>
                     </div>
                 </li>
-                {% endif %}
+
+
                 <li class="collection-item avatar" id="comments" style="display: none; margin: 0px">
                     <i class="material-icons circle blue-grey">comment</i>
                     <span class="title blue-grey-text">Comments</span>
@@ -528,6 +529,10 @@
 
 
             $('.upvote_upper_button').click(function(){
+                {% if not request.user.is_authenticated %}
+                    $("#modal1").modal('open');
+                    return;
+                {% endif %}
                 $.get('/link/{{link.id}}/vote/', {type: 'U'}, function(data){
                        $('#downvote_button').removeClass('lighten-5');
  
@@ -544,6 +549,10 @@
                 });
             });
             $('.downvote_upper_button').click(function(){
+                {% if not request.user.is_authenticated %}
+                    $("#modal1").modal('open');
+                    return;
+                {% endif %}
                 $.get('/link/{{link.id}}/vote/', {type: 'D'}, function(data){
                        $('#upvote_button').removeClass('lighten-5');
                        
@@ -597,6 +606,10 @@
 
             var commentsSubmitButton = $('#commentSubmitButton');
             commentsSubmitButton.click(function (){
+                {% if not request.user.is_authenticated %}
+                    $("#modal1").modal('open');
+                    return;
+                {% endif %}
                 commentsSubmitButton.addClass('disabled');
                 var text = $('#id_text').val();
                 $('#id_text').val('');
