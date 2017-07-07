@@ -34,7 +34,8 @@
 @import url('https://fonts.googleapis.com/css?family=Dosis');
 </style>
 
-<body background="{% static 'link.jpg' %}" style="background-attachment: fixed;background-size: 100% 100%;">
+<body background="{% static 'link.jpg' %}" style="background-attachment: fixed;background-size: 100% 100%;background-repeat: no-repeat; 
+    background-position: center;background-attachment: fixed;">
 
 <div class="navbar-fixed">
 <nav class=" white-text" style="background-color: #26a69a">
@@ -96,11 +97,10 @@
                 </li>
             {% endif %}
             <li class="active "><a href="/" style="font-family: Dosis; font-weight:600; font-size: 18px;">Home</a></li>
-            <li><a href="#" style="font-family: Dosis; font-weight:600; font-size: 18px;">About Us </a></li>
-            <li><a href="/project" style="font-family: Dosis; font-weight:600; font-size: 18px;">Project</a></li>
+
             {% if not request.user.is_authenticated %}
                 <li><a href="#modal1" style="font-family: Dosis; font-weight:600; font-size: 18px;">Login</a></li>
-                <li><a href="signup" style="font-family: Dosis; font-weight:600; font-size: 18px;"> Sign Up</a></li>
+                <li><a href="/signup" style="font-family: Dosis; font-weight:600; font-size: 18px;"> Sign Up</a></li>
             {% else %}
 
                 <li><a href="#modal2" title="Create new book" style="font-family: Dosis; font-weight:600; font-size: 18px;"><i class="material-icons">queue</i>Create new book</a>
@@ -110,6 +110,9 @@
 
                 <li><a href="/logout/?next={{ request.path }}" style="font-family: Dosis; font-weight:600; font-size: 18px;">Logout</a></li>
             {% endif %}
+            <li><a href="#" style="font-family: Dosis; font-weight:600; font-size: 18px;">About Us </a></li>
+            <li><a href="/project" style="font-family: Dosis; font-weight:600; font-size: 18px;">Project</a></li>
+            <li><a href="/trending" style="font-family: Dosis; font-weight:600; font-size: 18px;">Trending</a></li>
         </ul>
 
 <!-- Dropdown Structure -->
