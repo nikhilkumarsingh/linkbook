@@ -200,7 +200,7 @@
                             <span>
                             <sup><span id="num_comments1{{ ITEM.link.id }}">{{ITEM.link.comment_set.count}}</span> comment(s)</sup>
                             </span>
-                            <button class="btn blue waves-light center comments_tab waves-effect" id="comments_tab{{ ITEM.link.id }}">Comments</button>
+                            <button class="btn blue waves-light center comments_tab waves-effect" id="comments_tab{{ ITEM.link.id }}"><i class='material-icons' style='color: white; cbackground-color: transparent' >comment</i></button>
                         </div>
                        <div class="col s12 m12 l12 xl12 hide-on-large-only">
                             <br><br>
@@ -545,7 +545,7 @@
                 }
                 else{
                     $('#comments' + id).css({'display' : 'none'});
-                    $('comments_tab' + id).html("Comments");
+                    $('#comments_tab' + id).html("<i class='material-icons' style='color: white; cbackground-color: transparent' >comment</i>");
                 }
                 comments_open[id] = 1 - comments_open[id];
                 LoadComments(id);
