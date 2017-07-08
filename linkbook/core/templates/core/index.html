@@ -71,8 +71,9 @@
 
 </style>
 
-{% for ITEM in all_links %}
+
 <div class="container" style="padding: 0px;" >
+    {% for ITEM in all_links %}
     <div class="row" style="padding: 0px; margin: 0px">
         <div class="col s12 m1 l3 xl3"></div>
         <div class="col s12 m10 l6 xl6 link_card" id="{{ ITEM.link.id }}">
@@ -128,6 +129,7 @@
                              </div>
                     </div>
             </li>
+            {% if ITEM.link.description != '' %}
             <li class="collection-item avatar">
                 <i class="material-icons circle blue-grey">description</i>
                             <span class = "DESCR" style="font-size: 100%">{{ITEM.link.description}}
@@ -138,6 +140,16 @@
                             <span id="url" style="display: none"><a href="{{ ITEM.link.url }}" target="_blank"> {{ ITEM.link.url }} </a></span>
 
                 </li>
+                {% else %}
+                <li class="collection-item ">
+
+                            <span class = "DESCR" style="font-size: 100%">No description provided.
+                                 </span>
+                </li>
+
+            {% endif %}
+
+
                 {% if ITEM.link.og_data.title != None %}
                 <li class="collection-item avatar " style="padding: 4px">
                 <a href="{{ ITEM.link.url }}" style="text-decoration: none; color: black" target="_blank">
@@ -191,6 +203,7 @@
                     </li>
                     -->
                 <!-- Tags -->
+                {% if ITEM.link.tags.all|length != 0 %}
                 <li class="collection-item avatar" style="padding: 5px; min-height: 10px">
                     <!-- <i class="material-icons circle blue-grey">assignment</i> -->
                   <!--  <span class="title blue-grey-text">Tags</span> -->
@@ -202,7 +215,7 @@
                     {% endfor %}
                     </p>
                 </li>
-
+                {% endif %}
 
                 <li class="collection-item avatar" style="padding: 0px; margin: 0px">
                     <div class="row" style="padding: 0px; margin: 0px">
@@ -443,6 +456,11 @@
             </div>
         </div>
     </div>
+
+        {% empty %}
+        <div class="row" style="margin: 5px; padding: 1px">
+            <h5 class="center center-align">Follow people to see posts in your feed.</h5>
+        </div>
 
 {% endfor %}
 <script>

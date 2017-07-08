@@ -16,7 +16,7 @@
                 <form action="{% url 'signup' %}" method="post" role="form">
                     {% csrf_token %}
                     {% for field in form.visible_fields %}
-                    <div class=" input-field">
+                    <div class=" input-field validate">
                         {{ field }}
                         <label for="{{ field.label }}" class="active" >{{ field.label }} </label>
                          {% for error in field.errors %}
