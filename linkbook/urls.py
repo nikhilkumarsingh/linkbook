@@ -41,6 +41,7 @@ urlpatterns = [
 
     url(r'^trending/$', linkbook_core_views.trending, name = 'trending'),
     url(r'^recommendor/$', linkbook_core_views.recommend_users, name = 'recommend_users'),
+    url(r'^aboutus/$', linkbook_core_views.aboutus, name = 'aboutus'),
 
     url(r'^book/(?P<id>\d+)/$', linkbook_link_views.book, name='book'),
     url(r'^book/new/$', linkbook_link_views.create_book, name = 'create_book'),

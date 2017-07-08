@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load i18n %}
+{% block title %}About Us{% endblock %}
+{% block body %}
+
+<style>
+@media only screen and (min-width: 800px) {
+  .namecard{
+  	float:left; 
+  	width: 31%;
+  }
+
+  .card-title{
+  	font-size:20px;
+  }
+
+  .thanks{
+   position: fixed;     
+ }
+
+ }
+
+ .namecard{
+ 	margin :1%;
+ }
+
+ .card-title{
+ 	font-family: Dosis;
+ }
+
+ .social-button {
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+ 	font-size: 30px;
+ 	display: inline-flex;
+}
+
+ .thanks{
+   text-align: center;    
+   bottom: 0px; 
+   width: 100%;
+   font-size:15px;
+   text-align: right;
+   font-weight: 600;
+   bottom: 0px;
+ }
+
+</style>
+
+<link rel="stylesheet" type="text/css" href="/static/materialize/css/override_buttons.css">
+<link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+
+<div class="row blue-grey" style="width:100%; padding: 0px; margin: 0px">
+    <h3 class="center center-align white-text" style="font-family: Dosis; width: 100%; padding: 1px; margin-bottom: 0px">The Team</h3>
+</div>
+
+<div class="namecard">
+    <div class="col s12 m4 l4 xl4">
+        <div class="card">
+            <div class="card-image">
+              <img src="/static/nikhil.jpg">
+                <span class="card-title" >Lord Nikhil Kumar</span>
+            </div>
+            <div class="card-content center">
+               <a href="https://github.com/nikhilkumarsingh/"><button class="social-button" style="color: #000000"><span class="fa fa-github"></span></button></a>
+                <a href="https://www.facebook.com/nikhilksingh97"><button class="social-button" style="color: #3b5998"><span class="fa fa-facebook"></span></button></a>
+            </div>
+           
+        </div>
+    </div>
+</div>
+
+<div class="namecard">
+    <div class="col s12 m4 l4 xl4">
+        <div class="card">
+            <div class="card-image">
+              <img src="/static/himanshu.jpg">
+                <span class="card-title">Himanshu Gupta</span>
+            </div>
+            <div class="card-content center">
+               <a href="https://github.com/himanshugupta1997/"><button class="social-button" style="color: #000000"><span class="fa fa-github"></span></button></a>
+                <a href="https://www.facebook.com/himanshugupta1997"><button class="social-button" style="color: #3b5998"><span class="fa fa-facebook"></span></button></a>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<div class="namecard">
+    <div class="col s12 m4 l4 xl4">
+        <div class="card">
+            <div class="card-image">
+              <img src="/static/sanchit.jpg">
+                <span class="card-title">Sanchit Agarwal</span>
+            </div>
+            <div class="card-content center">
+               <a href="https://github.com/sanchit3008/"><button class="social-button" style="color: #000000"><span class="fa fa-github"></span></button></a>
+                <a href="https://www.facebook.com/sanchit3008"><button class="social-button" style="color: #3b5998"><span class="fa fa-facebook"></span></button></a>
+            </div>
+           
+        </div>
+    </div>
+</div>
+
+<div class="thanks">(Special thanks to <a href = "https://www.facebook.com/devashishtri">Devashish Trivedi</a> for the title logo/background)</div>
+{% endblock body %}
