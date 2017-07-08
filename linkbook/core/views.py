@@ -230,7 +230,8 @@ def recommend_users(request):
     # fetch 10 most similar users from similar links
     similar_users = Counter([link.user for link in similar_links 
                             if link.user != request.user]).most_common(10)
-    similar_users = [user[0] for user in similar_users]
+    similar_users = [user[0] for user in similar_users if user[0].profile 
+                        not in request.user.following.all()]
     return render(request, 'core/recommendor.html', {'users':similar_users})
 
 
