@@ -14,11 +14,28 @@ def UniqueEmailValidator(value):
 
 
 def UniqueUsernameIgnoreCaseValidator(value):
+	denied = ['administrator', 'trending', 'book', 'link', 'login', 
+	'logout', 'signup', 'oauth', 'navbar', 'project', 'inbox', 'link', 'import', 
+	'comment', 'tags', 'recommendor', 'follow', 'follower', 'following']
 	if User.objects.filter(username__iexact = value).exists():
 		raise ValidationError('User with this Username already exists.')
 
+	if value in denied:
+		raise ValidationError('This username is not allowed. Please choose some other username.')
+
+
 
 class SignUpForm(forms.ModelForm):
+	first_name = forms.CharField(
+		widget = forms.TextInput(attrs = {'id': 'FirstName'}),
+		max_length = 30,
+		required = True,
+		)
+	last_name = forms.CharField(
+		widget = forms.TextInput(attrs = {'id': 'LastName'}),
+		max_length = 30,
+		required = True,
+		)
 	username = forms.CharField(
 		widget = forms.TextInput(attrs = {'id': 'Username'}),
 		max_length = 30,
@@ -41,7 +58,7 @@ class SignUpForm(forms.ModelForm):
 	class Meta:
 		model = User
 		exclude = ['last_login', 'date_joined']
-		fields = ['username', 'email', 'password', 'confirm_password', ]
+		fields = ['first_name', 'last_name', 'username', 'email', 'password', 'confirm_password',]
 
 	def __init__(self, *args, **kwargs):
 		super(SignUpForm, self).__init__(*args, **kwargs)
