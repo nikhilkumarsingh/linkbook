@@ -42,7 +42,7 @@
     </div>
         <div class="row" style="padding: 0px; margin: 0px">
         <br><br>
-            {% for link in book %}
+            {% for link in links %}
                 <div class="col s12 m12 l4 xl4">
                     <div class="row" style="padding: 0px; margin: 0px">
                         <div class="col s12 m12 l12 xl12">
@@ -87,7 +87,7 @@
                     </div>
                 </div>
             {% endfor %}
-            {% if book == none or book|length == 0  %}
+            {% if links == none or links|length == 0  %}
                 <div class="col s12 m12 l4 xl4"></div>
                 <div class="col s12 m12 l4 xl4 flow-text center">
                     This Book is empty. No links here.

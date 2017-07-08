@@ -32,13 +32,13 @@ def project(request):
     return render(request, 'core/project.html')
 
 
-
 def index(request):
     if request.user.is_authenticated():
         followings = [p.user for p in request.user.profile.following.all()]
         links = Link.objects.filter(user__in = followings).order_by('-last_updated')
     else:
-        links = Link.objects.all().order_by('-last_updated')
+        links = Link.objects.all().order_by('-num_vote_up', '-date')
+        print(links)
 
     all_links = []
 
@@ -98,10 +98,10 @@ def fetch_notifs(user):
 
 
 @csrf_exempt
+@login_required
 def navbar(request):
     if request.is_ajax():
         books = [book.title for book in Book.objects.filter(user = request.user)]
-        print((request.user.notifications.count()))
 
         # check if any new notifications
         if len(request.user.notifications.unread()):
