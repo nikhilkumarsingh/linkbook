@@ -49,13 +49,20 @@
                                   <div class="card-title center"><h5>{{link.title}}</h5></div>
                                   <div class="card-content" id="{{ link.id }}">
                                   <p class="description">{{ link.description }}</p>
-                                  <p class="BooksP">Books:
+                                  {% if link.books.all|length != 0 %}
+                                      <p class="BooksP">Books:
                                     {% for book in link.books.all %}
                                         <span class="chip">
                                       <strong><a href = "/../book/{{book.id}}/">{{book.title}}</a></strong>
                                         </span>
                                     {% endfor %}
                                   </p>
+                                  {% else %}
+                                      <p><br><br></p>
+
+                                  {% endif %}
+
+                                  {% if link.tags.all|length != 0 %}
                                   <p class="TagsP">Tags:
                                     {% for tag in link.tags.all %}
                                         <span class="chip">
@@ -63,6 +70,10 @@
                                         </span>
                                     {% endfor %}
                                   </p>
+                                      {% else %}
+                                      <p><br><br></p>
+
+                                  {% endif %}
                                   <br>
 
                                                 <span class="insideMaterialIcon"><i class="material-icons">thumb_up</i><sup> {{link.num_vote_up}}</sup> </span>

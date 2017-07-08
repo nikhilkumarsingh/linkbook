@@ -158,6 +158,7 @@
                       <div class="card_link" id="{{links.0.id }}"  style="cursor: pointer;">
                           <div class="card-title center"><h5>{{links.0.title}}</h5></div>
                           <div class="card-content card-content1" id="{{links.0.id }}">
+                              {% if links.0.books.all|length != 0  %}
                               <p class="BooksP">Books:
                                 {% for book in links.0.books.all %}
                                     <span class="chip">
@@ -165,6 +166,11 @@
                                     </span>
                                 {% endfor %}
                               </p>
+                                  {% else %}
+                                  <p><br></p>
+                                  {% endif %}
+
+                            {% if links.0.tags.all|length != 0 %}
                               <p class="TagsP">Tags:
                                 {% for tag in links.0.tags.all %}
                                     <span class="chip">
@@ -173,6 +179,9 @@
                                 {% endfor %}
                               </p>
 
+                                  {% else %}
+                                  <p><br><br></p>
+                            {% endif%}
 <br>
                           <span class="insideMaterialIcon"><i class="material-icons">thumb_up</i><sup> {{links.0.num_vote_up}}</sup> </span>
 
@@ -201,13 +210,20 @@
                       <div class="card_link" id="{{links.2.id }}"  style="cursor: pointer;">
                       <div class="card-title center"><h5>{{links.2.title}}</h5></div>
                       <div class="card-content card-content1" id="{{links.2.id }}">
-                      <p class="BooksP">Books:
+                      {% if links.2.books.all|length != 0 %}
+                          <p class="BooksP">Books:
                         {% for book in links.2.books.all %}
                             <span class="chip">
                           <strong><a href = "/../book/{{book.id}}/">{{book.title}}</a></strong>
                             </span>
                         {% endfor %}
                       </p>
+
+                                  {% else %}
+                                  <p><br></p>
+                      {% endif %}
+
+                      {% if links.2.tags.all|length != 0 %}
                       <p class="TagsP">Tags:
                         {% for tag in links.2.tags.all %}
                             <span class="chip">
@@ -215,6 +231,10 @@
                             </span>
                         {% endfor %}
                       </p>
+
+                                  {% else %}
+                                  <p><br><br></p>
+                          {% endif %}
 <br>
                                                 <span class="insideMaterialIcon"><i class="material-icons">thumb_up</i><sup> {{links.2.num_vote_up}}</sup> </span>
 
@@ -247,7 +267,7 @@
                       <div class="card_link" id="{{links.1.id }}"  style="cursor: pointer;">
                       <div class="card-title center"><h5>{{links.1.title}}</h5></div>
                       <div class="card-content card-content1" id="{{links.1.id }}">
-
+                    {% if links.1.books.all|length != 0 %}
                       <p class="BooksP">Books:
                         {% for book in links.1.books.all %}
                             <span class="chip">
@@ -255,6 +275,12 @@
                             </span>
                         {% endfor %}
                       </p>
+
+                                  {% else %}
+                                  <p><br></p>
+                      {% endif %}
+
+                      {% if links.1.tags.all|length != 0 %}
                       <p class="TagsP">Tags:
                         {% for tag in links.1.tags.all %}
                             <span class="chip">
@@ -262,6 +288,10 @@
                             </span>
                         {% endfor %}
                       </p>
+
+                                  {% else %}
+                                  <p><br><br></p>
+                          {% endif %}
                       <br>
 
                                                 <span class="insideMaterialIcon"><i class="material-icons">thumb_up</i><sup> {{links.1.num_vote_up}}</sup> </span>
@@ -292,6 +322,7 @@
                       <div class="card_link" id="{{links.3.id }}"  style="cursor: pointer;">
                       <div class="card-title center"><h5>{{links.3.title}}</h5></div>
                       <div class="card-content card-content1" id="{{links.3.id }}">
+                      {% if links.3.books.all|length != 0 %}
                       <p class="BooksP">Books:
                         {% for book in links.3.books.all %}
                             <span class="chip">
@@ -299,6 +330,11 @@
                             </span>
                         {% endfor %}
                       </p>
+
+                                  {% else %}
+                                  <p><br></p>
+                          {% endif %}
+                      {% if links.3.tags.all|length != 0 %}
                       <p class="TagsP">Tags:
                         {% for tag in links.3.tags.all %}
                             <span class="chip">
@@ -306,6 +342,10 @@
                             </span>
                         {% endfor %}
                       </p>
+
+                                  {% else %}
+                                  <p><br><br></p>
+                          {% endif %}
 <br>
                                                 <span class="insideMaterialIcon"><i class="material-icons">thumb_up</i><sup> {{links.3.num_vote_up}}</sup> </span>
 

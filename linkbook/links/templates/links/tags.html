@@ -35,7 +35,8 @@
                       <div class="card-title center"><h5>{{link.title}}</h5></div>
                       <div class="card-content" id="{{ link.id }}" style="cursor: pointer;">
                       <p>{{ link.description }}</p>
-                      <p>Tags:
+
+                          <p>Tags:
                         {% for tag in link.tags.all %}
                             <span class="chip">
                           <strong><a href = "/../tags/{{tag.id}}/{{tag.name}}/" style="text-decoration: none">{{tag.name}}</a></strong>
