@@ -450,42 +450,6 @@
                 window.open(url);
 
             });
-
-       /*
-            var popularLinks = $('#popularLinks');
-        var popularBooks = $('#popularBooks');
-        var popularLinksTab = $('#popularLinksTab');
-        var popularBooksTab = $('#popularBooksTab');
-        var popularLinksHeading = $('#popularLinksHeading');
-        var popularBooksHeading = $('#popularBooksHeading');
-        var popularBooksDiv = $('#popularBooksDiv');
-        var popularLinksDiv = $('#popularLinksDiv');
-        popularBooks.css({'display' : 'none'});
-        popularLinksDiv.css({'border-bottom' : '3px groove red'}) ;
-     //      popularLinksTab.css({'box-shadow' : '3px 3px 15px rgba(0,0,0,0.75)'});
-   //         popularLinksHeading.css({'box-shadow' : 'none'});
-        popularBooksTab.click(function () {
-
-            popularLinks.css({'display' : 'none' });
-            popularBooks.css({'display' : 'block'});
-            popularBooksDiv.css({ 'border-bottom' : '3px groove red'});
-           // popularBooksTab.css({'box-shadow' : '3px 3px 15px rgba(0,0,0,0.75)'});
-          //  popularLinksTab.css({'box-shadow' : 'none'});
-            popularLinksDiv.css({ 'border-bottom' : 'none'});
-
-        });
-
-        popularLinksTab.click(function () {
-
-            popularBooks.css({'display' : 'none'});
-            popularLinks.show({'display' : 'block'});
-            popularLinksDiv.css({ 'border-bottom' : '3px groove red'});
-         //   popularLinksTab.css({'box-shadow' : '3px 3px 15px rgba(0,0,0,0.75)'});
-           // popularBooksTab.css({'box-shadow' : 'none'});
-            popularBooksDiv.css({'border-bottom' : 'none'});
-
-            });*/
-
          $('#follower_count').click(function(){
           $.get('/followers/', {user: "{{user.username}}"}, function(data){
               data = data.data;
@@ -561,8 +525,6 @@
         });
     });
             $('.modal').modal();
-
-
         });
     </script>
 {% endblock body %}
