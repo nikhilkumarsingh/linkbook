@@ -36,9 +36,9 @@ def project(request):
 def index(request):
     if request.user.is_authenticated():
         followings = [p.user for p in request.user.profile.following.all()]
-        links = Link.objects.filter(user__in = followings).order_by('-date')
+        links = Link.objects.filter(user__in = followings).order_by('-last_updated')
     else:
-        links = Link.objects.all().order_by('-date')
+        links = Link.objects.all().order_by('-last_updated')
 
     all_links = []
 
