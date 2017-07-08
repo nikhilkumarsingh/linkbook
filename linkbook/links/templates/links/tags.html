@@ -2,7 +2,7 @@
 {% load staticfiles %}
 {% load i18n %}
 
-{% block title %}{% endblock %}
+{% block title %}Tags{% endblock %}
 
 {% block body %}
 
@@ -25,10 +25,11 @@
 
     </div>
     <br><br>
+     <div class="row" style="margin: 1px; padding: 1px">
     {% for link in tag%}
-        <div class="row" style="margin: 1px; padding: 1px">
 
-            <div class="col s12 m4 l4 xl4" style="margin: 1px; padding: 1px">
+
+            <div class="col s12 m4 l4 xl4">
                 <div class="card horizontal hoverable white-text blue-grey lighten-1">
                   <div class="card-stacked">
                       <div class="card-title center"><h5>{{link.title}}</h5></div>
@@ -58,9 +59,10 @@
                 </div>
             </div>
 
-        </div>
+
 
     {% endfor %}
+      </div>
 
 
     </div>
