@@ -7,7 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 from PIL import Image
 import pyimgur
 import os
-from collections import Counter
+from collections import Counter, OrderedDict
 from notifications.models import Notification
 from notifications.signals import notify
 
@@ -231,7 +231,16 @@ def recommend_users(request):
     similar_users = Counter([link.user for link in similar_links 
                             if link.user != request.user]).most_common(10)
     similar_users = [user[0] for user in similar_users if user[0].profile 
-                        not in request.user.following.all()]
+                    not in request.user.profile.following.all()]
+    for user in request.user.profile.following.all():
+        similar_users.extend([p.user for p in user.following.all() if p not in 
+            request.user.profile.following.all() and p != request.user.profile])
+    
+
+    similar_users.extend([user for user in User.objects.all() if user != request.user 
+        and user.profile not in request.user.profile.following.all()])
+    if similar_users:   
+        similar_users = list(OrderedDict.fromkeys(similar_users))
     return render(request, 'core/recommendor.html', {'users':similar_users})
 
 
