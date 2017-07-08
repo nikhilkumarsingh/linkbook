@@ -38,7 +38,6 @@ def index(request):
         links = Link.objects.filter(user__in = followings).order_by('-date', '-num_vote_up')
     else:
         links = Link.objects.all().order_by('-num_vote_up', '-date')
-        print(links)
 
     all_links = []
 
@@ -222,26 +221,29 @@ def follow_profile(request):
 
 @login_required
 def recommend_users(request):
-    # fetch all links of user
-    user_links = Link.objects.filter(user = request.user)
-    # fetch links similar to each link of the user
-    similar_links = []
-    for link in user_links:
-        similar_links.extend([link for link in link.tags.similar_objects()])
-    # fetch 10 most similar users from similar links
-    similar_users = Counter([link.user for link in similar_links 
-                            if link.user != request.user]).most_common(10)
-    similar_users = [user[0] for user in similar_users if user[0].profile 
-                    not in request.user.profile.following.all()]
-    for user in request.user.profile.following.all():
-        similar_users.extend([p.user for p in user.following.all() if p not in 
-            request.user.profile.following.all() and p != request.user.profile])
-    
+    try:
+        # fetch all links of user
+        user_links = Link.objects.filter(user = request.user)
+        # fetch links similar to each link of the user
+        similar_links = []
+        for link in user_links:
+            similar_links.extend([link for link in link.tags.similar_objects()])
+        # fetch 10 most similar users from similar links
+        similar_users = Counter([link.user for link in similar_links 
+                                if link.user != request.user]).most_common(10)
+        similar_users = [user[0] for user in similar_users if user[0].profile 
+                        not in request.user.profile.following.all()]
+        for user in request.user.profile.following.all():
+            similar_users.extend([p.user for p in user.following.all() if p not in 
+                request.user.profile.following.all() and p != request.user.profile])
+        
 
-    similar_users.extend([user for user in User.objects.all() if user != request.user 
-        and user.profile not in request.user.profile.following.all()])
-    if similar_users:   
-        similar_users = list(OrderedDict.fromkeys(similar_users))
+        similar_users.extend([user for user in User.objects.all() if user != request.user 
+            and user.profile not in request.user.profile.following.all()])
+        if similar_users:   
+            similar_users = list(OrderedDict.fromkeys(similar_users))
+    except Exception as e:
+        print(e)
     return render(request, 'core/recommendor.html', {'users':similar_users})
 
 
