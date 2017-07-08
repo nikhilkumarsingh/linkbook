@@ -129,20 +129,23 @@
             </div>
         <!-- Ending of the first Column -->
         <!-- Second Column started -->
-            <div class="col s12 m12 l8 xl8">
+            <div class="col s12 m12 l8 xl8" style="margin-top: 1%">
+            <br>
             <br>
                 <div class="row" style="border-bottom: 3px solid lightgray; padding: 0px;">
-                    <div class="col s6 m6 l6 xl6" id="popularLinksDiv">
-                                    <div class="header center center-align" id="popularLinksTab" style="padding: 0px; cursor:pointer;">
-                        <h5 style="padding: 0px; font-weight: 900; cursor: pointer" id="popularLinksHeading"><br>Popular Links</h5><br>
-                    </div>
-                    </div>
-                    <div class="col s6 m6 l6 xl6" id="popularBooksDiv">
-                                    <div class="header center center-align" style="padding: 0px; cursor: pointer" id="popularBooksTab">
-                        <h5 id="popularBooksHeading" style="padding: 0px; font-weight: 900" ><br>Popular Books</h5><br>
-                                    </div>
-                    </div>
-                </div>
+                    <ul class="tabs">
+                        <li class="tab active col s6 m6 l6 xl6"><a href="#popularLinks" class="flow-text" style="font-weight: 900">
+
+                        Popular Links
+
+                        </a> </li>
+                        <li class="tab col s6 m6 l6 xl6">
+
+                            <a href="#popularBooks" class="flow-text " style="font-weight: 900">Popular Books</a>
+
+                        </li>
+                    </ul>
+
                 <div class="row" id="popularLinks" style="padding: 0px; margin: 0px">
                     <div class="col s12 m12 l6 xl6">
                         {% if links.0 == none %}
@@ -447,6 +450,8 @@
                 window.open(url);
 
             });
+
+       /*
             var popularLinks = $('#popularLinks');
         var popularBooks = $('#popularBooks');
         var popularLinksTab = $('#popularLinksTab');
@@ -479,7 +484,7 @@
            // popularBooksTab.css({'box-shadow' : 'none'});
             popularBooksDiv.css({'border-bottom' : 'none'});
 
-            });
+            });*/
 
          $('#follower_count').click(function(){
           $.get('/followers/', {user: "{{user.username}}"}, function(data){
