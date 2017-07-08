@@ -71,8 +71,50 @@
 
 </style>
 
-{% for ITEM in all_links %}
+
 <div class="container" style="padding: 0px;" >
+
+    {% if request.user.is_authenticated %}
+        <div class="row" style="padding: 1px; margin: 0px;">
+        <br>
+            <div class="col s12 m4 l4 xl4 topButton ">
+                <div class="row" style="margin: 0px; padding: 1px">
+                    <a href="#modal2" class="btn blue" style="height: 100%; vertical-align: middle">     <i class="material-icons large" style="color: white; vertical-align: middle">queue</i> Create New Book
+
+                    </a>
+                </div>
+            </div>
+            <div class="col s12 m4 l4 xl4 topButton" >
+                <div class="row" style="margin: 0px; padding: 1px">
+                    <a href="#modal3" class="btn blue" style="height: 100%; vertical-align: middle">    <i class="material-icons large" style="color: white; vertical-align: middle">note_add</i> Create New Link
+
+
+                    </a>
+
+                </div>
+            </div>
+            <div class="col s12 m4 l4 xl4 topButton">
+                <div class="row" style="margin: 0px; padding: 1px">
+                    <a href="/recommendor" class="btn blue " style="height: 100%; vertical-align: middle">       <i class="material-icons large" style="color: white; vertical-align: middle">group</i> Find People
+
+
+                    </a>
+                </div>
+            </div>
+        </div>
+        <br>
+    {% else  %}
+        <div class="row blue-grey" style="width:100%; padding: 0px; margin: 0px">
+        <!--
+        <h3 class="center center-align "><span class="blue-grey white-text" style="padding: 3px; border-radius: 5%; font-family: Dosis;">{{user.first_name}}'s Links</span></h3> -->
+
+        <h3 class="center center-align white-text" style="font-family: Dosis; width: 100%; padding: 1px; margin-bottom: 0px">Popular on LinkBook</h3>
+
+    </div>
+    {% endif %}
+
+
+    {% for ITEM in all_links %}
     <div class="row" style="padding: 0px; margin: 0px">
         <div class="col s12 m1 l3 xl3"></div>
         <div class="col s12 m10 l6 xl6 link_card" id="{{ ITEM.link.id }}">
@@ -128,6 +170,7 @@
                              </div>
                     </div>
             </li>
+            {% if ITEM.link.description != '' %}
             <li class="collection-item avatar">
                 <i class="material-icons circle blue-grey">description</i>
                             <span class = "DESCR" style="font-size: 100%">{{ITEM.link.description}}
@@ -138,6 +181,16 @@
                             <span id="url" style="display: none"><a href="{{ ITEM.link.url }}" target="_blank"> {{ ITEM.link.url }} </a></span>
 
                 </li>
+                {% else %}
+                <li class="collection-item ">
+
+                            <span class = "DESCR" style="font-size: 100%">No description provided.
+                                 </span>
+                </li>
+
+            {% endif %}
+
+
                 {% if ITEM.link.og_data.title != None %}
                 <li class="collection-item avatar " style="padding: 4px">
                 <a href="{{ ITEM.link.url }}" style="text-decoration: none; color: black" target="_blank">
@@ -191,6 +244,7 @@
                     </li>
                     -->
                 <!-- Tags -->
+                {% if ITEM.link.tags.all|length != 0 %}
                 <li class="collection-item avatar" style="padding: 5px; min-height: 10px">
                     <!-- <i class="material-icons circle blue-grey">assignment</i> -->
                   <!--  <span class="title blue-grey-text">Tags</span> -->
@@ -202,7 +256,7 @@
                     {% endfor %}
                     </p>
                 </li>
-
+                {% endif %}
 
                 <li class="collection-item avatar" style="padding: 0px; margin: 0px">
                     <div class="row" style="padding: 0px; margin: 0px">
@@ -443,6 +497,11 @@
             </div>
         </div>
     </div>
+
+        {% empty %}
+        <div class="row" style="margin: 5px; padding: 1px">
+            <h5 class="center center-align">Follow people to see posts in your feed.</h5>
+        </div>
 
 {% endfor %}
 <script>
