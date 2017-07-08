@@ -153,6 +153,7 @@
                                   <div class="card-title center"><h5>{{link.title}}</h5></div>
                                   <div class="card-content" id="{{ link.id }}">
                                   <p class="description">{{ link.description }}</p>
+                                 {% if link.books.all|length != 0 %}
                                   <p class="BooksP">Books:
                                     {% for book in link.books.all %}
                                         <span class="chip">
@@ -160,6 +161,11 @@
                                         </span>
                                     {% endfor %}
                                   </p>
+                                     {% else %}
+                                     <p><br><br></p>
+                                  {% endif %}
+
+                                  {% if link.tags.all|length != 0 %}
                                   <p class="TagsP">Tags:
                                     {% for tag in link.tags.all %}
                                         <span class="chip">
@@ -167,6 +173,9 @@
                                         </span>
                                     {% endfor %}
                                   </p>
+                                      {% else %}
+                                      <p><br><br></p>
+                                  {% endif %}
 <br>
 
                                                 <span class="insideMaterialIcon"><i class="material-icons">thumb_up</i><sup> {{link.num_vote_up}}</sup> </span>
@@ -247,13 +256,19 @@
                                   <div class="card-title center"><h5>{{link.title}}</h5></div>
                                   <div class="card-content" id="{{ link.id }}">
                                   <p class="description">{{ link.description }}</p>
-                                  <p class="BooksP">Books:
+                                  {% if link.books.all|length != 0 %}
+                                      <p class="BooksP">Books:
                                     {% for book in link.books.all %}
                                         <span class="chip">
                                       <strong><a href = "/../book/{{book.id}}/">{{book.title}}</a></strong>
                                         </span>
                                     {% endfor %}
                                   </p>
+                                      {% else %}
+                                      <p><br><br></p>
+                                  {% endif %}
+
+                                  {% if link.tags.all|length != 0 %}
                                   <p class="TagsP">Tags:
                                     {% for tag in link.tags.all %}
                                         <span class="chip">
@@ -261,6 +276,11 @@
                                         </span>
                                     {% endfor %}
                                   </p>
+                                      {% else %}
+                                      <p><br><br></p>
+                                  {% endif %}
+
+
                                   <br>
 
 
@@ -298,55 +318,10 @@
         </div>
     </div>
 
-
+<script src="/static/library/js/view_links.js"></script>
     <script>
 
         $(function () {
-
-            var cards = $('.card_link');
-
-            cards.click(function () {
-                var id = this.id;
-                var url = '/link/' + id;
-                window.location.href = url;
-            });
-
-            $('.collapsible').collapsible();
-          //  $('.collapsible').collapsible('destroy');
-
-            $('.dropdown-button').dropdown({
-                inDuration: 300,
-                outDuration: 225,
-                  constrainWidth: false, // Does not change width of dropdown to that of the activator
-                  hover: true, // Activate on hover
-                  gutter: 0, // Spacing from edge
-                  belowOrigin: true, // Displays dropdown below the button
-                  alignment: 'left', // Displays dropdown with edge aligned to the left of button
-                  stopPropagation: true, // Stops event propagation
-
-    });
-
-         $('.modal').modal({
-          dismissible: true, // Modal can be dismissed by clicking outside of the modal
-          opacity: .5, // Opacity of modal background
-          inDuration: 300, // Transition in duration
-          outDuration: 200, // Transition out duration
-          startingTop: '4%', // Starting top style attribute
-          endingTop: '10%', // Ending top style attribute
-          ready: function(modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
-           // alert("Ready");
-            console.log(modal, trigger);
-           // $('.collapsible').collapsible();
-            $('.collapsible').collapsible('destroy');
-          },
-          complete: function() { //alert('Closed');
-
-              $('.collapsible').collapsible();
-               } // Callback for Modal close
-        }
-      );
-
-
     $('.deleteCompletely').click(function(){
         $.ajax({
             url: '/book/' + this.value + '/delete/',
@@ -378,30 +353,7 @@
 
     });
 
-    $('.collapsible-header #infoUniversal').click(function (e) {
 
-        e.stopPropagation();
-        Materialize.toast('This is universal book. It contains all of your links. It cant be edited or modified in any way.', 10000,'',function ()
-        {
-         //  $('.collapsible').collapsible();
-        });
-
-    });
-
-   $('.dropdown_links').click(function (e) {
-
-       e.stopPropagation();
-       var id = $(this).attr('href');
-       console.log(id);
-       $(id ).modal('open');
-
-   });
-
-   $('.optionsButton').click(function (e) {
-
-       e.stopPropagation();
-
-   })
 
 
 
