@@ -147,12 +147,23 @@
                             </div>
                     </div>
                 <li>
+            {% if link.description != '' %}
                 <li class="collection-item avatar">
                 <i class="material-icons circle blue-grey">description</i>
                             <span id = "DESCR" style="font-size: 100%">{{link.description}}</span>
                             <span id="url" style="display: none"><a href="{{ link.url }}" target="_blank"> {{ link.url }} </a></span>
 
                 </li>
+                {% else %}
+                <li class="collection-item ">
+
+                            <span class = "DESCR" style="font-size: 100%">No description provided.
+                                 </span>
+                </li>
+
+            {% endif %}
+
+
                 <!-- Open Graph data -->
                 {% if link.og_data.title != None %}
                 <li class="collection-item avatar " style="padding: 4px">
@@ -205,6 +216,7 @@
                     </li>
                     -->
                 <!-- Tags -->
+            {%  if links.tag.all|length != 0 %}
                 <li class="collection-item avatar" style="padding: 5px; min-height: 10px">
 
                   <!--  <span class="title blue-grey-text">Tags</span> -->
@@ -216,6 +228,8 @@
                     {% endfor %}
                     </p>
                 </li>
+            {% endif %}
+
                 
                 <li class="collection-item avatar" style="padding: 0px; margin: 0px">
                     <div class="row" style="padding: 0px; margin: 0px">

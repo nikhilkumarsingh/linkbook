@@ -59,7 +59,7 @@
                                   <p class="TagsP">Tags:
                                     {% for tag in link.tags.all %}
                                         <span class="chip">
-                                      <strong><a href = "/../tags/{{tag.name}}/">{{tag.name}}</a></strong>
+                                      <strong><a href = "/../tags/{{ tag.id }}/{{tag.name}}/">{{tag.name}}</a></strong>
                                         </span>
                                     {% endfor %}
                                   </p>
@@ -92,6 +92,15 @@
     </div>
 </div>
     <script>
-        $('.modal').modal();
+        var cards = $('.card-content');
+
+            cards.click(function () {
+
+                var id = this.id;
+                var url = '/link/' + id;
+                window.location.href = url;
+
+            });
+    $('.modal').modal();
     </script>
 {% endblock%}

@@ -1,13 +1,92 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% load i18n %}
-{% block title %}Home{% endblock %}
+{% block title %}Recommendations{% endblock %}
 
 
 
 {% block body %}
-    {% for user in users %}
-    {{user}}
-    {% endfor %}
+
+    <style>
+
+
+    </style>
+    <div class="container">
+        <div class="row" style="padding: 1px; margin: 0px">
+            <div class="col s12 m3 l3 xl3"></div>
+            <div class="col s12 m6 l6 xl6">
+                <ul class="collection hoverable">
+                <li class="collection-item center center-align" style="font-weight: 900">
+                    People you may like to follow
+                </li>
+                    {% for user in users %}
+                        <li class="collection-item avatar">
+                            <a href="/{{ user.username }}"> <img src="{{ user.profile.pic }}" class="circle responsive-img" style="margin-top: 1%"></a>
+                        <div class="row" style="margin-top: 2%">
+                            <div class="col s12 m12 l4 xl4" style="word-wrap: break-word; margin-top: 1%" >
+                                <a href="/{{  user.username}}"> {{ user.username }}
+                                </a>
+                            </div>
+                            <div class="col s6 m6 l4 xl4">
+                                <span class="badge blue-grey white-text follower_count" id="f{{ user.username }}" style="margin-top: 5%">{{ user.profile.followers.count }} followers</span>
+                            </div>
+                            <div class="col s6 m6 l4 xl4 right right-align">
+                                <button class="light-blue btn-flat waves-effect waves-light follow_button" id="{{ user.username }}"  style="text-transform: lowercase">Follow</button>
+                            </div>
+                        </div>
+                        </li>
+                    {% endfor %}
+                <li class="collection-item center center-align">
+                    These recommendations are based on the type of similar tags and links.
+                </li>
+                </ul>
+            </div>
+            <div class="col s12 m3 l3 xl3"></div>
+
+        </div>
+    </div>
+
+
+    <script>
+
+        $(function () {
+
+            $('.modal').modal();
+
+            $('.follow_button').click(function () {
+
+                var username = this.id;
+                var fButton = $(this);
+                $.get('/follow/', {to_follow: username}, function (data) {
+                    console.log(fButton);
+                    console.log("hello");
+                    console.log(data);
+                    if (data['follow_button'] === '1') {
+                        //$('#follow_button').removeClass('grey');
+                        console.log("Condition 1");
+                        fButton.removeClass('grey');
+                        fButton.removeClass('lighten-3');
+                        fButton.attr('title', 'follow');
+                        fButton.html("follow");
+                    }
+                    else {
+                        console.log("Condition2");
+                        //$('#follow_button').addClass('grey');
+                        fButton.addClass('grey');
+                        fButton.addClass('lighten-3');
+                        fButton.attr('title', 'unfollow');
+                        fButton.html("followed");
+                    }
+
+                    $('#f' + username).html(data['follower_count'] + ' followers');
+                });
+
+
+
+            });
+
+        });
+
+    </script>
 
 {% endblock body %}
