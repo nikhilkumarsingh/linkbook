@@ -493,8 +493,8 @@
          $('#follower_count').click(function(){
           $.get('/followers/', {user: "{{user.username}}"}, function(data){
               data = data.data;
-              console.log("Data");
-              console.log(data);
+              // console.log("Data");
+              // console.log(data);
 
 
               var list = $('#followers_modal_list');
@@ -521,7 +521,7 @@
         $('#following_count').click(function(){
           $.get('/following/', {user: "{{user.username}}"}, function(data){
               data = data.data;
-              console.log(data);
+              // console.log(data);
                 $('#modal6').modal('open');
                  var list = $('#following_modal_list');
                  var str = '';

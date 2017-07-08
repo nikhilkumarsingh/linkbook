@@ -512,16 +512,16 @@
         var globalCommentsObject = {};
         function ModifyComments(linkId, commentId)
         {
-            console.log("Modify comments Called");
-            console.log(commentId);
+            // console.log("Modify comments Called");
+            // console.log(commentId);
             var textAreaEditComment = $('#modalEditCommentTextarea' + linkId);
             var commentToBeModified = globalCommentsObject[linkId][commentId];
             textAreaEditComment.val(commentToBeModified.text);
             commentsOperationsVariable = commentToBeModified.id;
         }
         function LoadComments(linkId){
-        console.log("Load Comments called");
-        console.log(linkId);
+        // console.log("Load Comments called");
+        // console.log(linkId);
     	$.ajax({
     		url: '/comment/load/',
     		type: 'get',
@@ -531,7 +531,7 @@
                 var str = '';
                 var comments = data['comments'];
                 globalCommentsObject[linkId] = comments;
-                console.log(comments);
+                // console.log(comments);
                 var i;
                 for( i = 0; i <comments.length ; i++)
                 {
@@ -661,8 +661,8 @@
 
                 var $textarea = $(formId + ' textarea');
                 var text = $textarea.val();
-                console.log("Text");
-                console.log(text);
+                // console.log("Text");
+                // console.log(text);
                 $textarea.val('');
                 if(!$.trim(text)){
                     alert("Can't add empty comments!");
@@ -678,7 +678,7 @@
                            'link_id': id
                         },
                     success :function(data, status){
-                        console.log(data);
+                        // console.log(data);
                         LoadComments(id);
                     }
                 });
@@ -691,7 +691,7 @@
                 url: '/link/' + id + '/delete/',
                 type: 'post',
                 success: function(data, status){
-                    console.log(data);
+                    // console.log(data);
                     window.location = "/{{request.user.username}}/";
                 }
             });

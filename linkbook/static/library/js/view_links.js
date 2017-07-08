@@ -32,7 +32,7 @@ $(function () {
           endingTop: '10%', // Ending top style attribute
           ready: function(modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
            // alert("Ready");
-            console.log(modal, trigger);
+            // console.log(modal, trigger);
            // $('.collapsible').collapsible();
             $('.collapsible').collapsible('destroy');
           },
@@ -58,7 +58,7 @@ $(function () {
 
        e.stopPropagation();
        var id = $(this).attr('href');
-       console.log(id);
+       // console.log(id);
        $(id ).modal('open');
 
    });

@@ -32,7 +32,7 @@
                 url: '/link/{{link.id}}/delete/',
                 type: 'post',
                 success: function(data, status){
-                    console.log(data);
+                    // console.log(data);
                     window.location = "/{{request.user.username}}/";
                 }
 
@@ -101,7 +101,7 @@
                     type: 'post',
                     data: {'text':text},
                     success :function(data, status){
-                        console.log(data);
+                        // console.log(data);
                         $('#modalEditComment').modal('close');
                         LoadComments();
                     }
@@ -115,7 +115,7 @@
                     url : '/comment/'+commentIndex+'/delete/',
                     type: 'post',
                     success :function(data, status){
-                        console.log(data);
+                        // console.log(data);
                         $('#modalEditComment').modal('close');
                         LoadComments();
                     }

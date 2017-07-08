@@ -41,7 +41,7 @@ function ResetForm() {
             data: {'notif': param},
             type: 'post',
             success: function (data, status) {
-                console.log(data);
+                // console.log(data);
 
                 // bind user books
                 if (param == 1) {
