@@ -275,3 +275,7 @@ def get_following_list(request):
 def trending(request):
     if request.method == 'GET':
         return render(request, 'core/trending.html')
+
+def aboutus(request):
+    if request.method == 'GET':
+        return render(request, 'core/aboutus.html')
