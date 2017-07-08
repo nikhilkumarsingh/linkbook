@@ -6,9 +6,9 @@
 	{% get_tagcloud as tags %}
 {% endif %}
 
-<div id="{{ element_id }}">
+<div id="{{ element_id }}" style="height: 100%;width: 100%; margin: 0px 0px 0px 0px;" class="center">
 
-	<canvas width="{{ width }}" height="{{ height }}" id="{{ element_id }}_canvas"></canvas>
+	<canvas id="{{ element_id }}_canvas" style="margin: 0px auto;height: 100%;width: 100%"></canvas>
 	
 	<div id="{{ element_id }}_tags">
 	
@@ -34,5 +34,7 @@
 	</div>
 
 </div>
+
+
 
 {% include "taggit_templatetags2/tagcanvas_include_js.html" with element_id=element_id %}

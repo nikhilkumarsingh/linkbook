@@ -4,12 +4,20 @@
 {% block title %}Trending{% endblock %}
 
 
-
 {% block body %}
-	<div class="container center col s12 m8 l8 xl8" style="margin-top: 10%;">
+	<style>
+		#wordcloudTrending{
+			width: 100%;
+    		height: 100%;
+    		margin: 0px 0px 0px 0px;
+    		padding: 0px 0px 0px 0px;
+		}
+	</style>
+
+	<div class="center" id="wordcloudTrending">
             {% load taggit_templatetags2_tags %}
             {% include "taggit_templatetags2/tagcanvas_include_js_static.html" %}
-            {% include_tagcanvas 'tag' '400 px' '400 px' 'view_tag' 'links.Link' %}
+            {% include_tagcanvas 'tag' '400px' '400 px' 'view_tag' 'links.Link' %}
     </div>
     <script>
 
