@@ -147,8 +147,9 @@ def username_slugs(request, username):
         return render(request, 'links/view_upvoted_links.html', {'links':upvoted_links})        
 
     else:
-        links = Link.objects.filter(user = user)[:5]
-        books = Book.objects.filter(user = user)[:5]
+        links = Link.objects.filter(user = user).order_by('-num_vote_up', 
+            'num_vote_down',)[:4]
+        books = Book.objects.filter(user = user)[:4]
         link_count = Link.objects.filter(user = user).count()
         book_count = Book.objects.filter(user = user).count()
         follower_count = user.profile.followers.count()
