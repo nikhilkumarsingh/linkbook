@@ -219,16 +219,18 @@ def follow_profile(request):
             'follow_button': follow_button})
 
 
+@login_required
 def recommend_users(request):
     # fetch all links of user
     user_links = Link.objects.filter(user = request.user)
     # fetch links similar to each link of the user
     similar_links = []
     for link in user_links:
-        similar_links.extend(link.tags.similar_objects())
+        similar_links.extend([link for link in link.tags.similar_objects()])
     # fetch 10 most similar users from similar links
     similar_users = Counter([link.user for link in similar_links 
                             if link.user != request.user]).most_common(10)
+    similar_users = [user[0] for user in similar_users]
     return render(request, 'core/recommendor.html', {'users':similar_users})
 
 
