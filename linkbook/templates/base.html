@@ -8,13 +8,13 @@
     <!-- This will help in zooming in mobile-->
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
-    <link type="text/css" rel="stylesheet" href="/static/library/css/materialize.css" media="screen,projection"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/css/materialize.min.css">
     <link rel="shortcut icon" href="{%  static 'favicon.ico' %}">
     <title>
         LinkBook | {% block title %}{% endblock %}
     </title>
-    <script src="/static/library/js/jquery.js"></script>
-    <script src='/static/library/js/materialize.js'></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/js/materialize.min.js"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/showdown/1.7.1/showdown.min.js'></script>
     <link type="text/css" rel="stylesheet" href="/static/library/css/basic.css" media="screen,projection"/>
     {% if not request.user.is_authenticated %}
