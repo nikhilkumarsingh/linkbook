@@ -83,7 +83,7 @@
         endingTop: '10%', // Ending top style attribute
         ready: function(modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
         // alert("Ready");
-        //console.log(modal, trigger);
+        //// console.log(modal, trigger);
       },
       complete: function() {
         //    alert('Closed');
@@ -94,7 +94,7 @@
         var File = $('input[type="file"]');
         var Parent = File.parent();
         Parent.addClass('file-field');
-        console.log(Parent.children());
+        // console.log(Parent.children());
         var Children = Parent.children();
         Children[1].remove();
         var str = Parent.html();
@@ -128,7 +128,7 @@
             if(evt.target.files.length !== 0)
             {
                 $('#modalCropper').modal('open');
-            //    console.log(evt.target.files);
+            //    // console.log(evt.target.files);
                 $("#cropper").cropper("loadImage", evt.target.files);
                 imageUploaded = true;
             }

@@ -433,8 +433,8 @@
         var globalCommentsObject;
         function ModifyComments(commentId)
         {
-            console.log("Modify comments Called");
-            console.log(commentId);
+            // console.log("Modify comments Called");
+            // console.log(commentId);
             var textAreaEditComment = $('#modalEditCommentTextarea');
             var commentToBeModified = globalCommentsObject[commentId];
             textAreaEditComment.val(commentToBeModified.text);
@@ -442,7 +442,7 @@
         }
 
         function LoadComments(){
-        console.log("Load Comments called");
+        // console.log("Load Comments called");
     	$.ajax({
     		url: '/comment/load/',
     		type: 'get',
@@ -452,7 +452,7 @@
                 var str = '';
                 var comments = data['comments'];
                 globalCommentsObject = comments;
-                console.log(comments);
+                // console.log(comments);
                 var i;
                 for( i = 0; i <comments.length ; i++)
                 {
@@ -579,7 +579,7 @@
                            'link_id':{{link.id}}
                         },
                     success :function(data, status){
-                        console.log(data);
+                        // console.log(data);
                         LoadComments();
                     }
                 });

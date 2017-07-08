@@ -305,13 +305,13 @@
     function RefreshDropdown()
     {
       //   var width = $('#list').css('width');
-       // console.log("Width");
-       // console.log(width);
+       // // console.log("Width");
+       // // console.log(width);
       //  $('#dropdown11').css({'max-width' : width });
 
     }
     function LoadComments(){
-        console.log("Load Comments called");
+        // console.log("Load Comments called");
     	$.ajax({
     		url: '/comment/load/',
     		type: 'get',
@@ -379,8 +379,8 @@
 	               $('.upvote').removeClass('lighten-5');
 	               $('.downvote').removeClass('lighten-5');
 	               //$(".downvote").toggleClass(data['downvote_button']);
-	                console.log(data.upvote_button);
-	                console.log(data.downvote_button);
+	                // console.log(data.upvote_button);
+	                // console.log(data.downvote_button);
 	                if(data['upvote_button'] == '')
 	                {
 	                }
@@ -460,7 +460,7 @@
                        'link_id':{{ITEM.link.id}}
                     },
                 success :function(data, status){
-                	console.log(data);
+                	// console.log(data);
                 	LoadComments();
                 }
             });
@@ -472,7 +472,7 @@
     });
 
     $('img').on('error', function () {
-        console.log("Hello");
+        // console.log("Hello");
         $('#card_image_div').css({'display' : 'none'});
     });
 
