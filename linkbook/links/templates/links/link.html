@@ -81,11 +81,11 @@
                 <li class="collection-item avatar" style="border-bottom: none; height: 10px; padding-bottom: 0px">
                     <div class="row"  style="padding: 0px; margin: 0px">
                         <!-- user avatar -->
-                        <img class="responsive-img circle"  height = "40px" width="40px" src="{{link.user.profile.pic}}" />
+                       <a href="/{{ link.user.username }}"> <img class="responsive-img circle"  height = "40px" width="40px" src="{{link.user.profile.pic}}" /></a>
                         <div class="row" style="margin: 0px; padding: 0px">
                             <div class="col s4 m4 l4 xl4" style="word-wrap: break-word; margin: 0px; padding: 0px; font-size: 0.5em">
-                                <span class="title blue-grey-text ">{{ link.user }}<br/>
-                        <sup>{{ time }}</sup></span>
+                                <a href="/{{ link.user.username }}"> <span class="title blue-grey-text ">{{ link.user }}<br/>
+                        <sup>{{ time }}</sup></span></a>
                         <br><br>
                             </div>
                            <div class="col s8 m8 l8 xl8 right right-align hide-on-med-and-down" id="icons_extra" style="margin: 0px; padding: 0px">
