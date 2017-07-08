@@ -52,3 +52,16 @@
     {
         background-color: lightblue;
     }
+
+    body{
+    background-attachment: fixed;
+    background-size: 100% 100%;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+    @media screen and (max-width: 600px){
+        body {
+            background: #eaeae9;
+        }
+    }

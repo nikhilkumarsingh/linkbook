@@ -6,6 +6,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- This will help in zooming in mobile-->
+    <meta property="og:title" content="LinkBook | A social media for links!"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="http://linkbook.pythonanywhere.com/"/>
+    <meta property="og:image" content="http://linkbook.pythonanywhere.com/static/favicon.ico"/>
+    <meta property="og:site_name" content="LinkBook"/>
+    <meta property="og:description" content="LinkBook lets you share and manage your links with ease. Create an account to get started!"/>
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/css/materialize.min.css">
@@ -34,18 +40,6 @@
 
 @import url('https://fonts.googleapis.com/css?family=Dosis');
 
-body{
-    background-attachment: fixed;
-    background-size: 100% 100%;
-    background-position: center;
-    background-attachment: fixed;"
-}
-
-@media screen and (max-width: 600px){
-    body {
-        background: #eaeae9;
-    }
-}
 </style>
 
 <body background="{% static 'link.jpg' %}">
@@ -60,7 +54,7 @@ body{
         {% if request.user.is_authenticated %}
 
             <ul class="hide-on-med-and-down right">
-                <li><a href="/logout/?next={{ request.path }}" style="font-family: Dosis; font-weight:600; font-size: 18px;">Logout</a></li>
+                <li id="nav-logout"><a href="/logout/?next={{ request.path }}" style="font-family: Dosis; font-weight:600; font-size: 18px;">Logout</a></li>
             </ul>
             <ul class="right">
                 <li><a class='dropdown-button btn-floating waves-effect waves-light green' data-beloworigin="true"
@@ -71,18 +65,18 @@ body{
         {% endif %}
 
         <ul class="hide-on-med-and-down left">
-            <li class="active left"><a href="/" style="font-family: Dosis; font-weight:600; font-size: 18px;">Home</a></li>
-            <li><a class="left" href="/trending" style="font-family: Dosis; font-weight:600; font-size: 18px;">Trending</a></li>
-            <li><a class="left" href="/project" style="font-family: Dosis; font-weight:600; font-size: 18px;">Project</a></li>
-            <li><a class="left" href="/aboutus" style="font-family: Dosis; font-weight:600; font-size: 18px;">About Us</a></li>
+            <li id="nav-home" class=" left"><a href="/" style="font-family: Dosis; font-weight:600; font-size: 18px;">Home</a></li>
+            <li id="nav-trending"><a class="left" href="/trending" style="font-family: Dosis; font-weight:600; font-size: 18px;">Trending</a></li>
+            <li id="nav-project"><a class="left" href="/project" style="font-family: Dosis; font-weight:600; font-size: 18px;">Project</a></li>
+            <li id="nav-aboutus"><a class="left" href="/aboutus" style="font-family: Dosis; font-weight:600; font-size: 18px;">About Us</a></li>
         </ul>
         
         <ul class="hide-on-med-and-down right">
             {% if not request.user.is_authenticated %}
-                <li><a class="right" href="#modal1" style="font-family: Dosis; font-weight:600; font-size: 18px;">Login</a></li>
-                <li><a href="/signup" class="right" style="font-family: Dosis; font-weight:600; font-size: 18px;">Sign Up</a></li>
+                <li id="nav-login"><a class="right" href="#modal1" style="font-family: Dosis; font-weight:600; font-size: 18px;">Login</a></li>
+                <li id="nav-signup"><a href="/signup" class="right" style="font-family: Dosis; font-weight:600; font-size: 18px;">Sign Up</a></li>
             {% else %}
-                <li style="font-family: Dosis; font-weight:600; font-size: 18px;">
+                <li id="nav-profile" style="font-family: Dosis; font-weight:600; font-size: 18px;">
                     <img class="responsive-img circle hoverable" style="vertical-align: middle; cursor: pointer;"
                          height="40px" width="40px" src="{{ request.user.profile.pic }}" id="userProfilePicNavbar">&nbsp;{{ request.user.first_name }}
                 </li>
@@ -100,7 +94,7 @@ body{
 </div>
         <ul class="side-nav" id="mobile-demo">
             {% if request.user.is_authenticated %}
-                <li>
+                <li id="mobile-nav-profile">
                     <div class="user-view">
                         <a href="/{{ request.user }}/"><img class="responsive-img small circle"
                                                             src="{{ request.user.profile.pic }}" style="position: relative; width: 90%; height:90%;">
@@ -109,11 +103,11 @@ body{
                     </div>
                 </li>
             {% endif %}
-            <li class="active "><a href="/" style="font-family: Dosis; font-weight:600; font-size: 18px;">Home</a></li>
+            <li id="mobile-nav-home"><a href="/" style="font-family: Dosis; font-weight:600; font-size: 18px;">Home</a></li>
 
             {% if not request.user.is_authenticated %}
-                <li><a href="#modal1" style="font-family: Dosis; font-weight:600; font-size: 18px;">Login</a></li>
-                <li><a href="/signup" style="font-family: Dosis; font-weight:600; font-size: 18px;"> Sign Up</a></li>
+                <li id="mobile-nav-login"><a href="#modal1" style="font-family: Dosis; font-weight:600; font-size: 18px;">Login</a></li>
+                <li id="mobile-nav-signup"><a href="/signup" style="font-family: Dosis; font-weight:600; font-size: 18px;"> Sign Up</a></li>
             {% else %}
 
                 <li><a href="#modal2" title="Create new book" style="font-family: Dosis; font-weight:600; font-size: 18px;"><i class="material-icons">queue</i>Create new book</a>
@@ -123,9 +117,9 @@ body{
 
                 <li><a href="/logout/?next={{ request.path }}" style="font-family: Dosis; font-weight:600; font-size: 18px;">Logout</a></li>
             {% endif %}
-            <li><a href="/aboutus" style="font-family: Dosis; font-weight:600; font-size: 18px;">About Us </a></li>
-            <li><a href="/project" style="font-family: Dosis; font-weight:600; font-size: 18px;">Project</a></li>
-            <li><a href="/trending" style="font-family: Dosis; font-weight:600; font-size: 18px;">Trending</a></li>
+            <li id="mobile-nav-aboutus"><a href="/aboutus" style="font-family: Dosis; font-weight:600; font-size: 18px;">About Us </a></li>
+            <li id="mobile-nav-project"><a href="/project" style="font-family: Dosis; font-weight:600; font-size: 18px;">Project</a></li>
+            <li id="mobile-nav-trending"><a href="/trending" style="font-family: Dosis; font-weight:600; font-size: 18px;">Trending</a></li>
         </ul>
 
 <!-- Dropdown Structure -->
