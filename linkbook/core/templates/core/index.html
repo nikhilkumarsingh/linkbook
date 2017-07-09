@@ -126,12 +126,12 @@
                         <!-- user avatar -->
                         <a class="/{{ ITEM.link.user.username }}"> <img class="responsive-img circle"  height = "40px" width="40px" src="{{ITEM.link.user.profile.pic}}" /></a>
                         <div class="row">
-                            <div class="col s4 m4 l4 xl4" style="word-wrap: break-word; margin: 0px; padding: 0px; font-size: 0.5em">
+                            <div class="col s5 m5 l5 xl5" style="word-wrap: break-word; margin: 0px; padding: 0px; font-size: 0.5em">
                                 <a href="/{{ ITEM.link.user.username }}"> <span class="title blue-grey-text ">{{ ITEM.link.user }}<br/>
                         <sup>{{ ITEM.time }}</sup></span></a>
                         <br><br>
                             </div>
-                           <div class="col s8 m8 l8 xl8 right right-align hide-on-med-and-down" id="icons_extra" style="margin: 0px; padding: 0px">
+                           <div class="col s7 m7 l7 xl7 right right-align hide-on-med-and-down" id="icons_extra" style="margin: 0px; padding: 0px">
 
 
                    <div class="row right right-align" style="margin: 0px; padding: 0px">
@@ -143,7 +143,7 @@
                       </div>
                   </div>
                   </div>
-                            <div class="col s8 m8 l8 xl8 right right-align hide-on-large-only" id="icons_extra" style="margin: 0px; padding: 0px">
+                            <div class="col s7 m7 l7 xl7 right right-align hide-on-large-only" id="icons_extra" style="margin: 0px; padding: 0px">
 
                    <div class="row right right-align" style="margin: 0px; padding: 0px">
                       <div class="col s12 m12 l12 xl12 right right-align" style="margin: 0px; padding: 0px">
@@ -216,36 +216,6 @@
                 </a>
                 </li>
                 {% endif %}
-                <!-- End of open graph data -->
-                <!-- Sharing Options
-                    <li class="collection-item avatar">
-                      <i class="material-icons circle blue-grey">share</i>
-                        <span class="title blue-grey-text">Share</span>
-                        <p>
-                            <div>
-                                <a href = "https://www.facebook.com/sharer/sharer.php?u={{ITEM.link.url}}">
-                                    <img height=41px width=41px src="/static/icons/fb.svg" alt="Facebook" />
-                                </a>
-                                <a href = "https://twitter.com/home?status={{ITEM.link.url}}">
-                                    <img height=41px width=41px src="/static/icons/Twitterbird.png" alt="Twitter" />
-                                </a>
-                                <a href = "https://plus.google.com/share?url={{ITEM.link.url}}">
-                                    <img height=41px width=41px src="/static/icons/gplus.png" alt="Google+" />
-                                </a>
-                                <a href = "http://www.reddit.com/submit?url={{ITEM.link.url}}">
-                                    <img height=41px width=41px src="/static/icons/reddit.png" alt="Reddit" />
-                                </a>
-                                <a href = "http://pinterest.com/pin/create/button/?url={{ITEM.link.url}}&description={{ITEM.link.description}}">
-                                    <img height=41px width=41px src="/static/icons/pinterest.svg" alt="Pinterest" />
-                                </a>
-                                <a href = "https://www.linkedin.com/shareArticle?mini=true&url={{ITEM.link.url}}">
-                                    <img height=41px width=41px src="/static/icons/linkedin.svg" alt="LinkedIn" />
-                                </a>
-                            </div>
-                        </p>
-                    </li>
-                    -->
-                <!-- Tags -->
                 {% if ITEM.link.tags.all|length != 0 %}
                 <li class="collection-item avatar" style="padding: 5px; min-height: 10px">
                     <!-- <i class="material-icons circle blue-grey">assignment</i> -->
