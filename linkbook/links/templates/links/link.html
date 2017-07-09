@@ -167,11 +167,7 @@
                             <span class = "DESCR" style="font-size: 100%">No description provided.
                                  </span>
                 </li>
-
             {% endif %}
-
-
-                <!-- Open Graph data -->
                 {% if link.og_data.title != None %}
                 <li class="collection-item avatar " style="padding: 4px">
                     <a href="{{ link.url }}" style="text-decoration: none; color: black" target="_blank">
@@ -418,11 +414,11 @@
 
                         </textarea>
                         <div class="row">
-                            <div class="col 12 m12 l6">
-                                <button class="btn" id="editCommentButton">Save</button>
+                            <div class="col s6 m6 l6">
+                                <button class="btn" id="editCommentButton" style="width: 100%">Save</button>
                             </div>
-                            <div class="col 12 m12 l6">
-                                <button class="btn red white-text" id="deleteCommentButton">Delete</button>
+                            <div class="col s6 m6 l6">
+                                <button class="btn red white-text" id="deleteCommentButton" style="width: 100%">Delete</button>
                             </div>
                         </div>
 

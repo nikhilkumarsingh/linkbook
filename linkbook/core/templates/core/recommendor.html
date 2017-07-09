@@ -27,6 +27,10 @@
                             </div>
                         </div>
                         </li>
+                        {% empty %}
+                        <li class="collection-item center center-align">
+                            No recommendations can be generated for you at the time. Create more links or add more tags to find recommendations.
+                        </li>
                     {% endfor %}
                 <li class="collection-item center center-align">
                     These recommendations are based on the type of similar tags and your profile network.

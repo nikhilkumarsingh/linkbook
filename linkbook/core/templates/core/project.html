@@ -5,8 +5,8 @@
 
 
 {% block body %}
-
     <style>
+
         .tab
         {
             font-family: Dosis;
@@ -18,10 +18,10 @@
             outline-color: #26a69a;
         }
 
+
     </style>
 
-
-<div class="container" style="padding: 0px; height: 100%">
+    <div class="container" style="padding: 0px; height: 100%">
 
     <div class="row" style="margin: 1px; padding: 1px">
         <div class="col s12 m1 l1 xl1"></div>
@@ -29,24 +29,24 @@
             <div class="row tabs-div" style="margin: 1px; padding: 1px">
                 <ul class="tabs hide-on-med-and-down blue-grey-text">
                     <li class="col s4 m4 l4 xl4 tab active blue-grey-text">
-                        <a href="#aboutLinkbook" class="blue-grey-text" style="text-decoration-color: #26a69a; outline-color: #26a69a" >About Linkbook</a>
+                        <a href="#aboutLinkbook" class="title blue-grey-text" style="text-decoration-color: #26a69a; outline-color: #26a69a; font-size: 150%; font-weight: 900" >About Linkbook</a>
                     </li>
                     <li class="col s4 m4 l4 xl4 tab blue-grey-text" >
-                        <a href="#projectStructure" class="blue-grey-text" style="text-decoration-color: #26a69a">Project Structure</a>
+                        <a href="#projectStructure" class="title blue-grey-text" style="text-decoration-color: #26a69a; font-size: 150%; font-weight: 900">Project Structure</a>
                     </li>
                     <li class="col s4 m4 l4 xl4 tab blue-grey-text" >
-                        <a href="#ERDiagram" class="blue-grey-text" style="text-decoration-color: #26a69a">Relationship diagram</a>
+                        <a href="#ERDiagram" class="title blue-grey-text" style="text-decoration-color: #26a69a; font-size: 150%; font-weight: 900">Relationship diagram</a>
                     </li>
                 </ul>
                 <ul class="tabs hide-on-large-only">
                     <li class="col s4 m4 l4 xl4 tab active">
-                        <a href="#aboutLinkbook" class="blue-grey-text" style="text-decoration-color: #26a69a">About</a>
+                        <a href="#aboutLinkbook" class="title blue-grey-text" style="text-decoration-color: #26a69a; font-size: 150%; font-weight: 900">About</a>
                     </li>
                     <li class="col s4 m4 l4 xl4 tab" >
-                        <a href="#projectStructure" class="blue-grey-text" style="text-decoration-color: #26a69a">Project</a>
+                        <a href="#projectStructure" class="title blue-grey-text" style="text-decoration-color: #26a69a; font-size: 150%; font-weight: 900">Project</a>
                     </li>
                     <li class="col s4 m4 l4 xl4 tab" >
-                        <a href="#ERDiagram" class="blue-grey-text" style="text-decoration-color: #26a69a">R. Diag.</a>
+                        <a href="#ERDiagram" class="title blue-grey-text" style="text-decoration-color: #26a69a; font-size: 150%; font-weight: 900">R. Diag.</a>
                     </li>
                 </ul>
             </div>
@@ -114,16 +114,12 @@
 <script type="text/javascript" src="https://www.draw.io/js/viewer.min.js"></script>
     <script>
 
-        ($(function () {
+        $(function () {
 
             $('.modal').modal();
-
-
             $('#nav-project').addClass('active');
             $('#mobile-nav-project').addClass('active');
-
-
-        }));
+        });
 
     </script>
 {% endblock %}
