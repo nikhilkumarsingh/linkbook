@@ -49,9 +49,16 @@
                   <div class="card-stacked" style="max-width: 100%">
                       <div class="card-title center" style="max-width: 100%"><h5>{{link.title}}</h5></div>
                       <div class="card-content" id="{{ link.id }}" style="cursor: pointer; max-width: 100%">
-                      <p class="description" style="max-width: 100%">
+
+                          {% if link.description != '' %}
+                          <p class="description" style="max-width: 100%">
                           {{ link.description }}
                       </p>
+                      {% else %}
+                              <p class="description" style="max-width: 100%">
+                               No description has been provided for this.
+                              </p>
+                      {% endif %}
 
                           <p>Tags:
                         {% for tag in link.tags.all %}
