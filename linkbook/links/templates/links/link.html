@@ -155,9 +155,9 @@
                     </div>
                 <li>
             {% if link.description != '' %}
-                <li class="collection-item avatar">
+                <li class="collection-item avatar" style="text-align: justify">
                 <i class="material-icons circle blue-grey">description</i>
-                            <span id = "DESCR" style="font-size: 100%">{{link.description}}</span>
+                            <span id = "DESCR" style="font-size: 100%; max-width: 100%; word-wrap: break-word; padding: 1px; text-align: justify">{{link.description}}</span>
                             <span id="url" style="display: none"><a href="{{ link.url }}" target="_blank"> {{ link.url }} </a></span>
 
                 </li>
