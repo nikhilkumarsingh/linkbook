@@ -376,12 +376,12 @@
                             </div>
                         {% else %}
                 <div class="card card1 horizontal hoverable blue-grey white-text lighten-1" >
-                    <div class="card-stacked">
-                    <div id="{{ books.0.id }}" class="card_book" style="cursor: pointer">
+                    <div class="card-stacked" style="max-width: 100%">
+                    <div id="{{ books.0.id }}" class="card_book" style="cursor: pointer; width: 100%">
 
                           <div class="card-title center"><h4>{{ books.0.title }}</h4></div>
-                          <div class="card-content card-content1">
-                          <p>{{ books.0.description }}</p>
+                          <div class="card-content card-content1" style="max-width: 100%">
+                          <p style="max-width: 100%; word-wrap: break-word">{{ books.0.description }}</p>
                           <p>{{books.0.link_set.count}} link(s)</p>
                         </div>
                     </div>
@@ -392,12 +392,12 @@
                         {% if books.2 == none %}
                         {% else %}
                             <div class="card card1 horizontal hoverable blue-grey white-text lighten-1 ">
-                            <div class="card-stacked">
-                                <div id="{{ books.2.id }}" class="card_book" style="cursor: pointer;">
+                            <div class="card-stacked" style="max-width: 100%">
+                                <div id="{{ books.2.id }}" class="card_book" style="cursor: pointer; max-width: 100%">
 
                       <div class="card-title center"><h4>{{ books.2.title }}</h4></div>
-                      <div class="card-content card-content1">
-                      <p>{{ books.2.description }}</p>
+                      <div class="card-content card-content1" style="max-width: 100%">
+                      <p style="max-width: 100%; word-wrap: break-word">{{ books.2.description }}</p>
                       <p>{{books.2.link_set.count}} link(s)</p>
                     </div>
                   </div>
@@ -412,12 +412,12 @@
                         {% if books.1 == none %}
                         {% else %}
                         <div class="card card1 horizontal hoverable blue-grey white-text lighten-1 " >
-                        <div class="card-stacked">
-                            <div id="{{ books.1.id }}" class="card_book" style="cursor:pointer;">
+                        <div class="card-stacked" style="max-width: 100%">
+                            <div id="{{ books.1.id }}" class="card_book" style="cursor:pointer; max-width: 100%">
 
                                   <div class="card-title center"><h4>{{ books.1.title }}</h4></div>
-                                  <div class="card-content card-content1">
-                                  <p>{{ books.1.description }}</p>
+                                  <div class="card-content card-content1" style="max-width: 100%">
+                                  <p style="max-width: 100%; word-wrap: break-word">{{ books.1.description }}</p>
                                   <p>{{books.1.link_set.count}} link(s)</p>
                                 </div>
                               </div>
@@ -429,12 +429,12 @@
                         {% if books.3 == none %}
                         {% else %}
                 <div class="card card1 horizontal hoverable blue-grey white-text lighten-1">
-                <div class="card-stacked" >
-                    <div id="{{ books.3.id }}" class="card_book" style="cursor: pointer">
+                <div class="card-stacked" style="max-width: 100%" >
+                    <div id="{{ books.3.id }}" class="card_book" style="cursor: pointer; max-width: 100%">
 
                       <div class="card-title center"><h4>{{ books.3.title }}</h4></div>
-                      <div class="card-content card-content1">
-                      <p>{{ books.3.description }}</p>
+                      <div class="card-content card-content1" style="max-width: 100%">
+                      <p style="max-width: 100%; word-wrap: break-word">{{ books.3.description }}</p>
                       <p>{{books.3.link_set.count}} link(s)</p>
                     </div>
                   </div>

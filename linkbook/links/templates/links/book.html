@@ -8,12 +8,14 @@
     <style>
         .card1
         {
-            height : 310px;
+            height : 390px;
         }
         .description
         {
-            overflow: hidden;
-            max-height : 65px;
+                max-width: 90%;
+             overflow: hidden;
+                height : 107px;
+                word-wrap: break-word;
         }
         .BooksP
         {
@@ -47,11 +49,11 @@
                     <div class="row" style="padding: 0px; margin: 0px">
                         <div class="col s12 m12 l12 xl12">
                 <div class="card card1 horizontal hoverable white-text blue-grey lighten-1">
-                  <div class="card-stacked">
-                      <div class="card_link" id="{{ link.id }}"  style="cursor: pointer;">
+                  <div class="card-stacked" style="max-width: 100%">
+                      <div class="card_link" id="{{ link.id }}"  style="cursor: pointer; max-width: 100%">
                       <div class="card-title center"><h5>{{link.title}}</h5></div>
-                      <div class="card-content" id="{{ link.id }}">
-                      <p class="description">{{ link.description }}</p>
+                      <div class="card-content" id="{{ link.id }}" style="max-width: 100%">
+                      <p class="description" style="max-width: 100%">{{ link.description }}</p>
                       {% if link.books.all|length != 0 %}
                           <p class="BooksP">Books:
                         {% for book in link.books.all %}

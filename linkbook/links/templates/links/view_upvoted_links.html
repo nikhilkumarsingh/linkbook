@@ -8,12 +8,14 @@
     <style>
         .card1
         {
-            height : 310px;
+            height : 390px;
         }
         .description
         {
+            max-width: 90%;
             overflow: hidden;
-            max-height : 65px;
+            height : 107px;
+            word-wrap: break-word;
         }
         .BooksP
         {
@@ -44,11 +46,11 @@
         {% for link in links %}
                                 <div class="col s12 m12 l4 xl4">
                                 <div class="card card1 horizontal hoverable blue-grey white-text lighten-1">
-                              <div class="card-stacked">
-                                  <div class="card_link" id="{{ link.id }}"  style="cursor: pointer;">
-                                  <div class="card-title center"><h5>{{link.title}}</h5></div>
-                                  <div class="card-content" id="{{ link.id }}">
-                                  <p class="description">{{ link.description }}</p>
+                              <div class="card-stacked" style="max-width: 100%">
+                                  <div class="card_link" id="{{ link.id }}"  style="cursor: pointer; max-width: 100%">
+                                  <div class="card-title center" style="max-width: 100%"><h5>{{link.title}}</h5></div>
+                                  <div class="card-content" id="{{ link.id }}" style="max-width: 100%">
+                                  <p class="description" style="max-width: 100%; word-wrap: break-word">{{ link.description }}</p>
                                   {% if link.books.all|length != 0 %}
                                       <p class="BooksP">Books:
                                     {% for book in link.books.all %}
