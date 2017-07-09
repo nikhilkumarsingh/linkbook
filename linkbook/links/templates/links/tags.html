@@ -14,6 +14,21 @@
         margin-left: 1%;
     }
 
+    .card1
+    {
+        height: 350px;
+    }
+
+    .description
+    {
+
+        max-width: 90%;
+        overflow: hidden;
+        height : 107px;
+        word-wrap: break-word;
+
+    }
+
     </style>
 
     <div class = "container">
@@ -30,11 +45,13 @@
 
 
             <div class="col s12 m4 l4 xl4">
-                <div class="card horizontal hoverable white-text blue-grey lighten-1">
-                  <div class="card-stacked">
-                      <div class="card-title center"><h5>{{link.title}}</h5></div>
-                      <div class="card-content" id="{{ link.id }}" style="cursor: pointer;">
-                      <p>{{ link.description }}</p>
+                <div class="card card1 horizontal hoverable white-text blue-grey lighten-1">
+                  <div class="card-stacked" style="max-width: 100%">
+                      <div class="card-title center" style="max-width: 100%"><h5>{{link.title}}</h5></div>
+                      <div class="card-content" id="{{ link.id }}" style="cursor: pointer; max-width: 100%">
+                      <p class="description" style="max-width: 100%">
+                          {{ link.description }}
+                      </p>
 
                           <p>Tags:
                         {% for tag in link.tags.all %}
