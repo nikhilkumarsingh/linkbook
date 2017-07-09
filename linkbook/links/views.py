@@ -149,6 +149,10 @@ def vote_link(request, id):
                 request.user.profile.upvoted_links.remove(link)
                 upvote_button = ""
                 downvote_button = ""
+
+            link.num_vote_down = link.votes.count(action = DOWN)
+            link.num_vote_up = link.votes.count(action = UP)
+            link.save()
         
             return JsonResponse({'upvotes': link.votes.count(action = UP), 
                 'downvotes': link.votes.count(action = DOWN),
