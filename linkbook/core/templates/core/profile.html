@@ -561,7 +561,7 @@
             fButton.attr('title', 'unfollow')
         }
        // $('#follow_button').html(data['follow_button']);
-        $('#follower_count').html(data['follower_count'] + " followers");
+        $('#follower_count').html( 'followers<span class="badge">' + data['follower_count'] + '</span>');
         });
     });
             $('.modal').modal();
