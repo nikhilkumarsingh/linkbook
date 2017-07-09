@@ -147,8 +147,8 @@ def username_slugs(request, username):
 
     else:
         links = Link.objects.filter(user = user).order_by('-num_vote_up', 
-            'num_vote_down',)[:4]
-        books = Book.objects.filter(user = user)[:4]
+            'num_vote_down',).distinct()[:4]
+        books = Book.objects.filter(user = user).distinct()[:4]
         link_count = Link.objects.filter(user = user).count()
         book_count = Book.objects.filter(user = user).count()
         follower_count = user.profile.followers.count()
