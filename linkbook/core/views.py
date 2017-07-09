@@ -143,7 +143,7 @@ def username_slugs(request, username):
 
     elif action == 'upvoted':
         upvoted_links = user.profile.upvoted_links.all()    
-        return render(request, 'links/view_upvoted_links.html', {'links':upvoted_links})        
+        return render(request, 'links/view_upvoted_links.html', {'links':upvoted_links, 'user': user})        
 
     else:
         links = Link.objects.filter(user = user).order_by('-num_vote_up', 

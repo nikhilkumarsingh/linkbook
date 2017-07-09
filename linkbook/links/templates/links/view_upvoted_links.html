@@ -95,7 +95,11 @@
                                 <div class="row">
                                     <div class="col s12 m12 l4 xl4"></div>
                                     <div class="col s12 m12 l4 xl4 flow-text center">
+                                    {% if user == request.user %}
                                         You haven't upvoted any links till yet.
+                                    {% else %}
+                                        {{user.first_name}} hasn't upvoted any links till yet.
+                                    {% endif %}
                                     </div>
                                     <div class="col s12 m12 l4 xl4"></div>
                                 </div>
