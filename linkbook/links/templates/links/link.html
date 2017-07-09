@@ -83,12 +83,19 @@
                         <!-- user avatar -->
                        <a href="/{{ link.user.username }}"> <img class="responsive-img circle"  height = "40px" width="40px" src="{{link.user.profile.pic}}" /></a>
                         <div class="row" style="margin: 0px; padding: 0px">
-                            <div class="col s5 m5 l5 xl5" style="word-wrap: break-word; margin: 0px; padding: 0px; font-size: 0.5em">
-                                <a href="/{{ link.user.username }}"> <span class="title blue-grey-text ">{{ link.user }}<br/>
+
+
+                            <div class="col s6 m6 l6 xl6" style="word-wrap: break-word; margin: 0px; padding: 0px; font-size: 0.5em">
+                                <a href="/{{ link.user.username }}" class="hide-on-small-only"> <span class="title blue-grey-text ">{{ link.user }}<br/>
                         <sup>{{ time }}</sup></span></a>
+
+                                <a href="/{{ link.user.username }}" class="hide-on-med-and-up"> <span class="blue-grey-text" style="font-size: 3.5vw">{{link.user }}<br/>
+                        <sup>{{ time }}</sup></span></a>
+
+
                         <br><br>
                             </div>
-                           <div class="col s7 m7 l7 xl7 right right-align hide-on-med-and-down" id="icons_extra" style="margin: 0px; padding: 0px">
+                           <div class="col s6 m6 l6 xl6 right right-align hide-on-med-and-down" id="icons_extra" style="margin: 0px; padding: 0px">
 
                                <div class="row right right-align" style="margin: 0px; padding: 0px">
                       <div class="col s12 m12 l12 xl12right right-align" style="margin: 0px; padding: 0px">
@@ -100,7 +107,7 @@
                       </div>
                   </div>
                   </div>
-                            <div class="col s7 m7 l7 xl7 right right-align hide-on-large-only" id="icons_extra" style="margin: 0px; padding: 0px">
+                            <div class="col s6 m6 l6 xl6 right right-align hide-on-large-only" id="icons_extra" style="margin: 0px; padding: 0px">
 
                    <div class="row left left-align" style="margin: 0px; padding: 0px">
                       <div class="col s12 m12 l12 xl12 right right-align" style="margin: 0px; padding: 0px">
