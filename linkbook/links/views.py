@@ -13,12 +13,17 @@ from linkbook.links.models import Link, Book, Comment
 from taggit.models import Tag
 from taggit.utils import _parse_tags
 from notifications.signals import notify
-import humanize
+import humanize, re
 from datetime import datetime, timezone
 
 UP = 0
 DOWN = 1
 vote_color = "lighten-5"
+
+
+def striphtml(data):
+    p = re.compile(r'<.*?>')
+    return p.sub('', data)
 
 
 def link(request, id):
@@ -63,12 +68,12 @@ def create_link(request):
         link = Link()
         link.user = request.user
         link.url = request.POST.get('URL')
-        link.title = request.POST.get('TITLE')
-        link.description = request.POST.get('DESCRIPTION')
+        link.title = striphtml(request.POST.get('TITLE'))
+        link.description = striphtml(request.POST.get('DESCRIPTION'))
         link.save()
         tag_list = request.POST.get('TAGS')
         for tag in _parse_tags(tag_list):
-            link.tags.add(tag)
+            link.tags.add(striphtml(tag))
         for book_name in request.POST.getlist('BOOKS'):
             link.books.add(Book.objects.get(user = request.user, title = book_name))
         link.save()
@@ -84,13 +89,13 @@ def edit_link(request, id):
     books = Book.objects.filter(user = request.user)
     if request.method == 'POST':
         link.url = request.POST.get('URL')
-        link.title = request.POST.get('TITLE')
-        link.description = request.POST.get('DESCRIPTION')
+        link.title = striphtml(request.POST.get('TITLE'))
+        link.description = striphtml(request.POST.get('DESCRIPTION'))
         for tag in link.tags.all():
             link.tags.remove(tag)
         tag_list = request.POST.get('TAGS')
         for tag in _parse_tags(tag_list):
-            link.tags.add(tag)
+            link.tags.add(striphtml(tag))
 
         new_book_list = request.POST.getlist('BOOKS')
         for book in books:
@@ -199,8 +204,8 @@ def create_book(request):
 
         book = Book()
         book.user = request.user
-        book.title = request.POST.get('TITLE')
-        book.description = request.POST.get('DESCRIPTION')
+        book.title = striphtml(request.POST.get('TITLE'))
+        book.description = striphtml(request.POST.get('DESCRIPTION'))
         book.save()
         
         return redirect('/'+request.user.username+'/?show=links')
@@ -212,8 +217,8 @@ def create_book(request):
 def edit_book(request, id):
     book = get_object_or_404(Book, id = id)
     if request.method == 'POST':
-        book.title = request.POST.get('TITLE')
-        book.description = request.POST.get('DESCRIPTION')
+        book.title = striphtml(request.POST.get('TITLE'))
+        book.description = striphtml(request.POST.get('DESCRIPTION'))
         book.save()
         return redirect("/book/{}/".format(id))
     else:
@@ -258,7 +263,7 @@ def ajax_create_comment(request):
         comment = Comment()
         comment.user = request.user
         comment.link = Link.objects.get(id = request.POST.get('link_id'))
-        comment.text = request.POST.get('text')
+        comment.text = striphtml(request.POST.get('text'))
         comment.save()
         if comment.user != request.user:
             notify.send(request.user, recipient = comment.link.user, 
@@ -272,7 +277,7 @@ def ajax_create_comment(request):
 def ajax_edit_comment(request, id):
     if request.is_ajax():
         comment = Comment.objects.get(id = id)
-        comment.text = request.POST.get('text')
+        comment.text = striphtml(request.POST.get('text'))
         comment.save()
         return JsonResponse({'done': True})
 
