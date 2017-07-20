@@ -26,6 +26,4 @@ Other cool features of LinkBook:
 
 >For more details, visit [project](http://link-book.herokuapp.com/project/) page.
 
-
-
- 
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/ym4V6yZh4yU/0.jpg)](https://www.youtube.com/watch?v=ym4V6yZh4yU)
