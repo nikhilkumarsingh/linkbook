@@ -1,33 +1,31 @@
 # LinkBook
-###### A social media for links! Linkbook allows you to create, manage, explore and share links.
+**The social media for links!**
 
-#### Link : [http://link-book.herokuapp.com/](http://link-book.herokuapp.com/)
+Linkbook is a **django powered** social link manager which lets you manage your links as well as lets you share them with your followers. 
 
-### Technologies And Frameworks
-1. [Django](https://www.djangoproject.com/)
-2. [SQLite](https://www.sqlite.org/)
-3. [Materialize](http://materializecss.com/)
+#### Try it now! [http://link-book.herokuapp.com/](link-book.herokuapp.com)
 
-### Features
-**1. Create and store links.**
 
-![](linkbook/static/1.png)
-![](linkbook/static/2.png)
+### Why use linkbook?
+<p align="center">
+  <img src="http://link-book.herokuapp.com/static/use_types.png">
+</p>
 
-**2. Group these links into books and manage them accordingly.**
+### How linkbook works?
+<p align="center">
+  <img src="http://link-book.herokuapp.com/static/er.9de2e2c6b3c7.png">
+</p>
 
-![](linkbook/static/3.png)
-![](linkbook/static/4.png)
+Other cool features of LinkBook:
+- **Whom to follow?**
 
-**3. See what others have shared and the facility to upvote, downvote and comment on links.**
+  You can always see [recommendor](http://link-book.herokuapp.com/recommendor) page to get a list of users whom you can follow.
+- **What's trending?**
 
-![](linkbook/static/5.png)
+  You can get an animated cloud of most popular tags on LinkBook at our [trending](http://link-book.herokuapp.com/trending) page.
 
-**4. See recommendations to follow on the basis of your tags, and links.**
+>For more details, visit [project](http://link-book.herokuapp.com/project/) page.
 
-![](linkbook/static/6.png)
 
-**5. See whats trending and explore the shared links on it.**
-![](linkbook/static/7.png)
 
  
