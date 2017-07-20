@@ -6,12 +6,12 @@ Linkbook is a **django powered** social link manager which lets you manage your 
 #### Try it now! [link-book.herokuapp.com](http://link-book.herokuapp.com/)
 
 
-### Why use linkbook?
+### How linkbook works?
 <p align="center">
   <img src="http://link-book.herokuapp.com/static/use_types.png">
 </p>
 
-### How linkbook works?
+### Models and relations
 <p align="center">
   <img src="http://link-book.herokuapp.com/static/er.9de2e2c6b3c7.png">
 </p>
