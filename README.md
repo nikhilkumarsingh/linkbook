@@ -3,7 +3,7 @@
 
 Linkbook is a **django powered** social link manager which lets you manage your links as well as lets you share them with your followers. 
 
-#### Try it now! [http://link-book.herokuapp.com/](link-book.herokuapp.com)
+#### Try it now! [link-book.herokuapp.com](http://link-book.herokuapp.com/)
 
 
 ### Why use linkbook?
