@@ -5,7 +5,7 @@ cycler==0.10.0
 decorator==4.0.11
 defusedxml==0.5.0
 dj-database-url==0.4.1
-Django==1.11.1
+Django==1.11.28
 django-ajax-comments==1.1.0.dev1
 django-appconf==1.0.1
 django-classy-tags==0.8.0
