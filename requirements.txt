@@ -32,7 +32,7 @@ Pillow==6.2.0
 prompt-toolkit==1.0.14
 psycopg2==2.6.2
 ptyprocess==0.5.1
-Pygments==2.2.0
+Pygments==2.7.4
 pyimgur==0.6.0
 PyJWT==1.5.0
 pyparsing==2.2.0
